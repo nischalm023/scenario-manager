@@ -17,6 +17,9 @@ const deepPartial = <T extends Shape>(o: z.ZodObject<T>, nullable = false): z.Zo
     ),
   );
 
+/** Station ids are uuids; keys are joined with '.' when patches are flattened, so they must not contain dots. */
+const StationId = z.uuid();
+
 const timeWindow = z.object({ start: z.string(), end: z.string() });
 
 const WmsOrderDefaults = z.object({
@@ -161,28 +164,8 @@ export const ScenarioConfigSchema = z.object({
     station_level: z.object({
       defaults: StationLevelDefaults,
       overrides: z
-        .record(z.string(), StationLevelOverride)
-        .meta({ description: 'Per-station overrides keyed by station id (e.g. PPS-101)' }),
+        .record(StationId, StationLevelOverride)
+        .meta({ description: 'Per-station overrides keyed by station id (uuid)' }),
     }),
   }),
-});
-
-/**
- * Update payload: only `overrides` can be sent. A `null` leaf resets that override to its default.
- */
-const OverridesPatch = (o: z.ZodObject<Shape>) => z.object({ overrides: deepPartial(o, true) }).optional();
-
-export const ScenarioConfigPatchSchema = z.object({
-  wms_order: OverridesPatch(WmsOrderDefaults),
-  agent: OverridesPatch(AgentDefaults),
-  station: z
-    .object({
-      shared: OverridesPatch(StationSharedDefaults),
-      station_level: z
-        .object({
-          overrides: z.record(z.string(), deepPartial(StationLevelDefaults, true)),
-        })
-        .optional(),
-    })
-    .optional(),
 });

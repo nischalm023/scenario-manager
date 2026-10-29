@@ -119,7 +119,7 @@ export class ScenariosController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Update a scenario: rename, repoint the config blob, or merge config overrides' })
+  @ApiOperation({ summary: 'Update a scenario: rename it or replace its config' })
   @ApiParam({ name: 'id', format: 'uuid', description: 'Scenario ID' })
   @ApiOkResponse({ type: PatchScenarioResponseDto })
   @ApiBadRequestResponse({ description: 'Invalid request body' })
@@ -137,7 +137,6 @@ export class ScenariosController {
       const { scenario, changes, modules } = await this.updateScenario.execute({
         id,
         name: dto.name,
-        configUri: dto.configUri,
         config: dto.config,
         updatedBy,
       });

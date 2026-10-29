@@ -4,7 +4,7 @@ import {
   type PaginatedResponse,
   PaginationMetaSchema,
 } from '../../../common/interfaces/paginated-response.interface.js';
-import type { ConfigChange } from '../../application/apply-config-patch.js';
+import type { ConfigChange } from '../../application/replace-config.js';
 import type { Scenario } from '../../domain/scenario.js';
 import { ScenarioStatus } from '../../domain/scenario-status.js';
 import { ScenarioConfigSchema } from './scenario-config.schema.js';

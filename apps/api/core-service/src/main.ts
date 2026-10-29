@@ -1,4 +1,5 @@
 import './load-env.js';
+import './telemetry/bootstrap.js';
 import { Logger, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { requestLogger } from 'shared';

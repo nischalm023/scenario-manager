@@ -1,8 +1,13 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { CloneScenarioDto } from './clone-scenario.dto.js';
 import { CreateScenarioDto } from './create-scenario.dto.js';
 import { ListAllScenariosQuery } from './list-all-scenarios.query.js';
+import { validScenarioConfig } from './scenario-config.fixture.js';
 import { PatchScenarioDto } from './update-scenario.dto.js';
+
+vi.mock('../../../config.js', () => ({
+  appConfig: { scenarioConfig: { bucket: 'scenario-bucket', prefix: 'scenarios/' } },
+}));
 
 const uuid = '3f2b8c1e-9d4a-4b6e-8a1f-2c7d5e9b0a13';
 
@@ -11,6 +16,7 @@ const validCreate = {
   project_id: uuid,
   map_id: uuid,
   map_version: 1,
+  config: validScenarioConfig,
 };
 
 const issuePaths = (result: { success: boolean; error?: { issues: { path: PropertyKey[] }[] } }) =>
@@ -24,10 +30,16 @@ describe('CreateScenarioDto', () => {
   });
 
   it.each(Object.keys(validCreate))('rejects a missing %s', (field) => {
-    const { [field]: _omitted, ...body } = validCreate as Record<string, unknown>;
+    const body: Record<string, unknown> = { ...validCreate };
+    delete body[field];
     const result = parse(body);
     expect(result.success).toBe(false);
     expect(issuePaths(result)).toEqual([field]);
+  });
+
+  it('rejects an empty or partial config', () => {
+    expect(parse({ ...validCreate, config: {} }).success).toBe(false);
+    expect(parse({ ...validCreate, config: { agent: validScenarioConfig.agent } }).success).toBe(false);
   });
 
   it.each(['name', 'project_id', 'map_id'])('rejects an empty %s', (field) => {
@@ -71,32 +83,23 @@ describe('PatchScenarioDto', () => {
   it('accepts an empty body and each field alone', () => {
     expect(parse({}).success).toBe(true);
     expect(parse({ name: 'New name' }).success).toBe(true);
-    expect(parse({ configUri: 'gs://bucket/config.json' }).success).toBe(true);
+    expect(parse({ config: validScenarioConfig }).success).toBe(true);
   });
 
-  it.each(['name', 'configUri'])('rejects an empty %s', (field) => {
-    const result = parse({ [field]: '' });
-    expect(result.success).toBe(false);
-    expect(issuePaths(result)).toEqual([field]);
-  });
-
-  it.each(['name', 'configUri'])('rejects a non-string %s', (field) => {
-    const result = parse({ [field]: 123 });
-    expect(result.success).toBe(false);
-    expect(issuePaths(result)).toEqual([field]);
-  });
-
-  it('rejects a blank or over-long name', () => {
+  it('rejects an empty, blank or over-long name', () => {
+    expect(parse({ name: '' }).success).toBe(false);
     expect(parse({ name: '   ' }).success).toBe(false);
     expect(parse({ name: 'x'.repeat(101) }).success).toBe(false);
   });
 
-  it('accepts a partial overrides patch and a null reset', () => {
-    expect(parse({ config: { agent: { overrides: { outage_pct: 8 } } } }).success).toBe(true);
-    const reset = parse({
-      config: { wms_order: { overrides: { data_window: { start: '06:00' }, order_cutoff: null } } },
-    });
-    expect(reset.success).toBe(true);
+  it('rejects a partial config', () => {
+    const result = parse({ config: { agent: { overrides: { outage_pct: 8 } } } });
+    expect(result.success).toBe(false);
+  });
+
+  it('drops configUri', () => {
+    const result = parse({ configUri: 'gs://scenario-bucket/scenarios/config.json' });
+    expect(result.success && 'configUri' in result.data).toBe(false);
   });
 });
 

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ScenarioConfigNotFoundError, ScenarioNotFoundError } from '../../domain/errors.js';
-import { applyConfigPatch } from '../apply-config-patch.js';
+import { ScenarioNotFoundError } from '../../domain/errors.js';
+import { replaceConfig } from '../replace-config.js';
 import {
   SCENARIO_CONFIG_READER,
   type ScenarioConfigReader,
@@ -10,8 +10,7 @@ import { SCENARIO_REPOSITORY, type ScenarioRepository } from '../ports/scenario.
 export interface UpdateScenarioInput {
   id: string;
   name?: string;
-  configUri?: string;
-  /** Overrides patch; a null leaf resets that override to its default. */
+  /** Full config; replaces the stored one. */
   config?: Record<string, unknown>;
   updatedBy: string;
 }
@@ -28,20 +27,23 @@ export class UpdateScenarioUseCase {
     if (!scenario) throw new ScenarioNotFoundError(input.id);
     scenario.assertEditable();
 
-    const current = await this.scenarios.findCurrentVersion(scenario);
-    const configUri = input.configUri ?? current?.configUri;
-    if (!configUri && !current?.config) throw new ScenarioConfigNotFoundError(input.id);
+    // The previous config is only needed to report what changed. A blob is fetched outside the row lock;
+    // an inline body is read under it in the repository.
+    const current = input.config ? await this.scenarios.findCurrentVersion(scenario) : null;
+    const baseline =
+      current && !current.config && current.configUri ? await this.configs.read(current.configUri) : undefined;
 
-    const patched = input.config
-      ? applyConfigPatch(current?.config ?? (await this.configs.read(configUri!)), input.config)
-      : undefined;
-
+    let replaced: ReturnType<typeof replaceConfig> | undefined;
     const updated = await this.scenarios.update(input.id, {
       name: input.name,
-      configUri: configUri || undefined,
-      config: patched?.config,
+      patchConfig: input.config
+        ? (stored) => {
+            replaced = replaceConfig(stored ?? baseline ?? {}, input.config!);
+            return replaced.config;
+          }
+        : undefined,
       updatedBy: input.updatedBy,
     });
-    return { scenario: updated, changes: patched?.changes ?? [], modules: patched?.modules ?? [] };
+    return { scenario: updated, changes: replaced?.changes ?? [], modules: replaced?.modules ?? [] };
   }
 }

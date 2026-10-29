@@ -6,7 +6,7 @@ const toError = (e: unknown) => (e instanceof Error ? e : new Error(String(e)));
 
 // `shared` can't import the app's DomainError, so expected errors are recognised by shape:
 // a `kind` that maps to a client error. Upstream outages ('unavailable', 'bad_gateway') are not expected.
-const SERVER_SIDE_KINDS = new Set(["unavailable", "bad_gateway"]);
+const SERVER_SIDE_KINDS = new Set(["unavailable", "bad_gateway", "conflict", "forbidden", "not_found"]);
 
 const isExpected = (e: unknown) => {
   const kind = (e as { kind?: unknown } | null)?.kind;

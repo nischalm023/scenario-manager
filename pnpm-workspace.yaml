@@ -2,6 +2,11 @@ packages:
   - "apps/*"
   - "apps/api/*"
   - "packages/*"
+publicHoistPattern:
+  - "*eslint*"
+  - "*prettier*"
+  - "@nestjs/*"
+  - "nestjs-zod"
 allowBuilds:
   "@scarf/scarf": false
   esbuild: true

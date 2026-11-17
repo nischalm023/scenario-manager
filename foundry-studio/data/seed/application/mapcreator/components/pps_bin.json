@@ -1,0 +1,120 @@
+{
+  "asserts": "is",
+  "component": "pps_bin",
+  "meaning": "the entity is one bin of a Map Creator station's put wall: its place in the wall, its station-local centre, which way it opens, what may go in it, and the two operator seats that reach it",
+  "owner": "foundry-studio",
+  "refs": [
+    {
+      "expects": "pps_seat",
+      "path": "/back_seat"
+    },
+    {
+      "expects": "pps_bin_type",
+      "path": "/bin_type"
+    },
+    {
+      "expects": "pps_seat",
+      "path": "/front_seat"
+    },
+    {
+      "expects": "mapcreator.station",
+      "path": "/station"
+    }
+  ],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {
+      "entity_id": {
+        "description": "One entity of this document, by identity. A declared identity is a UUID; a derived one is its root UUID and the generator's key path, which nothing in a converted document produces.",
+        "title": "entity_id",
+        "type": "string"
+      },
+      "legacy_value": {
+        "description": "A legacy value the dump wrote, kept verbatim in whatever JSON kind it wrote it. It states no type on purpose: the round trip writes back what the dump said, and correcting a kind here would be the converter deciding what the site meant.",
+        "title": "legacy_value"
+      }
+    },
+    "$id": "urn:mapcreator-compat:0.1:components:pps_bin",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one bin of a Map Creator station's put wall: its place in the wall, its station-local centre, which way it opens, what may go in it, and the two operator seats that reach it",
+    "properties": {
+      "allowed_tags": {
+        "description": "Map Creator's `allowed_tags`, carried as the export states it.",
+        "type": [
+          "array"
+        ]
+      },
+      "back_seat": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The operator seat Map Creator's `back_seat_name` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+      },
+      "back_seat_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `back_seat_name` verbatim, present only when it names no operator seat of this dump, or is not spelled in the JSON kind the export writes that key back in. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "bin_type": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The bin geometry type Map Creator's `type` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+      },
+      "bin_type_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `type` verbatim, present only when it names no bin geometry type of this dump, or is not spelled in the JSON kind the export writes that key back in. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "direction": {
+        "description": "Map Creator's `direction`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      },
+      "front_seat": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The operator seat Map Creator's `front_seat_name` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+      },
+      "front_seat_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `front_seat_name` verbatim, present only when it names no operator seat of this dump, or is not spelled in the JSON kind the export writes that key back in. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "group_id": {
+        "description": "Map Creator's `group_id`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      },
+      "runtime": {
+        "description": "What was happening at the site when the export was written, as the export wrote it. SPEC §1 separates a world from what is happening in it, so this is here to be dropped by a policy that decides to rather than lost by a converter that forgot — the round trip writes it back.",
+        "properties": {
+          "status": {
+            "description": "Map Creator's `status`, carried as the export states it.",
+            "type": [
+              "string"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "station": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The station Map Creator's `pps_id` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+      },
+      "station_local_coordinate": {
+        "description": "Map Creator's `coordinate`, carried as the export states it.",
+        "type": [
+          "array"
+        ]
+      },
+      "station_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `pps_id` verbatim, present only when it names no station of this dump, or is not spelled in the JSON kind the export writes that key back in. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "wall_position": {
+        "description": "Map Creator's `position`, carried as the export states it.",
+        "type": [
+          "array"
+        ]
+      }
+    },
+    "title": "pps_bin",
+    "type": "object"
+  },
+  "status": "ratified"
+}

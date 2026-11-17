@@ -1,0 +1,87 @@
+{
+  "asserts": "is",
+  "component": "conveyor_mapping",
+  "meaning": "the entity is one row of Map Creator's three-frame join table, relating a cell to a conveyor step and, where it has one, the vendor's own coordinate for the same place",
+  "owner": "foundry-studio",
+  "refs": [
+    {
+      "expects": "cell",
+      "path": "/cell"
+    },
+    {
+      "expects": "conveyor",
+      "path": "/conveyor_coordinates/conveyor"
+    },
+    {
+      "expects": "mapcreator.station",
+      "path": "/station"
+    }
+  ],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {
+      "entity_id": {
+        "description": "One entity of this document, by identity. A declared identity is a UUID; a derived one is its root UUID and the generator's key path, which nothing in a converted document produces.",
+        "title": "entity_id",
+        "type": "string"
+      },
+      "legacy_value": {
+        "description": "A legacy value the dump wrote, kept verbatim in whatever JSON kind it wrote it. It states no type on purpose: the round trip writes back what the dump said, and correcting a kind here would be the converter deciding what the site meant.",
+        "title": "legacy_value"
+      }
+    },
+    "$id": "urn:mapcreator-compat:0.1:components:conveyor_mapping",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one row of Map Creator's three-frame join table, relating a cell to a conveyor step and, where it has one, the vendor's own coordinate for the same place",
+    "properties": {
+      "cell": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The cell Map Creator's `go_coordinates` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+      },
+      "cell_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `go_coordinates` verbatim, present only when the cell it names is not in this dump. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "conveyor_coordinates": {
+        "description": "Map Creator's `conveyor_coordinates` object, field by field.",
+        "properties": {
+          "conveyor": {
+            "$ref": "#/$defs/entity_id",
+            "description": "The conveyor Map Creator's `conveyor_id` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+          },
+          "conveyor_unresolved": {
+            "$ref": "#/$defs/legacy_value",
+            "description": "Map Creator's `conveyor_id` verbatim, present only when it names no conveyor of this dump, or is not spelled in the JSON kind the export writes that key back in. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+          }
+        },
+        "type": "object"
+      },
+      "location_type": {
+        "description": "Map Creator's `location_type`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      },
+      "station": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The station Map Creator's `pps_id` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+      },
+      "station_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `pps_id` verbatim, present only when it names no station of this dump, or is not spelled in the JSON kind the export writes that key back in. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "vendor_coordinates": {
+        "description": "Map Creator's `HAI_coordinates`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      }
+    },
+    "required": [
+      "conveyor_coordinates"
+    ],
+    "title": "conveyor_mapping",
+    "type": "object"
+  },
+  "status": "ratified"
+}

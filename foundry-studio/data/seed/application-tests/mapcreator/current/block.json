@@ -1,0 +1,72 @@
+[
+  {
+    "entity_type": "queue",
+    "entity_details": {
+      "block_id": "7",
+      "coordinates": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    }
+  },
+  {
+    "entity_type": "sequenced_queue",
+    "entity_details": {
+      "block_id": "8",
+      "coordinates": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "extra_details": {
+        "sync_point": [
+          2,
+          2
+        ],
+        "exit_point": [
+          2,
+          3
+        ]
+      }
+    }
+  },
+  {
+    "entity_type": "waiting",
+    "entity_details": {
+      "block_id": "9",
+      "coordinates": [
+        [
+          3,
+          3
+        ]
+      ]
+    }
+  },
+  {
+    "entity_type": "conveyor_pps_point",
+    "entity_details": {
+      "block_id": "10",
+      "coordinates": [
+        [
+          4,
+          1
+        ],
+        [
+          9,
+          9
+        ]
+      ]
+    }
+  }
+]

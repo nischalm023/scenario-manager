@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One SKU the run handles, with every unit of it.",
+  "properties": {
+    "id": {
+      "description": "The SKU's id, by which the records of the other streams name it.",
+      "type": "string"
+    },
+    "units": {
+      "description": "Every unit of the SKU that stands in the racks at world time 0 or comes in during the run. Beside `starting_tote` or `inbound_lot` streams, the sum of their quantities of the SKU; with neither, the run racks a configured share at world time 0 and brings in the rest.",
+      "format": "uint32",
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "units"
+  ],
+  "title": "Sku",
+  "type": "object"
+}

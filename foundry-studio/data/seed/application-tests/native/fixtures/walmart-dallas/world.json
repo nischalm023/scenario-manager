@@ -1,0 +1,807 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "3cbd200e-580a-40d8-b5ee-edf406aa1c88",
+    "name": "walmart-dallas world (representative slice)",
+    "kind": "world",
+    "depends_on": [
+      "5a9f3a20-1849-44aa-a6cd-a77b2e1a29e8"
+    ]
+  },
+  "primary_frame": "44d924cd-e36e-4da9-b7ac-401b932bf445",
+  "required_components": [
+    "frame",
+    "region",
+    "tiling",
+    "flow",
+    "stamp",
+    "stitch",
+    "access",
+    "sector",
+    "rack",
+    "storage"
+  ],
+  "$comment": "A deliberately small slice of the Dallas site: one highway, one two-row storage aisle, one tunnel rack row with its under-rack corridor, a station spine feeding one EasyLoop, one box induction and two extraction stations, a two-rack order buffer, sectors, stitches, and override examples. Geometry is illustrative, not surveyed. Real scale: 20 storage aisles (split into 40 single-VTM segments), 144 HTMs, ~49 VTMs.",
+  "entities": [
+    {
+      "id": "44d924cd-e36e-4da9-b7ac-401b932bf445",
+      "name": "site",
+      "components": {
+        "frame": {
+          "dims": 3,
+          "units": "mm",
+          "unit_mm": 1,
+          "$comment": "The primary frame: world-fixed, millimeters, 3-D. Everything resolves here."
+        }
+      }
+    },
+    {
+      "id": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+      "name": "floor1",
+      "components": {
+        "frame": {
+          "parent": "44d924cd-e36e-4da9-b7ac-401b932bf445",
+          "dims": 2,
+          "units": "mm",
+          "transform_to_parent": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1
+            ],
+            "$comment": "2-D into 3-D: [x, y] -> [x, y, 0], then translate (SPEC §4). A second floor would translate in z."
+          }
+        }
+      }
+    },
+    {
+      "id": "af1f165f-c886-42df-9766-bafb062d5e56",
+      "name": "legacy grid",
+      "components": {
+        "frame": {
+          "parent": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "dims": 2,
+          "units": "index",
+          "integer_only": true,
+          "transform_to_parent": {
+            "translation": [
+              -375,
+              375
+            ],
+            "scale": [
+              -750,
+              750
+            ]
+          },
+          "$comment": "Kept ONLY so legacy consumers can project into grid coordinates — nominal and lossy by declaration (SPEC §4); real sites' grids drift cell-to-cell. A grid index names a cell and a cell's place is its centre, so index [c,r] reads as millimetres [-750c-375, 750r+375]: the 750 mm pitch as the scale, half a cell as the translation, each half taking the sign of the axis it offsets. A zero translation would name a corner of the square instead and shift every projection half a cell. The negative x scale is the real installed convention: grid +x runs against world +x (research/mapcreator-format.md). Nothing in this document is positioned in this frame."
+        }
+      }
+    },
+    {
+      "id": "f207d86a-173c-4375-a66d-55607ad63a04",
+      "name": "vendor: HAI bots",
+      "components": {
+        "frame": {
+          "parent": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "dims": 2,
+          "units": "mm",
+          "vendor": "hai",
+          "transform_to_parent": {
+            "translation": [
+              -126960,
+              143540
+            ],
+            "scale": [
+              1,
+              -1
+            ]
+          },
+          "$comment": "The bot vendor's native frame (the 'vda_world_coordinate' of legacy exports): vda = [126960 + x, 143540 - y] against floor mm — a translated Y-FLIP. Butler computes exactly this per floor from one {barcode, vda5050_coordinate} reference (gridinfo.erl gmc_wc_to_vda5050_coord, verified 400/400 cells in research/butler-representation.md). Here the flip is one signed scale entry, declared once."
+        }
+      }
+    },
+    {
+      "id": "272542c8-2ea2-441f-8807-8a37aafc8f10",
+      "name": "north-south highway",
+      "components": {
+        "region": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "$comment": "Extents are exact pitch multiples by rule (SPEC §5): 2 x 33 cells.",
+          "origin": [
+            0,
+            0
+          ],
+          "size": [
+            1800,
+            29700
+          ]
+        },
+        "tiling": {
+          "$comment": "Generator: 66 cells expand with keys 'cell:{col},{row}', each named by its own address — this entity's UUID, then the key. No global grid is involved. The exclusion beside the pitch takes six of them back out (rows 29-31): nothing is modeled in the charging area, which is what replaces desmap's clip_boxes here. Charging itself enters the model when charging behavior does.",
+          "pitch": [
+            900,
+            900
+          ],
+          "exclusions": [
+            {
+              "origin": [
+                0,
+                26000
+              ],
+              "size": [
+                8000,
+                3000
+              ]
+            }
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        },
+        "flow": {
+          "rule": "one_way",
+          "direction": "+y",
+          "$comment": "Policy, not physics — policy.json overrides flows without touching this file."
+        }
+      }
+    },
+    {
+      "id": "cdda8cce-008d-4c20-b5b7-4d5a816e05c8",
+      "name": "aisle 1 (between rack rows A and B)",
+      "components": {
+        "region": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "origin": [
+            2000,
+            5300
+          ],
+          "size": [
+            16200,
+            1800
+          ]
+        },
+        "tiling": {
+          "$comment": "Both classes: VTMs are floor robots restricted to aisles and cross-aisles ('either it can travel here, or under the straight line' — Walmart call); the climb up a rack face is rack-internal motion, not graph traversal. The racks' relay cells expand from the rack entities and sit along this strip's edges — bound to it by the relay stitches below.",
+          "pitch": [
+            900,
+            900
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm",
+                "vtm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "df6ef2f1-e8e6-46c3-abde-55461a2c6d16",
+      "name": "VTM tunnel corridor",
+      "components": {
+        "region": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "origin": [
+            2000,
+            10000
+          ],
+          "size": [
+            16200,
+            1300
+          ]
+        },
+        "tiling": {
+          "$comment": "Runs UNDER the tunnel rack row (same footprint): storage starts above 11 open levels (3850 mm clearance, vs robot_class.height_mm), so this is how VTMs cross between aisles without leaving the floor.",
+          "pitch": [
+            900,
+            650
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm",
+                "vtm"
+              ]
+            }
+          }
+        },
+        "flow": {
+          "rule": "one_way",
+          "direction": "+x"
+        }
+      }
+    },
+    {
+      "id": "4e9d1209-6065-4a05-89b4-1c552ea6e17d",
+      "name": "EasyLoop approach corridor",
+      "components": {
+        "region": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "origin": [
+            18500,
+            5300
+          ],
+          "size": [
+            3600,
+            900
+          ]
+        },
+        "tiling": {
+          "$comment": "Connector from the aisle's east end to the station spine. Stations connect to the floor network through ordinary regions plus stitches — no special corridor machinery.",
+          "pitch": [
+            900,
+            900
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "06949220-afd7-4056-b9f5-6dd282ee06e4",
+      "name": "station spine",
+      "components": {
+        "region": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "origin": [
+            22100,
+            2600
+          ],
+          "size": [
+            900,
+            15300
+          ]
+        },
+        "tiling": {
+          "$comment": "The north-south lane every station on this slice hangs off: 1 x 17 cells serving the EasyLoop, box induction, both extractions, and the tote staging area.",
+          "pitch": [
+            900,
+            900
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "d26adfc0-dd23-4cc7-a409-f052e64abfbe",
+      "name": "rack row A (access north)",
+      "components": {
+        "pose": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "position": [
+            2000,
+            4000
+          ],
+          "heading_deg": 0
+        },
+        "stamp": {
+          "template": "5d03cfed-c642-428f-b963-95224752359e",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              2750,
+              0
+            ]
+          },
+          "$comment": "Six double-deep racks in one record. Expansion: instance entities (key 'instance:{i}' — always present, repeat or not), each instance's rack ('local:rack'), then that rack's relays, relay cells, and slots. Every one has a deterministic UUID."
+        }
+      }
+    },
+    {
+      "id": "568cbecd-264e-4912-aa4d-e5c4762b03dd",
+      "name": "rack row B (access south)",
+      "components": {
+        "pose": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "position": [
+            18500,
+            8600
+          ],
+          "heading_deg": 180
+        },
+        "stamp": {
+          "template": "5d03cfed-c642-428f-b963-95224752359e",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              -2750,
+              0
+            ]
+          },
+          "$comment": "Same template rotated 180°, so its access side faces the shared aisle from the north; the repeat step is NOT rotated by the heading, so this row spans the same x extent as row A. (Rows A and B face each other. A back-to-back pair — two racks sharing a spine wall, four slots of geometric depth, each side reaching at most two — would be two stamps whose access sides point AWAY from each other; the full map has many.)"
+        }
+      }
+    },
+    {
+      "id": "dcc757f2-393f-4f89-b25a-3949329f264b",
+      "name": "tunnel rack row",
+      "components": {
+        "pose": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "position": [
+            2000,
+            10000
+          ],
+          "heading_deg": 0
+        },
+        "stamp": {
+          "template": "f53adbad-d714-421e-a55a-d4a1311b9d29",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              2750,
+              0
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "8b43cab5-dd0d-428c-9c71-c610c8ad0f98",
+      "name": "order buffer rack row",
+      "components": {
+        "pose": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "position": [
+            2000,
+            20000
+          ],
+          "heading_deg": 0
+        },
+        "stamp": {
+          "template": "5d03cfed-c642-428f-b963-95224752359e",
+          "params": {},
+          "repeat": {
+            "count": 2,
+            "step": [
+              2750,
+              0
+            ]
+          }
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "8b43cab5-dd0d-428c-9c71-c610c8ad0f98",
+        "key": "instance:0/local:rack"
+      },
+      "components": {
+        "storage": {
+          "holds": "order"
+        }
+      },
+      "$comment": "Override of a stamped-out internal: the catalog rack template says holds 'inventory'; these two racks are the order buffer. The chained key walks stamp -> instance -> internal, each segment namespacing the next UUID. Component replacement is wholesale."
+    },
+    {
+      "derivation": {
+        "generator": "8b43cab5-dd0d-428c-9c71-c610c8ad0f98",
+        "key": "instance:1/local:rack"
+      },
+      "components": {
+        "storage": {
+          "holds": "order"
+        }
+      }
+    },
+    {
+      "id": "b83f97cc-9ff1-49ec-b547-5c1a1ff88411",
+      "name": "EasyLoop 1",
+      "components": {
+        "pose": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "position": [
+            23000,
+            5000
+          ],
+          "heading_deg": 0
+        },
+        "stamp": {
+          "template": "d9a76375-edc7-4a18-ab93-9a052a70fe16"
+        }
+      }
+    },
+    {
+      "id": "a3e242cd-44de-421d-8ce1-e16e3c5d5ba8",
+      "name": "box induction 1",
+      "components": {
+        "pose": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "position": [
+            22000,
+            12000
+          ]
+        },
+        "stamp": {
+          "template": "d5e658b2-33a5-4cc8-9b48-c93b93025798",
+          "params": {}
+        }
+      }
+    },
+    {
+      "id": "b172c061-646b-416b-ac1b-3ffdce97c08f",
+      "name": "extraction 1",
+      "components": {
+        "pose": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "position": [
+            22000,
+            15000
+          ]
+        },
+        "stamp": {
+          "template": "df598355-55f0-4c15-9bf1-0a838fcd921b",
+          "params": {}
+        }
+      }
+    },
+    {
+      "id": "c8bbeead-7cb7-4d42-8455-538f0491449a",
+      "name": "extraction 2",
+      "components": {
+        "pose": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "position": [
+            22000,
+            17000
+          ]
+        },
+        "stamp": {
+          "template": "df598355-55f0-4c15-9bf1-0a838fcd921b",
+          "params": {}
+        }
+      }
+    },
+    {
+      "id": "b71bb1ff-6a5b-4e12-babc-c39bae3de3ae",
+      "name": "stitch: highway <-> aisle 1",
+      "components": {
+        "stitch": {
+          "a": "272542c8-2ea2-441f-8807-8a37aafc8f10",
+          "b": "cdda8cce-008d-4c20-b5b7-4d5a816e05c8",
+          "rule": "contact",
+          "$comment": "Nearest-facing within tolerance (SPEC §5): highway tiling ends at x=1800, aisle tiling begins at x=2000 — a 200 mm normal gap, 100 mm tangential offset. Nothing links without a stitch; touching regions with no stitch is a validator error, not an implicit merge.",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "074dcd21-8d3a-49b5-9ce2-f46990264fbd",
+      "name": "stitch: approach corridor <-> aisle 1",
+      "components": {
+        "stitch": {
+          "a": "4e9d1209-6065-4a05-89b4-1c552ea6e17d",
+          "b": "cdda8cce-008d-4c20-b5b7-4d5a816e05c8",
+          "rule": "contact",
+          "$comment": "The aisle's last tiled column ends at x=18200; the corridor's first begins at x=18500 — a 300 mm seam.",
+          "tolerance": 350
+        }
+      }
+    },
+    {
+      "id": "19494efb-6d23-44d5-80c3-5516e5dee5fe",
+      "name": "stitch: highway <-> tunnel corridor",
+      "components": {
+        "stitch": {
+          "a": "272542c8-2ea2-441f-8807-8a37aafc8f10",
+          "b": "df6ef2f1-e8e6-46c3-abde-55461a2c6d16",
+          "rule": "contact",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "62299e30-8c25-41ea-91f6-a8695533f115",
+      "name": "stitch: approach corridor <-> station spine",
+      "components": {
+        "stitch": {
+          "a": "4e9d1209-6065-4a05-89b4-1c552ea6e17d",
+          "b": "06949220-afd7-4056-b9f5-6dd282ee06e4",
+          "rule": "contact",
+          "$comment": "Shared boundary at x=22100, rows aligned (both centers at y=5750): a zero-gap seam.",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "84b14d27-ed24-4d31-ae2d-8a4bc3a1f424",
+      "name": "stitch: station spine <-> EasyLoop 1 ingress/egress",
+      "components": {
+        "stitch": {
+          "a": "06949220-afd7-4056-b9f5-6dd282ee06e4",
+          "b": "b83f97cc-9ff1-49ec-b547-5c1a1ff88411",
+          "rule": "explicit",
+          "pairs": [
+            [
+              {
+                "generator": "06949220-afd7-4056-b9f5-6dd282ee06e4",
+                "key": "cell:0,2"
+              },
+              {
+                "generator": "b83f97cc-9ff1-49ec-b547-5c1a1ff88411",
+                "key": "instance:0/local:inventory_ingress"
+              }
+            ],
+            [
+              {
+                "generator": "06949220-afd7-4056-b9f5-6dd282ee06e4",
+                "key": "cell:0,2"
+              },
+              {
+                "generator": "b83f97cc-9ff1-49ec-b547-5c1a1ff88411",
+                "key": "instance:0/local:inventory_egress"
+              }
+            ]
+          ],
+          "$comment": "Explicit pairs, by derivation address — stable across re-expansion because the IDs are. Used exactly where contact would be wrong: these two cells are the station's only legal floor entry, and nothing else inside it may be entered from outside."
+        }
+      }
+    },
+    {
+      "id": "d498e951-45cb-4856-a3ce-db98d199c07d",
+      "name": "stitch: station spine <-> box induction 1",
+      "components": {
+        "stitch": {
+          "a": "06949220-afd7-4056-b9f5-6dd282ee06e4",
+          "b": "a3e242cd-44de-421d-8ce1-e16e3c5d5ba8",
+          "rule": "contact",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "57d38a29-5297-4ddc-a765-da7f6f81a843",
+      "name": "stitch: station spine <-> extraction 1",
+      "components": {
+        "stitch": {
+          "a": "06949220-afd7-4056-b9f5-6dd282ee06e4",
+          "b": "b172c061-646b-416b-ac1b-3ffdce97c08f",
+          "rule": "contact",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "972e538a-758d-4610-b56e-1d3887c9e295",
+      "name": "stitch: station spine <-> extraction 2",
+      "components": {
+        "stitch": {
+          "a": "06949220-afd7-4056-b9f5-6dd282ee06e4",
+          "b": "c8bbeead-7cb7-4d42-8455-538f0491449a",
+          "rule": "contact",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "9c4e1f7a-2b58-4d63-8e0a-f31c6b90d472",
+      "name": "access: rack row A slots <-> aisle 1",
+      "components": {
+        "access": {
+          "rack": "d26adfc0-dd23-4cc7-a409-f052e64abfbe",
+          "along": "cdda8cce-008d-4c20-b5b7-4d5a816e05c8",
+          "face": "+y",
+          "serves": [
+            "5cae603b-9e3e-43e1-b2f3-6d8ce919f110"
+          ],
+          "$comment": "A slots-access derives nothing — a VTM climbing a rack face is rack-internal motion, not graph traversal — but it is the declaration that makes this run somewhere that class works, and it is where 'depth counts from here' comes from. What it derives depends only on 'kind', never on 'serves', so this world derives identically with or without fleet.json layered over it."
+        }
+      }
+    },
+    {
+      "id": "b7d2e830-45a1-4c96-a5f8-2e64d901c3ab",
+      "name": "access: rack row B slots <-> aisle 1",
+      "components": {
+        "access": {
+          "rack": "568cbecd-264e-4912-aa4d-e5c4762b03dd",
+          "along": "cdda8cce-008d-4c20-b5b7-4d5a816e05c8",
+          "face": "+y",
+          "serves": [
+            "5cae603b-9e3e-43e1-b2f3-6d8ce919f110"
+          ]
+        }
+      }
+    },
+    {
+      "id": "e51a37c9-8f60-4b2d-97e4-1a05c8b7d3f2",
+      "name": "access: tunnel rack slots <-> VTM tunnel corridor",
+      "components": {
+        "access": {
+          "rack": "dcc757f2-393f-4f89-b25a-3949329f264b",
+          "along": "df6ef2f1-e8e6-46c3-abde-55461a2c6d16",
+          "face": "+y",
+          "serves": [
+            "5cae603b-9e3e-43e1-b2f3-6d8ce919f110"
+          ],
+          "$comment": "A modeling choice worth naming: the tunnel racks are served from the corridor that runs UNDER them, which is the same strip the row's own footprint covers. Whether a VTM really works this row from beneath or only passes through it is a question about the site, not about the format — the format's job here is to make the claim visible instead of leaving it implied by an overlap."
+        }
+      }
+    },
+    {
+      "id": "6fc78339-53e7-41f8-81da-ed8533d9070d",
+      "name": "sector: order buffer",
+      "components": {
+        "sector": {
+          "members": [
+            "8b43cab5-dd0d-428c-9c71-c610c8ad0f98"
+          ],
+          "$comment": "A sector is shapeless: a named grouping used as a behavior selector. A generator member stands for its whole expansion — here, both buffer racks and everything they expand. The buffer VTM cohort in fleet.json is hard-assigned to this sector."
+        }
+      }
+    },
+    {
+      "id": "3a9f2c17-6d84-4e05-9b21-7c0e5d4a1f63",
+      "name": "order buffer lane",
+      "components": {
+        "region": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "origin": [
+            2000,
+            21300
+          ],
+          "size": [
+            5400,
+            900
+          ]
+        },
+        "tiling": {
+          "$comment": "New in v0.5, and an admission: through v0.4 the order buffer's racks derived relay cells that no stitch ever bound to anything — dead steel with a shelf and no floor in front of it, and nothing in the format said so because a rack could declare an access side without anyone declaring a way. The access mechanism cannot be written without naming the way, so the way had to exist. 6 x 1 cells; it connects to nothing else in this slice, which is honest: the buffer's own aisle is a lane, and how a robot gets into it from the rest of the site is a routing question the full map answers and this slice does not.",
+          "pitch": [
+            900,
+            900
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm",
+                "vtm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "d3b18c60-72f9-4e84-a1d5-06b4e7c92f81",
+      "name": "access: order buffer slots <-> buffer lane",
+      "components": {
+        "access": {
+          "rack": "8b43cab5-dd0d-428c-9c71-c610c8ad0f98",
+          "along": "3a9f2c17-6d84-4e05-9b21-7c0e5d4a1f63",
+          "face": "+y",
+          "serves": [
+            "069bdf48-276f-41e5-b56e-c19263a2cd9f"
+          ],
+          "$comment": "The gripper VTM cohort is hard-assigned to the buffer sector; this is the declaration that makes that sector somewhere it can work. Before v0.5 the check took any rack in a sector as habitat for any VTM, which was a guess that happened to be right here and would have been wrong for a rack nobody had declared a way onto."
+        }
+      }
+    },
+    {
+      "id": "dea32596-e800-4fd5-8371-d800650fe181",
+      "name": "sector: empty order tote staging",
+      "components": {
+        "region": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "origin": [
+            21200,
+            2600
+          ],
+          "size": [
+            900,
+            1800
+          ]
+        },
+        "sector": {
+          "members": [],
+          "$comment": "Region-based sector: emptied order totes return here (off the station spine, near the EasyLoops) after extraction, per the anti-starvation design."
+        },
+        "tiling": {
+          "pitch": [
+            900,
+            900
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "89cc3e65-fc38-4cce-8629-f6d9cf2b1855",
+      "name": "stitch: station spine <-> staging",
+      "components": {
+        "stitch": {
+          "a": "06949220-afd7-4056-b9f5-6dd282ee06e4",
+          "b": "dea32596-e800-4fd5-8371-d800650fe181",
+          "rule": "contact",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "272542c8-2ea2-441f-8807-8a37aafc8f10",
+        "key": "cell:1,7"
+      },
+      "expect": {
+        "position": [
+          1350,
+          6750
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "cell": {
+          "traversable_by": [
+            "htm"
+          ],
+          "blocked": true
+        }
+      },
+      "$comment": "Override of one derived cell: a building column stands here. The highway generator remains untouched. 'expect' pins where the author believes cell:1,7 sits — a later pitch change fails loudly instead of silently blocking a different patch of floor; an address no generator produces at all is a load error."
+    },
+    {
+      "derivation": {
+        "generator": "cdda8cce-008d-4c20-b5b7-4d5a816e05c8",
+        "key": "cell:17,1"
+      },
+      "expect": {
+        "position": [
+          17750,
+          6650
+        ],
+        "tolerance": 50
+      },
+      "suppress": true,
+      "$comment": "Suppression: this tile of the aisle simply does not exist (sprinkler riser). The graph routes around a hole, not a flag — and the suppression carries the same 'expect' pin as any other ordinal-keyed record."
+    },
+    {
+      "id": "fed8af20-b454-4764-bea8-123b0a780724",
+      "name": "hand-declared cell (dock-face keep-clear marker)",
+      "components": {
+        "pose": {
+          "frame": "edd0316d-a9bc-48f4-bb37-a1594ced8cd1",
+          "position": [
+            19000,
+            2000
+          ]
+        },
+        "cell": {
+          "traversable_by": [
+            "htm"
+          ],
+          "blocked": false
+        }
+      },
+      "$comment": "Everything derivable is also declarable: a cell authored directly on open floor, no generator, default 900 mm footprint, same shape as any derived cell."
+    }
+  ]
+}

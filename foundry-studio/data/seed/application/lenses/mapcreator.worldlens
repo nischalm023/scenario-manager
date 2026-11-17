@@ -1,0 +1,252 @@
+// The Map Creator export's record kinds, as lenses over a site's entities.
+//
+// One lens per record kind: its objects are the entities that become that kind's
+// records, and the serializer beside it (`adapter/src/serialize.rs`) turns one
+// object into one record in the spelling the export uses. Every lens is named for the file
+// and field it stands for, and every name is one a consumer can ask a server for
+// (`mapcreator_cell`, not `mc_cell`), because DESIGN.md §10 makes a registered
+// lens name part of the read API.
+//
+// Every lens over a record kind whose component is shared matches only an
+// entity carrying that kind's own Map Creator key in `external_ids`: a shared
+// component (`zone`, `pps_bin`, ...) another tool puts on an entity of this
+// adapter's is that tool's fact, not a record of the kind, and is not written
+// into the kind's file.
+//
+// WHAT THE LENSES DO NOT DO, and why. A record that names another record — a
+// charger naming three cells by barcode, a cell naming its zone — is not folded
+// on. Two facts about the engine decide that (`lens/rust/README.md`): a lens
+// field list comes back in identity order with repeats dropped, so a single
+// folded list of cells cannot say which cell filled which field; and one fold
+// pattern per referencing field would be about thirty patterns whose only job is
+// to re-state a `ref` the component already carries. So the export runs every
+// lens once, indexes every object by identity, and joins through that index. The
+// spec's own `mc_cell` sketch says the same thing: it "folds nothing".
+//
+// The one lens that DOES fold is `mapcreator_station`, because a station with its
+// points and its queues is a thing a consumer asks for on its own — it is the
+// `GET /pps/{id}` read — and because the serializer needs exactly those parts.
+//
+// Every lens's object count on the five production exports is counted twice: by
+// this engine in `tests/tests/laws.rs`, and by a plain scan over the site's
+// entities in the same file that never mentions the engine.
+
+// ---------------------------------------------------------------------------
+// The frames — the one scale every length is read through.
+// ---------------------------------------------------------------------------
+
+// The four frames an ingested site holds: the site's (which is the
+// primary frame and the one that says what a step is worth), the floor's, the
+// legacy grid as a declared lossy projection, and the robot vendor's. The
+// export reads `unit_mm` off the site frame to turn a cell's position in steps
+// back into the millimetres `map.json` states.
+pattern mapcreator_frame { f: mapcreator.frame, frame; }
+lens mapcreator_frame { anchor f: mapcreator_frame; }
+
+// ---------------------------------------------------------------------------
+// map.json — the spine.
+// ---------------------------------------------------------------------------
+
+// One cell of `map_values`: its measured position, its footprint and
+// traversability, its legacy keys, and every per-cell field Map Creator states,
+// which ride on the same `cell`. A cell is known by its grid coordinate, which
+// a cell another tool declared does not carry. Its position in the file rides
+// in its `import_formatting`, because a lens list is identity-ordered and the
+// identities are random.
+pattern mapcreator_cell { c: cell, pose, external_ids(mapcreator_grid_coordinate exists); }
+lens mapcreator_cell { anchor c: mapcreator_cell; }
+
+// One bundle of per-bot-type permissions from `map.json`'s `location_profiles`.
+// Every cell that names one carries `cell.traversable_by` read off it, which is
+// the flat, lossy form; this is the table whole.
+pattern mapcreator_location_profile { p: location_profile, external_ids(mapcreator_location_profile_id exists); }
+lens mapcreator_location_profile { anchor p: mapcreator_location_profile; }
+
+// ---------------------------------------------------------------------------
+// The groupings — zones, sectors, aisles.
+// ---------------------------------------------------------------------------
+
+// One zone of `zone.json`: an e-stop and light-curtain domain. Its two runtime
+// flags ride under `zone.runtime`.
+pattern mapcreator_zone { z: zone, external_ids(mapcreator_zone_id exists); }
+lens mapcreator_zone { anchor z: mapcreator_zone; }
+
+// One sector. `sectors.json` is the inverse of the cell `sector` field, so the
+// serializer writes it from `sector.members` — which is ordered — rather than
+// from anything the file states twice. `undefined` is one of these: a cell that
+// states it is not a cell that states nothing. A sector is known by its key,
+// which an aisle, the other sector this adapter writes, does not carry.
+pattern mapcreator_sector { s: sector, external_ids(mapcreator_sector exists); }
+lens mapcreator_sector { anchor s: mapcreator_sector; }
+
+// One aisle of `vtm_zone.json`, which states only which io-point cells belong to
+// it — no extent, no rack, no direction — so it is a sector, the format's
+// shapeless named grouping. The order of the io points is `sector.members`'s own.
+pattern mapcreator_aisle { a: aisle, sector, external_ids(mapcreator_aisle_id exists); }
+lens mapcreator_aisle { anchor a: mapcreator_aisle; }
+
+// One block of `block.json`. A queue block carries the core `queue` beside this;
+// a waiting block carries `waiting` and keeps its cells here, because SPEC §10
+// gives a waiting area no way to name them.
+pattern mapcreator_block { b: block, external_ids(mapcreator_block_id exists); }
+lens mapcreator_block { anchor b: mapcreator_block; }
+
+// ---------------------------------------------------------------------------
+// pps.json — the stations, in two dialects, with their parts.
+// ---------------------------------------------------------------------------
+
+// A station's v3 presentation point, with the presentation geometry Map Creator
+// states on the same `presentation_point`. A point is known by its station and
+// its point id, which a v2 station point, whose `presentation_point` is empty,
+// does not carry.
+pattern mapcreator_presentation_point { p: presentation_point, external_ids(mapcreator_point_id exists); }
+lens mapcreator_presentation_point { anchor p: mapcreator_presentation_point; }
+
+// A station's v2 point, which the older dialect calls a `pps_point`.
+pattern mapcreator_station_point { p: station_point, external_ids(mapcreator_position_id exists); }
+lens mapcreator_station_point { anchor p: mapcreator_station_point; }
+
+// The points of one station, and the queues that serve it. These three exist to
+// be folded: a station's record nests its own parts, so the serializer needs them
+// per station rather than as three flat lists. A part is folded only where it
+// carries its own Map Creator key, as its own lens requires: its component is
+// shared, so another tool's `presentation_point` naming the station, put on an
+// entity of this adapter's, is no record of the station's and is not written
+// into its file.
+pattern mapcreator_station_presentation {
+  s: mapcreator.station;
+  p: presentation_point, external_ids(mapcreator_point_id exists);
+  ref(p, s, "presentation_point.station");
+}
+pattern mapcreator_station_v2_point {
+  s: mapcreator.station;
+  p: station_point, external_ids(mapcreator_position_id exists);
+  ref(p, s, "station_point.station");
+}
+pattern mapcreator_station_queue {
+  s: mapcreator.station;
+  q: block;
+  ref(s, q, "mapcreator.station.served_by");
+}
+
+// The interior of one station: the bins of its put wall, the operator seats that
+// reach them, and the put-to-light module on each bin. These are folded for the
+// same reason the points are — `GET /pps/{id}` is a read somebody asks for on its
+// own, and a station without its wall is not a station a consumer can use — and
+// only the oldest dump has any: site-e's ten stations carry 40 bins, 20
+// seats and 80 lights between them — twice as many lights as bins, because
+// `pptl.json` lists its devices in twenty groups, the same ten stations twice over
+// with different peripheral ids. Each, like a point, only where it carries its
+// own Map Creator key.
+pattern mapcreator_station_bin {
+  s: mapcreator.station;
+  b: pps_bin, external_ids(mapcreator_bin_id exists);
+  ref(b, s, "pps_bin.station");
+}
+pattern mapcreator_station_seat {
+  s: mapcreator.station;
+  t: pps_seat, external_ids(mapcreator_seat_name exists);
+  ref(t, s, "pps_seat.station");
+}
+pattern mapcreator_station_light {
+  s: mapcreator.station;
+  l: pptl, external_ids(mapcreator_peripheral_id exists);
+  ref(l, s, "pptl.station");
+}
+
+// One station, with its parts. The `station` and `pose` components are not
+// required of it: a station whose `allowed_modes` name both pick and put has no
+// single core kind and carries no `station` component at all, and one whose
+// `location` names no cell has no pose — and both still have to come back out.
+pattern mapcreator_station { s: mapcreator.station; }
+lens mapcreator_station {
+  anchor s: mapcreator_station;
+  presentation_points: mapcreator_station_presentation by s -> p;
+  points: mapcreator_station_v2_point by s -> p;
+  queues: mapcreator_station_queue by s -> q;
+  bins: mapcreator_station_bin by s -> b;
+  seats: mapcreator_station_seat by s -> t;
+  lights: mapcreator_station_light by s -> l;
+}
+
+// ---------------------------------------------------------------------------
+// The furniture — what stands on the floor beside the cells.
+// ---------------------------------------------------------------------------
+
+// One charger, with the cell it stands at, the cell a robot approaches from and
+// the re-init cell it uses, all three by identity rather than by the barcode the
+// file writes.
+pattern mapcreator_charger { g: charger, external_ids(mapcreator_charger_id exists); }
+lens mapcreator_charger { anchor g: mapcreator_charger; }
+
+// One docking point: a fixed floor position where a trolley is parked.
+pattern mapcreator_dock_point { d: dock_point, external_ids(mapcreator_dock_point_id exists); }
+lens mapcreator_dock_point { anchor d: mapcreator_dock_point; }
+
+// One obstacle-detection exclusion: a (cell, heading) pair where a robot's
+// obstacle sensor is suppressed, because the charger fixture there would read as
+// an obstacle.
+pattern mapcreator_ods_exclusion { x: ods_exclusion, external_ids(mapcreator_ods_tuple exists); }
+lens mapcreator_ods_exclusion { anchor x: mapcreator_ods_exclusion; }
+
+// One conveyor, as an ordered chain of steps with entry and exit ports.
+pattern mapcreator_conveyor { v: conveyor, external_ids(mapcreator_conveyor_id exists); }
+lens mapcreator_conveyor { anchor v: mapcreator_conveyor; }
+
+// One row of the three-frame join table, which joins a cell to a conveyor step.
+pattern mapcreator_conveyor_mapping { m: conveyor_mapping, external_ids(mapcreator_step_id exists); }
+lens mapcreator_conveyor_mapping { anchor m: mapcreator_conveyor_mapping; }
+
+// ---------------------------------------------------------------------------
+// The storage model, and the templates nothing places.
+// ---------------------------------------------------------------------------
+
+// One storage position: a flat tuple of (access cell, heading, direction, depth,
+// height) under an allocation-counter id, with no rack anywhere in the export to
+// derive it from. 55,721 of these across three sites, one entity each.
+pattern mapcreator_tote_storage { t: tote_storage, external_ids(mapcreator_tote_location exists); }
+lens mapcreator_tote_storage { anchor t: mapcreator_tote_storage; }
+
+// One rack and carrier geometry template. Nothing in the export instantiates one
+// at a place, so its shelf tree has no parts to be entities of.
+pattern mapcreator_rack_type { r: rack_type, external_ids(mapcreator_racktype_id exists); }
+lens mapcreator_rack_type { anchor r: mapcreator_rack_type; }
+
+// Carrier type to an ordered list of preferred sectors — a storage policy, which
+// SPEC §7 would keep in an overlay document.
+pattern mapcreator_sector_preference { f: sector_preference, external_ids(mapcreator_preferred_for exists); }
+lens mapcreator_sector_preference { anchor f: mapcreator_sector_preference; }
+
+// ---------------------------------------------------------------------------
+// The station interior, which only the oldest dump reveals.
+// ---------------------------------------------------------------------------
+
+// One put-wall bin, with its station, its two operator seats and its bin type all
+// by identity.
+pattern mapcreator_pps_bin { b: pps_bin, external_ids(mapcreator_bin_id exists); }
+lens mapcreator_pps_bin { anchor b: mapcreator_pps_bin; }
+
+// One bin geometry type. Its dimensions are centimetres, while everything else in
+// the export is millimetres.
+pattern mapcreator_pps_bin_type { t: pps_bin_type, external_ids(mapcreator_bin_type_id exists); }
+lens mapcreator_pps_bin_type { anchor t: mapcreator_pps_bin_type; }
+
+// One operator seat, which bins reference by name.
+pattern mapcreator_pps_seat { t: pps_seat, external_ids(mapcreator_seat_name exists); }
+lens mapcreator_pps_seat { anchor t: mapcreator_pps_seat; }
+
+// One put-to-light module, bound one to one to a bin.
+pattern mapcreator_pptl { l: pptl, external_ids(mapcreator_peripheral_id exists); }
+lens mapcreator_pptl { anchor l: mapcreator_pptl; }
+
+// ---------------------------------------------------------------------------
+// The export's own table of contents.
+// ---------------------------------------------------------------------------
+
+// Which files the site shipped, and which of them were empty in which form. A
+// file a site never shipped and a file it shipped empty are two different facts,
+// and `[]` and `{}` are two more, so the export is told rather than left to
+// guess. The per-file wrappers ride here too: the conveyor file's own version
+// header, and the two files that are checked-in HTTP request envelopes.
+pattern mapcreator_export { e: mapcreator.export; }
+lens mapcreator_export { anchor e: mapcreator_export; }

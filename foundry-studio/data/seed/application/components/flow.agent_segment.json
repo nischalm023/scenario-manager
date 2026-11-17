@@ -1,0 +1,229 @@
+{
+  "asserts": "is",
+  "component": "flow.agent_segment",
+  "meaning": "the entity is one span of custody on a material edge, who carries the carrier from one place to the next, cut wherever custody changes hands; or an empty move by a robot kept for its next segment",
+  "owner": "agent-studio",
+  "refs": [
+    {
+      "path": "/edge",
+      "expects": "flow.material_edge"
+    },
+    {
+      "path": "/from/node",
+      "expects": "flow.node"
+    },
+    {
+      "path": "/to/node",
+      "expects": "flow.node"
+    },
+    {
+      "path": "/executor/cohort",
+      "expects": "cohort"
+    },
+    {
+      "path": "/executor/conveyance",
+      "expects": "flow.node"
+    },
+    {
+      "path": "/retained_for/*",
+      "expects": "flow.agent_segment"
+    }
+  ],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "flow.agent_segment",
+    "description": "the entity is one span of custody on a material edge, who carries the carrier from one place to the next, cut wherever custody changes hands; or an empty move by a robot kept for its next segment",
+    "$comment": "Written for world-proto's registry from Agent Studio's 06-flow-panel-and-compiler.md section 3.1 (notes/agent-studio-2026-10-17/design/specs/06-flow-panel-and-compiler.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "from",
+      "to",
+      "executor",
+      "at_end"
+    ],
+    "properties": {
+      "edge": {
+        "description": "The material edge this span helps carry; absent on an empty move.",
+        "$ref": "#/$defs/reference"
+      },
+      "step": {
+        "description": "This span's place in its edge's chain, from 1.",
+        "type": "integer",
+        "minimum": 1
+      },
+      "from": {
+        "$ref": "#/$defs/place"
+      },
+      "to": {
+        "$ref": "#/$defs/place"
+      },
+      "executor": {
+        "$ref": "#/$defs/executor"
+      },
+      "carries": {
+        "description": "`nothing` marks an empty move.",
+        "enum": [
+          "edge",
+          "nothing"
+        ],
+        "default": "edge"
+      },
+      "at_end": {
+        "description": "What happens at `to`: custody passes at a handoff port to the next step's executor; the robot sets the carrier down at a port; the robot keeps the carrier through the work; or, for an external executor, the goods are there or the order leaves the site.",
+        "enum": [
+          "hands_over",
+          "sets_down",
+          "keeps_through_work",
+          "arrives",
+          "leaves"
+        ]
+      },
+      "retained_for": {
+        "description": "Segments the same robot carries on with next instead of returning to the fleet; each starts where this one ends.",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "$ref": "#/$defs/reference"
+        }
+      }
+    },
+    "dependentRequired": {
+      "edge": [
+        "step"
+      ],
+      "step": [
+        "edge"
+      ]
+    },
+    "if": {
+      "required": [
+        "carries"
+      ],
+      "properties": {
+        "carries": {
+          "const": "nothing"
+        }
+      }
+    },
+    "then": {
+      "properties": {
+        "edge": false,
+        "step": false
+      }
+    },
+    "else": {
+      "required": [
+        "edge",
+        "step"
+      ]
+    },
+    "$defs": {
+      "place": {
+        "title": "place",
+        "description": "A node and one of its ports; the ports a node has follow its kind.",
+        "type": "object",
+        "required": [
+          "node",
+          "port"
+        ],
+        "properties": {
+          "node": {
+            "$ref": "#/$defs/reference"
+          },
+          "port": {
+            "enum": [
+              "presentation",
+              "slot",
+              "relay",
+              "dropoff",
+              "collect",
+              "order_presentation",
+              "boundary"
+            ]
+          }
+        }
+      },
+      "executor": {
+        "title": "executor",
+        "description": "Who carries: a named robot cohort; the cohort hard-assigned at the `from` or `to` place, named as a kind and resolved per member by the compiler; a conveyance node's belt; or nothing modelled.",
+        "type": "object",
+        "properties": {
+          "cohort": {
+            "$ref": "#/$defs/reference"
+          },
+          "assigned": {
+            "enum": [
+              "from",
+              "to"
+            ]
+          },
+          "conveyance": {
+            "$ref": "#/$defs/reference"
+          },
+          "external": {
+            "const": true
+          }
+        },
+        "oneOf": [
+          {
+            "required": [
+              "cohort"
+            ]
+          },
+          {
+            "required": [
+              "assigned"
+            ]
+          },
+          {
+            "required": [
+              "conveyance"
+            ]
+          },
+          {
+            "required": [
+              "external"
+            ]
+          }
+        ]
+      },
+      "reference": {
+        "title": "reference",
+        "description": "Another entity, by identity: a declared UUID or a derivation address, bare or with a pin. Which pin a field takes is the pin rule's to enforce: within the referrer's unit bare or `@head`, across units a changeset (a tag once tags land).",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/entity_id"
+          },
+          {
+            "$ref": "urn:world-graph-server:defs#/$defs/version_pin"
+          }
+        ]
+      },
+      "entity_id": {
+        "title": "entity id",
+        "description": "A declared entity's UUID or a derived entity's address, either arm (SPEC section 3).",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/uuid"
+          },
+          {
+            "$ref": "#/$defs/derived_entity_id"
+          }
+        ]
+      },
+      "uuid": {
+        "title": "UUID",
+        "description": "Copied from proto/schema/values.json at c384e59.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "derived_entity_id": {
+        "title": "derived entity id",
+        "description": "Copied from proto/schema/values.json at c384e59.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+(/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+)*$"
+      }
+    }
+  },
+  "status": "experimental"
+}

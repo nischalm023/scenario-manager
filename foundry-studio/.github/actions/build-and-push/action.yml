@@ -1,0 +1,30 @@
+name: Build and push to Artifact Registry
+description: Build the deployable images; push them to Artifact Registry unless push is false.
+inputs:
+  push:
+    description: Push the images once built. A pull request builds only.
+    required: false
+    default: "true"
+runs:
+  using: composite
+  steps:
+    # Authenticating only when the images are going somewhere: a fork's pull
+    # request gets no identity token, and a build that does not push needs none.
+    - id: auth
+      if: inputs.push == 'true'
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: projects/1094715745642/locations/global/workloadIdentityPools/default-pool/providers/github-provider
+        service_account: github-actions-repo-writer@greymatter-development.iam.gserviceaccount.com
+
+    - if: inputs.push == 'true'
+      uses: google-github-actions/setup-gcloud@v2
+
+    - if: inputs.push == 'true'
+      shell: bash
+      run: gcloud auth configure-docker us-docker.pkg.dev --quiet
+
+    - shell: bash
+      env:
+        PUSH: ${{ inputs.push }}
+      run: ./scripts/build-and-push.sh

@@ -1,0 +1,4 @@
+# Every pull request into master needs an approving review from the repository
+# owner. The "Protect master" ruleset enforces this through its
+# require_code_owner_review flag, which reads this file.
+* @dnorman

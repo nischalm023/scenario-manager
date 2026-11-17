@@ -1,0 +1,11 @@
+[package]
+name = "foundry-spatial"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Foundry application geometry in integer frame steps and degree headings"
+
+[workspace]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

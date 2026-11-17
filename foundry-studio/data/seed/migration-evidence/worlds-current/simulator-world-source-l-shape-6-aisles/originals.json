@@ -1,0 +1,10 @@
+{
+  "sim/dessim/tests/fixtures/flowgraph/l_shape_6_aisles.json": {
+    "sha256": "e4aac7b29d17b5a508ebfd95c77735487b3aeac5ba35aca292708e86acb18067",
+    "preserved_as": "original-legacy-l-shape.json"
+  },
+  "data/snapshots/worlds/flowgraph/l_shape_6_aisles.json": {
+    "sha256": "6676f8028d40c98dd430eb67609bfa15d91d000a5bb6886f5a1823f4c381aee1",
+    "preserved_as": "original-wps-l-shape.json"
+  }
+}

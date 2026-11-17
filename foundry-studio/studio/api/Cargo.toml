@@ -1,0 +1,99 @@
+[package]
+name = "studio-api"
+version = "0.1.0"
+edition = "2024"
+description = "The Agent Studio API service: the one door through which a person in the browser and the agent act on Agent Studio's data"
+
+[features]
+default = []
+# The deployment's run-object store backend, as crucible's: off by default, so a development build links no cloud
+# SDK and dev.sh needs no credential; the image turns it on.
+gcs = ["runstore/gcs"]
+
+[dependencies]
+studio-protocol = { path = "../../studio/protocol" }
+# The metric streams' catalogue (`GET /api/metric-streams`): what the streaming server computes, named once.
+studio-metrics = { path = "../metrics" }
+# The agent loop's model backends, tool registry and frozen prompt (brief I1.03; ruling D122).
+agent-loop = { path = "../../studio/agent-loop" }
+# `join_all` and `StreamExt`: a reply's read and page calls run together, and its events are read in order.
+futures = "0.3"
+# `CancellationToken`: Stop cancels a running turn's task and the calls it runs.
+tokio-util = "0.7"
+# `SimTime` and `SimDuration`, the simtime a run's rows and pins carry.
+desunits = { path = "../../sim/desunits" }
+# The floor compile (spec 03 section 3.6): the simulator's reader, the one compile both viewers draw from, and the
+# floor document a browser reads.
+dessim = { path = "../../sim/dessim" }
+# The tasks: a program that runs a simulation, or reads a spec or a recording that names tasks, links this crate
+# (`use native_modules as _;`), or it finds no task by name.
+native-modules = { path = "../../native-modules" }
+worldview-floor = { path = "../../worldview/worldview-floor" }
+worldview-render = { path = "../../worldview/worldview-render" }
+# The one door to world-proto-server (spec 04): the API is generic over the server it speaks to, HTTP in the service
+# and the client's in-memory mock in the tests.
+wps-client = { path = "../../studio/wps-client" }
+
+axum = "0.8"
+# The floor cache holds a floor document as the client's `Bytes`.
+bytes = "1"
+chrono = "0.4"
+rustc-hash = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+# Spec 07's scenario logic, which the check and the runner share; the check loads a version's workload with
+# dessim's own reader, above (SPEC.md section 8.1: the API links dessim).
+scenario-spec = { path = "../../studio/scenario-spec" }
+# The scratch folder a check lays a run's files out in for dessim's reader.
+tempfile = "3"
+# `migrate` and `macros` so `sqlx::migrate!` embeds the schema in the binary, as crucible's does: a deployed service
+# carries its own migrations and needs no source tree beside it. `chrono` and `json` read the journal's `at` and
+# `body` columns.
+sqlx = { version = "0.8", default-features = false, features = [
+    "runtime-tokio",
+    "postgres",
+    "migrate",
+    "macros",
+    "chrono",
+    "json",
+] }
+thiserror = "2"
+# Where an evaluation's wall clock goes: a span per phase and one line per evaluation (templates::phases), on stderr
+# with the API's other lines.
+tracing = "0.1"
+tracing-subscriber = "0.3"
+# `fs` and `io-util`: a runner's recording streams to a file of the API's own before it is stored.
+tokio = { version = "1", features = ["fs", "io-util", "macros", "net", "process", "rt-multi-thread", "sync", "time"] }
+# `ReceiverStream`: a conversation stream's events, from the task that makes them to the response body.
+tokio-stream = "0.1"
+ulid = "1"
+# The client takes WPS's base address as a `Url`; the configuration reads it as an `http::Uri`.
+url = "2"
+# Spec 05's template evaluation engine, which the API runs on its compute pool for every draft's evaluation.
+site-template = { path = "../../studio/site-template" }
+# An evaluation's plan and floor, kept in the run-object store under the API's own prefixes (spec 05 section
+# 3.7).
+runstore = { path = "../../runstore" }
+# Spec 08's run loops, which the service runs over its own tables and journal (brief I1.09), and their invoker in a
+# cluster, one Job per attempt; a local service runs a container per attempt itself (`runs::container`).
+run-invocation = { path = "../../studio/run-invocation" }
+kube-invoker = { path = "../../studio/kube-invoker" }
+# RFC 8785 canonical JSON: the bytes a plan's `plan_sha256` hashes.
+serde_jcs = "0.1"
+# A stored recording's live edge and frames, read as the run store keeps it.
+worldview = { path = "../../worldview/worldview" }
+
+[dev-dependencies]
+# `BodyExt::frame`: the stream tests read a response's events as they come.
+http-body-util = "0.1"
+# The native expansion the tests' in-memory world-proto-server generates with, standing in for the WASM generators
+# until the native expansion is deleted (fwd task xQivf0lE).
+site-model = { path = "../../sim/site-model" }
+# The container suite starts a streaming server in process and watches a real run through it.
+studio-streaming = { path = "../streaming" }
+tokio-tungstenite = "0.29"
+# `io-util` for the health test's request and answer on a bare socket.
+tokio = { version = "1", features = ["io-util"] }
+# `util` for `oneshot`: the route tests call the router without a socket.
+tower = { version = "0.5", features = ["util"] }

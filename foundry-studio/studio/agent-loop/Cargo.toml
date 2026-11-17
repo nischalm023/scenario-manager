@@ -1,0 +1,33 @@
+[package]
+name = "agent-loop"
+version = "0.1.0"
+edition = "2024"
+description = "Agent Studio's agent loop parts that know no database: the model backends on rig, the scripted fake, the tool registry and the frozen system prompt"
+
+[dependencies]
+studio-protocol = { path = "../protocol" }
+
+bytes = "1"
+futures = "0.3"
+http = "1"
+# The registry checks every call's input against its tool's full schema with the crate and version the world client
+# validates writes with.
+jsonschema = { version = "0.26", default-features = false }
+# Ruling D122 and LEAD-DECISIONS entry 50: rig at the completion level only, pinned exactly so it cannot drift; its
+# default features off, its reqwest transport on rustls.
+rig-core = { version = "=0.45.0", default-features = false, features = ["reqwest", "rustls"] }
+# The process-wide reqwest client the Gemini transport wraps to carry its key in a header.
+rig-reqwest = { version = "=0.45.0", default-features = false, features = ["rustls"] }
+rustc-hash = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+thiserror = "2"
+tokio = { version = "1", features = ["macros", "rt", "sync", "time"] }
+
+[dev-dependencies]
+# Records one live Gemini turn through its proxy and replays it offline, scrubbed of the key.
+rig-cassette = { version = "=0.45.0", features = ["http"] }
+# The canned transport's streaming responses.
+rig-core = { version = "=0.45.0", default-features = false, features = ["reqwest", "rustls"] }
+tokio = { version = "1", features = ["macros", "net", "io-util", "rt-multi-thread"] }

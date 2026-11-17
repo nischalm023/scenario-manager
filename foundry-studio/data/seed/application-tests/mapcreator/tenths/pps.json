@@ -1,0 +1,50 @@
+[
+  {
+    "pps_id": 81,
+    "type": "manual",
+    "version": "3.1",
+    "location": [
+      2,
+      1
+    ],
+    "allowed_modes": [
+      "pick"
+    ],
+    "orchestrator": "fleet-t",
+    "system": [
+      "sys-t"
+    ],
+    "entities": {
+      "presentation_points": [
+        {
+          "point_id": "T1",
+          "presented_for": "pick",
+          "light_curtain": false,
+          "presented_entity_allowed_types": [
+            "tote"
+          ],
+          "presenting_agent_type": "htm",
+          "presenting_agent_id": "agent-T1",
+          "attributes": {
+            "barcode": "822.223",
+            "world_coordinates": [
+              2,
+              2
+            ],
+            "display_attributes": {
+              "direction": 0,
+              "display_id": "screen-T1"
+            },
+            "pick_direction": 1,
+            "presentation_height": 812.5,
+            "bot_type": "HTM_QT_X1",
+            "bot_orientation": 0,
+            "is_workbench": true
+          }
+        }
+      ]
+    },
+    "status": "ready",
+    "pps_url": "http://station-81.example.invalid/api"
+  }
+]

@@ -1,0 +1,77 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "Bootstrap source: sim/dessim/tests/fixtures/robots/quicktron_m5f.world.json. An HTM. Figures from Quicktron's M5F efficiency calculation sheet (04 M5F单机效率计算表V1.3-20251128), with the loaded figures field-calibrated to the empty ones (Vinay, 2026-06: the sheet's loaded 1.5 m/s, 1.0 m/s² and 2.6 s quarter turn over-penalised throughput). Cencora's HTM runs these figures.",
+  "doc": {
+    "id": "fda5287c-b2e0-4d3e-a000-e46fa35ba40c",
+    "name": "Quicktron M5F (Dematic D30)",
+    "kind": "catalog",
+    "depends_on": []
+  },
+  "entities": [
+    {
+      "id": "75fb2fbe-5260-4290-80ba-d8acf7974312",
+      "name": "Quicktron M5F (Dematic D30)",
+      "components": {
+        "robot_class": {
+          "role": "htm",
+          "model": "D30",
+          "configuration": "forks",
+          "locomotion": "floor",
+          "carries": [
+            "tote"
+          ],
+          "footprint": [
+            695,
+            460
+          ],
+          "height": 900,
+          "$comment": "Bootstrap source: sim/dessim/tests/fixtures/robots/quicktron_m5f.world.json. An HTM. Figures from Quicktron's M5F efficiency calculation sheet (04 M5F单机效率计算表V1.3-20251128), with the loaded figures field-calibrated to the empty ones (Vinay, 2026-06: the sheet's loaded 1.5 m/s, 1.0 m/s² and 2.6 s quarter turn over-penalised throughput). Cencora's HTM runs these figures. The M5F(XH) column of the Ranger Relay Profile Matrix as transcribed on equipment/world-protocol-0.8, its lengths read as tenths of a millimetre; the matrix lists only the XH variant. Constant-mode execution cruise: sim/dessim/tests/fixtures/cencora_v3_spec.json, settings.htm."
+        },
+        "lineage": [
+          {
+            "party": "Quicktron",
+            "role": "manufacturer",
+            "designation": "M5F"
+          },
+          {
+            "party": "Dematic",
+            "role": "distributor",
+            "designation": "D30"
+          }
+        ],
+        "floor_drive": {
+          "loaded": {
+            "max_speed_mm_s": 4500,
+            "accel_mm_s2": 2000,
+            "quarter_turn_secs": 2.1,
+            "constant_speed_mm_s": 4500.0
+          },
+          "empty": {
+            "max_speed_mm_s": 4500,
+            "accel_mm_s2": 2000,
+            "quarter_turn_secs": 2.1,
+            "constant_speed_mm_s": 4500.0
+          },
+          "$comment": "The sheet states no 180° turn, so a reversal is two quarter turns. The matrix gives a 2.8 s 180° turn, and indexes speed on fork position rather than load: 4.5 m/s forks down, 2.0 m/s forks up.",
+          "kind": "trapezoidal"
+        },
+        "lift": {
+          "strokes": [
+            {
+              "from": "min",
+              "to": "max",
+              "secs": 3.2
+            }
+          ],
+          "$comment": "The sheet's 'fork raise time (pre-jacking action)'. It names no heights, so min and max are our reading. No handoff adds it: the sheet's pick and drop are timed with pre-jacking complete."
+        },
+        "end_effector": {
+          "kind": "forks",
+          "pick_secs": 2.0,
+          "drop_secs": 2.0,
+          "$comment": "The sheet's single pick or drop action, with pre-jacking complete. The matrix calls the configuration a latent fork."
+        }
+      }
+    }
+  ]
+}

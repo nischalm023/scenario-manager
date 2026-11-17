@@ -1,0 +1,36 @@
+{
+  "version": "2.9.0",
+  "hai_port_types": [],
+  "conveyor_data": [
+    {
+      "conveyor_id": 3,
+      "display_name": "Belt 3",
+      "connected_conveyors": [],
+      "conveyor_steps": [
+        {
+          "coordinate": "[999,3]",
+          "location_id": "C3-S1",
+          "location_type": "conveyor_track",
+          "world_coordinate": "[33000,7400]"
+        },
+        {
+          "coordinate": "[4,1]",
+          "location_id": "C3-S2",
+          "location_type": "conveyor_pps_point",
+          "world_coordinate": "[25000,6250]"
+        }
+      ],
+      "entry_points": [],
+      "exit_points": [
+        {
+          "bot_orientation": 0,
+          "direction": 2,
+          "height": 650,
+          "io_point": "[4,1]",
+          "io_point_type": "pick",
+          "location_id": "C3-X1"
+        }
+      ]
+    }
+  ]
+}

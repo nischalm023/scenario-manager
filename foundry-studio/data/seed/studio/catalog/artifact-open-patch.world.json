@@ -1,0 +1,52 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "A patch of open floor the HTMs drive, tiled at 850 mm, its size a parameter in whole cells.",
+  "doc": {
+    "id": "f2914490-29bf-49ff-99fe-027416167ee5",
+    "name": "Open floor patch",
+    "kind": "catalog",
+    "depends_on": []
+  },
+  "entities": [
+    {
+      "id": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8",
+      "name": "Open floor patch, 850 mm cells",
+      "components": {
+        "template": {
+          "params": {
+            "size": {}
+          },
+          "entities": [
+            {
+              "local": "floor",
+              "components": {
+                "region": {
+                  "origin": [
+                    0,
+                    0
+                  ],
+                  "size": {
+                    "$param": "size"
+                  }
+                },
+                "tiling": {
+                  "pitch": [
+                    850,
+                    850
+                  ],
+                  "derives": {
+                    "cell": {
+                      "traversable_by": [
+                        "htm"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

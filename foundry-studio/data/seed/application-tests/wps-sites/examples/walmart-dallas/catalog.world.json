@@ -1,0 +1,267 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "5a9f3a20-1849-44aa-a6cd-a77b2e1a29e8",
+    "name": "GO product catalog (Dallas subset)",
+    "kind": "catalog",
+    "depends_on": []
+  },
+  "required_components": ["template"],
+  "$comment": "Templates only. A template is an entity whose 'template' component packages parameterized internal entities with string 'local' handles; internals reference each other with {'local_ref': ...}, rewritten to stamped UUIDs at expansion. Stamps in world.world.json instantiate these.",
+  "entities": [
+    {
+      "id": "5d03cfed-c642-428f-b963-95224752359e",
+      "name": "Rack, 5 wide, double-deep, 23 levels, 4 relays",
+      "components": {
+        "template": {
+          "params": {},
+          "entities": [
+            {
+              "local": "rack",
+              "components": {
+                "pose": { "position": [0, 0], "heading_deg": 0 },
+                "rack": {
+                  "slots_wide": 5,
+                  "slots_deep": 2,
+                  "slot_pitch": [550, 650],
+                  "footprint": [2750, 1300],
+                  "levels": [
+                    { "height": 350 },
+                    {
+                      "height": 400,
+                      "positions": [[340, 1300], [1030, 1300], [1720, 1300], [2410, 1300]],
+                      "reach": 1750,
+                      "$comment": "The one relay level: four diving boards 400 mm up, each stated as where it stands on the bay — the along-run offsets the drawings give, and 1300 out, which is the far edge of the bay's depth. That second number is the side they protrude from, said as geometry, and row B's 180° stamp turns it to look south. 'reach' is how far a relay looks for the cell an HTM stands on — 1750 covers the 450 mm the old boards-access used to offset a minted cell by, plus a full aisle tile, which is what it takes for the relays behind the suppressed sprinkler tile to fall through to the next surviving cell instead of refusing to load."
+                    },
+                    { "height": 700 },
+                    { "height": 1050 },
+                    { "height": 1400 },
+                    { "height": 1750 },
+                    { "height": 2100 },
+                    { "height": 2450 },
+                    { "height": 2800 },
+                    { "height": 3150 },
+                    { "height": 3500 },
+                    { "height": 3850 },
+                    { "height": 4200 },
+                    { "height": 4550 },
+                    { "height": 4900 },
+                    { "height": 5250 },
+                    { "height": 5600 },
+                    { "height": 5950 },
+                    { "height": 6300 },
+                    { "height": 6650 },
+                    { "height": 7000 },
+                    { "height": 7350 },
+                    { "height": 7700 },
+                    { "height": 8050 }
+                  ],
+                  "$comment": "Anchoring: the pose is the footprint's min corner at heading 0 (SPEC §5). A rack is pure steel: one enumerated list of level heights bottom-up, and nothing about who reaches them — that is the access, declared beside the run in world.world.json, because the same steel is served from different sides by different classes. 24 entries: the 23 storage shelves this site nominally spaces 350 mm apart, plus the relay level at 400 mm sorted into place. A level that carries 'positions' is a relay level and derives one relay per position ('relay:{level},{i}'); every other level is a storage level and derives its slots ('slot:{level},{col},{depth}'), so a stored tote, a damaged position, or a double-deep front/rear pair is addressable. Both key forms index this one list, so 'level 3' means one shelf no matter which kind sits below it. Depth counts from the access face, which is what makes 'front' and 'rear' mean anything. Double-deep: the rear slot is reachable only after the front tote is relocated (behavior itself is out of v0 world data, SPEC §11)."
+                },
+                "storage": { "holds": "inventory" }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f53adbad-d714-421e-a55a-d4a1311b9d29",
+      "name": "Tunnel rack, 5 wide, double-deep (storage starts above the tunnel)",
+      "components": {
+        "template": {
+          "params": {},
+          "entities": [
+            {
+              "local": "rack",
+              "components": {
+                "pose": { "position": [0, 0], "heading_deg": 0 },
+                "rack": {
+                  "slots_wide": 5,
+                  "slots_deep": 2,
+                  "slot_pitch": [550, 650],
+                  "footprint": [2750, 1300],
+                  "levels": [
+                    { "height": 4200 },
+                    { "height": 4550 },
+                    { "height": 4900 },
+                    { "height": 5250 },
+                    { "height": 5600 },
+                    { "height": 5950 },
+                    { "height": 6300 },
+                    { "height": 6650 },
+                    { "height": 7000 },
+                    { "height": 7350 },
+                    { "height": 7700 },
+                    { "height": 8050 }
+                  ],
+                  "$comment": "A tunnel rack is not a kind of rack; it is a rack whose lowest level starts high. There is no tunnel field to set and no open levels to count — the list simply begins at 4200 mm, which is the Dallas '11 levels' tunnel written as the only thing about it that is physically true. That is also the number the height check reads: a class taller than 4200 mm may not drive the cell_grid this row's footprint crosses. No relay level, so this rack derives no relays at all; the under-rack passage itself is a world-declared open region tiled traversable_by htm+vtm."
+                },
+                "storage": { "holds": "inventory" }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "d9a76375-edc7-4a18-ab93-9a052a70fe16",
+      "name": "EasyLoop station (low fidelity)",
+      "components": {
+        "template": {
+          "params": {
+            "loop_transit_secs": { "default": 45 },
+            "time_per_pick_secs": { "default": 9 }
+          },
+          "$comment": "Low fidelity by ruling: ingress/egress cells, the waiting/queue structure, two presentation points, and internal timing — not conveyor mechanics. If it is called EasyLoop it looks exactly like this; anything different is a different template.",
+          "entities": [
+            {
+              "local": "station",
+              "components": {
+                "pose": { "position": [0, 0], "heading_deg": 0 },
+                "station": { "kind": "pick", "role": "easyloop" },
+                "easyloop": {
+                  "loop_transit_secs": { "$param": "loop_transit_secs" },
+                  "time_per_pick_secs": { "$param": "time_per_pick_secs" },
+                  "$comment": "Product-specific timing abstraction standing in for the L-shaped twin conveyor; replaced by conveyor entities when fidelity rises."
+                }
+              }
+            },
+            {
+              "local": "inventory_ingress",
+              "components": {
+                "pose": { "position": [900, 0] },
+                "cell": { "traversable_by": ["htm"] },
+                "port": {
+                  "direction": "sink",
+                  "of": [{ "kind": "tote", "designation": "inventory" }],
+                  "into": { "local_ref": "station" },
+                  "$comment": "An HTM drops an inventory tote onto the conveyor here. 'of' entries name a carrier kind + designation; binding to specific carrier_type entities is optional and would add a doc dependency."
+                }
+              }
+            },
+            {
+              "local": "inventory_egress",
+              "components": {
+                "pose": { "position": [1800, 0] },
+                "cell": { "traversable_by": ["htm"] },
+                "port": {
+                  "direction": "source",
+                  "of": [{ "kind": "tote", "designation": "inventory" }],
+                  "from": { "local_ref": "station" },
+                  "$comment": "Adjacent to ingress by design; a waiting HTM receives the returned tote."
+                }
+              }
+            },
+            {
+              "local": "order_queue",
+              "components": {
+                "region": { "origin": [0, 900], "size": [2700, 1800] },
+                "tiling": { "pitch": [900, 900], "derives": { "cell": { "traversable_by": ["htm"] } } },
+                "queue": {
+                  "path": [
+                    { "local_ref": "order_queue", "key": "cell:0,0" },
+                    { "local_ref": "order_queue", "key": "cell:1,0" },
+                    { "local_ref": "order_queue", "key": "cell:2,0" },
+                    { "local_ref": "order_queue", "key": "cell:2,1" },
+                    { "local_ref": "order_queue", "key": "cell:1,1" },
+                    { "local_ref": "order_queue", "key": "cell:0,1" }
+                  ],
+                  "discipline": "no_reverse",
+                  "$comment": "The horseshoe under the safety cover, as an ordered path over this region's own cells. Once an HTM enters a path cell it cannot back out — the point of no return the sequencing logic must respect."
+                }
+              }
+            },
+            {
+              "local": "waiting_block",
+              "components": {
+                "region": { "origin": [3000, 900], "size": [1800, 5400] },
+                "waiting": { "$comment": "Capacity is the cell count: 2 x 6 = 12, the 6+6 of the Dallas drawings. HTMs holding partially complete orders recirculate between here and the queue until their order completes (recirculation behavior is out of v0 world data, SPEC §11)." },
+                "tiling": { "pitch": [900, 900], "derives": { "cell": { "traversable_by": ["htm"] } } }
+              }
+            },
+            {
+              "local": "waiting_to_queue",
+              "components": {
+                "stitch": {
+                  "a": { "local_ref": "waiting_block" },
+                  "b": { "local_ref": "order_queue" },
+                  "rule": "contact",
+                  "tolerance": 300,
+                  "$comment": "A template ships its own internal connectivity: the 300 mm seam between waiting block (x >= 3000 local) and queue (x <= 2700 local). The order-side entry from the site into the waiting block is elided in this slice — the full Dallas map routes it from the south highway."
+                }
+              }
+            },
+            {
+              "local": "present:0",
+              "components": {
+                "pose": { "position": [1350, 2900] },
+                "presentation_point": { "for": "order_carrier" }
+              }
+            },
+            {
+              "local": "present:1",
+              "components": {
+                "pose": { "position": [2250, 2900] },
+                "presentation_point": { "for": "order_carrier", "$comment": "Exactly two, per the Walmart ruling. v0 binds each to its serving queue cell by proximity (SPEC §10, OPEN §12.11)." }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "d5e658b2-33a5-4cc8-9b48-c93b93025798",
+      "name": "Box induction station",
+      "components": {
+        "template": {
+          "params": { "induct_secs": { "default": 6 } },
+          "entities": [
+            {
+              "local": "station",
+              "components": {
+                "pose": { "position": [0, 0] },
+                "station": { "kind": "induct", "role": "box_induction" },
+                "cell": { "traversable_by": ["htm"] },
+                "port": {
+                  "direction": "source",
+                  "of": [{ "kind": "box", "designation": "order" }],
+                  "induct_secs": { "$param": "induct_secs" },
+                  "$comment": "An empty HTM arrives; an assembled box appears on it. Boxes are their own carrier — no tray beneath, per the Dallas ruling."
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "df598355-55f0-4c15-9bf1-0a838fcd921b",
+      "name": "Extraction station",
+      "components": {
+        "template": {
+          "params": { "extract_secs": { "default": 8 } },
+          "entities": [
+            {
+              "local": "station",
+              "components": {
+                "pose": { "position": [0, 0] },
+                "station": { "kind": "extract", "role": "extraction" },
+                "cell": { "traversable_by": ["htm"] },
+                "port": {
+                  "direction": "sink",
+                  "of": [
+                    { "kind": "tote", "designation": "order", "leaves": "contents" },
+                    { "kind": "box", "designation": "order", "leaves": "carrier" }
+                  ],
+                  "extract_secs": { "$param": "extract_secs" },
+                  "$comment": "Order contents leave the world. A box leaves with them; a tote is emptied on the spot and re-enters circulation toward the empty-order-tote staging sector (the return behavior is out of v0 world data, SPEC §11)."
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "asserts": "is",
+  "component": "template.knob",
+  "meaning": "the entity is one knob of a site template: an integer the agent and the user set before a site is made, with its label, its unit, its range or options, and its default",
+  "owner": "agent-studio",
+  "refs": [],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "template.knob",
+    "description": "the entity is one knob of a site template: an integer the agent and the user set before a site is made, with its label, its unit, its range or options, and its default",
+    "$comment": "Written for world-proto's registry from Agent Studio's 05-template-workflow.md section 3.2 and 3.3 (notes/agent-studio-2026-10-17/design/specs/05-template-workflow.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "key",
+      "label",
+      "unit",
+      "default"
+    ],
+    "properties": {
+      "key": {
+        "description": "The name expressions use for this knob, unique in the template; never `min` or `max`, which name the two calls.",
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]{0,39}$",
+        "not": {
+          "enum": [
+            "min",
+            "max"
+          ]
+        }
+      },
+      "label": {
+        "description": "What a person reads beside the control.",
+        "type": "string",
+        "maxLength": 60
+      },
+      "unit": {
+        "enum": [
+          "count",
+          "mm",
+          "deg"
+        ],
+        "description": "`count`; `mm`, a length in whole millimetres; or `deg`, an angle whose values are quarter turns. A choice among codes is an options knob of unit `count`."
+      },
+      "min": {
+        "description": "The lowest value of a range knob.",
+        "type": "integer"
+      },
+      "max": {
+        "description": "The highest value of a range knob.",
+        "type": "integer"
+      },
+      "step": {
+        "description": "A range knob's valid values are min + i * step, up to max.",
+        "type": "integer",
+        "minimum": 1
+      },
+      "options": {
+        "description": "An options knob's valid values, each with the label that says what it means.",
+        "type": "array",
+        "minItems": 2,
+        "items": {
+          "$ref": "#/$defs/option"
+        }
+      },
+      "default": {
+        "description": "The value a new draft starts at: an integer, one of the knob's valid values; or an expression over the other knobs (spec 05 section 3.3's grammar: knob keys, + - * / with floor division, min, max, parentheses, integers), evaluated in dependency order at every evaluation while the person has not set this knob, snapped to the knob's step and clamped to its range (D120: an outline follows the aisles and stations it must fit).",
+        "oneOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "pattern": "^[A-Za-z0-9_ +*/(),-]+$",
+            "$comment": "spec 05 section 3.3, the knob grammar; section 3.2, the derived default (D120)"
+          }
+        ]
+      },
+      "description": {
+        "description": "What the knob changes, in a sentence.",
+        "type": "string"
+      },
+      "group": {
+        "description": "The heading the knob form shows the knob under.",
+        "type": "string"
+      },
+      "order": {
+        "description": "The knob's place within its group.",
+        "type": "integer"
+      },
+      "checks": {
+        "description": "Problems the user fixes by changing this knob.",
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/check"
+        }
+      }
+    },
+    "oneOf": [
+      {
+        "required": [
+          "min",
+          "max",
+          "step"
+        ],
+        "not": {
+          "required": [
+            "options"
+          ]
+        }
+      },
+      {
+        "required": [
+          "options"
+        ],
+        "properties": {
+          "min": false,
+          "max": false,
+          "step": false
+        }
+      }
+    ],
+    "if": {
+      "required": [
+        "unit"
+      ],
+      "properties": {
+        "unit": {
+          "const": "deg"
+        }
+      }
+    },
+    "then": {
+      "properties": {
+        "min": {
+          "multipleOf": 90
+        },
+        "max": {
+          "multipleOf": 90
+        },
+        "step": {
+          "multipleOf": 90
+        },
+        "default": {
+          "multipleOf": 90
+        },
+        "options": {
+          "items": {
+            "properties": {
+              "value": {
+                "multipleOf": 90
+              }
+            }
+          }
+        }
+      }
+    },
+    "$defs": {
+      "option": {
+        "title": "option",
+        "type": "object",
+        "required": [
+          "value",
+          "label"
+        ],
+        "properties": {
+          "value": {
+            "type": "integer"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      },
+      "check": {
+        "title": "check",
+        "description": "A problem that holds while `fails_when` is one or more.",
+        "type": "object",
+        "required": [
+          "severity",
+          "fails_when",
+          "problem"
+        ],
+        "properties": {
+          "severity": {
+            "description": "An error blocks Create site and update; a warning does not.",
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "value_unit": {
+            "enum": [
+              "count",
+              "mm",
+              "deg"
+            ],
+            "default": "count",
+            "description": "The dimension of `fails_when`'s value; at `mm`, `{value}` prints in millimetres."
+          },
+          "fails_when": {
+            "$ref": "#/$defs/expression"
+          },
+          "problem": {
+            "description": "What the user reads: `{value}` prints the expression's value, and a knob's key in braces prints that knob's value with its unit.",
+            "type": "string"
+          }
+        }
+      },
+      "expression": {
+        "title": "knob expression",
+        "description": "An integer expression over the template's knobs: integers, knob keys, + - * / (floor division), min and max, parentheses, separated by spaces (05-template-workflow.md section 3.3). The schema holds its alphabet and its 512-character limit; the template evaluation engine parses it and refuses a name that is not a declared knob.",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^[a-z0-9_ +*/(),-]+$"
+      }
+    }
+  },
+  "status": "experimental"
+}

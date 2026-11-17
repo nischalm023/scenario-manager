@@ -1,0 +1,25 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "5bb375e6-5b61-4ab5-8555-a5f12bc56bbc",
+    "name": "walmart-dallas: putaway + embargoed pick, 4h",
+    "kind": "scenario"
+  },
+  "layers": [
+    "catalog.json",
+    "world.json",
+    "fleet.json",
+    "workload.json",
+    "policy.json"
+  ],
+  "$comment": "A scenario is a composition: ordered layers, processed by the SPEC §8 pipeline (merge declarations -> expand -> override -> derive graph). Paths resolve relative to this file; duplicates and cycles are load errors. Layer order is precedence where two layers touch the same target; expansion happens once, over the merged set.",
+  "settings": {
+    "sim_duration_secs": 14400,
+    "fidelity": "low",
+    "pick": {
+      "embargo_secs": 3600
+    },
+    "$comment": "OPEN (SPEC.md §11.7): which of these are scenario semantics vs simulator configuration that does not belong in the protocol. Parked here unblended with world data either way."
+  },
+  "entities": []
+}

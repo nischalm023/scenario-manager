@@ -1,0 +1,24 @@
+{
+ "composition": "walmart",
+ "world": "walmart_dfw6.json",
+ "scenario": {
+  "outbound_csv": "walmart-data/outbound.csv",
+  "onhand_csv": "walmart-data/onhand.csv",
+  "unknown_container": "as_carton",
+  "units_per_tote": 1,
+  "stock": "cover_demand"
+ },
+ "settings": {
+  "queue_factor": 3.0,
+  "fidelity": "Ghost",
+  "motion_model": "htm_kinematic",
+  "sim_duration": {
+   "secs": 14400,
+   "nanos": 0
+  },
+  "waive_completability_check": true,
+  "order": {
+   "max_inflight_picks_override": 3
+  }
+ }
+}

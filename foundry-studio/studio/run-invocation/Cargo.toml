@@ -1,0 +1,15 @@
+[package]
+name = "run-invocation"
+version = "0.1.0"
+edition = "2024"
+description = "Spec 08's run loops (the dispatcher holding at most five seats, the watcher, the reconciler) over three traits: the invoker that starts Jobs, and the store and events the API implements over its tables and journal"
+
+[dependencies]
+studio-protocol = { path = "../../studio/protocol" }
+desunits = { path = "../../sim/desunits" }
+# A runner token: 32 bytes from the operating system's generator, hex, and only its SHA-256 kept.
+getrandom = "0.3"
+hex = "0.4"
+rustc-hash = "2"
+sha2 = "0.10"
+tokio = { version = "1", features = ["macros", "rt", "sync", "time"] }

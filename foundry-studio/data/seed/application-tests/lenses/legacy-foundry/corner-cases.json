@@ -1,0 +1,66 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "3a4c0d1e-6b7f-4a2c-9d15-0e8b7c6a5d43",
+    "name": "worldlens: the corner cases no surveyed document happens to contain",
+    "kind": "world",
+    "depends_on": []
+  },
+  "primary_frame": "11111111-1111-4111-8111-111111111111",
+  "required_components": ["frame", "region", "tiling"],
+  "$comment": "Four rules of the language need a document that decides them, and no surveyed site happens to. A TIE: the station stands at [0, 0] and the two presentation points sit 900 steps away on either side, so only the tie-break can choose, and `a0000000-…` sorts below `b0000000-…`. A CLOSED INTERVAL: the east-half region's edges fall exactly on two cell centres, which a half-open rule would drop. AN EMPTY LIST: one sector names nobody and one names the west point, so `exists` has to say whether an empty list is a statement. THE REFERENCE FORMS: one entity spells out every way the format names another entity — a bare identity, a {generator, key} derivation address, a flat list of both — beside the three spellings that name nothing: a template-local handle, an [x, y] position, and an array inside an array, which is no form of the reader's and is not flattened into one. A DOTTED COMPONENT NAME: the last entity carries both `go.easyloop` and `go`, and each spells out a `station` field at the same dotted path, so `ref(x, y, \"go.easyloop.station\")` has to say which name it read. Two frames deep on purpose, so `in_frame` has a chain to walk.",
+  "entities": [
+    { "id": "11111111-1111-4111-8111-111111111111", "name": "site",
+      "components": { "frame": { "dims": 2, "units": "mm", "unit_mm": 1 } } },
+    { "id": "22222222-2222-4222-8222-222222222222", "name": "floor",
+      "components": { "frame": { "parent": "11111111-1111-4111-8111-111111111111", "dims": 2, "units": "mm",
+                                 "transform_to_parent": { "translation": [0, 0], "scale": [1, 1] } } } },
+    { "id": "33333333-3333-4333-8333-333333333333", "name": "open floor",
+      "components": {
+        "region": { "frame": "22222222-2222-4222-8222-222222222222", "origin": [-1350, -450], "size": [2700, 900] },
+        "tiling": { "pitch": [900, 900] }
+      } },
+    { "id": "55555555-5555-4555-8555-555555555555", "name": "east half, edged on two cell centres",
+      "components": {
+        "region": { "frame": "22222222-2222-4222-8222-222222222222", "origin": [0, -450], "size": [900, 900] }
+      } },
+    { "id": "44444444-4444-4444-8444-444444444444", "name": "the station",
+      "components": {
+        "pose": { "frame": "22222222-2222-4222-8222-222222222222", "position": [0, 0] },
+        "station": { "kind": "pick", "role": "tie" }
+      } },
+    { "id": "a0000000-0000-4000-8000-000000000001", "name": "west point",
+      "components": {
+        "pose": { "frame": "22222222-2222-4222-8222-222222222222", "position": [-900, 0] },
+        "presentation_point": { "for": "inventory_tote" }
+      } },
+    { "id": "b0000000-0000-4000-8000-000000000002", "name": "east point",
+      "components": {
+        "pose": { "frame": "22222222-2222-4222-8222-222222222222", "position": [900, 0] },
+        "presentation_point": { "for": "inventory_tote" }
+      } },
+    { "id": "c0000000-0000-4000-8000-000000000003", "name": "the sector that names nobody",
+      "components": { "sector": { "members": [] } } },
+    { "id": "c0000000-0000-4000-8000-000000000004", "name": "the sector that names the west point",
+      "components": { "sector": { "members": ["a0000000-0000-4000-8000-000000000001"] } } },
+    { "id": "e0000000-0000-4000-8000-000000000006", "name": "the entity that names things every way the format allows, and two ways it does not",
+      "components": {
+        "reference_forms": {
+          "bare": "44444444-4444-4444-8444-444444444444",
+          "derived": { "generator": "33333333-3333-4333-8333-333333333333", "key": "cell:1,0" },
+          "several": [
+            "a0000000-0000-4000-8000-000000000001",
+            { "generator": "33333333-3333-4333-8333-333333333333", "key": "cell:2,0" }
+          ],
+          "nested": [["44444444-4444-4444-8444-444444444444"]],
+          "local": { "local_ref": "floor", "key": "cell:0,0" },
+          "position": [900, 0]
+        }
+      } },
+    { "id": "d0000000-0000-4000-8000-000000000005", "name": "the entity that spells the same path two ways",
+      "components": {
+        "go.easyloop": { "part": "envelope", "station": "44444444-4444-4444-8444-444444444444" },
+        "go": { "easyloop": { "station": "a0000000-0000-4000-8000-000000000001" } }
+      } }
+  ]
+}

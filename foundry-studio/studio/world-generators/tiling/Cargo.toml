@@ -1,0 +1,15 @@
+[package]
+name = "seed-generator-tiling"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+description = "The tiling generator: a region with a pitch becomes the cells that cover it"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+foundry-spatial = { workspace = true }
+worldgen-sdk = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }

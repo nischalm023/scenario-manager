@@ -1,0 +1,2 @@
+# The generator's frozen bytes: never converted, so every platform compares the same ones.
+*.ndjson -text

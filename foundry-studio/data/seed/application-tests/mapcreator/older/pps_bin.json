@@ -1,0 +1,48 @@
+{
+  "url": "http://bins.example.invalid/api/bins",
+  "type": "POST",
+  "header": {
+    "accept": "application/json",
+    "content-type": "application/json"
+  },
+  "data": [
+    {
+      "bin_id": "B1",
+      "pps_id": "1",
+      "position": [
+        0,
+        0
+      ],
+      "coordinate": [
+        10.5,
+        20.25
+      ],
+      "direction": "front",
+      "group_id": "G1",
+      "type": "small",
+      "allowed_tags": [],
+      "front_seat_name": "front-1",
+      "back_seat_name": "back-1",
+      "status": "ok"
+    },
+    {
+      "bin_id": "B2",
+      "pps_id": "1",
+      "position": [
+        0,
+        1
+      ],
+      "coordinate": [
+        10.5,
+        45.0
+      ],
+      "direction": "back",
+      "group_id": "G1",
+      "type": "large",
+      "allowed_tags": [],
+      "front_seat_name": "front-1",
+      "back_seat_name": "back-1",
+      "status": "ok"
+    }
+  ]
+}

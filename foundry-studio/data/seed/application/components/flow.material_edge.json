@@ -1,0 +1,299 @@
+{
+  "asserts": "is",
+  "component": "flow.material_edge",
+  "meaning": "the entity is one movement of one carrier state, such as a stock tote or a closed order, from one flow node to another",
+  "owner": "agent-studio",
+  "refs": [
+    {
+      "path": "/from",
+      "expects": "flow.node"
+    },
+    {
+      "path": "/to",
+      "expects": "flow.node"
+    },
+    {
+      "path": "/alternative_to",
+      "expects": "flow.material_edge"
+    },
+    {
+      "path": "/returns_by",
+      "expects": "flow.return_rule"
+    },
+    {
+      "path": "/storage_scope/*",
+      "expects": "sector"
+    }
+  ],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "flow.material_edge",
+    "description": "the entity is one movement of one carrier state, such as a stock tote or a closed order, from one flow node to another",
+    "$comment": "Written for world-proto's registry from Agent Studio's 06-flow-panel-and-compiler.md section 3.1 (notes/agent-studio-2026-10-17/design/specs/06-flow-panel-and-compiler.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "from",
+      "to",
+      "moves"
+    ],
+    "properties": {
+      "from": {
+        "description": "The node the carrier starts at.",
+        "$ref": "#/$defs/reference"
+      },
+      "to": {
+        "description": "The node the carrier ends at.",
+        "$ref": "#/$defs/reference"
+      },
+      "moves": {
+        "description": "What moves: `units`, product without a modelled carrier, or a carrier state.",
+        "enum": [
+          "units",
+          "inventory_tote:stock",
+          "inventory_tote:empty",
+          "inventory_tote:after_pick",
+          "order_container:empty",
+          "order_container:new",
+          "order:closed",
+          "order:in_bin"
+        ]
+      },
+      "when": {
+        "$ref": "#/$defs/guard"
+      },
+      "alternative_to": {
+        "description": "An edge this one competes with to bring the same carrier state to the same node; the destination chooses per opening, in scheduler time.",
+        "$ref": "#/$defs/reference"
+      },
+      "bias": {
+        "description": "The handicap in that choice: `fleet_pressure`, derived from the map, or a fixed signed simtime, positive favouring this edge.",
+        "default": "fleet_pressure",
+        "oneOf": [
+          {
+            "const": "fleet_pressure"
+          },
+          {
+            "type": "object",
+            "required": [
+              "fixed_sim_ms"
+            ],
+            "properties": {
+              "fixed_sim_ms": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      "opens_at_sim_ms": {
+        "description": "No task starts on this edge before this simtime.",
+        "type": "integer",
+        "minimum": 0
+      },
+      "until_sim_ms": {
+        "description": "No task starts on this edge from this simtime on.",
+        "type": "integer",
+        "minimum": 0
+      },
+      "storage_scope": {
+        "description": "At a storage end: which of the storage node's sectors this edge may use; absent, all of them.",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "$ref": "#/$defs/reference"
+        }
+      },
+      "returns_by": {
+        "description": "The return rule this edge shares with the other return edges its root serves.",
+        "$ref": "#/$defs/reference"
+      },
+      "induction": {
+        "$ref": "#/$defs/induction"
+      }
+    },
+    "dependentRequired": {
+      "bias": [
+        "alternative_to"
+      ]
+    },
+    "allOf": [
+      {
+        "if": {
+          "required": [
+            "induction"
+          ]
+        },
+        "then": {
+          "properties": {
+            "moves": {
+              "const": "units"
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "required": [
+            "when"
+          ],
+          "properties": {
+            "when": {
+              "anyOf": [
+                {
+                  "required": [
+                    "container"
+                  ]
+                },
+                {
+                  "required": [
+                    "exit_path"
+                  ]
+                },
+                {
+                  "required": [
+                    "routing"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "moves": {
+              "const": "order:closed"
+            }
+          }
+        }
+      }
+    ],
+    "$defs": {
+      "guard": {
+        "title": "guard",
+        "description": "Which carriers take this edge: on `order:closed` edges the containers, exit paths and routings it admits; `phase` on leftover edges. An absent field admits all.",
+        "type": "object",
+        "properties": {
+          "container": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "tote",
+                "tray",
+                "carton"
+              ]
+            }
+          },
+          "exit_path": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "buffer",
+                "sorter",
+                "dock"
+              ]
+            }
+          },
+          "routing": {
+            "description": "The workload's designations this edge admits.",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "phase": {
+            "const": "inbound_ended"
+          }
+        }
+      },
+      "induction": {
+        "title": "induction",
+        "description": "How inbound units are inducted, on a `units` edge.",
+        "type": "object",
+        "properties": {
+          "sequence": {
+            "enum": [
+              "sku_demand",
+              "order_release"
+            ],
+            "default": "sku_demand"
+          },
+          "hour_gate": {
+            "description": "A lot waits for its hour.",
+            "type": "boolean",
+            "default": true
+          },
+          "lead_time_sim_ms": {
+            "description": "Needs `sequence: order_release`.",
+            "type": "integer",
+            "minimum": 0
+          },
+          "units_per_tote": {
+            "description": "How many units fill one inbound tote; never the stored totes' fill, which is the scenario's.",
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          }
+        },
+        "if": {
+          "required": [
+            "lead_time_sim_ms"
+          ]
+        },
+        "then": {
+          "required": [
+            "sequence"
+          ],
+          "properties": {
+            "sequence": {
+              "const": "order_release"
+            }
+          }
+        }
+      },
+      "reference": {
+        "title": "reference",
+        "description": "Another entity, by identity: a declared UUID or a derivation address, bare or with a pin. Which pin a field takes is the pin rule's to enforce: within the referrer's unit bare or `@head`, across units a changeset (a tag once tags land).",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/entity_id"
+          },
+          {
+            "$ref": "urn:world-graph-server:defs#/$defs/version_pin"
+          }
+        ]
+      },
+      "entity_id": {
+        "title": "entity id",
+        "description": "A declared entity's UUID or a derived entity's address, either arm (SPEC section 3).",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/uuid"
+          },
+          {
+            "$ref": "#/$defs/derived_entity_id"
+          }
+        ]
+      },
+      "uuid": {
+        "title": "UUID",
+        "description": "Copied from proto/schema/values.json at c384e59.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "derived_entity_id": {
+        "title": "derived entity id",
+        "description": "Copied from proto/schema/values.json at c384e59.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+(/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+)*$"
+      }
+    }
+  },
+  "status": "experimental"
+}

@@ -1,0 +1,3089 @@
+{
+  "clip_boxes": [
+    {
+      "height": 46,
+      "origin": [
+        0,
+        50
+      ],
+      "width": 114
+    },
+    {
+      "height": 2,
+      "origin": [
+        146,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        146,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        139,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        132,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        125,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        114,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        107,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        100,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        100,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        107,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        114,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        125,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        132,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        139,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        93,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        82,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        75,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        68,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        61,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        61,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        68,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        75,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        82,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        93,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        50,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        43,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        36,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        29,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        50,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        43,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        36,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        29,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        18,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        11,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        18,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        11,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        4,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        4,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        107,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        107,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        100,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        100,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        100,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        100,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        82,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        82,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        82,
+        18
+      ],
+      "width": 3
+    },
+    {
+      "height": 2,
+      "origin": [
+        82,
+        38
+      ],
+      "width": 3
+    },
+    {
+      "height": 3,
+      "origin": [
+        14,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        13,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        18,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        17,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        22,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        21,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        25,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        10,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        26,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        53,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        57,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        61,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        56,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        60,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        64,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        65,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        68,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        69,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        94,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        98,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        102,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        97,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        101,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        105,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 3,
+      "origin": [
+        106,
+        47
+      ],
+      "width": 1
+    },
+    {
+      "height": 2,
+      "origin": [
+        109,
+        48
+      ],
+      "width": 1
+    },
+    {
+      "height": 1,
+      "origin": [
+        114,
+        50
+      ],
+      "width": 3
+    },
+    {
+      "height": 1,
+      "origin": [
+        114,
+        53
+      ],
+      "width": 2
+    },
+    {
+      "height": 2,
+      "origin": [
+        114,
+        54
+      ],
+      "width": 3
+    },
+    {
+      "height": 1,
+      "origin": [
+        114,
+        58
+      ],
+      "width": 2
+    },
+    {
+      "height": 2,
+      "origin": [
+        114,
+        59
+      ],
+      "width": 3
+    },
+    {
+      "height": 1,
+      "origin": [
+        114,
+        63
+      ],
+      "width": 2
+    },
+    {
+      "height": 2,
+      "origin": [
+        114,
+        64
+      ],
+      "width": 3
+    },
+    {
+      "height": 1,
+      "origin": [
+        114,
+        68
+      ],
+      "width": 2
+    },
+    {
+      "height": 2,
+      "origin": [
+        114,
+        69
+      ],
+      "width": 3
+    }
+  ],
+  "fleet": {
+    "htms": 340
+  },
+  "grid": {
+    "cell_size_mm": 850.0,
+    "depth": 96,
+    "row_centers_mm": [
+      425.0,
+      1275.0,
+      2125.0,
+      2975.0,
+      3825.0,
+      4675.0,
+      5525.0,
+      6375.0,
+      7225.0,
+      8075.0,
+      8925.0,
+      9775.0,
+      10625.0,
+      11475.0,
+      12325.0,
+      13175.0,
+      14025.0,
+      14875.0,
+      15725.0,
+      16575.0,
+      17425.0,
+      18070.0,
+      18715.0,
+      19565.0,
+      20210.0,
+      20855.0,
+      21705.0,
+      22350.0,
+      22995.0,
+      23845.0,
+      24490.0,
+      25135.0,
+      25985.0,
+      26630.0,
+      27275.0,
+      28125.0,
+      28770.0,
+      29415.0,
+      30265.0,
+      31115.0,
+      31965.0,
+      32815.0,
+      33665.0,
+      34515.0,
+      35365.0,
+      36215.0,
+      37065.0,
+      37915.0,
+      38765.0,
+      39615.0,
+      40465.0,
+      41315.0,
+      42165.0,
+      43015.0,
+      43865.0,
+      44715.0,
+      45565.0,
+      46415.0,
+      47265.0,
+      48115.0,
+      48965.0,
+      49815.0,
+      50665.0,
+      51515.0,
+      52365.0,
+      53215.0,
+      54065.0,
+      54915.0,
+      55765.0,
+      56615.0,
+      57465.0,
+      58315.0,
+      59165.0,
+      60015.0,
+      60865.0,
+      61715.0,
+      62565.0,
+      63415.0,
+      64265.0,
+      65115.0,
+      65965.0,
+      66815.0,
+      67665.0,
+      68515.0,
+      69365.0,
+      70215.0,
+      71065.0,
+      71915.0,
+      72765.0,
+      73615.0,
+      74465.0,
+      75315.0,
+      76165.0,
+      77015.0,
+      77865.0,
+      78715.0
+    ],
+    "width": 153
+  },
+  "racks": [
+    {
+      "length_mm": 2140.0,
+      "name": "cencora_a5_bay",
+      "slots": [
+        {"diving_board": true, "diving_board_slot": 0, "x": 425.0, "y": 394.0},
+        {"diving_board": true, "diving_board_slot": 0, "x": 1070.0, "y": 394.0},
+        {"diving_board": true, "diving_board_slot": 0, "x": 1715.0, "y": 394.0},
+        {"diving_board": true, "diving_board_slot": 1, "x": 425.0, "y": 952.0},
+        {"diving_board": true, "diving_board_slot": 1, "x": 1070.0, "y": 952.0},
+        {"diving_board": true, "diving_board_slot": 1, "x": 1715.0, "y": 952.0},
+        {"x": 320.0, "y": 1580.0},
+        {"x": 820.0, "y": 1580.0},
+        {"x": 1320.0, "y": 1580.0},
+        {"x": 1820.0, "y": 1580.0},
+        {"x": 320.0, "y": 2138.0},
+        {"x": 820.0, "y": 2138.0},
+        {"x": 1320.0, "y": 2138.0},
+        {"x": 1820.0, "y": 2138.0},
+        {"x": 320.0, "y": 2697.0},
+        {"x": 820.0, "y": 2697.0},
+        {"x": 1320.0, "y": 2697.0},
+        {"x": 1820.0, "y": 2697.0},
+        {"x": 320.0, "y": 3461.0},
+        {"x": 820.0, "y": 3461.0},
+        {"x": 1320.0, "y": 3461.0},
+        {"x": 1820.0, "y": 3461.0},
+        {"x": 320.0, "y": 4020.0},
+        {"x": 820.0, "y": 4020.0},
+        {"x": 1320.0, "y": 4020.0},
+        {"x": 1820.0, "y": 4020.0},
+        {"x": 320.0, "y": 4578.0},
+        {"x": 820.0, "y": 4578.0},
+        {"x": 1320.0, "y": 4578.0},
+        {"x": 1820.0, "y": 4578.0},
+        {"x": 320.0, "y": 5137.0},
+        {"x": 820.0, "y": 5137.0},
+        {"x": 1320.0, "y": 5137.0},
+        {"x": 1820.0, "y": 5137.0},
+        {"x": 320.0, "y": 5696.0},
+        {"x": 820.0, "y": 5696.0},
+        {"x": 1320.0, "y": 5696.0},
+        {"x": 1820.0, "y": 5696.0},
+        {"x": 320.0, "y": 6460.0},
+        {"x": 820.0, "y": 6460.0},
+        {"x": 1320.0, "y": 6460.0},
+        {"x": 1820.0, "y": 6460.0},
+        {"x": 320.0, "y": 7018.0},
+        {"x": 820.0, "y": 7018.0},
+        {"x": 1320.0, "y": 7018.0},
+        {"x": 1820.0, "y": 7018.0},
+        {"x": 320.0, "y": 7577.0},
+        {"x": 820.0, "y": 7577.0},
+        {"x": 1320.0, "y": 7577.0},
+        {"x": 1820.0, "y": 7577.0}
+      ]
+    }
+  ],
+  "scenario": {
+    "bulk_csv": "sim/desmap/tests/fixtures/cencora_data/bulk/peak_day_12_16.csv",
+    "items_csv": "sim/desmap/tests/fixtures/cencora_data/items.csv",
+    "max_pallet_units": 50,
+    "min_pallet_units": 35,
+    "units_per_tote": 1
+  },
+  "settings": {
+    "fidelity": "CollisionDes",
+    "htm": {
+      "empty_accel": 2.0,
+      "empty_constant_speed": 4.5,
+      "empty_rotate": 2.1,
+      "empty_speed": 4.5,
+      "load_time_secs": 2.0,
+      "loaded_accel": 2.0,
+      "loaded_constant_speed": 4.5,
+      "loaded_rotate": 2.1,
+      "loaded_speed": 4.5,
+      "unload_time_secs": 2.0
+    },
+    "motion_model": "htm_kinematic",
+    "operator": {
+      "time_per_pick_secs": 7.0
+    },
+    "pick": {
+      "embargo_secs": 7200.0
+    },
+    "putaway": {
+      "dwell_secs": 4.5,
+      "enabled": true,
+      "max_presentations_per_hour": 216.0,
+      "queue_depth": 4
+    },
+    "queue_factor": 4.0,
+    "sim_duration": {
+      "nanos": 0,
+      "secs": 36000
+    },
+    "vtm": {
+      "alignment_secs": 3.0,
+      "drop_secs": 5.0,
+      "isolation": "off",
+      "pick_secs": 6.2
+    }
+  },
+  "stations": [
+    {
+      "exit_direction": "North",
+      "id": 11,
+      "position": [
+        13,
+        47
+      ],
+      "presentation_cell": [
+        12,
+        47
+      ],
+      "queue_path": [
+        [
+          11,
+          47
+        ],
+        [
+          11,
+          48
+        ],
+        [
+          11,
+          49
+        ],
+        [
+          12,
+          49
+        ],
+        [
+          12,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "North",
+      "id": 15,
+      "position": [
+        56,
+        47
+      ],
+      "presentation_cell": [
+        55,
+        47
+      ],
+      "queue_path": [
+        [
+          54,
+          47
+        ],
+        [
+          54,
+          48
+        ],
+        [
+          54,
+          49
+        ],
+        [
+          55,
+          49
+        ],
+        [
+          55,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "North",
+      "id": 19,
+      "position": [
+        97,
+        47
+      ],
+      "presentation_cell": [
+        96,
+        47
+      ],
+      "queue_path": [
+        [
+          95,
+          47
+        ],
+        [
+          95,
+          48
+        ],
+        [
+          95,
+          49
+        ],
+        [
+          96,
+          49
+        ],
+        [
+          96,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "East",
+      "id": 23,
+      "position": [
+        116,
+        53
+      ],
+      "presentation_cell": [
+        116,
+        52
+      ],
+      "queue_path": [
+        [
+          116,
+          51
+        ],
+        [
+          115,
+          51
+        ],
+        [
+          114,
+          51
+        ],
+        [
+          114,
+          52
+        ],
+        [
+          115,
+          52
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "North",
+      "id": 12,
+      "position": [
+        17,
+        47
+      ],
+      "presentation_cell": [
+        16,
+        47
+      ],
+      "queue_path": [
+        [
+          15,
+          47
+        ],
+        [
+          15,
+          48
+        ],
+        [
+          15,
+          49
+        ],
+        [
+          16,
+          49
+        ],
+        [
+          16,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "North",
+      "id": 13,
+      "position": [
+        21,
+        47
+      ],
+      "presentation_cell": [
+        20,
+        47
+      ],
+      "queue_path": [
+        [
+          19,
+          47
+        ],
+        [
+          19,
+          48
+        ],
+        [
+          19,
+          49
+        ],
+        [
+          20,
+          49
+        ],
+        [
+          20,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "North",
+      "id": 14,
+      "position": [
+        25,
+        47
+      ],
+      "presentation_cell": [
+        24,
+        47
+      ],
+      "queue_path": [
+        [
+          23,
+          47
+        ],
+        [
+          23,
+          48
+        ],
+        [
+          23,
+          49
+        ],
+        [
+          24,
+          49
+        ],
+        [
+          24,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "North",
+      "id": 18,
+      "position": [
+        68,
+        47
+      ],
+      "presentation_cell": [
+        67,
+        47
+      ],
+      "queue_path": [
+        [
+          66,
+          47
+        ],
+        [
+          66,
+          48
+        ],
+        [
+          66,
+          49
+        ],
+        [
+          67,
+          49
+        ],
+        [
+          67,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "North",
+      "id": 17,
+      "position": [
+        64,
+        47
+      ],
+      "presentation_cell": [
+        63,
+        47
+      ],
+      "queue_path": [
+        [
+          62,
+          47
+        ],
+        [
+          62,
+          48
+        ],
+        [
+          62,
+          49
+        ],
+        [
+          63,
+          49
+        ],
+        [
+          63,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "North",
+      "id": 16,
+      "position": [
+        60,
+        47
+      ],
+      "presentation_cell": [
+        59,
+        47
+      ],
+      "queue_path": [
+        [
+          58,
+          47
+        ],
+        [
+          58,
+          48
+        ],
+        [
+          58,
+          49
+        ],
+        [
+          59,
+          49
+        ],
+        [
+          59,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "North",
+      "id": 20,
+      "position": [
+        101,
+        47
+      ],
+      "presentation_cell": [
+        100,
+        47
+      ],
+      "queue_path": [
+        [
+          99,
+          47
+        ],
+        [
+          99,
+          48
+        ],
+        [
+          99,
+          49
+        ],
+        [
+          100,
+          49
+        ],
+        [
+          100,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "North",
+      "id": 21,
+      "position": [
+        105,
+        47
+      ],
+      "presentation_cell": [
+        104,
+        47
+      ],
+      "queue_path": [
+        [
+          103,
+          47
+        ],
+        [
+          103,
+          48
+        ],
+        [
+          103,
+          49
+        ],
+        [
+          104,
+          49
+        ],
+        [
+          104,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "North",
+      "id": 22,
+      "position": [
+        109,
+        47
+      ],
+      "presentation_cell": [
+        108,
+        47
+      ],
+      "queue_path": [
+        [
+          107,
+          47
+        ],
+        [
+          107,
+          48
+        ],
+        [
+          107,
+          49
+        ],
+        [
+          108,
+          49
+        ],
+        [
+          108,
+          48
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "East",
+      "id": 24,
+      "position": [
+        116,
+        58
+      ],
+      "presentation_cell": [
+        116,
+        57
+      ],
+      "queue_path": [
+        [
+          116,
+          56
+        ],
+        [
+          115,
+          56
+        ],
+        [
+          114,
+          56
+        ],
+        [
+          114,
+          57
+        ],
+        [
+          115,
+          57
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "East",
+      "id": 25,
+      "position": [
+        116,
+        63
+      ],
+      "presentation_cell": [
+        116,
+        62
+      ],
+      "queue_path": [
+        [
+          116,
+          61
+        ],
+        [
+          115,
+          61
+        ],
+        [
+          114,
+          61
+        ],
+        [
+          114,
+          62
+        ],
+        [
+          115,
+          62
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "East",
+      "id": 26,
+      "position": [
+        116,
+        68
+      ],
+      "presentation_cell": [
+        116,
+        67
+      ],
+      "queue_path": [
+        [
+          116,
+          66
+        ],
+        [
+          115,
+          66
+        ],
+        [
+          114,
+          66
+        ],
+        [
+          114,
+          67
+        ],
+        [
+          115,
+          67
+        ]
+      ],
+      "station_type": "Putaway"
+    },
+    {
+      "exit_direction": "East",
+      "id": 1,
+      "position": [
+        13,
+        0
+      ],
+      "presentation_cell": [
+        13,
+        1
+      ],
+      "queue_path": [
+        [
+          10,
+          1
+        ],
+        [
+          11,
+          1
+        ],
+        [
+          12,
+          1
+        ]
+      ],
+      "station_type": "Pick"
+    },
+    {
+      "exit_direction": "East",
+      "id": 2,
+      "position": [
+        22,
+        0
+      ],
+      "presentation_cell": [
+        22,
+        1
+      ],
+      "queue_path": [
+        [
+          19,
+          1
+        ],
+        [
+          20,
+          1
+        ],
+        [
+          21,
+          1
+        ]
+      ],
+      "station_type": "Pick"
+    },
+    {
+      "exit_direction": "East",
+      "id": 3,
+      "position": [
+        40,
+        0
+      ],
+      "presentation_cell": [
+        40,
+        1
+      ],
+      "queue_path": [
+        [
+          37,
+          1
+        ],
+        [
+          38,
+          1
+        ],
+        [
+          39,
+          1
+        ]
+      ],
+      "station_type": "Pick"
+    },
+    {
+      "exit_direction": "East",
+      "id": 4,
+      "position": [
+        59,
+        0
+      ],
+      "presentation_cell": [
+        59,
+        1
+      ],
+      "queue_path": [
+        [
+          56,
+          1
+        ],
+        [
+          57,
+          1
+        ],
+        [
+          58,
+          1
+        ]
+      ],
+      "station_type": "Pick"
+    },
+    {
+      "exit_direction": "East",
+      "id": 5,
+      "position": [
+        78,
+        0
+      ],
+      "presentation_cell": [
+        78,
+        1
+      ],
+      "queue_path": [
+        [
+          75,
+          1
+        ],
+        [
+          76,
+          1
+        ],
+        [
+          77,
+          1
+        ]
+      ],
+      "station_type": "Pick"
+    },
+    {
+      "exit_direction": "East",
+      "id": 6,
+      "position": [
+        89,
+        0
+      ],
+      "presentation_cell": [
+        89,
+        1
+      ],
+      "queue_path": [
+        [
+          86,
+          1
+        ],
+        [
+          87,
+          1
+        ],
+        [
+          88,
+          1
+        ]
+      ],
+      "station_type": "Pick"
+    },
+    {
+      "exit_direction": "East",
+      "id": 7,
+      "position": [
+        106,
+        0
+      ],
+      "presentation_cell": [
+        106,
+        1
+      ],
+      "queue_path": [
+        [
+          103,
+          1
+        ],
+        [
+          104,
+          1
+        ],
+        [
+          105,
+          1
+        ]
+      ],
+      "station_type": "Pick"
+    },
+    {
+      "exit_direction": "East",
+      "id": 8,
+      "position": [
+        122,
+        0
+      ],
+      "presentation_cell": [
+        122,
+        1
+      ],
+      "queue_path": [
+        [
+          119,
+          1
+        ],
+        [
+          120,
+          1
+        ],
+        [
+          121,
+          1
+        ]
+      ],
+      "station_type": "Pick"
+    },
+    {
+      "exit_direction": "East",
+      "id": 9,
+      "position": [
+        140,
+        0
+      ],
+      "presentation_cell": [
+        140,
+        1
+      ],
+      "queue_path": [
+        [
+          137,
+          1
+        ],
+        [
+          138,
+          1
+        ],
+        [
+          139,
+          1
+        ]
+      ],
+      "station_type": "Pick"
+    },
+    {
+      "exit_direction": "East",
+      "id": 10,
+      "position": [
+        149,
+        0
+      ],
+      "presentation_cell": [
+        149,
+        1
+      ],
+      "queue_path": [
+        [
+          146,
+          1
+        ],
+        [
+          147,
+          1
+        ],
+        [
+          148,
+          1
+        ]
+      ],
+      "station_type": "Pick"
+    }
+  ],
+  "version": 3,
+  "zones": [
+    {
+      "id": 1,
+      "length": 18,
+      "origin": [
+        146,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 2,
+      "length": 18,
+      "origin": [
+        139,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 3,
+      "length": 18,
+      "origin": [
+        132,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 4,
+      "length": 18,
+      "origin": [
+        125,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 5,
+      "length": 18,
+      "origin": [
+        114,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 8,
+      "length": 18,
+      "origin": [
+        93,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 10,
+      "length": 18,
+      "origin": [
+        75,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 11,
+      "length": 18,
+      "origin": [
+        68,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 12,
+      "length": 18,
+      "origin": [
+        61,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 13,
+      "length": 18,
+      "origin": [
+        50,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 14,
+      "length": 18,
+      "origin": [
+        43,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 15,
+      "length": 18,
+      "origin": [
+        36,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 16,
+      "length": 18,
+      "origin": [
+        29,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 17,
+      "length": 18,
+      "origin": [
+        18,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 18,
+      "length": 18,
+      "origin": [
+        11,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 19,
+      "length": 18,
+      "origin": [
+        4,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 20,
+      "length": 18,
+      "origin": [
+        107,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 21,
+      "length": 18,
+      "origin": [
+        100,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    },
+    {
+      "id": 23,
+      "length": 18,
+      "origin": [
+        82,
+        20
+      ],
+      "rack_placements": [
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Left",
+          "x_offset_mm": 10700.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right"
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 2140.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 4280.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 6420.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 8560.0
+        },
+        {
+          "rack": "cencora_a5_bay",
+          "side": "Right",
+          "x_offset_mm": 10700.0
+        }
+      ],
+      "real_shelf_count": 13,
+      "type": "relay",
+      "zone_height_mm": 10017,
+      "zone_width_mm": 12200
+    }
+  ]
+}

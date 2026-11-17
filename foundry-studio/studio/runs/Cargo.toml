@@ -1,0 +1,74 @@
+[package]
+name = "crucible"
+version = "0.1.0"
+edition = "2024"
+description = "The Crucible server: runs simulations in-process, records each one as a .worldview, and serves them"
+
+[lib]
+name = "crucible"
+path = "src/lib.rs"
+
+[[bin]]
+name = "crucible"
+path = "src/main.rs"
+
+[[bin]]
+name = "crucible-cli"
+path = "src/bin/crucible-cli.rs"
+
+[features]
+default = []
+# The deployment storage backend. Off by default, so a development build links
+# no cloud SDK and a developer needs no cloud credential to run the server.
+gcs = ["runstore/gcs"]
+
+[dependencies]
+desunits = { path = "../../sim/desunits" }
+dessim = { path = "../../sim/dessim" }
+# The tasks: a program that runs a simulation, or reads a spec or a recording that names tasks, links this crate
+# (`use native_modules as _;`), or it finds no task by name.
+native-modules = { path = "../../native-modules" }
+runstore = { path = "../../runstore" }
+worldview = { path = "../../worldview/worldview" }
+worldview-floor = { path = "../../worldview/worldview-floor" }
+
+axum = { version = "0.8", features = ["ws"] }
+base64 = "0.22"
+chrono = "0.4"
+futures = "0.3"
+rmp-serde = "1"
+rustc-hash = "2"
+thiserror = "2"
+tokio = { version = "1", features = ["full"] }
+tower-http = { version = "0.6", features = ["cors"] }
+tokio-tungstenite = "0.29"
+ts-rs = "12"
+ulid = "1"
+
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# `migrate` and `macros` so `sqlx::migrate!` embeds the schema in the binary: a
+# deployed server carries its own migrations and needs no source tree beside it.
+sqlx = { version = "0.8", default-features = false, features = [
+    "runtime-tokio",
+    "postgres",
+    "migrate",
+    "macros",
+    "chrono",
+] }
+
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+[dev-dependencies]
+# The serving tests write a synthetic recording in the run vocabulary's own
+# records, which speaks this crate's cell and station ids.
+desgraph = { path = "../../sim/desgraph" }
+# A storage double that counts what the cache asks of it implements `RunStorage`,
+# whose methods are `async_trait` ones over `Bytes`.
+async-trait = "0.1"
+bytes = "1"
+tempfile = "3"
+# `test-util` for a paused clock: the back-pressure test would otherwise wait
+# the whole ten seconds it is about.
+tokio = { version = "1", features = ["full", "test-util"] }

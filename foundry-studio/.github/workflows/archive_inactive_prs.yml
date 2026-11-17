@@ -1,0 +1,101 @@
+# Keeps the open-PR list small enough to review: a PR with no comments,
+# commits or other changes for 7 days gets a warning that @-mentions its
+# author, and is closed 3 days after the warning if nothing happens in
+# between. Closing is not a judgment on the change, and the branch is never
+# deleted; the closing comment invites the author to file a fresh PR once the
+# work is ready to merge. A PR labelled `keep-open` is never warned or closed.
+name: Archive inactive PRs
+
+on:
+  schedule:
+    - cron: "0 14 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Log what would happen without commenting, labelling or closing"
+        type: boolean
+        default: true
+
+permissions:
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: archive-inactive-prs
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        env:
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        with:
+          script: |
+            const INACTIVE_DAYS = 7;
+            const GRACE_DAYS = 3;
+            const EXEMPT_LABEL = 'keep-open';
+            const WARNED_LABEL = 'inactive-warning';
+            const ARCHIVED_LABEL = 'archived-inactive';
+            // Identifies this workflow's own warning comment, so its timestamp
+            // can be told apart from the author's later activity.
+            const WARNING_MARKER = '<!-- archive-inactive-prs:warning -->';
+            // The workflow's own comment and label edits bump `updated_at`;
+            // activity within this window of the warning is the warning itself.
+            const SELF_EDIT_SLACK_MS = 5 * 60 * 1000;
+
+            const dryRun = process.env.DRY_RUN === 'true';
+            const { owner, repo } = context.repo;
+            const now = Date.now();
+            const days = (ms) => ms / 86_400_000;
+
+            const act = async (description, fn) => {
+              core.info(`${dryRun ? '[dry run] ' : ''}${description}`);
+              if (!dryRun) await fn();
+            };
+
+            const pulls = await github.paginate(github.rest.pulls.list, {
+              owner, repo, state: 'open', per_page: 100,
+            });
+
+            for (const pr of pulls) {
+              const labels = pr.labels.map((l) => l.name);
+              if (labels.includes(EXEMPT_LABEL)) continue;
+
+              const issue = { owner, repo, issue_number: pr.number };
+              const author = pr.user.login;
+              const lastActivity = Date.parse(pr.updated_at);
+
+              if (labels.includes(WARNED_LABEL)) {
+                const comments = await github.paginate(github.rest.issues.listComments, { ...issue, per_page: 100 });
+                const warning = comments.filter((c) => c.body?.includes(WARNING_MARKER)).pop();
+                const warnedAt = warning ? Date.parse(warning.created_at) : lastActivity;
+
+                if (lastActivity > warnedAt + SELF_EDIT_SLACK_MS) {
+                  await act(`#${pr.number}: activity since the warning, clearing it`, () =>
+                    github.rest.issues.removeLabel({ ...issue, name: WARNED_LABEL }));
+                  continue;
+                }
+                if (days(now - warnedAt) < GRACE_DAYS) continue;
+
+                await act(`#${pr.number}: closing after ${GRACE_DAYS} days without activity since the warning`, async () => {
+                  await github.rest.issues.createComment({ ...issue, body:
+                    `@${author} — we're closing PRs that have had no comments, commits or other changes for more than ${INACTIVE_DAYS} days, so the open-PR list stays small enough for us to actually review. This isn't a judgment on this change, and your branch \`${pr.head.ref}\` has **not** been deleted.\n\n` +
+                    `If and when this work is fully ready to merge and meets the repo's current requirements, please file a fresh PR from it (rebased on \`${pr.base.ref}\`) and we'll review it then.` });
+                  await github.rest.issues.addLabels({ ...issue, labels: [ARCHIVED_LABEL] });
+                  await github.rest.issues.removeLabel({ ...issue, name: WARNED_LABEL });
+                  await github.rest.pulls.update({ owner, repo, pull_number: pr.number, state: 'closed' });
+                });
+                continue;
+              }
+
+              if (days(now - lastActivity) <= INACTIVE_DAYS) continue;
+
+              await act(`#${pr.number}: warning after ${Math.floor(days(now - lastActivity))} days without activity`, async () => {
+                await github.rest.issues.addLabels({ ...issue, labels: [WARNED_LABEL] });
+                await github.rest.issues.createComment({ ...issue, body:
+                  `${WARNING_MARKER}\n@${author} — this PR has had no comments, commits or other changes for more than ${INACTIVE_DAYS} days. ` +
+                  `To keep the open-PR list reviewable it will be closed in ${GRACE_DAYS} days unless something happens on it; any comment or push keeps it open. ` +
+                  `Closing never deletes the branch. To exempt it permanently, ask a maintainer to add the \`${EXEMPT_LABEL}\` label.` });
+              });
+            }

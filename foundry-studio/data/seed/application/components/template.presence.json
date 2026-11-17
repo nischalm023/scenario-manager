@@ -1,0 +1,34 @@
+{
+  "asserts": "has",
+  "component": "template.presence",
+  "meaning": "the entity has a condition over the knobs: while the condition's value is below one, the entity and everything it would make are left out of the site",
+  "owner": "agent-studio",
+  "refs": [],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "template.presence",
+    "description": "the entity has a condition over the knobs: while the condition's value is below one, the entity and everything it would make are left out of the site",
+    "$comment": "Written for world-proto's registry from Agent Studio's 05-template-workflow.md section 3.2 (notes/agent-studio-2026-10-17/design/specs/05-template-workflow.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "when"
+    ],
+    "properties": {
+      "when": {
+        "description": "The entity is present when this is one or more. On a placement it governs every instance; in a record's `components` it governs the record and is stripped before the record is written.",
+        "$ref": "#/$defs/expression"
+      }
+    },
+    "$defs": {
+      "expression": {
+        "title": "knob expression",
+        "description": "An integer expression over the template's knobs: integers, knob keys, + - * / (floor division), min and max, parentheses, separated by spaces (05-template-workflow.md section 3.3). The schema holds its alphabet and its 512-character limit; the template evaluation engine parses it and refuses a name that is not a declared knob.",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^[a-z0-9_ +*/(),-]+$"
+      }
+    }
+  },
+  "status": "experimental"
+}

@@ -1,0 +1,112 @@
+{
+  "asserts": "is",
+  "component": "dock_point",
+  "meaning": "the entity is one Map Creator docking point: a fixed floor position where a carrier is parked at a station, with its heading, its operator-facing name and the bay it belongs to",
+  "owner": "foundry-studio",
+  "refs": [
+    {
+      "expects": "cell",
+      "path": "/at_cell"
+    }
+  ],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {
+      "entity_id": {
+        "description": "One entity of this document, by identity. A declared identity is a UUID; a derived one is its root UUID and the generator's key path, which nothing in a converted document produces.",
+        "title": "entity_id",
+        "type": "string"
+      },
+      "legacy_value": {
+        "description": "A legacy value the dump wrote, kept verbatim in whatever JSON kind it wrote it. It states no type on purpose: the round trip writes back what the dump said, and correcting a kind here would be the converter deciding what the site meant.",
+        "title": "legacy_value"
+      }
+    },
+    "$id": "urn:mapcreator-compat:0.1:components:dock_point",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one Map Creator docking point: a fixed floor position where a carrier is parked at a station, with its heading, its operator-facing name and the bay it belongs to",
+    "properties": {
+      "at_cell": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The cell Map Creator's `dock_coordinate` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+      },
+      "at_cell_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `dock_coordinate` verbatim, present only when the cell it names is not in this dump. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "direction": {
+        "description": "Map Creator's `direction`, carried as the export states it.",
+        "type": [
+          "number"
+        ]
+      },
+      "display_name": {
+        "description": "Map Creator's `display_name`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      },
+      "dock_barcode": {
+        "description": "Map Creator's `dock_barcode`, present only where it differs from the `id` it repeats in every row of every dump seen. Absent means the two agree and the export writes this one from the other.",
+        "type": "string"
+      },
+      "docking_station_id": {
+        "description": "Map Creator's `station_id`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      },
+      "runtime": {
+        "description": "What was happening at the site when the export was written, as the export wrote it. SPEC §1 separates a world from what is happening in it, so this is here to be dropped by a policy that decides to rather than lost by a converter that forgot — the round trip writes it back.",
+        "properties": {
+          "mtu_id": {
+            "description": "Map Creator's `mtu_id`, carried as the export states it.",
+            "type": [
+              "string"
+            ]
+          },
+          "rack_id": {
+            "description": "Map Creator's `rack_id`, carried as the export states it.",
+            "type": [
+              "string"
+            ]
+          },
+          "rack_status": {
+            "description": "Map Creator's `rack_status`, carried as the export states it.",
+            "type": [
+              "string"
+            ]
+          },
+          "reserved_by": {
+            "description": "Map Creator's `reserved_by`, carried as the export states it.",
+            "type": [
+              "string"
+            ]
+          },
+          "station_point_status": {
+            "description": "Map Creator's `station_point_status`, carried as the export states it.",
+            "type": [
+              "string"
+            ]
+          },
+          "status": {
+            "description": "Map Creator's `status`, carried as the export states it.",
+            "type": [
+              "string"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "station_type": {
+        "description": "Map Creator's `station_type`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      }
+    },
+    "title": "dock_point",
+    "type": "object"
+  },
+  "status": "ratified"
+}

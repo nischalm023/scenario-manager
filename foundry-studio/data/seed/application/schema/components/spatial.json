@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:components:spatial",
+  "title": "world protocol — spatial components",
+  "description": "Where things are: the components that declare a coordinate system, place an entity in one, turn an area into the cells an agent can stand on, and mark the cells robots may stand idle on. Mirrors the crate module of the same name; nothing here knows about racks, stations or robots.",
+  "$defs": {
+    "frame": {
+      "title": "frame",
+      "description": "A declared coordinate system. One frame per world is primary — 3-D, world-fixed, and the only one that says what a step is worth — and every other frame reaches it through a chain of transforms, so conversion is defined in exactly one place (SPEC §4).",
+      "type": "object",
+      "required": ["dims", "units"],
+      "properties": {
+        "parent": {
+          "description": "The frame this one is measured against. Absent on the primary frame and only there.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        },
+        "dims": {
+          "description": "How many axes this frame has. The primary frame is 3-D; a floor or a lattice is usually 2-D.",
+          "type": "integer",
+          "enum": [2, 3]
+        },
+        "units": {
+          "description": "What one step of this frame measures: a length (`mm`, sized by the primary frame's `unit_mm` through the chain) or a lattice index (`index`), whose physical pitch lives in the transform's scale (SPEC §4).",
+          "type": "string",
+          "minLength": 1
+        },
+        "unit_mm": {
+          "description": "What one integer step of this format's lengths is worth physically. The primary frame declares it and no other frame may, so a step becomes physical in exactly one place (SPEC §4).",
+          "$ref": "urn:worldproto:0.7:values#/$defs/unit_mm"
+        },
+        "integer_only": {
+          "description": "Positions declared in this frame must be whole numbers; projections into it round half-up and are understood to be approximate (SPEC §4).",
+          "$ref": "urn:worldproto:0.7:values#/$defs/flag"
+        },
+        "vendor": {
+          "description": "The robot vendor whose install this frame belongs to. A vendor frame is not a kind of frame — just a frame so tagged (SPEC §4).",
+          "type": "string"
+        },
+        "transform_to_parent": {
+          "description": "How a point in this frame reads in the parent's: `p_parent = translation + scale ⊙ p_frame`, per axis. A negative scale entry is the mirror (SPEC §4).",
+          "$ref": "#/$defs/transform"
+        }
+      }
+    },
+    "transform": {
+      "title": "transform to parent",
+      "description": "The per-axis translation and scale that carry a point from one frame into its parent. A 2-D frame under a 3-D parent embeds as [x, y] → [x, y, 0] before translating, which is why its translation carries three entries and its scale two (SPEC §4).",
+      "type": "object",
+      "properties": {
+        "translation": {"$ref": "urn:worldproto:0.7:values#/$defs/axis_vector"},
+        "scale": {"$ref": "urn:worldproto:0.7:values#/$defs/axis_vector"}
+      }
+    },
+    "pose": {
+      "title": "pose",
+      "description": "Where an entity sits, and optionally which way it faces, in a stated frame. Inside a template the frame is absent: the pose is in the template's own local frame and acquires a frame when a stamp places it (SPEC §5).",
+      "type": "object",
+      "required": ["position"],
+      "properties": {
+        "frame": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "position": {"$ref": "urn:worldproto:0.7:values#/$defs/position"},
+        "heading_deg": {
+          "description": "Counter-clockwise from +x. An angle is not a length and takes its unit from no frame, so it keeps its suffix and may be fractional.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/degrees"
+        }
+      }
+    },
+    "region": {
+      "title": "region",
+      "description": "A rectangle in a frame, anchored at its minimum corner and measured in that frame's steps. Declaring one in a frame whose units are `index` is a load error: an integer lattice frame is for projecting into, never for authoring in (SPEC §5).",
+      "type": "object",
+      "required": ["origin", "size"],
+      "properties": {
+        "frame": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "origin": {"description": "The minimum corner.", "$ref": "urn:worldproto:0.7:values#/$defs/steps_pair"},
+        "size": {
+          "description": "Extent from the origin. Each extent must be a positive whole multiple of the matching tiling pitch — no silent remainder strips (SPEC §5).",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps_pair_positive"
+        }
+      }
+    },
+    "tiling": {
+      "title": "tiling",
+      "description": "What makes a region a cell_grid: derive a cell per tile at this pitch, each carrying the whole component map in `derives` (SPEC §5). Tiling is opt-in per region — a real site tiles the strips robots actually travel, not its whole floor.",
+      "type": "object",
+      "required": ["pitch"],
+      "properties": {
+        "pitch": {
+          "description": "Tile size, which is also each derived cell's footprint.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps_pair_positive"
+        },
+        "exclusions": {
+          "description": "The parts of its own region this tiling leaves untiled. A tiling states its own holes, so no other entity has to reach into this one to punch them and a hole meant for one tiling cannot take cells out of another that overlaps it (SPEC §5). Absent means none.",
+          "type": "array",
+          "items": {"$ref": "#/$defs/exclusion"}
+        },
+        "derives": {
+          "description": "Every component each derived cell carries, verbatim — which is how an area-level fact is declared once instead of per cell: these cells admit HTMs, these cells have chargers. A cell whose `derives` names no `cell` component still carries an empty one.",
+          "$ref": "urn:worldproto:0.7:components#/$defs/set"
+        }
+      }
+    },
+    "exclusion": {
+      "title": "exclusion",
+      "description": "A rectangle a tiling leaves untiled: anchored at its minimum corner, stated relative to its region's origin, in the region's frame's steps. Each derived cell whose centre falls strictly inside it is removed — from this tiling only, so what a tiling derives is a function of the tiling alone (SPEC §5).",
+      "type": "object",
+      "required": ["origin", "size"],
+      "properties": {
+        "origin": {
+          "description": "The minimum corner, measured from the region's own origin. It may sit outside the region, which is how a carve-out authored against a whole floor keeps its geometry when it is written onto one tiling of it.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps_pair"
+        },
+        "size": {
+          "description": "Extent from that corner.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps_pair_positive"
+        }
+      }
+    },
+    "cell": {
+      "title": "cell",
+      "description": "A node an agent can occupy — the thing the traversability graph is built out of. Derived by a tiling or declared by hand, with the same standing either way (SPEC §5).",
+      "type": "object",
+      "properties": {
+        "traversable_by": {
+          "description": "The agent classes that physically fit here. Capability, not policy: whether traffic is allowed to run this way is `flow`'s business (SPEC §7).",
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "blocked": {
+          "description": "Something stands here — a building column, a pallet — so nothing may occupy the cell even though it exists.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/flag"
+        },
+        "size": {
+          "description": "A hand-declared cell's own extent. A derived cell's is its tile; a declared cell with no size is 900 × 900 mm expressed in the frame's steps — the one physical constant the suffix purge leaves standing, because a default cannot be a step count until a document says what a step is (SPEC §5).",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps_pair_positive"
+        },
+        "legacy_grid_coordinate": {
+          "description": "The coordinate a legacy system recorded for this cell, kept because real lattices drift and the declared frame gives only the nominal projection. Data, never identity, never a key (SPEC §4).",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"type": "integer"}
+        },
+        "location_profile": {
+          "description": "The location profile this cell names: the per-robot-model, per-heading permission table `traversable_by` is the flat reading of, kept whole on the profile entity. Map Creator states it as the profile's id.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        },
+        "location_profile_unresolved": {
+          "description": "The location profile id the producer stated, as it stated it, present only where it names no profile the same document declares — a reference whose target is missing, kept rather than dropped."
+        },
+        "zone": {
+          "description": "The zone this cell belongs to: the e-stop and light-curtain domain a safety event pauses or blocks whole.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        },
+        "zone_unresolved": {
+          "description": "The zone name the producer stated, as it stated it, present only where it names no zone the same document declares."
+        },
+        "size_info": {
+          "description": "The four half-extents a survey states, of which `size` is the per-axis sum: kept because the sum loses where a footprint that is not centred on the cell lies. In the producer's own unit, millimetres for Map Creator.",
+          "type": "array"
+        },
+        "adjacency": {
+          "description": "The four neighbours a survey states, one slot per direction with an empty slot where there is none: the original form the stitches beside the cell are derived from, which cannot state a one-way lane, an impassable neighbour pair or a grade.",
+          "type": "array"
+        },
+        "neighbours": {
+          "description": "The travel grade toward each of the four neighbours — whether a neighbour exists, whether a robot may move to it, whether it may move there loaded — of which a stitch is the ungraded, two-way reading.",
+          "type": "array"
+        },
+        "store_status": {
+          "description": "Whether a movable rack may be parked on this cell, as Map Creator states it.",
+          "type": "number"
+        },
+        "special": {
+          "description": "Whether this cell is where a robot re-establishes its position, as Map Creator states it.",
+          "type": "boolean"
+        },
+        "grid_attribute": {
+          "description": "The cell's classification as Map Creator states it, which the orchestrator recomputes for itself.",
+          "type": "string"
+        },
+        "composite_attribute_list": {
+          "description": "The cell's second, list-valued classification as Map Creator states it.",
+          "type": "array"
+        },
+        "has_storables": {
+          "description": "Map Creator's `hasStorables`, as it states it: a number, or null.",
+          "type": ["number", "null"]
+        },
+        "conveyor_direction_attribute": {
+          "description": "The conveyor direction Map Creator states for this cell.",
+          "type": "number"
+        },
+        "barcode_properties": {
+          "description": "The per-cell robot permissions Map Creator keys by the cell's floor sticker, kept whole.",
+          "type": "object"
+        },
+        "world_coordinate_reference_neighbour": {
+          "description": "The neighbour Map Creator measured this cell's position from.",
+          "type": "string"
+        },
+        "floor": {
+          "description": "The floor this cell's record names, beside the floor its pose's frame says: Map Creator states it on some cells and not others.",
+          "type": "number"
+        },
+        "runtime": {
+          "description": "What was happening on this cell when the producer wrote it down: the robot standing on it and why it is blocked. Live state rather than layout, carried so a consumer can drop it on purpose rather than lose it by accident.",
+          "type": "object",
+          "properties": {
+            "botid": {"description": "The robot standing on the cell, or none.", "type": ["string", "null"]},
+            "block_reasons": {"description": "Why the cell is blocked.", "type": "array"}
+          }
+        }
+      }
+    },
+    "charging": {
+      "title": "charging",
+      "description": "A robot charging point. A marker with no fields, declared individually or through a tiling's `derives` (SPEC §5, §10). This denotes charging equipment, not a generic idle destination; charge-state dispatch is a simulator policy.",
+      "type": "object"
+    }
+  }
+}

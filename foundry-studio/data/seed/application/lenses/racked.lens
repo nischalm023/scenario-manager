@@ -1,0 +1,7 @@
+
+// Census 17's bay without the run above it: every bay of racking, wherever it
+// stands and whatever placed it. What a bay derives follows from its steel
+// alone, so asking for the stamp as well would be asking for something the
+// shelves do not depend on.
+pattern racked { r: rack; }
+lens racked { anchor r: racked; }

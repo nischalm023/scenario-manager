@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 772" width="840" height="772" role="img" aria-labelledby="title desc">
+  <title id="title">The life of a frame</title>
+  <desc id="desc">In the runner container, one per attempt, the simulator appends each final slice's frames to recording.worldview, once, and the runner reads whole frames as the file grows and sends each to the streaming server's /runners websocket as one binary message, the end block last and never the index. Once the run has ended, the finished file goes to the run-object store, stored by the API. The streaming server holds each open attempt's frames; it checks each frame's header, checksum and order, rewrites the scenario block for the browser, computes each metric from the frames' bodies and relays every other frame as written. It appends every frame to its disk copy, live.worldview, and uploads the scenario block and each closed segment to the run-object store. On /frames/run/attempt it sends each browser the rewritten scenario block, the declarations stamped up to the instant it attaches from, at most one keyframe, and the deltas, declarations and end block after it; on /metrics/run/attempt, one socket per metric panel, it sends the rows of one metric as JSON. In the browser the viewer's wasm decodes each frame, draws the canvas and keeps the decoded picture in memory, and the metric panels draw the rows as sent.</desc>
+  <style>
+    svg { font-family: "Inter", -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+    .bg { fill: #ffffff; stroke: #d5d7da; }
+    text { font-size: 14px; fill: #181d27; }
+    .ti { font-size: 16px; font-weight: 600; }
+    .b { font-weight: 600; }
+    .mu { fill: #535862; }
+    .mo { font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; }
+    .cap { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; fill: #535862; }
+    .json-t { fill: #2f6f9f; }
+    .box { fill: #ffffff; stroke: #181d27; stroke-width: 1.25; }
+    .key { stroke-width: 2.5; }
+    .container { fill: none; stroke: #7f848e; stroke-width: 1.25; stroke-dasharray: 6 4; }
+    .chip { fill: #f1f2f4; stroke: #7f848e; stroke-width: 1; }
+    .rule { stroke: #d5d7da; stroke-width: 1; }
+    .bytes { fill: none; stroke: #a95b0b; stroke-width: 2.5; }
+    .json { fill: none; stroke: #2f6f9f; stroke-width: 1.75; }
+    .head { fill: #a95b0b; }
+    .head-json { fill: #2f6f9f; }
+    .held { fill: none; stroke: #7f848e; stroke-width: 1.75; }
+    .head-held { fill: #7f848e; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #13161b; stroke: #373a41; }
+      text { fill: #f5f5f6; }
+      .mu, .cap { fill: #a4a7ae; }
+      .json-t { fill: #7fb3dc; }
+      .box { fill: #13161b; stroke: #f5f5f6; }
+      .container { stroke: #73777f; }
+      .chip { fill: #1b1f26; stroke: #73777f; }
+      .rule { stroke: #373a41; }
+      .bytes { stroke: #f0a53a; }
+      .json { stroke: #7fb3dc; }
+      .head { fill: #f0a53a; }
+      .head-json { fill: #7fb3dc; }
+      .held { stroke: #94979c; }
+      .head-held { fill: #94979c; }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
+    <marker id="json" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="head-json"/></marker>
+    <marker id="held" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="head-held"/></marker>
+  </defs>
+  <rect class="bg" x="0.5" y="0.5" width="839" height="771" rx="10"/>
+
+  <!-- The runner container: the simulator writes the file, the runner reads it -->
+  <rect class="container" x="16" y="16" width="808" height="176" rx="10"/>
+  <text class="mu" x="32" y="42">Runner container, one per attempt</text>
+
+  <rect class="box" x="32" y="58" width="220" height="118" rx="6"/>
+  <text class="cap" x="48" y="82">WRITTEN</text>
+  <text x="48" y="106"><tspan class="ti">Simulator</tspan><tspan class="mo mu" dx="8">dessim</tspan></text>
+  <text x="48" y="136">writes each final</text>
+  <text x="48" y="156">slice's frames once</text>
+
+  <path class="bytes" d="M252,128 H316" marker-end="url(#arrow)"/>
+  <text x="284" y="116" text-anchor="middle">appends</text>
+
+  <rect class="chip" x="320" y="92" width="200" height="72" rx="4"/>
+  <text class="mu" x="420" y="120" text-anchor="middle">the runner's file</text>
+  <text class="mo b" x="420" y="144" text-anchor="middle">recording.worldview</text>
+
+  <path class="bytes" d="M520,128 H584" marker-end="url(#arrow)"/>
+  <text x="552" y="116" text-anchor="middle">reads</text>
+
+  <rect class="box" x="588" y="58" width="220" height="118" rx="6"/>
+  <text class="cap" x="604" y="82">READ</text>
+  <text x="604" y="106"><tspan class="ti">Runner</tspan><tspan class="mo mu" dx="8">simrunner</tspan></text>
+  <text x="604" y="136">reads whole frames</text>
+  <text x="604" y="156">as the file grows</text>
+
+  <!-- The finished file, once the run has ended -->
+  <path class="bytes" d="M340,164 V290 H268" marker-end="url(#arrow)"/>
+  <text x="328" y="214" text-anchor="end">once the run has ended,</text>
+  <text x="328" y="234" text-anchor="end">the finished file, stored by the API</text>
+
+  <!-- Runner to streaming server -->
+  <path class="bytes" d="M698,176 V268" marker-end="url(#arrow)"/>
+  <text class="b" x="684" y="206" text-anchor="end">one binary message per frame,</text>
+  <text class="b" x="684" y="226" text-anchor="end">the end block last, never the index</text>
+  <text class="mu" x="684" y="248" text-anchor="end">websocket <tspan class="mo">/runners</tspan>, internal port</text>
+
+  <!-- The streaming server: holds, stores and serves -->
+  <rect class="box key" x="392" y="272" width="416" height="208" rx="6"/>
+  <text class="cap" x="408" y="296">HELD · STORED · SERVED</text>
+  <text x="408" y="320"><tspan class="ti">Streaming server</tspan><tspan class="mo mu" dx="8">studio/streaming</tspan></text>
+  <text x="408" y="346">holds each open attempt's frames</text>
+  <line class="rule" x1="408" y1="360" x2="792" y2="360"/>
+  <text x="408" y="384"><tspan class="b">checks:</tspan> each frame's header, checksum and order</text>
+  <text x="408" y="408"><tspan class="b">rewrites:</tspan> the scenario block, for the browser</text>
+  <text x="408" y="432"><tspan class="b">computes:</tspan> each metric, from the frames' bodies</text>
+  <text x="408" y="456"><tspan class="b">relays:</tspan> every other frame as written</text>
+
+  <rect class="chip" x="32" y="272" width="232" height="96" rx="4"/>
+  <text class="b" x="148" y="298" text-anchor="middle">Run-object store</text>
+  <text class="mo" x="148" y="320" text-anchor="middle">live/scenario.worldview</text>
+  <text class="mo" x="148" y="340" text-anchor="middle">live/seg-000000…</text>
+  <text class="mo" x="148" y="360" text-anchor="middle">recording.worldview</text>
+
+  <path class="bytes" d="M392,352 H268" marker-end="url(#arrow)"/>
+  <text x="330" y="318" text-anchor="middle">uploads each</text>
+  <text x="330" y="336" text-anchor="middle">closed segment</text>
+
+  <path class="bytes" d="M392,432 H268" marker-end="url(#arrow)"/>
+  <text x="330" y="420" text-anchor="middle">appends</text>
+  <rect class="chip" x="32" y="400" width="232" height="64" rx="4"/>
+  <text class="b" x="148" y="426" text-anchor="middle">Server's disk copy</text>
+  <text class="mo" x="148" y="449" text-anchor="middle">live.worldview</text>
+
+  <!-- Streaming server to the browser: the picture's frames and each metric's rows -->
+  <path class="bytes" d="M520,480 V576" marker-end="url(#arrow)"/>
+  <text class="b" x="508" y="506" text-anchor="end">the rewritten scenario block, the declarations,</text>
+  <text class="b" x="508" y="526" text-anchor="end">at most one keyframe, the deltas after it, the end block</text>
+  <text class="mu" x="508" y="548" text-anchor="end">websocket <tspan class="mo">/frames/&lt;run&gt;/&lt;attempt&gt;</tspan></text>
+
+  <path class="json" d="M760,480 V576" marker-end="url(#json)"/>
+  <text class="b json-t" x="748" y="506" text-anchor="end">rows of one metric,</text>
+  <text class="b json-t" x="748" y="526" text-anchor="end">one socket per panel</text>
+  <text class="mo mu" x="748" y="548" text-anchor="end">/metrics/&lt;run&gt;/&lt;attempt&gt;</text>
+
+  <!-- The browser: decodes and draws -->
+  <rect class="box" x="392" y="580" width="416" height="136" rx="6"/>
+  <text class="cap" x="408" y="604">DECODED · DRAWN</text>
+  <text x="408" y="628"><tspan class="ti">Browser</tspan><tspan class="mu" dx="8">run page and viewer</tspan></text>
+  <text x="408" y="654">the viewer's wasm <tspan class="b">decodes each frame</tspan></text>
+  <text x="408" y="674">and draws the canvas, <tspan class="mo mu">push_frame()</tspan></text>
+  <text x="408" y="700">the metric panels draw the rows as sent</text>
+
+  <path class="held" d="M392,648 H268" marker-end="url(#held)"/>
+  <text x="330" y="636" text-anchor="middle">keeps</text>
+  <rect class="chip" x="32" y="616" width="232" height="64" rx="4"/>
+  <text class="b" x="148" y="642" text-anchor="middle">In memory</text>
+  <text x="148" y="664" text-anchor="middle">the decoded picture</text>
+
+  <!-- What each arrow carries -->
+  <path class="bytes" d="M32,748 H68"/>
+  <text class="mu" x="76" y="753">the recording's bytes</text>
+  <path class="json" d="M236,748 H272"/>
+  <text class="mu" x="280" y="753">JSON</text>
+  <path class="held" d="M352,748 H388"/>
+  <text class="mu" x="396" y="753">decoded state</text>
+</svg>

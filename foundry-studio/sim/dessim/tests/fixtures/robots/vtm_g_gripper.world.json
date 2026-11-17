@@ -1,0 +1,42 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "ee965a35-0372-4d1c-a148-9282fb1ce460",
+    "kind": "catalog",
+    "name": "VTM-G with gripper (DFW6 order buffer VTM)"
+  },
+  "$comment": "The VTM that works DFW6's order buffer aisles, 8 in the map as 'VTM (gripper)'. Figures are the bot specifications Vinay directed on 2026-09-21, from GreyOrange's hardware team (docs/walmart-facts.md section 6b): provisional, 'to be used for this week' while HAI vetting is in progress. No confirmed maker or model: the map calls it VTM-G, Vinay asks 'gripper vtm?', and the draft catalog on equipment/world-protocol-0.8 names HAI Robotics while marking that unconfirmed. The matrix has no Walmart gripper column; its generic gripper column, C56-G-2D, times a pick or a drop at 5.0 s. The directive's VTM rows cover both VTM families, so these figures match the suction VTM's except for the end effector.",
+  "entities": [
+    {
+      "id": "83fffd80-dc1e-41a4-aaef-2bbcd70c82cf",
+      "name": "VTM-G",
+      "components": {
+        "floor_drive": {
+          "loaded": {
+            "max_speed_mm_s": 1500,
+            "accel_mm_s2": 500
+          },
+          "empty": {
+            "max_speed_mm_s": 1500,
+            "accel_mm_s2": 500
+          },
+          "$comment": "The directive states no turn times, and the simulator needs none: it keeps DFW6's VTMs in their aisles."
+        },
+        "lift": {
+          "profile": {
+            "max_speed_mm_s": 1500,
+            "accel_mm_s2": 500
+          },
+          "$comment": "The directive gives one VTM speed and acceleration; the simulator applies them to the lift as well, which is still to be confirmed."
+        },
+        "end_effector": {
+          "kind": "gripper",
+          "pick_secs": 4.0,
+          "drop_secs": 4.0,
+          "align_before_pick_secs": 3.56,
+          "align_before_drop_secs": 2.3
+        }
+      }
+    }
+  ]
+}

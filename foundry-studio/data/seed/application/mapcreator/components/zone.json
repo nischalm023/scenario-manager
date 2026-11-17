@@ -1,0 +1,37 @@
+{
+  "asserts": "is",
+  "component": "zone",
+  "meaning": "the entity is one Map Creator zone: the e-stop and light-curtain domain every cell belongs to exactly one of, which the orchestrator pauses and blocks whole on a physical safety event",
+  "owner": "foundry-studio",
+  "refs": [],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {},
+    "$id": "urn:mapcreator-compat:0.1:components:zone",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one Map Creator zone: the e-stop and light-curtain domain every cell belongs to exactly one of, which the orchestrator pauses and blocks whole on a physical safety event",
+    "properties": {
+      "runtime": {
+        "description": "What was happening at the site when the export was written, as the export wrote it. SPEC §1 separates a world from what is happening in it, so this is here to be dropped by a policy that decides to rather than lost by a converter that forgot — the round trip writes it back.",
+        "properties": {
+          "blocked": {
+            "description": "Map Creator's `blocked`, carried as the export states it.",
+            "type": [
+              "boolean"
+            ]
+          },
+          "paused": {
+            "description": "Map Creator's `paused`, carried as the export states it.",
+            "type": [
+              "boolean"
+            ]
+          }
+        },
+        "type": "object"
+      }
+    },
+    "title": "zone",
+    "type": "object"
+  },
+  "status": "ratified"
+}

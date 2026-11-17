@@ -1,0 +1,11 @@
+{
+  "lens": "stamped",
+  "owner": "agent-studio",
+  "status": "candidate",
+  "meaning": "the authored input projection used by Foundry’s stamp generator",
+  "version": "0.1.0",
+  "text": {
+    "path": "lenses/stamped.lens",
+    "sha256": "bdd92d9f46751578a83f285271b2426f73f2aab3b21cd23a52f200531bcdf709"
+  }
+}

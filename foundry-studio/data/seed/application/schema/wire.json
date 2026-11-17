@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:wire",
+  "title": "world protocol — wire profile",
+  "description": "How a consumer must read a document that arrives from somewhere else. A component this version does not know is carried and ignored, and so is an unknown field inside a component it does know — that is not leniency for its own sake, it is SPEC §9's forward-compatibility rule, and it is what lets one team ship a component without negotiating with every other consumer. What this profile does insist on is the part a consumer acts upon: record kinds, identities and addresses, references, closed enums, and the fields a known component cannot work without.",
+  "$comment": "Validate anything you did not write against this profile, and what you are writing against the authoring profile as well. This file is deliberately thin: the shared shape is the whole wire contract, and the authoring profile is that shape plus a closure.",
+  "$ref": "urn:worldproto:0.7:document#/$defs/document"
+}

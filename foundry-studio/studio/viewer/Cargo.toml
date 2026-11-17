@@ -1,0 +1,39 @@
+[package]
+name = "crucible-viewer"
+version = "0.1.0"
+edition = "2024"
+description = "The browser viewer: a run's own frames decoded in the tab and drawn with worldview-render, over wasm-bindgen"
+
+[lib]
+# cdylib is what wasm-bindgen links; rlib is what the native tests below read
+# the same decode-and-convert path through, with no browser in the room.
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+desgraph = { path = "../../sim/desgraph" }
+desunits = { path = "../../sim/desunits" }
+worldview = { path = "../../worldview/worldview" }
+rustc-hash = "2"
+worldview-render = { path = "../../worldview/worldview-render" }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+console_error_panic_hook = "0.1"
+js-sys = "0.3"
+wasm-bindgen = "=0.2.106"
+wasm-bindgen-futures = "0.4"
+web-sys = { version = "0.3", features = ["CanvasRenderingContext2d", "HtmlCanvasElement"] }
+# Both browser backends: wgpu picks WebGPU where the tab has it and WebGL2
+# otherwise, and this is the one place either is asked for — `worldview-render`
+# takes no backend at all, so desvis's build is untouched by this line.
+wgpu = { version = "23", default-features = false, features = ["webgpu", "webgl", "wgsl"] }
+
+[dev-dependencies]
+bytemuck = "1"
+rustc-hash = "2"
+rmp-serde = "1"
+serde = "1"
+# The floor a browser is sent is compiled from the recording's own world
+# document, which needs the simulator's map compiler: the server's job on the
+# wire, and the test's job when it reads a file instead.
+dessim = { path = "../../sim/dessim" }
+worldview-floor = { path = "../../worldview/worldview-floor" }

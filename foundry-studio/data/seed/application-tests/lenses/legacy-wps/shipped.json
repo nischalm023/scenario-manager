@@ -1,0 +1,15 @@
+{
+  "owner": "world-team",
+  "status": "candidate",
+  "version": "0.1.0",
+  "text": "world.lens",
+  "lenses": {
+    "easyloop_station": "one EasyLoop machine, with the cells it stands on, its ports, its pick places and its waiting cells",
+    "lane": "one queueing lane, with the cells its path names",
+    "rack_bay": "one bay of racking, with the shelf positions that name it and the handoff relays bound to it",
+    "placed_station": "every station that has been put somewhere on the floor",
+    "pick_station": "every pick station",
+    "floor_cohort": "every fleet cohort of a floor-going robot class",
+    "vtm_cohort": "every fleet cohort of a vertical transfer machine"
+  }
+}

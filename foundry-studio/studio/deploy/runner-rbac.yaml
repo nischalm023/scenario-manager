@@ -1,0 +1,39 @@
+# What the cluster must grant for Agent Studio to run its attempts as Jobs (spec 08 section 3.5; the kube invoker).
+#
+# The one permission that cannot be an environment variable: the API's service account creates a Job per attempt and
+# then its Secret, which the Job owns, reads the Job, lists its pods, and deletes the Job on stop; the garbage collector
+# deletes the Job's pods and its Secret with it. A runner pod needs no other Secret and no permission: its token and job
+# spec are in the Secret its Job owns, and the rest of its environment is set variable by variable, so no database URL
+# or credential reaches a runner (ruling D174).
+#
+# Apply in the namespace the runs go in (STUDIO_RUNNER_NAMESPACE; unset, the API pod's own), with the API's service
+# account and the namespace the API runs in named in the binding's subject, which may differ from the runs'. A namespace
+# of the runs' own keeps this Role's rights on Secrets away from the API's own. The runner pods run as that namespace's
+# default service account unless STUDIO_RUNNER_SERVICE_ACCOUNT names another, and mount no token of it.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: studio-run-invoker
+rules:
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create", "get", "delete"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["create", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: studio-run-invoker
+subjects:
+  - kind: ServiceAccount
+    name: studio-api            # the API Deployment's serviceAccountName
+    namespace: studio           # the namespace the API runs in, not necessarily the runs' own
+roleRef:
+  kind: Role
+  name: studio-run-invoker
+  apiGroup: rbac.authorization.k8s.io

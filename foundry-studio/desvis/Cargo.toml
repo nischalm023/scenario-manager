@@ -1,0 +1,47 @@
+[package]
+name = "desvis"
+version = "0.1.0"
+edition = "2024"
+description = "Interactive warehouse graph visualizer"
+
+[[bin]]
+name = "desvis"
+path = "src/main.rs"
+
+[features]
+walmart-demo = []
+trace = ["dessim/trace"]
+perf = ["trace", "dessim/perf", "native-modules/perf"]
+debug-logs = ["dessim/debug-logs"]
+pathfinder-trace = ["dessim/pathfinder-trace"]
+
+[dependencies]
+desgraph = { path = "../sim/desgraph" }
+desmap = { path = "../sim/desmap" }
+desunits = { path = "../sim/desunits" }
+dessim = { path = "../sim/dessim" }
+# The tasks: a program that runs a simulation, or reads a spec or a recording that names tasks, links this crate
+# (`use native_modules as _;`), or it finds no task by name.
+native-modules = { path = "../native-modules" }
+workbook = { path = "../workbook" }
+worldview-render = { path = "../worldview/worldview-render" }
+worldview-floor = { path = "../worldview/worldview-floor" }
+site-model = { path = "../sim/site-model" }
+rustc-hash = "2"
+eframe = { version = "0.30", default-features = false, features = ["default_fonts", "wgpu"] }
+egui_plot = "0.30"
+rmp-serde = "1"
+zstd = "0.13"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = "0.4"
+clap = { version = "4", features = ["derive"] }
+indicatif = "0.17"
+rayon = "1"
+bytemuck = { version = "1", features = ["derive"] }
+image = "0.25"
+
+[dev-dependencies]
+# The live intake's test reads which frames its fixture's recording holds.
+worldview = { path = "../worldview/worldview" }
+zip = { version = "7.2", default-features = false, features = ["deflate"] }

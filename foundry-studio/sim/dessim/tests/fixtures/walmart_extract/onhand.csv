@@ -1,0 +1,5 @@
+item_id,channel,Velocity_Band,length_in,width_in,height_in,weight_lbs,item_cube,on_hand_qty
+9000000001,1P,Superhead,3.25,3.2,1.35,2.0,0.008,100.0
+9000000002,1P,Head,11.75,8.6,1.0,1.0,0.058,50.0
+9000000003,1P,Torso,8.6,8.15,3.05,4.0,0.123,25.0
+9000000004,1P,Tail,15.7,11.7,1.4,0.5,0.155,10.0

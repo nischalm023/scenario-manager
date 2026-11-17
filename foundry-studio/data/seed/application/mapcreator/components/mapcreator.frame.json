@@ -1,0 +1,40 @@
+{
+  "asserts": "has",
+  "component": "mapcreator.frame",
+  "meaning": "the frame has the role Map Creator gave it: the site frame, the floor, the nominal legacy grid declared for projection only, or the robot vendor's — plus, on the floor, the floor id and the barcode of the one cell the export offers as a vendor-frame sample point",
+  "owner": "foundry-studio",
+  "refs": [],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {},
+    "$id": "urn:mapcreator-compat:0.1:components:mapcreator.frame",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the frame has the role Map Creator gave it: the site frame, the floor, the nominal legacy grid declared for projection only, or the robot vendor's — plus, on the floor, the floor id and the barcode of the one cell the export offers as a vendor-frame sample point",
+    "properties": {
+      "floor_id": {
+        "description": "The floor id `map.json` states, on the floor frame. One export is one floor.",
+        "type": "integer"
+      },
+      "role": {
+        "description": "Which frame this is: `site`, `floor`, `legacy_grid` or `vendor_vda5050`.",
+        "enum": [
+          "site",
+          "floor",
+          "legacy_grid",
+          "vendor_vda5050"
+        ],
+        "type": "string"
+      },
+      "vda5050_reference_barcode": {
+        "description": "The barcode of the one cell `map.json` offers as a vendor-frame sample point. SPEC §4 names a sample point in place of a transform as the anti-pattern; the transform is declared on the vendor frame instead, and this is the sample the export stated. Its other half — the vendor coordinate — is that cell's own field, so the export rebuilds the pair from the cell.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "role"
+    ],
+    "title": "mapcreator.frame",
+    "type": "object"
+  },
+  "status": "experimental"
+}

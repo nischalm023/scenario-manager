@@ -1,0 +1,29 @@
+{
+  "python.REPL.enableREPLSmartSend": false,
+  "files.exclude": {
+    "**/.pytest_cache": true,
+    ".ruff_cache": true,
+    "node_modules": true,
+    "package-lock.json": true,
+    ".*": false
+  },
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "xml.format.maxLineWidth": 200,
+  "xml.format.splitAttributes": true,
+  "xml.format.preserveAttributeLineBreaks": false,
+  "editor.foldingImportsByDefault": true,
+  "files.associations": {
+    "*.py": "python"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "python.terminal.activateEnvironment": true
+}

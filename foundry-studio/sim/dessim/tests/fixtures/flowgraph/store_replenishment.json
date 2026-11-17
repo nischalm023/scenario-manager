@@ -1,0 +1,1843 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "29c09f09-e08f-496d-abc5-5dfa7ccb8dac",
+    "name": "Store replenishment: the flow compiler litmus fixture",
+    "kind": "scenario",
+    "depends_on": [
+      "cf9e92de-6097-5ce9-b998-47464db1226d"
+    ]
+  },
+  "layers": [
+    "../walmart_dfw6.json"
+  ],
+  "$comment": "Spec 06 section 9, statement 4: a store-replenishment relay flow with an EasyLoop-like lane, a compiler fixture only, never a template flow or a product example (rulings D91, D102). It stands on the map of the study it is checked against, adding the sectors the flow needs, and names no aisle, VTM or cohort but the free HTM fleet: each VTM segment is {assigned}, resolved per rack row by the compiler (D105).",
+  "entities": [
+    {
+      "id": "fb1c7fca-8342-4f99-afb0-a1cf8d0c6476",
+      "name": "aisle 0: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "fe82121e-3931-59e1-9a31-052adb34e79c",
+            "b46becee-ce46-5f6e-ab86-c529f2239e95",
+            "8f4ba791-c880-5bf3-9093-edc73bcc0466",
+            "02663690-2fad-5811-83d9-213e5ca47be0",
+            "9f2c799a-5fd5-5fa8-9188-6d8b3b2d4ad4",
+            "9de49fec-57e8-51e4-9015-e52da70d02c6",
+            "279d10a6-8a58-5548-8929-3aac7e73ebe1",
+            "0f9ba8c0-26aa-5f62-a4ec-98c70c044ada"
+          ]
+        }
+      }
+    },
+    {
+      "id": "3d2e90ab-2324-4e1a-9263-7b3a6be7fa31",
+      "name": "aisle 1: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "7fdc71d1-c525-512d-b5e7-89217d2ab3b2",
+            "3d50cdfc-20a8-5525-b0db-66e03dfecb31",
+            "a15977a5-2404-5820-bdd0-a131445943b4",
+            "00045e65-de24-51f6-b575-d6bd3ff055b6",
+            "f0d69766-b4a4-5f83-929d-6a2b74dd0a2f",
+            "7a4f55fe-dbec-566c-9678-b2871645527e",
+            "85fa7b90-7226-5832-b0dd-7296eb0b1321",
+            "0ef518b0-9981-532a-baa0-68a456c4835e",
+            "951369da-2ec3-5a9c-9879-46eedb8774c5",
+            "53ef65b8-e1d5-5929-9891-a950fc2b438d",
+            "6dcf83b1-8e78-5e24-874c-9705b04253f8",
+            "a23bef47-0318-534e-a5c8-743232adec3e",
+            "da23e139-2afb-5f08-b95b-b6e43ae016e6",
+            "5d4746c9-3765-58fe-a5f7-e6ac1cf446f7",
+            "172dc59f-f9a3-516b-971b-23a13408a839",
+            "eff68d3d-8b98-567a-a86b-9c397eed2110"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c86d9e75-6572-4938-820d-223275b2da2c",
+      "name": "aisle 2: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "a4437a6b-336b-5070-b053-f66ba7ec8a9c",
+            "778f94f8-a0c0-5088-bbec-bedede24ae0f",
+            "d06a7701-1cb6-5da0-a9b9-215073babc84",
+            "a8602747-1450-5156-91ae-e11415c15413",
+            "441ddeb6-557c-5c20-916a-bd1d70cae4e9",
+            "ab42c659-91db-5cdc-8c14-25cafd0b2ac7",
+            "37203b81-ed4a-5ce1-93f1-9fca6fa86025",
+            "ce6dee32-8237-5c43-b0bf-da9abab2e131",
+            "43d60592-be4e-5f20-8064-d232e7b9c602",
+            "56b70d83-aa83-5434-add9-5735606a69b8",
+            "16cf3a6b-378f-53dd-a71c-5d4c070cc84c",
+            "b54a3e56-cf24-52d3-a21e-c67b16256c1d",
+            "91d18cef-56e1-5f96-85dc-e1e24c704357",
+            "13474732-f6e1-514f-8ef2-b43f398f6732",
+            "1d364881-47f6-59fa-b0e9-cab562e68d1b",
+            "3d47b0c2-75d8-5b9f-abfb-bab01e49731f"
+          ]
+        }
+      }
+    },
+    {
+      "id": "546d20ac-e5ab-42ea-9b03-74bb9a5ad3ae",
+      "name": "aisle 3: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "1b1f8ee7-58ff-5c3e-b9a4-a757913f6938",
+            "9dd4e96b-c8ec-50ca-81b3-6df49003f3bd",
+            "e05c0d72-87e2-5a50-9723-0cc486fd5c10",
+            "f17a19ca-f018-5c91-a282-8c0b30a2a4b7",
+            "18c379a4-cabd-5707-82e1-bc7e71399f85",
+            "c61c4d98-6c36-5ed0-961c-2ce723730043",
+            "e3e145ed-75ee-5724-8268-6c4a10231561",
+            "d3ec2d6f-945b-57d1-bc78-e59946afddb2",
+            "c9914b4a-34a5-5ba8-af93-55d9775d451e",
+            "5433746b-f284-50ec-8552-4563b0bb1d33",
+            "fed9c2a5-bbe7-5aa8-b22c-3a2a15d8dc00",
+            "208d6681-13f8-5dcb-b3b0-d291ac7f81e4",
+            "e80d0508-e4fd-58dc-9b58-8fbdb9bd7b26",
+            "99f04513-5610-5523-aacb-5c84649b49e9",
+            "0bda869a-b805-53f8-b998-89ffe63bfaf6",
+            "d3ebdcc4-40ed-59a3-8e54-184dea3767fa"
+          ]
+        }
+      }
+    },
+    {
+      "id": "6e42af31-af9f-47c6-92ba-ee17b92eeb56",
+      "name": "aisle 4: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "b0c95417-5dcf-5529-aac2-a3a790632c92",
+            "6a916d1f-d113-5e70-b309-c363d8d47fa0",
+            "65713836-fa4b-59b0-9f73-115c3e2dff30",
+            "b37c5db5-ebbf-55f0-9a0d-7c1ce9ae9e41",
+            "b088c4a5-78c1-5bc8-bd91-365f7bd6f782",
+            "e4e4036e-da27-59b0-824a-f8c34394db35",
+            "17a41517-1e68-5642-be6f-b9aa4a44c965",
+            "4643a949-8a64-5a11-b360-e51f72d5efc0",
+            "d99213f9-2006-5735-baa4-194c0867fc9f",
+            "b6446ea1-aa61-5eb7-b566-351821ad8b0a",
+            "c4329347-30b2-57d1-b9e0-8e17ea228c03",
+            "96be25f9-b102-54c5-a12a-0a0a76119961",
+            "fcada990-2fbd-5b15-8fe4-6b8dcc26b719",
+            "0ee66ef7-6319-5692-90db-f284adb1f69b",
+            "7fd45e93-62da-5859-ab9f-9fe3f7980247",
+            "ae69fdd3-e181-5e45-8afd-31ddbdfad362"
+          ]
+        }
+      }
+    },
+    {
+      "id": "8bccbcdb-97bf-4cba-bf23-99d5723faa86",
+      "name": "aisle 5: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "5f9e284b-9684-51dd-a871-860bcafdc822",
+            "96193d18-ac44-5c52-b900-b478bcbd08e3",
+            "27f27f29-8d8b-59e4-a808-a2d7e675fe40",
+            "a8fa391e-db49-57d0-8ae9-919f9a38a396",
+            "2ebf1862-720d-51b8-8bad-8f71c7525143",
+            "6644ae8f-3129-5d1a-ba0f-08e2edb951c7",
+            "f1ad1942-2941-5f10-83a0-7e615af45db8",
+            "ed70f683-46be-568c-a4f6-9e3194bd506a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "569caa92-b8ac-4d2b-9f5a-ae23e8fce92e",
+      "name": "aisle 6: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "99dbe121-8967-5266-9277-56495607df34",
+            "33caa99b-6ac6-5f68-835a-803c8a676f99",
+            "7434128c-a265-5060-8e5f-608fdccaa48a",
+            "24e7650a-8b3b-5031-8b0b-8b064df5e1b2",
+            "862072c0-3ba3-58d8-9d42-8410a1846016",
+            "4d920864-8fc2-578b-92c0-8c72e9587867",
+            "17c20a61-6005-5056-81e2-83e19b237fe8",
+            "5f2df3c9-d100-575c-ae73-b1ea9bbe01f9",
+            "49cc600e-1fe4-5965-bfb1-a66e91180a4a",
+            "56ae1482-1cac-5845-bda0-6778721b9850",
+            "96c2e7ba-ce57-59dd-be3e-2359c74aaef4",
+            "0375fffd-0200-573e-9fc9-a73437890b9a",
+            "d25f199c-e84d-503e-a4d4-5de9d069640a",
+            "61b09602-eb72-5ef0-90bb-32e35890673a",
+            "060e0e0c-8c91-5b6d-bce6-1fc879a32a2c",
+            "d8033b71-daf9-5d7d-9c3f-c0e9f36b9d90"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cf75e0b5-5dd8-4a5d-b540-229f02ef5c32",
+      "name": "aisle 7: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "442c23de-ac95-513a-bdd6-5d059fe3643f",
+            "48b7402c-9448-5acb-a0ae-3cc78dda4e1f",
+            "f917ba1a-bfac-59d5-8731-dabe9194f02b",
+            "3a737e80-5b40-56ee-bcaf-e316a149e59d",
+            "731e7923-b8ac-56e3-874c-1b9a2ca8a427",
+            "c7f2c610-9ddf-57c2-8861-071caefab51b",
+            "18c2fccf-2209-52a0-8c34-9cb7b464f028",
+            "94807826-27cc-5412-9358-08ab571dbccd",
+            "263b8add-6abb-5163-88c0-3d6e0ea6040d",
+            "09bc23c5-300c-5251-9cc6-218db287831b",
+            "023acd2a-e4de-5088-99f7-5648f02e16f5",
+            "89532955-c0d8-5639-a1cf-7257deadfdc2",
+            "2b7e8ae5-ffc9-5d22-b5d6-4f14615945f2",
+            "d1296038-8f2e-5722-9054-e0963cf4ee9d",
+            "f4bb1425-9901-53a1-acf6-b416fe857e89",
+            "4acc654c-ea08-5082-a944-da80d466ef35"
+          ]
+        }
+      }
+    },
+    {
+      "id": "261b19a1-48e2-4ee7-93ea-1c851f62f45c",
+      "name": "aisle 8: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "ae48023f-7db9-5fe0-8e1e-74b4a84ad136",
+            "37379106-6a3b-58e5-a6d7-98786c30135c",
+            "74b5e95c-b79d-50b8-a58d-dd3be282c9ad",
+            "fe98fe97-861c-5de3-a2c7-0a1e8fbb9603",
+            "26d01839-10c1-56ad-80c4-7279e014939c",
+            "fc3158b6-b4ea-5d28-accc-c5a780255fa0",
+            "683bb1af-1cdb-5d1c-b52f-35ef3ba6cbb2",
+            "5f9e0e9c-fde2-5c1e-82ac-531c8748b7a3",
+            "2367b1ab-8a02-5ebc-9b6b-d76ddbaca29f",
+            "5539ed0c-9668-5a2b-8716-d34a736f41c2",
+            "0131e117-0ba9-52c5-8bfd-e14d9ad2d5ea",
+            "8d8e6aab-53cc-563f-9dae-76a0122c0719",
+            "26a1dd84-0ba1-57a9-9128-de9cb09befcf",
+            "d45c0deb-5300-5be7-bb8b-44670fa4bd40",
+            "97d2c120-c143-5b37-b87b-ce873850a7eb",
+            "c58c12f1-af15-5977-96be-da46563e2ba4"
+          ]
+        }
+      }
+    },
+    {
+      "id": "4732b0d6-b4f9-4311-bd93-84e195377ddd",
+      "name": "aisle 9: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "0ed35736-bfad-50f6-a548-1f4bdd5b850b",
+            "14c4cdf9-d3dc-521b-b6c9-f77c52f2d84d",
+            "6c5e8668-7633-5114-b152-0226ad30e306",
+            "281012d9-3151-58c5-9139-c68228bcb87f",
+            "4bcd737d-542c-5370-9e06-302c166ad01c",
+            "8adb108c-3c27-5ced-870b-eb64905438eb",
+            "7b8599b6-f351-598c-9efc-c5e95c555b76",
+            "c65f82a8-f046-5bd1-a588-eaffb56cd8d0",
+            "ff9d2ec9-b00f-5252-ae4f-18e1290f35d8",
+            "5b6394bb-f083-55f4-a1f8-5a6c57e0d63e",
+            "9b54451c-ceb8-5693-bb01-e868f5a532a6",
+            "7feffd1f-ca1b-5b54-9578-554647cf5d06",
+            "daa976a9-f5eb-57ae-9e2a-de42c4ffceee",
+            "6c513cfd-8860-517a-88a1-73b0182c966f",
+            "64170e2d-9970-5186-8e31-c27d2e730f26",
+            "16bea024-a893-5edb-87ea-69d492dcebd8"
+          ]
+        }
+      }
+    },
+    {
+      "id": "2e963a9a-0393-493f-9b54-2a207dcdf227",
+      "name": "aisle 10: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "0a42045e-3b26-5b03-ad22-5478f3426b42",
+            "9de3ff81-806e-5f6e-9bd1-0792a92e9673",
+            "be812e28-9742-5f60-8a51-995d75b8b668",
+            "1b12a9c6-c287-57ba-a484-72a37eaa9213",
+            "40d2e316-fa33-522b-a74f-bc8540d11dd7",
+            "49babc15-e74f-5f1d-b2f1-48caf9342d8c",
+            "cf26d50d-17c7-5376-b027-f66512a9e376",
+            "a179b629-937a-5b9a-9699-0df94f5f24dd",
+            "06397d74-806b-59de-b05e-1685a4277cb4",
+            "167230fc-d72b-5b0c-87ef-6d661398d723",
+            "f9343038-f871-5e8f-8039-a5c72ff84718",
+            "d38cf1e7-0fed-535c-95ff-6e838ffd4f54",
+            "80d3b6be-1b06-504c-adb5-f254cb58a253",
+            "47d9b023-7655-55be-94fe-7c2c637024e7",
+            "bf2dcc79-b97d-5a75-ada1-2bb18cc30a29",
+            "b099f9ba-e4fa-5301-86c1-2f14d18bbcb5"
+          ]
+        }
+      }
+    },
+    {
+      "id": "0c96216e-e088-4fb4-8c2f-f267a20e13de",
+      "name": "aisle 11: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "7db4ad11-508a-5003-b321-ce7e908631ea",
+            "f8b468fd-0b0f-5416-be9c-715088988205",
+            "476176aa-60f5-5e78-a084-87d4d5c170de",
+            "dc3cf2a1-73cc-5f7f-b113-8f55779dcba4",
+            "bd16657d-80ce-53b4-a4bf-f69851a4926a",
+            "6722411c-bd72-5d97-8c0f-fff13f2052ba",
+            "2232032b-236f-5dc8-a3d3-95f643aa00db",
+            "232030e2-1a3b-5759-bfd5-b3d8f66f55b2",
+            "5b25d542-1190-53b4-bc60-9add15229064",
+            "a057dcfe-b33f-5878-8cbe-efb6049c52d9",
+            "91c5c6c4-b6be-5cd0-8b50-fe05f15e7ba5",
+            "738f064a-d817-53d7-aaf5-9ab94b1da30c",
+            "7293f911-fcb7-5189-8a20-2cfbca2ebc11",
+            "44fe0f78-259e-5c3d-997d-9bbd90bdce2b",
+            "f7bd4ea9-e101-51ec-bfcb-a7a6c4a18761",
+            "f4534ab3-d8d9-5168-9c9d-c0599f31db8e"
+          ]
+        }
+      }
+    },
+    {
+      "id": "76d65497-cfb3-4c64-85c4-fc0384ac4966",
+      "name": "aisle 12: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "8d7c643d-667b-5a72-97ae-b045c6614b9a",
+            "005405a0-fa68-5f7a-888a-0eb29ed6ede0",
+            "0eef117a-373d-5a40-beac-d6f30faa564b",
+            "5fe06116-48f2-5515-9280-8aa9430c6456",
+            "327bc1bc-dfeb-5916-bf0e-5612538865d8",
+            "88b2d105-522d-5287-ac3e-65eb80063b5a",
+            "31a56732-a884-5a3a-b146-af7688d9f5ed",
+            "aeb4985e-42c0-57e8-aeec-75a805a4923d",
+            "d39c205f-218b-5121-ab13-9a80a9c70f52",
+            "3cc3c7ca-f05c-565a-a265-8e67206c5d1a",
+            "6e952a85-df38-54d4-8e79-2ab9cfbe89ef",
+            "374dca07-e9be-5452-8961-02751956546f",
+            "69477dba-16f5-5d2b-9285-0fa166e9a769",
+            "b290aa86-fc90-5c9e-83a3-9fa5d934e2f8",
+            "4e91f468-15dc-51eb-951c-3d38e7a797ee",
+            "abaf3903-3ad1-5d3b-990b-4ea1e9f7d27f"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c1604712-632c-43bd-a215-3d63e301bdf3",
+      "name": "aisle 13: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "24b9445f-2077-5976-a9b4-caa65b2250cc",
+            "cde7380b-3315-5a83-aad2-e8d05bb76f63",
+            "8645fe94-8e7b-5655-a4fc-574f5b1ad4af",
+            "de01e665-2ad8-51dd-8a2a-add50ed82b16",
+            "ff70498e-0347-56cd-b268-928520a8e5e7",
+            "77c37394-195b-53d6-abc2-76aab6fab051",
+            "34f5cfc6-c01a-5c24-bb20-2034c1e1f0e8",
+            "07e35433-efce-5896-b9ff-429c80468378",
+            "3d66ec10-bdf6-5ecd-91a2-d31b085bffb1",
+            "d948a511-b420-51f1-85d3-007a6ef02078",
+            "b48a4207-ba3a-5b39-83b7-72cfd18df663",
+            "6ca9c531-1fb4-5fd0-9f7a-051839a7cb80",
+            "a01dca1f-4ba8-5746-9907-d226fd62b97a",
+            "20ef4385-56df-5dab-bbf0-d569948c68d4",
+            "5b99dcb3-0094-57d2-9428-b17ea914c53c",
+            "34c79b3e-933b-5962-971e-b8e2c9c5cfe3"
+          ]
+        }
+      }
+    },
+    {
+      "id": "f897851f-4c25-4786-913e-e86cbd88cfbe",
+      "name": "aisle 14: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "253950da-498b-5eea-a914-f0640a7b3176",
+            "389da470-3f6c-596a-a9a3-9a7ff25ed191",
+            "925b51db-ac73-5f54-acce-cff59928f9d2",
+            "f73c630a-8039-556f-89e3-b1456ca247ac",
+            "5e1364c3-8726-5cf1-9e02-32dc44d38fc5",
+            "16e8936c-3d76-5abe-9281-93e6cb516d86",
+            "a3ea5d35-7ec1-5405-906c-f654288ee022",
+            "96265154-4f9c-55a1-97a9-c8eab635b7fd",
+            "a15f1612-5619-517e-a255-d579cb3190f9",
+            "99d802a9-f6ff-559e-a40b-e4146e653191",
+            "c662f488-38c5-562f-acc3-760e53ab691c",
+            "15dfce59-2c5c-5e9d-8e85-e210453f53f1",
+            "2d43dcdf-9ecb-5752-bc71-c45b18048e57",
+            "0048772d-0959-599f-8f61-6ded79e884a6",
+            "2a598aa5-269a-54f3-a7a0-f2496a09d394",
+            "5fb4172b-6f13-5da3-973e-5cbf15748cef"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a2f004a9-e61d-4b83-9073-7fdde9ae391a",
+      "name": "aisle 15: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "f67a3998-7991-543f-b357-497856eb0676",
+            "4c7d2c01-550a-542b-86c2-6772d0b9d15e",
+            "6f44345a-932b-5fe6-9fd5-5e4785666fc9",
+            "33b84378-8767-57f4-a68c-6d91ec6ccbab",
+            "266fc316-790b-54fd-980b-9fd8da0c06c9",
+            "6442298c-c72a-5aab-ae6f-e12f61d78f5f",
+            "ec5bdcbd-ebcf-5eda-85c9-afe6e0d5aa9f",
+            "de887a42-abd6-5858-ac35-3f004fa38753",
+            "211294cf-3900-5a22-b04a-ff0e60217475",
+            "7efb512a-3ab9-579f-9a29-f6c83a1098c0",
+            "911372fe-9034-565a-9543-a42cdd223c2a",
+            "acf9f48b-0eef-5fac-820e-8b1312b4d9f5",
+            "202eee54-ab3e-5220-8f5b-748225a65b63",
+            "7785e61c-c65d-55bb-9b8f-0fb7629e53d2",
+            "7378eb9a-b083-568f-b350-1b44f298dad6",
+            "cc5a3be2-af96-5f4f-b631-ad4b88ea952e"
+          ]
+        }
+      }
+    },
+    {
+      "id": "e14fb495-2bdb-4f31-92e2-298423d034c4",
+      "name": "aisle 16: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "37885801-9def-5dae-bd24-c93f468aea06",
+            "841d9010-94ba-5e32-b3e0-43b562e4ff22",
+            "183a2c25-61be-53d8-acd5-fa697a4317db",
+            "738502f8-efd6-5c88-8a6b-2ecbcc6300d2",
+            "a05d9160-79fd-5806-bd50-f6931d4a5a8c",
+            "80db8954-e12d-54ca-8acb-6f15ca335472",
+            "e20c0816-d7da-5e80-8b4f-e07b4ba37017",
+            "1c249707-1ca3-5f47-8c9d-baee73be498f",
+            "ce460ed4-ea3b-5bb5-8286-d05139dde363",
+            "e9291ef6-1f7e-5176-b7b4-c584fd2eae49",
+            "aca48b04-eb63-533f-88c0-34710c8901e8",
+            "c222ec6e-0e3e-5dff-bb27-8e3db0c4405d",
+            "5eea2e10-765f-5f3d-a4f3-4e4dc71cb747",
+            "673ae64e-7bad-56ff-a3bd-a12ac1ce0f0d",
+            "0088014d-571c-5bf0-b7bd-0b02b45530d0",
+            "fae6a319-1c0a-5d8e-8666-7c5f6de95487"
+          ]
+        }
+      }
+    },
+    {
+      "id": "8b589e64-5dc8-47fd-9e19-c25e0322507e",
+      "name": "aisle 17: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "71895d3f-eef7-5624-9c0c-2530ada0d822",
+            "f62ab03f-9746-5ce3-ac65-c975b7804980",
+            "e216ac82-f595-5efe-a46b-8191a136003e",
+            "8955a769-450b-55dd-bfad-7b2bea90a496",
+            "f0392a27-67f6-5998-bbd1-a0413ac95a98",
+            "9c6ea13c-f82e-5de4-ba84-c6af87cf8167",
+            "1a75439a-6204-5757-8db2-edc4ceb66e30",
+            "2d63055b-b819-57cf-bac8-c9eee3695eef",
+            "c611e435-629d-5a14-96d7-f8aea8d46a7e",
+            "653d0bd2-5f8d-51d7-9c61-81be002aed85",
+            "798a7590-0867-5d2d-b034-2fa7d807aaa4",
+            "2d90a02d-dcd8-5e34-8802-520a8780382f",
+            "154dfcdd-20ab-5626-b0e6-5a7b99378a7a",
+            "08944077-5e03-5f01-9cf7-eca2d989b532",
+            "d3626b3c-d19b-57da-bf77-7af19a84f5ca",
+            "1df231ab-e459-5ee8-9001-88f58ec6f624"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cd655720-cf61-4c27-9851-3b4517d1de84",
+      "name": "aisle 18: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "044a7989-f67a-5618-8db3-251a54b7842f",
+            "20345679-015f-5059-ab2a-078e642b21fa",
+            "032dd223-95aa-5f64-b66d-b09486a9e100",
+            "4d108012-8e4a-5ec8-be45-4edbfc8b6a2d",
+            "bd37af6a-eaef-528a-919c-672c770e198c",
+            "481ffce3-0866-53b2-8c61-6b672900841c",
+            "dea62db4-6afc-5b89-b177-af47a6374168",
+            "590d9176-2360-54b0-89e2-31de49773937"
+          ]
+        }
+      }
+    },
+    {
+      "id": "609cf6cd-cb13-42df-bf3e-cb2ef0eb3e00",
+      "name": "aisle 19: inventory rows",
+      "components": {
+        "sector": {
+          "members": [
+            "dd6b87aa-8ff3-5eaf-8372-09474ccf8aa1",
+            "cbf26c9c-d547-5f51-ba66-3f8b5b92d343",
+            "06104159-200b-5126-88a5-b805bab021f4",
+            "31317a14-1f80-5ca2-9df0-b85abba2124b",
+            "d63b5174-3f70-5de3-8e7b-f7070d3cdc77",
+            "f860f343-6469-5684-a7d0-0052bf7a0911",
+            "b1cb64ee-5996-546e-8e05-8c452f27d3bb",
+            "43509e13-0a60-5a50-862d-32a0a85c8bde",
+            "822f0604-ecb6-543d-ad53-dc94f3d87a92",
+            "123053b4-e7d0-5e0d-9a0f-84c27d26ccc5",
+            "4b5ebaf5-c59a-53db-9b1c-c2287dbf5b8d",
+            "ea82857a-e76a-5074-86da-474a67d7570b",
+            "1d5bf732-5da4-5e1f-9a3f-e6539b9bb67c",
+            "e16c57d5-6c7a-50f1-8266-a1213fcf323d",
+            "64511ec5-6e39-5d3a-be0c-b1c4b375f4b8",
+            "5f5fec88-3f03-54e9-8524-d15b7880357f"
+          ]
+        }
+      }
+    },
+    {
+      "id": "606e5ac2-78a9-4793-8792-afcfbc27105b",
+      "name": "Put stations",
+      "components": {
+        "sector": {
+          "members": [
+            "0a353c67-8d70-5fdb-8496-4c7c855354b9",
+            "86fbfa73-7a5b-5c0d-8da7-7abcf710c7b5",
+            "88757463-0260-5fad-91fb-22d1b3a75b59",
+            "8b693aa6-a755-5ab6-85e4-bab884dc3e63",
+            "ded41cd0-76fe-5b68-a1b8-2c721816428a",
+            "fc5692b9-872d-5c4f-9024-9272cc56bda5"
+          ]
+        }
+      }
+    },
+    {
+      "id": "fc68123a-b91d-456d-a03c-cc4348836e84",
+      "name": "Box induction",
+      "components": {
+        "sector": {
+          "members": [
+            "7212b2a4-f507-583d-ae13-d3896463ba87",
+            "aacad52c-0690-5730-b7d7-0b1d850cf701"
+          ]
+        }
+      }
+    },
+    {
+      "id": "0f76b7cb-d921-44ba-9760-e9c23e0d5a92",
+      "name": "EasyLoop machines",
+      "components": {
+        "sector": {
+          "members": [
+            "3db66753-3f23-5177-85a4-640e1efec2b8",
+            "3f37eca5-d5a6-5d93-90c2-8e700aaae767",
+            "5a2c0749-c5c5-5931-ac41-6aa3f0790b34",
+            "c9a069b8-f5dd-5d1c-b0a5-65329c899cd7"
+          ]
+        }
+      }
+    },
+    {
+      "id": "e1195b40-8dc0-45e3-829d-ffca7cd1122f",
+      "name": "Empty order tote row",
+      "components": {
+        "sector": {
+          "members": [
+            "003f4329-04cc-5542-bc60-7d5d617f757b",
+            "02d3d5df-3c1e-5806-8361-ec45686bfee7",
+            "0b565f51-1eb8-5243-b56e-d54ce1b381f6",
+            "1acd4400-f1cc-55d1-b77b-32d782e4c300",
+            "26cdad1f-33b2-528f-8dcd-aa71efd3823f",
+            "3294d971-d4b2-5f24-8855-f8779b45d1bd",
+            "3ddf237c-096d-5e08-906e-b5a72e7eb498",
+            "3f7737e9-6527-5fb0-a476-1544be064c06",
+            "433e5aa1-47a0-538e-a79c-ef7844edf019",
+            "49450e49-b090-5c41-8774-4e7490000294",
+            "4a9dd8fa-8463-5a87-aef4-5fc4de259c0a",
+            "4b12b04c-698e-51ce-be91-5d93d775b089",
+            "4eaabcb5-e843-5535-9a85-ab0948dc5a8a",
+            "4ef7165b-3d31-5198-a84a-5772f57cf37a",
+            "515bab4c-f0fe-5fa5-a639-30a85d684233",
+            "5418c3fa-5e31-5082-8976-bc191357c4a0",
+            "5eae8531-8fda-51ce-84ee-c2a80553e877",
+            "7478a976-3b88-5efe-913b-33204da1e955",
+            "76213912-f631-5f0b-914a-18c804bd11fd",
+            "8aec7d2b-bfab-5425-bd2c-aef521b61b73",
+            "970c0aa3-265f-5d10-94b2-17942b4fa09f",
+            "a0c44cb1-2d03-5292-be21-f46b0c5a66a7",
+            "a6a2b0bb-60bd-5ddd-ad96-45c676977f00",
+            "aff0111a-c8db-5d99-87ff-a4e74731705c",
+            "b27f7088-3985-5048-8d61-1bd4956ea354",
+            "b4d33fa4-521f-5f32-8950-d4fbe3312b89",
+            "b74b215f-242a-5088-9dd5-02eadcbb7941",
+            "b9cffc36-55a3-5ffc-b1f7-a3163015e10a",
+            "c7f0e3b2-a702-54f8-9dae-aab861d9fb07",
+            "dcaf9dd9-373f-5e77-86aa-5007f12510b3",
+            "e0a6135b-5e3c-5ed1-8dce-55d3336a4e8e",
+            "e0c70167-7a22-5156-b8ee-b34c22b67d92",
+            "e5e43497-72e7-5a92-9863-1c9ba76595ca",
+            "e8f99cad-a90f-5b45-85de-5f75cbf443db",
+            "f030de9d-309a-534e-9fa4-ffe2a5684fcb",
+            "f2b24cef-6f40-5dee-b095-01689cd9aabe",
+            "f573290a-a7b6-5208-9e0a-215a93ac25cf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "d41a16dd-010e-4b49-b8a1-dbaf26f10fdc",
+      "name": "Inventory storage",
+      "components": {
+        "sector": {
+          "members": [
+            "fb1c7fca-8342-4f99-afb0-a1cf8d0c6476",
+            "3d2e90ab-2324-4e1a-9263-7b3a6be7fa31",
+            "c86d9e75-6572-4938-820d-223275b2da2c",
+            "546d20ac-e5ab-42ea-9b03-74bb9a5ad3ae",
+            "6e42af31-af9f-47c6-92ba-ee17b92eeb56",
+            "8bccbcdb-97bf-4cba-bf23-99d5723faa86",
+            "569caa92-b8ac-4d2b-9f5a-ae23e8fce92e",
+            "cf75e0b5-5dd8-4a5d-b540-229f02ef5c32",
+            "261b19a1-48e2-4ee7-93ea-1c851f62f45c",
+            "4732b0d6-b4f9-4311-bd93-84e195377ddd",
+            "2e963a9a-0393-493f-9b54-2a207dcdf227",
+            "0c96216e-e088-4fb4-8c2f-f267a20e13de",
+            "76d65497-cfb3-4c64-85c4-fc0384ac4966",
+            "c1604712-632c-43bd-a215-3d63e301bdf3",
+            "f897851f-4c25-4786-913e-e86cbd88cfbe",
+            "a2f004a9-e61d-4b83-9073-7fdde9ae391a",
+            "e14fb495-2bdb-4f31-92e2-298423d034c4",
+            "8b589e64-5dc8-47fd-9e19-c25e0322507e",
+            "cd655720-cf61-4c27-9851-3b4517d1de84",
+            "609cf6cd-cb13-42df-bf3e-cb2ef0eb3e00"
+          ]
+        }
+      }
+    },
+    {
+      "id": "628bbd80-eeb4-4c56-a6d1-a9e6324c7d2c",
+      "name": "Route dispense",
+      "components": {
+        "sector": {
+          "members": [
+            "5604be5d-6f4d-5e52-9042-93d6fc734d66",
+            "5be8e84d-50aa-5aa2-84e9-9bc7ac305fec",
+            "d0d45430-f9ae-5793-ab33-f45c7d389bc6"
+          ]
+        }
+      }
+    },
+    {
+      "id": "4b737c68-c3af-4103-99fc-d695bbd40720",
+      "name": "Sealer drop-off",
+      "components": {
+        "sector": {
+          "members": [
+            "3d9f26ef-23d2-58a0-ab3e-abbd071e1237",
+            "caa78a2e-1371-5b78-93b2-be50e696bd11",
+            "f945e51e-d1f5-5027-8d78-3d6314b6a69a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "9906fa3a-983b-4f37-94b5-391c917ddf77",
+      "name": "Bagging",
+      "components": {
+        "sector": {
+          "members": [
+            "48928043-7d54-5fac-8afb-fff6c357bcab"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ce65b08f-abc9-4074-87b5-f5a07384d59e",
+      "name": "Flex",
+      "components": {
+        "sector": {
+          "members": [
+            "b48f1742-975d-5887-889f-cb4c7fc6eb3b"
+          ]
+        }
+      }
+    },
+    {
+      "id": "1580d371-fdf7-4533-827b-0e22af83fa7a",
+      "name": "Inbound units",
+      "components": {
+        "flow.node": {
+          "kind": "source",
+          "demand": "putaway"
+        }
+      }
+    },
+    {
+      "id": "72477e0c-2cbe-4283-bf77-0eff373102bf",
+      "name": "Put stations",
+      "components": {
+        "flow.node": {
+          "kind": "stations",
+          "sectors": [
+            "606e5ac2-78a9-4793-8792-afcfbc27105b"
+          ],
+          "process": {
+            "operation": "put",
+            "gives_by": [
+              "3754c7d0-b1c7-48e7-a50e-9268fdb8fc16"
+            ],
+            "receives_by": [
+              "cdbc05cc-9531-4a0a-9b8b-b622cd8c489f"
+            ]
+          },
+          "work": {
+            "presentations_per_hour": 60
+          },
+          "intake": [
+            {
+              "moves": "inventory_tote:empty",
+              "admission_factor": 1.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+      "name": "Inventory storage",
+      "components": {
+        "flow.node": {
+          "kind": "storage",
+          "sectors": [
+            "d41a16dd-010e-4b49-b8a1-dbaf26f10fdc"
+          ],
+          "holds": "inventory_tote"
+        }
+      }
+    },
+    {
+      "id": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+      "name": "Empty order tote row",
+      "components": {
+        "flow.node": {
+          "kind": "storage",
+          "sectors": [
+            "e1195b40-8dc0-45e3-829d-ffca7cd1122f"
+          ],
+          "holds": "order_container"
+        }
+      }
+    },
+    {
+      "id": "6cea83d8-99e4-4440-b798-fd81191c519c",
+      "name": "Box induction",
+      "components": {
+        "flow.node": {
+          "kind": "stations",
+          "sectors": [
+            "fc68123a-b91d-456d-a03c-cc4348836e84"
+          ],
+          "process": {
+            "operation": "create_container"
+          }
+        }
+      }
+    },
+    {
+      "id": "8963446d-302d-4eca-a324-ba455ff654d2",
+      "name": "EasyLoop machines",
+      "components": {
+        "flow.node": {
+          "kind": "conveyance",
+          "sectors": [
+            "0f76b7cb-d921-44ba-9760-e9c23e0d5a92"
+          ],
+          "process": {
+            "operation": "pick",
+            "gives_by": [
+              "3257b0f8-6f7e-4abc-a553-8f8edeb3737e"
+            ],
+            "receives_by": [
+              "84cf9cc5-bf32-4603-99d5-eb5f999f9d6f",
+              "7fb97fdd-f863-43c8-8c08-f5fdfdefd206"
+            ]
+          },
+          "work": {
+            "pick_sim_ms": 10000,
+            "map_figures": "display_only"
+          },
+          "intake": [
+            {
+              "moves": "inventory_tote:stock",
+              "admission_factor": 3.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+      "name": "Order buffer",
+      "components": {
+        "flow.node": {
+          "kind": "storage",
+          "sectors": [
+            "cac1b2c9-277f-5db1-a930-28010fa24b14",
+            "5d60dbdf-3784-5f9d-b822-63fa8f3f934b",
+            "0c1e25fa-005c-53ec-ad54-294766270501",
+            "af6d2dae-181f-5b0e-aa2e-021fff8d5cbc",
+            "fd0e6ca7-b8f7-524e-bc84-5950487e285e",
+            "7935b551-10d8-5459-8e7e-8aa2dce3cf92",
+            "0e15d1fd-421e-59b0-a1b4-57a5ff267978",
+            "f1f1f1ab-ad71-52db-9227-4f229712795a"
+          ],
+          "holds": "closed_order",
+          "work": {
+            "dwell_sim_ms": 3600000
+          }
+        }
+      }
+    },
+    {
+      "id": "fb51af43-a9b9-426d-b1d8-3b69d2cc547a",
+      "name": "Route dispense",
+      "components": {
+        "flow.node": {
+          "kind": "stations",
+          "sectors": [
+            "628bbd80-eeb4-4c56-a6d1-a9e6324c7d2c"
+          ],
+          "process": {
+            "operation": "extract"
+          },
+          "work": {
+            "extraction_sim_ms": 9000
+          }
+        }
+      }
+    },
+    {
+      "id": "57fa161b-addd-4446-8890-dec6a0c640ca",
+      "name": "Sealer drop-off",
+      "components": {
+        "flow.node": {
+          "kind": "stations",
+          "sectors": [
+            "4b737c68-c3af-4103-99fc-d695bbd40720"
+          ],
+          "process": {
+            "operation": "extract"
+          },
+          "work": {
+            "extraction_sim_ms": 9000
+          }
+        }
+      }
+    },
+    {
+      "id": "a2bcc3e0-6fd7-469d-91b8-a7dc61cd4f6f",
+      "name": "Bagging",
+      "components": {
+        "flow.node": {
+          "kind": "stations",
+          "sectors": [
+            "9906fa3a-983b-4f37-94b5-391c917ddf77"
+          ],
+          "process": {
+            "operation": "extract"
+          },
+          "work": {
+            "extraction_sim_ms": 9000
+          }
+        }
+      }
+    },
+    {
+      "id": "ace16742-0400-4ea2-ba79-f9edb9d3bdeb",
+      "name": "Flex",
+      "components": {
+        "flow.node": {
+          "kind": "stations",
+          "sectors": [
+            "ce65b08f-abc9-4074-87b5-f5a07384d59e"
+          ],
+          "process": {
+            "operation": "extract"
+          },
+          "work": {
+            "extraction_sim_ms": 9000
+          }
+        }
+      }
+    },
+    {
+      "id": "509d2486-9812-485e-b73f-8d4aa2d2fae2",
+      "name": "Return rule",
+      "components": {
+        "flow.return_rule": {
+          "min_backlog": 1
+        }
+      }
+    },
+    {
+      "id": "3754c7d0-b1c7-48e7-a50e-9268fdb8fc16",
+      "components": {
+        "flow.material_edge": {
+          "from": "1580d371-fdf7-4533-827b-0e22af83fa7a",
+          "to": "72477e0c-2cbe-4283-bf77-0eff373102bf",
+          "moves": "units",
+          "induction": {
+            "sequence": "order_release",
+            "units_per_tote": 6
+          }
+        }
+      }
+    },
+    {
+      "id": "cdbc05cc-9531-4a0a-9b8b-b622cd8c489f",
+      "components": {
+        "flow.material_edge": {
+          "from": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+          "to": "72477e0c-2cbe-4283-bf77-0eff373102bf",
+          "moves": "inventory_tote:empty"
+        }
+      }
+    },
+    {
+      "id": "e172f0c4-43e7-446f-a07c-50a5fcf72a62",
+      "components": {
+        "flow.material_edge": {
+          "from": "72477e0c-2cbe-4283-bf77-0eff373102bf",
+          "to": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+          "moves": "inventory_tote:stock",
+          "returns_by": "509d2486-9812-485e-b73f-8d4aa2d2fae2"
+        }
+      }
+    },
+    {
+      "id": "107009df-5221-4f00-8bd6-0644f14f5dd2",
+      "components": {
+        "flow.material_edge": {
+          "from": "72477e0c-2cbe-4283-bf77-0eff373102bf",
+          "to": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+          "moves": "inventory_tote:empty",
+          "when": {
+            "phase": "inbound_ended"
+          },
+          "returns_by": "509d2486-9812-485e-b73f-8d4aa2d2fae2"
+        }
+      }
+    },
+    {
+      "id": "3257b0f8-6f7e-4abc-a553-8f8edeb3737e",
+      "components": {
+        "flow.material_edge": {
+          "from": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+          "to": "8963446d-302d-4eca-a324-ba455ff654d2",
+          "moves": "inventory_tote:stock"
+        }
+      }
+    },
+    {
+      "id": "0e1dc238-5584-4067-a9ea-bacbf29d4b71",
+      "components": {
+        "flow.material_edge": {
+          "from": "8963446d-302d-4eca-a324-ba455ff654d2",
+          "to": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+          "moves": "inventory_tote:after_pick"
+        }
+      }
+    },
+    {
+      "id": "84cf9cc5-bf32-4603-99d5-eb5f999f9d6f",
+      "components": {
+        "flow.material_edge": {
+          "from": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+          "to": "8963446d-302d-4eca-a324-ba455ff654d2",
+          "moves": "order_container:empty"
+        }
+      }
+    },
+    {
+      "id": "7fb97fdd-f863-43c8-8c08-f5fdfdefd206",
+      "components": {
+        "flow.material_edge": {
+          "from": "6cea83d8-99e4-4440-b798-fd81191c519c",
+          "to": "8963446d-302d-4eca-a324-ba455ff654d2",
+          "moves": "order_container:new"
+        }
+      }
+    },
+    {
+      "id": "c3c03546-cd45-4fe1-bfe4-a65f24d3d6a3",
+      "components": {
+        "flow.material_edge": {
+          "from": "8963446d-302d-4eca-a324-ba455ff654d2",
+          "to": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+          "moves": "order:closed",
+          "when": {
+            "exit_path": [
+              "buffer"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "ade1ece1-abaf-41ec-80a0-d4a7546aa6c0",
+      "components": {
+        "flow.material_edge": {
+          "from": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+          "to": "fb51af43-a9b9-426d-b1d8-3b69d2cc547a",
+          "moves": "order:closed",
+          "when": {
+            "container": [
+              "tote"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "f0ef080c-2d73-44d4-aee0-d83f78a0dcab",
+      "components": {
+        "flow.material_edge": {
+          "from": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+          "to": "57fa161b-addd-4446-8890-dec6a0c640ca",
+          "moves": "order:closed",
+          "when": {
+            "container": [
+              "carton"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "71e30316-dd33-4b0c-953a-92ed2d4de984",
+      "components": {
+        "flow.material_edge": {
+          "from": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+          "to": "ace16742-0400-4ea2-ba79-f9edb9d3bdeb",
+          "moves": "order:closed",
+          "when": {
+            "container": [
+              "tray"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "c89ce3a4-52bc-4aca-bcc6-0848f9faf126",
+      "components": {
+        "flow.material_edge": {
+          "from": "8963446d-302d-4eca-a324-ba455ff654d2",
+          "to": "a2bcc3e0-6fd7-469d-91b8-a7dc61cd4f6f",
+          "moves": "order:closed",
+          "when": {
+            "container": [
+              "tote"
+            ],
+            "exit_path": [
+              "sorter",
+              "dock"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "2d121302-060b-4a44-b0d6-5be366c1c39b",
+      "components": {
+        "flow.material_edge": {
+          "from": "8963446d-302d-4eca-a324-ba455ff654d2",
+          "to": "57fa161b-addd-4446-8890-dec6a0c640ca",
+          "moves": "order:closed",
+          "when": {
+            "container": [
+              "carton"
+            ],
+            "exit_path": [
+              "sorter",
+              "dock"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "cddacd9d-a7b5-4aa8-862f-2ad482290a40",
+      "components": {
+        "flow.material_edge": {
+          "from": "8963446d-302d-4eca-a324-ba455ff654d2",
+          "to": "ace16742-0400-4ea2-ba79-f9edb9d3bdeb",
+          "moves": "order:closed",
+          "when": {
+            "container": [
+              "tray"
+            ],
+            "exit_path": [
+              "sorter",
+              "dock"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "8ed91037-2bd1-443d-8f75-ff24fc30212a",
+      "components": {
+        "flow.material_edge": {
+          "from": "fb51af43-a9b9-426d-b1d8-3b69d2cc547a",
+          "to": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+          "moves": "order_container:empty"
+        }
+      }
+    },
+    {
+      "id": "5c2fdbff-cb85-47e9-8f4c-78f595f2545c",
+      "components": {
+        "flow.material_edge": {
+          "from": "a2bcc3e0-6fd7-469d-91b8-a7dc61cd4f6f",
+          "to": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+          "moves": "order_container:empty"
+        }
+      }
+    },
+    {
+      "id": "d342b5aa-3de2-4077-8ae8-8da2abf77a73",
+      "components": {
+        "flow.material_edge": {
+          "from": "ace16742-0400-4ea2-ba79-f9edb9d3bdeb",
+          "to": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+          "moves": "order_container:empty"
+        }
+      }
+    },
+    {
+      "id": "5754fb2c-3b36-4c93-9a03-ef69b97d9ced",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "1580d371-fdf7-4533-827b-0e22af83fa7a",
+            "port": "boundary"
+          },
+          "to": {
+            "node": "72477e0c-2cbe-4283-bf77-0eff373102bf",
+            "port": "presentation"
+          },
+          "executor": {
+            "external": true
+          },
+          "at_end": "arrives",
+          "edge": "3754c7d0-b1c7-48e7-a50e-9268fdb8fc16",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "1b31679b-3c29-437b-a9b2-4f9da1bd99f9",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "slot"
+          },
+          "to": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "relay"
+          },
+          "executor": {
+            "assigned": "from"
+          },
+          "at_end": "hands_over",
+          "edge": "cdbc05cc-9531-4a0a-9b8b-b622cd8c489f",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "4eb81a1d-c70a-4f4d-8846-dbebd3e0645d",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "relay"
+          },
+          "to": {
+            "node": "72477e0c-2cbe-4283-bf77-0eff373102bf",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "keeps_through_work",
+          "edge": "cdbc05cc-9531-4a0a-9b8b-b622cd8c489f",
+          "step": 2
+        }
+      }
+    },
+    {
+      "id": "a7cdc129-3db3-408d-a0cf-10dc17cdc208",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "72477e0c-2cbe-4283-bf77-0eff373102bf",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "hands_over",
+          "edge": "e172f0c4-43e7-446f-a07c-50a5fcf72a62",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "c423cd41-b9ab-47e7-a84b-5c87c3829052",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "relay"
+          },
+          "to": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down",
+          "edge": "e172f0c4-43e7-446f-a07c-50a5fcf72a62",
+          "step": 2
+        }
+      }
+    },
+    {
+      "id": "6451ddc4-f7e5-4163-a77d-7381aa0c9303",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "72477e0c-2cbe-4283-bf77-0eff373102bf",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "hands_over",
+          "edge": "107009df-5221-4f00-8bd6-0644f14f5dd2",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "d40acf6f-43ac-4a7e-9f67-530c42fb2608",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "relay"
+          },
+          "to": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down",
+          "edge": "107009df-5221-4f00-8bd6-0644f14f5dd2",
+          "step": 2
+        }
+      }
+    },
+    {
+      "id": "d188fd23-b22a-4005-a0f8-be43003baa76",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "slot"
+          },
+          "to": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "relay"
+          },
+          "executor": {
+            "assigned": "from"
+          },
+          "at_end": "hands_over",
+          "edge": "3257b0f8-6f7e-4abc-a553-8f8edeb3737e",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "83da86e2-293d-4e91-ab31-42eb0c12c128",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "relay"
+          },
+          "to": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "dropoff"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "sets_down",
+          "edge": "3257b0f8-6f7e-4abc-a553-8f8edeb3737e",
+          "step": 2,
+          "retained_for": [
+            "8edcc9be-6051-4955-a1fd-13c421e8f82f"
+          ]
+        }
+      }
+    },
+    {
+      "id": "3a6cab32-f2c8-445b-a14e-b1e4bbc69d00",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "dropoff"
+          },
+          "to": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "collect"
+          },
+          "executor": {
+            "conveyance": "8963446d-302d-4eca-a324-ba455ff654d2"
+          },
+          "at_end": "hands_over",
+          "edge": "3257b0f8-6f7e-4abc-a553-8f8edeb3737e",
+          "step": 3
+        }
+      }
+    },
+    {
+      "id": "8edcc9be-6051-4955-a1fd-13c421e8f82f",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "dropoff"
+          },
+          "to": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "collect"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "hands_over",
+          "carries": "nothing",
+          "retained_for": [
+            "00eb37b0-96e2-4ddd-90ea-0bd4b00eed7b"
+          ]
+        }
+      }
+    },
+    {
+      "id": "00eb37b0-96e2-4ddd-90ea-0bd4b00eed7b",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "collect"
+          },
+          "to": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "hands_over",
+          "edge": "0e1dc238-5584-4067-a9ea-bacbf29d4b71",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "e820759a-fe93-4784-b037-cc03dc8e6eaa",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "relay"
+          },
+          "to": {
+            "node": "ad34d708-f90f-4850-b06e-ace43800e9fb",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down",
+          "edge": "0e1dc238-5584-4067-a9ea-bacbf29d4b71",
+          "step": 2
+        }
+      }
+    },
+    {
+      "id": "9fd6191a-bf32-473d-85db-5a9b8728b314",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "slot"
+          },
+          "to": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "relay"
+          },
+          "executor": {
+            "assigned": "from"
+          },
+          "at_end": "hands_over",
+          "edge": "84cf9cc5-bf32-4603-99d5-eb5f999f9d6f",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "19d7e648-c119-48e0-984f-7112affc4c83",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "relay"
+          },
+          "to": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "order_presentation"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "keeps_through_work",
+          "edge": "84cf9cc5-bf32-4603-99d5-eb5f999f9d6f",
+          "step": 2,
+          "retained_for": [
+            "5880bcb5-5269-4b81-898c-8bbcbd71d265",
+            "29a23d5a-9276-46c5-92c5-4e449983ed64",
+            "9dc3063b-c10d-4016-a2ec-80a5a1da3b26",
+            "23ccfd04-877c-46e1-b0b5-e4a74c657bad"
+          ]
+        }
+      }
+    },
+    {
+      "id": "295f2d64-8044-48be-8695-95571f710cda",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "6cea83d8-99e4-4440-b798-fd81191c519c",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "order_presentation"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "keeps_through_work",
+          "edge": "7fb97fdd-f863-43c8-8c08-f5fdfdefd206",
+          "step": 1,
+          "retained_for": [
+            "5880bcb5-5269-4b81-898c-8bbcbd71d265",
+            "29a23d5a-9276-46c5-92c5-4e449983ed64",
+            "9dc3063b-c10d-4016-a2ec-80a5a1da3b26",
+            "23ccfd04-877c-46e1-b0b5-e4a74c657bad"
+          ]
+        }
+      }
+    },
+    {
+      "id": "5880bcb5-5269-4b81-898c-8bbcbd71d265",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "order_presentation"
+          },
+          "to": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "hands_over",
+          "edge": "c3c03546-cd45-4fe1-bfe4-a65f24d3d6a3",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "cc927e66-0483-49b8-bec9-4ed240910f4f",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "relay"
+          },
+          "to": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down",
+          "edge": "c3c03546-cd45-4fe1-bfe4-a65f24d3d6a3",
+          "step": 2
+        }
+      }
+    },
+    {
+      "id": "58b8f4c5-06fc-41f8-a70c-ef002a809001",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "slot"
+          },
+          "to": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "relay"
+          },
+          "executor": {
+            "assigned": "from"
+          },
+          "at_end": "hands_over",
+          "edge": "ade1ece1-abaf-41ec-80a0-d4a7546aa6c0",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "58dac066-aecd-43f5-be0e-d4693cf47143",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "relay"
+          },
+          "to": {
+            "node": "fb51af43-a9b9-426d-b1d8-3b69d2cc547a",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "keeps_through_work",
+          "edge": "ade1ece1-abaf-41ec-80a0-d4a7546aa6c0",
+          "step": 2
+        }
+      }
+    },
+    {
+      "id": "b637d300-a6fe-455c-987e-eedf368d2cad",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "slot"
+          },
+          "to": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "relay"
+          },
+          "executor": {
+            "assigned": "from"
+          },
+          "at_end": "hands_over",
+          "edge": "f0ef080c-2d73-44d4-aee0-d83f78a0dcab",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "9f5f168e-996c-47b3-94da-2a6a7fdc0fdd",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "relay"
+          },
+          "to": {
+            "node": "57fa161b-addd-4446-8890-dec6a0c640ca",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "keeps_through_work",
+          "edge": "f0ef080c-2d73-44d4-aee0-d83f78a0dcab",
+          "step": 2
+        }
+      }
+    },
+    {
+      "id": "fb24fe8b-e469-4de6-ac5e-45634a053f0a",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "slot"
+          },
+          "to": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "relay"
+          },
+          "executor": {
+            "assigned": "from"
+          },
+          "at_end": "hands_over",
+          "edge": "71e30316-dd33-4b0c-953a-92ed2d4de984",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "aa4d81fb-2687-483e-ad75-2acc8ffc5441",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ec5aa20e-fd78-487f-827d-58eea38c9297",
+            "port": "relay"
+          },
+          "to": {
+            "node": "ace16742-0400-4ea2-ba79-f9edb9d3bdeb",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "keeps_through_work",
+          "edge": "71e30316-dd33-4b0c-953a-92ed2d4de984",
+          "step": 2
+        }
+      }
+    },
+    {
+      "id": "29a23d5a-9276-46c5-92c5-4e449983ed64",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "order_presentation"
+          },
+          "to": {
+            "node": "a2bcc3e0-6fd7-469d-91b8-a7dc61cd4f6f",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "keeps_through_work",
+          "edge": "c89ce3a4-52bc-4aca-bcc6-0848f9faf126",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "9dc3063b-c10d-4016-a2ec-80a5a1da3b26",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "order_presentation"
+          },
+          "to": {
+            "node": "57fa161b-addd-4446-8890-dec6a0c640ca",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "keeps_through_work",
+          "edge": "2d121302-060b-4a44-b0d6-5be366c1c39b",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "23ccfd04-877c-46e1-b0b5-e4a74c657bad",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "8963446d-302d-4eca-a324-ba455ff654d2",
+            "port": "order_presentation"
+          },
+          "to": {
+            "node": "ace16742-0400-4ea2-ba79-f9edb9d3bdeb",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "keeps_through_work",
+          "edge": "cddacd9d-a7b5-4aa8-862f-2ad482290a40",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "32aee62e-f817-4e0e-b15e-5589457157db",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "fb51af43-a9b9-426d-b1d8-3b69d2cc547a",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "hands_over",
+          "edge": "8ed91037-2bd1-443d-8f75-ff24fc30212a",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "f106f7f5-8830-497a-bce2-a1b01e02b110",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "relay"
+          },
+          "to": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down",
+          "edge": "8ed91037-2bd1-443d-8f75-ff24fc30212a",
+          "step": 2
+        }
+      }
+    },
+    {
+      "id": "cf30e1a9-f7d3-4e5a-a7c4-d50a6bd8c7bc",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "a2bcc3e0-6fd7-469d-91b8-a7dc61cd4f6f",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "hands_over",
+          "edge": "5c2fdbff-cb85-47e9-8f4c-78f595f2545c",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "573dba73-f007-4593-9bd0-97a5e047a295",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "relay"
+          },
+          "to": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down",
+          "edge": "5c2fdbff-cb85-47e9-8f4c-78f595f2545c",
+          "step": 2
+        }
+      }
+    },
+    {
+      "id": "173ebf0c-6cb4-42f2-a587-1f84bdb6c27d",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "ace16742-0400-4ea2-ba79-f9edb9d3bdeb",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "56ec28ec-6616-5ffd-bcee-78722d8345fd"
+          },
+          "at_end": "hands_over",
+          "edge": "d342b5aa-3de2-4077-8ae8-8da2abf77a73",
+          "step": 1
+        }
+      }
+    },
+    {
+      "id": "af3e4f74-e9d1-4523-ac2a-c91d42df0489",
+      "components": {
+        "flow.agent_segment": {
+          "from": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "relay"
+          },
+          "to": {
+            "node": "af5c4054-a3ee-4243-8aa0-b96aaee0bfcb",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down",
+          "edge": "d342b5aa-3de2-4077-8ae8-8da2abf77a73",
+          "step": 2
+        }
+      }
+    }
+  ]
+}

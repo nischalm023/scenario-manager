@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:document",
+  "title": "world protocol — document",
+  "description": "One JSON file of the protocol: metadata, the semantics a reader must understand before it may read on, and a list of records. A scenario document is the same file with an ordered list of layers and the settings for one run (SPEC §8).",
+  "$comment": "Document-scope keys are closed in both profiles. SPEC §9's rule that a consumer ignores what it does not understand covers unknown components and unknown fields inside known components — not a stray key at document scope, which the reference reader also refuses by name rather than reading as false.",
+  "$defs": {
+    "document": {
+      "title": "document",
+      "type": "object",
+      "required": ["proto_version", "doc"],
+      "properties": {
+        "proto_version": {
+          "description": "The version of the protocol this file is written in, semver in full. Inside 0.x there is no additive promise between minors, so a consumer accepts the current minor and refuses every other (SPEC §9). These schemas describe 0.7.",
+          "type": "string",
+          "pattern": "^0\\.7\\.[0-9]+$"
+        },
+        "doc": {"$ref": "#/$defs/doc_meta"},
+        "primary_frame": {
+          "description": "The one frame everything in this world resolves into: 3-D, world-fixed, and the only frame that says what a step is worth. World documents only (SPEC §4).",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_id"
+        },
+        "required_components": {
+          "description": "The semantics this document cannot be read without understanding. A consumer missing one refuses the document instead of mis-simulating it — a smaller world, quietly produced, is exactly what this prevents (SPEC §9).",
+          "type": "array",
+          "items": {"$ref": "urn:worldproto:0.7:components#/$defs/declarable_name"}
+        },
+        "entities": {
+          "description": "The records this document contributes.",
+          "type": "array",
+          "items": {"$ref": "urn:worldproto:0.7:record#/$defs/record"}
+        },
+        "layers": {
+          "description": "The documents a scenario composes, in order: later layers replace earlier ones per component, before anything expands. Paths resolve relative to this file; duplicates and cycles are load errors (SPEC §8).",
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "settings": {
+          "description": "What one run of this scenario is configured with. How much of this belongs in the protocol at all is an open question (SPEC §12.6), so the shape is deliberately unconstrained.",
+          "type": "object"
+        },
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "doc_meta": {
+      "title": "document metadata",
+      "description": "Which document this is, which others it reaches into, and, on a document a server assembled, what it was assembled from. A document loads standalone only if its dependencies are present (SPEC §8).",
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {"$ref": "urn:worldproto:0.7:values#/$defs/doc_id"},
+        "name": {"description": "A label for people.", "type": "string"},
+        "kind": {
+          "description": "What this document is for — `world`, `catalog`, `fleet`, `workload`, `policy`, `scenario` are the ones in use. Nothing reads it: composition comes from `layers` and precedence from their order, so this is a label, and it is left open rather than closed around today's six.",
+          "type": "string"
+        },
+        "depends_on": {
+          "description": "The documents this one references into by id.",
+          "type": "array",
+          "items": {"$ref": "urn:worldproto:0.7:values#/$defs/doc_id"}
+        },
+        "assembled_from": {
+          "description": "The scopes a server read this document's records from, each at the changeset it was read at, so a run that saved the document can say what it ran on. Only a document a server assembled states it; a hand-authored one leaves it out. A reader carries it and acts on none of it: the document means the same without it (SPEC §8, ruled 2026-10-18).",
+          "type": "array",
+          "items": {"$ref": "#/$defs/source_scope"}
+        },
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "source_scope": {
+      "title": "a scope an assembled document was read from",
+      "description": "One scope the document holds, at the one changeset its records were read at. The words are the assembling server's, carried and never read: `scope` is the path that server names the scope by, `changeset` the number of the edit the scope stood at (0 for one never written), and `tag` the name of the tag the read reached that changeset through, stated only when it reached it through one (SPEC §8).",
+      "type": "object",
+      "required": ["scope", "changeset"],
+      "properties": {
+        "scope": {"type": "string", "minLength": 1},
+        "changeset": {"type": "integer", "minimum": 0},
+        "tag": {"type": "string", "minLength": 1},
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

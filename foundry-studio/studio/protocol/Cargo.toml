@@ -1,0 +1,19 @@
+[package]
+name = "studio-protocol"
+version = "0.1.0"
+edition = "2024"
+description = "Agent Studio's shared value types: written once in Rust, generated into the studio pages' TypeScript"
+
+[dependencies]
+# `SimTime`, the simtime newtype a command's `sim_ms` travels in.
+desunits = { path = "../../sim/desunits" }
+chrono = { version = "0.4", features = ["serde"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# The flow plan's digest (`canonical`), taken here so that the API's and a runner's agree.
+sha2 = "0.10"
+thiserror = "2"
+# `serde-json-impl` so a journal entry's body, JSON until its kind is typed, has a TypeScript name.
+ts-rs = { version = "12", features = ["serde-json-impl"] }
+# `v4` for `DeclaredId::mint`, the one place a new entity id is made.
+uuid = { version = "1", features = ["v4"] }

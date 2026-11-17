@@ -1,0 +1,74 @@
+{
+  "asserts": "is",
+  "component": "sector_preference",
+  "meaning": "the entity is one Map Creator storage preference: a carrier type, and the sectors it prefers in order",
+  "owner": "foundry-studio",
+  "refs": [
+    {
+      "expects": "sector",
+      "path": "/prefers/*"
+    }
+  ],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {
+      "entity_id": {
+        "description": "One entity of this document, by identity. A declared identity is a UUID; a derived one is its root UUID and the generator's key path, which nothing in a converted document produces.",
+        "title": "entity_id",
+        "type": "string"
+      },
+      "entity_ids": {
+        "description": "Entities of this document by identity, in the order the Map Creator file states them.",
+        "items": {
+          "$ref": "#/$defs/entity_id"
+        },
+        "title": "entity_ids",
+        "type": "array"
+      },
+      "legacy_value": {
+        "description": "A legacy value the dump wrote, kept verbatim in whatever JSON kind it wrote it. It states no type on purpose: the round trip writes back what the dump said, and correcting a kind here would be the converter deciding what the site meant.",
+        "title": "legacy_value"
+      },
+      "placed_legacy_values": {
+        "description": "Legacy values a Map Creator list holds that named nothing in the dump, each with `at`, its place in the list counting from zero, and `value`, the value verbatim.",
+        "items": {
+          "properties": {
+            "at": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "value": {
+              "$ref": "#/$defs/legacy_value"
+            }
+          },
+          "required": [
+            "at",
+            "value"
+          ],
+          "type": "object"
+        },
+        "title": "placed_legacy_values",
+        "type": "array"
+      }
+    },
+    "$id": "urn:mapcreator-compat:0.1:components:sector_preference",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one Map Creator storage preference: a carrier type, and the sectors it prefers in order",
+    "properties": {
+      "prefers": {
+        "$ref": "#/$defs/entity_ids",
+        "description": "The sectors this carrier type prefers, by entity identity, in the order the file lists them."
+      },
+      "prefers_unresolved": {
+        "$ref": "#/$defs/placed_legacy_values",
+        "description": "The entries of Map Creator's `sectorMxUPreferences.json` that name a sector no cell of this dump states in that spelling, each verbatim with its place in the list the file states. The entries that resolved are references in their own order, and the export writes each of these back at its place among them. Present only when an entry named nothing."
+      }
+    },
+    "required": [
+      "prefers"
+    ],
+    "title": "sector_preference",
+    "type": "object"
+  },
+  "status": "ratified"
+}

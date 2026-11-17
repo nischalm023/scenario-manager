@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>crucible-viewer, a floor alone</title>
+<!--
+  The page `floor.test.mjs` drives: a viewer opened on a GPU canvas with a 2D
+  canvas laid over it for its lines, drawing the floor document named by
+  ?floor= with no run, and handing the test the viewer to question. The
+  palette's tokens are spec 02's light values, as a page that mounts the
+  viewer defines them. `fit` is what a mount's resize and device-pixel-ratio
+  observers do; the lines a frame strokes are copied out as pixels in the task
+  that drew it.
+-->
+<style>
+  :root { --color-map-floor: #eef0f3; --color-text-primary: #181d27; --color-agent: #6941c6; --color-selection: #0a4a5e; }
+  body { margin: 0; background: var(--color-map-floor); }
+  .stage { position: relative; width: 800px; height: 600px; }
+  .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .stage .lines { pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="stage"><canvas class="gpu" aria-hidden="true"></canvas><canvas class="lines" aria-hidden="true"></canvas></div>
+<script type="module">
+import { openFloorViewer, readPalette } from "../dist/index.js";
+
+const stage = document.querySelector(".stage");
+const [gpu, lines] = stage.querySelectorAll("canvas");
+
+// Size the GPU canvas in device pixels from its CSS size, and tell the viewer.
+const fit = (viewer) => {
+  const ratio = window.devicePixelRatio || 1;
+  gpu.width = Math.round(gpu.clientWidth * ratio);
+  gpu.height = Math.round(gpu.clientHeight * ratio);
+  viewer.resize(gpu.width, gpu.height, ratio);
+  return { ratio, size: [gpu.clientWidth, gpu.clientHeight], device: [gpu.width, gpu.height], lines: [lines.width, lines.height] };
+};
+
+// A canvas's pixels as they stand.
+const pixels = (canvas) => {
+  if (canvas.width === 0 || canvas.height === 0) return null;
+  const copy = document.createElement("canvas");
+  copy.width = canvas.width;
+  copy.height = canvas.height;
+  const context = copy.getContext("2d");
+  context.drawImage(canvas, 0, 0);
+  return context.getImageData(0, 0, copy.width, copy.height);
+};
+
+try {
+  const viewer = await openFloorViewer(gpu, lines);
+  fit(viewer);
+  const floor = await fetch(new URLSearchParams(location.search).get("floor"));
+  if (!floor.ok) throw new Error(`the floor document answered ${floor.status}`);
+  viewer.set_floor(new Uint8Array(await floor.arrayBuffer()));
+
+  const harness = { viewer, fit: () => fit(viewer), palette: () => readPalette(stage), stage, ink: null };
+
+  // Draw `count` animation frames and answer what the last one submitted and stroked; the lines' pixels stay in `ink`.
+  harness.frames = (count) =>
+    new Promise((done, failed) => {
+      let left = count;
+      let last = performance.now();
+      const step = (now) => {
+        try {
+          viewer.frame((now - last) / 1000);
+        } catch (failure) {
+          failed(failure);
+          return;
+        }
+        last = now;
+        left -= 1;
+        if (left > 0) {
+          requestAnimationFrame(step);
+          return;
+        }
+        harness.ink = pixels(lines);
+        done({ drawn: Array.from(viewer.drawn_counts()), outlined: Array.from(viewer.outlined_counts()) });
+      };
+      requestAnimationFrame(step);
+    });
+
+  // How many pixels of the lines canvas, in CSS pixels from the bottom-left corner, hold ink.
+  harness.inkInCorner = (size) => {
+    const ratio = window.devicePixelRatio || 1;
+    const side = Math.round(size * ratio);
+    const corner = lines.getContext("2d").getImageData(0, lines.height - side, side, side).data;
+    let inked = 0;
+    for (let at = 3; at < corner.length; at += 4) if (corner[at] > 0) inked += 1;
+    return inked;
+  };
+
+  window.harness = harness;
+} catch (failure) {
+  window.harness = { failed: String(failure) };
+}
+</script>
+</body>
+</html>

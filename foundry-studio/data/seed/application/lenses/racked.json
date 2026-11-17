@@ -1,0 +1,11 @@
+{
+  "lens": "racked",
+  "owner": "agent-studio",
+  "status": "candidate",
+  "meaning": "the authored input projection used by Foundry’s rack generator",
+  "version": "0.1.0",
+  "text": {
+    "path": "lenses/racked.lens",
+    "sha256": "c0a596283c2eed893ae3274dd260115226d4258be224552d9d9568d07c7c1992"
+  }
+}

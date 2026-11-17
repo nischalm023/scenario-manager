@@ -1,0 +1,219 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "0ef9b3a2-6b0a-4ab8-8874-b1befc28b988",
+    "name": "walmart-dallas fleet & carriers (slice-scaled)",
+    "kind": "fleet",
+    "depends_on": [
+      "3cbd200e-580a-40d8-b5ee-edf406aa1c88"
+    ]
+  },
+  "required_components": [
+    "robot_class",
+    "cohort",
+    "carrier_type",
+    "carrier_pool"
+  ],
+  "$comment": "Robot classes and carrier types are catalog-like declarations; cohorts and pools are generators of individual robot/carrier entities (each individually declarable and overridable, like any derived entity). Counts here are scaled to the world slice; real Dallas counts in comments.",
+  "entities": [
+    {
+      "id": "2dcfd4c1-b3aa-48a5-a587-2648415be442",
+      "name": "HTM (K50-class)",
+      "components": {
+        "lineage": [
+          {
+            "party": "HAI",
+            "role": "manufacturer",
+            "designation": "HTM_HAI_K50_L_E1"
+          }
+        ],
+        "robot_class": {
+          "role": "htm",
+          "model": "HTM_HAI_K50_L_E1",
+          "configuration": "standard",
+          "carries": [
+            "tote",
+            "box"
+          ],
+          "carry_exclusive": true,
+          "$comment": "One carrier at a time — a tote OR a box, never both, per the Dallas ruling. The model string matches the legacy pps.json bot_type for traceability.",
+          "native_frame": "f207d86a-173c-4375-a66d-55607ad63a04",
+          "footprint": [
+            850,
+            650
+          ],
+          "height": 300,
+          "max_speed": 1800
+        }
+      }
+    },
+    {
+      "id": "5cae603b-9e3e-43e1-b2f3-6d8ce919f110",
+      "name": "VTM (vacuum effector)",
+      "components": {
+        "lineage": [
+          {
+            "party": "HAI",
+            "role": "manufacturer",
+            "designation": "VTM_HAI_V2"
+          }
+        ],
+        "robot_class": {
+          "role": "vtm",
+          "model": "VTM_HAI_V2",
+          "configuration": "vacuum_effector",
+          "locomotion": "floor",
+          "carries": [
+            "tote"
+          ],
+          "$comment": "Same chassis as the gripper class, different end effector — hence a different class. height_mm is what the tunnel clearance check reads (11 open levels x 350 mm = 3850 mm > 3600). OPEN in the calls: which effector serves storage aisles vs the order buffer; swap the two cohort assignments below if this is backwards.",
+          "footprint": [
+            1100,
+            900
+          ],
+          "height": 3600,
+          "max_climb": 900
+        }
+      }
+    },
+    {
+      "id": "069bdf48-276f-41e5-b56e-c19263a2cd9f",
+      "name": "VTM (gripper effector)",
+      "components": {
+        "lineage": [
+          {
+            "party": "HAI",
+            "role": "manufacturer",
+            "designation": "VTM_HAI_V2"
+          }
+        ],
+        "robot_class": {
+          "role": "vtm",
+          "model": "VTM_HAI_V2",
+          "configuration": "gripper_effector",
+          "locomotion": "floor",
+          "carries": [
+            "tote",
+            "box"
+          ],
+          "footprint": [
+            1100,
+            900
+          ],
+          "height": 3600,
+          "max_climb": 900
+        }
+      }
+    },
+    {
+      "id": "e6097dc8-9b60-40fe-a636-cd3a45869e81",
+      "name": "cohort: HTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "2dcfd4c1-b3aa-48a5-a587-2648415be442",
+          "count": 12,
+          "$comment": "Real Dallas: 144. Individual robots expand with keys 'robot:{i}'.",
+          "assignment": {
+            "kind": "free"
+          }
+        }
+      }
+    },
+    {
+      "id": "e7ffa31d-5d23-452a-ae2f-9c254ecdea9d",
+      "name": "cohort: aisle VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "5cae603b-9e3e-43e1-b2f3-6d8ce919f110",
+          "count": 2,
+          "$comment": "Real Dallas: ~40 working (2 per aisle; interim design splits 20 aisles into 40 one-VTM segments), plus chargers rotating in. Hard assignment: these robots never leave their aisle.",
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "cdda8cce-008d-4c20-b5b7-4d5a816e05c8"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "242b6569-e299-44df-bccf-af11e96751d0",
+      "name": "cohort: order buffer VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "069bdf48-276f-41e5-b56e-c19263a2cd9f",
+          "count": 1,
+          "$comment": "Real Dallas: 8-9 dedicated to the 9 buffer aisles; never crossing over.",
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "6fc78339-53e7-41f8-81da-ed8533d9070d"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "12cc6d9e-6c7f-4d8e-8443-d1169cd57ddf",
+      "name": "tote 650x450 (high wall)",
+      "components": {
+        "carrier_type": {
+          "kind": "tote",
+          "$comment": "One physical tote type; inventory-vs-order is a per-instance designation (carrier_pool), not a different type. A tray would be this with walls: none.",
+          "size": [
+            650,
+            450,
+            300
+          ]
+        }
+      }
+    },
+    {
+      "id": "63136591-0215-40f6-90dd-9f13faec4705",
+      "name": "order box (generic)",
+      "components": {
+        "carrier_type": {
+          "kind": "box",
+          "self_carrying": true,
+          "$comment": "A box rides the HTM directly (no tray beneath) and leaves the world at extraction.",
+          "size": [
+            600,
+            400,
+            400
+          ]
+        }
+      }
+    },
+    {
+      "id": "700da094-b7a6-4c82-abbe-b7b26bcc3e98",
+      "name": "pool: inventory totes",
+      "components": {
+        "carrier_pool": {
+          "carrier_type": "12cc6d9e-6c7f-4d8e-8443-d1169cd57ddf",
+          "designation": "inventory",
+          "count": 60,
+          "placement": {
+            "kind": "distributed_storage",
+            "fill_fraction": 0.5
+          },
+          "$comment": "Real Dallas talk: e.g. 800 inventory / 200 order of ~1000 totes; start 50% fill rising to 75%. Designation is permanent per tote (anti-starvation ruling). Individual totes expand with keys 'carrier:{i}' — and any one of them can be declared or overridden by hand for a curated pre-fill."
+        }
+      }
+    },
+    {
+      "id": "e0fe9525-85a1-4e5a-a7e5-cd089bcacf97",
+      "name": "pool: order totes",
+      "components": {
+        "carrier_pool": {
+          "carrier_type": "12cc6d9e-6c7f-4d8e-8443-d1169cd57ddf",
+          "designation": "order",
+          "count": 15,
+          "placement": {
+            "kind": "sector",
+            "sector": "dea32596-e800-4fd5-8371-d800650fe181"
+          }
+        }
+      }
+    }
+  ]
+}

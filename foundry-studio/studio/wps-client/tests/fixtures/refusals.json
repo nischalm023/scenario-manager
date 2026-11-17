@@ -1,0 +1,817 @@
+{
+ "recorded_from": "world-graph-server at world-proto cd4923516",
+ "answers": [
+  {
+   "case": "a scope created twice",
+   "route": "create_scope",
+   "status": 409,
+   "body": {
+    "code": "scope_exists",
+    "details": {
+     "scope": "rec0c66b8fa/a"
+    },
+    "error": "scope rec0c66b8fa/a already exists"
+   }
+  },
+  {
+   "case": "a scope under a missing parent",
+   "route": "create_scope",
+   "status": 422,
+   "body": {
+    "code": "parent_missing",
+    "details": {
+     "missing": "rec0c66b8fa/none",
+     "scope": "rec0c66b8fa/none/x"
+    },
+    "error": "scope rec0c66b8fa/none/x cannot be created, because its parent does not exist: rec0c66b8fa/none is the first of its ancestors that does not, so create rec0c66b8fa/none and each scope below it first, each stating its boundary flag — the server never creates an ancestor of its own accord, since the flag is fixed at creation (DESIGN.md §14)"
+   }
+  },
+  {
+   "case": "an export of a scope that does not exist",
+   "route": "export",
+   "status": 404,
+   "body": {
+    "code": "unknown_scope",
+    "details": {
+     "scope": "rec0c66b8fa/none"
+    },
+    "error": "scope rec0c66b8fa/none does not exist"
+   }
+  },
+  {
+   "case": "an entity read that is not live",
+   "route": "read",
+   "status": 404,
+   "body": {
+    "code": "entity_not_live",
+    "details": {
+     "at": null,
+     "entity": "35acd304-e585-4d38-91d5-5c0c0cf289fe",
+     "scope": "rec0c66b8fa/a/map"
+    },
+    "error": "scope rec0c66b8fa/a/map has no entity `35acd304-e585-4d38-91d5-5c0c0cf289fe` live at head"
+   }
+  },
+  {
+   "case": "the history of an identity the scope never held",
+   "route": "read",
+   "status": 404,
+   "body": {
+    "code": "entity_unknown",
+    "details": {
+     "entity": "55fa704c-e060-49b3-a55a-4877a3d9fcde",
+     "scope": "rec0c66b8fa/a/map"
+    },
+    "error": "scope rec0c66b8fa/a/map has never held an entity `55fa704c-e060-49b3-a55a-4877a3d9fcde`"
+   }
+  },
+  {
+   "case": "a component no one defined",
+   "route": "read",
+   "status": 404,
+   "body": {
+    "code": "component_undefined",
+    "details": {
+     "component": "norecordedcomponent"
+    },
+    "error": "component `norecordedcomponent` is not defined — define it before publishing schemas"
+   }
+  },
+  {
+   "case": "an export at a changeset that does not read",
+   "route": "export",
+   "status": 400,
+   "body": {
+    "code": "query_unreadable",
+    "details": {},
+    "error": "Failed to deserialize query string: at: invalid digit found in string"
+   }
+  },
+  {
+   "case": "an operation outside the initiating scope",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "outside_the_initiating_scope",
+    "details": {
+     "field": "ops",
+     "index": 0,
+     "initiating": "rec0c66b8fa/a/map",
+     "scope": "rec0c66b8fa/a/flow"
+    },
+    "error": "changeset refused: its operation 0 (`declare`) names scope rec0c66b8fa/a/flow, which is neither rec0c66b8fa/a/map, the scope this changeset is initiated on, nor below it: a changeset initiated on a scope writes that scope and its descendants, never a sibling or a parent (DESIGN.md §8)"
+   }
+  },
+  {
+   "case": "a family of the registry stating bases and creations",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "registry_writes_itself_alone",
+    "details": {
+     "fields": [
+      "bases",
+      "create"
+     ],
+     "scope": "registry/lenses"
+    },
+    "error": "changeset refused: scope registry/lenses is a family of the registry, and a family's changeset writes its own scope alone, so it states nothing in `prologue`, `bases`, `create`, `prologues` or `generators`, and this one states `bases` and `create` (DESIGN.md §8)"
+   }
+  },
+  {
+   "case": "a scope created twice in one changeset",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "created_twice",
+    "details": {
+     "scope": "rec0c66b8fa/a/new"
+    },
+    "error": "changeset refused: this changeset lists scope rec0c66b8fa/a/new twice among the scopes it creates, and a scope is created once"
+   }
+  },
+  {
+   "case": "a written scope without its base",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "base_unstated",
+    "details": {
+     "scope": "rec0c66b8fa/a/map"
+    },
+    "error": "changeset refused: this changeset writes scope rec0c66b8fa/a/map and states no base for it: every scope a changeset writes states the head its author read, in `bases`, or in `base` for the scope it is initiated on (DESIGN.md §8)"
+   }
+  },
+  {
+   "case": "a created scope's base other than 0",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "created_base_not_zero",
+    "details": {
+     "base": 3,
+     "scope": "rec0c66b8fa/a/new"
+    },
+    "error": "changeset refused: this changeset creates scope rec0c66b8fa/a/new and states its base as 3: a scope a changeset creates stands at 0 when the changeset begins, so its base is 0 (DESIGN.md §8)"
+   }
+  },
+  {
+   "case": "the initiating scope's base stated twice",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "stated_twice",
+    "details": {
+     "fact": "base",
+     "scope": "rec0c66b8fa/a/map"
+    },
+    "error": "changeset refused: this changeset states the base of scope rec0c66b8fa/a/map twice, and the two disagree: 1 as `base`, and 0 in `bases`"
+   }
+  },
+  {
+   "case": "a generator expected twice",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "expected_twice",
+    "details": {
+     "generator": "tiling"
+    },
+    "error": "changeset refused: this changeset names generator `tiling` twice in the set it expects to run, and a generator runs at one version"
+   }
+  },
+  {
+   "case": "one entity written twice",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "duplicate_op",
+    "details": {
+     "what": "entity",
+     "written": "f16f202f-2f9b-44d8-a07a-b07a9c9391e5"
+    },
+    "error": "changeset refused: f16f202f-2f9b-44d8-a07a-b07a9c9391e5: two operations in one changeset write the same entity — a changeset carries no order, so it cannot say which wins"
+   }
+  },
+  {
+   "case": "a body that is not JSON",
+   "route": "changesets",
+   "status": 400,
+   "body": {
+    "code": "body_syntax",
+    "details": {},
+    "error": "Failed to parse the request body as JSON: key must be a string at line 1 column 3"
+   }
+  },
+  {
+   "case": "two scopes written from bases their heads passed",
+   "route": "changesets",
+   "status": 409,
+   "body": {
+    "code": "stale_base",
+    "details": {
+     "stale": [
+      {
+       "base": 0,
+       "head": 1,
+       "scope": "rec0c66b8fa/a/flow"
+      },
+      {
+       "base": 0,
+       "head": 1,
+       "scope": "rec0c66b8fa/a/map"
+      }
+     ]
+    },
+    "error": "changeset base 0 is not scope rec0c66b8fa/a/flow's head 1; changeset base 0 is not scope rec0c66b8fa/a/map's head 1 — re-read those scopes and rebuild against them"
+   }
+  },
+  {
+   "case": "another body under a stored operation identifier",
+   "route": "changesets",
+   "status": 409,
+   "body": {
+    "code": "operation_reused",
+    "details": {
+     "initiated": "rec0c66b8fa/b/map",
+     "named": [
+      {
+       "changeset": 3,
+       "scope": "rec0c66b8fa/b/map"
+      }
+     ],
+     "operation": "rec0c66b8fa-op"
+    },
+    "error": "operation `rec0c66b8fa-op` already names changeset 3 of scope rec0c66b8fa/b/map, which was sent with another body — an operation identifier names one changeset and is never reused, so nothing was applied; send that changeset's own body again to read its answer, or name this one anew"
+   }
+  },
+  {
+   "case": "a stated generator that would not run",
+   "route": "changesets",
+   "status": 409,
+   "body": {
+    "code": "generators_moved",
+    "details": {
+     "differences": [
+      {
+       "generator": "tiling",
+       "runs": null,
+       "stated": {
+        "digest": "509eb66472f587963fc505cfa990dddcf1bd47f997655d56ed8f9396c5e56148",
+        "version": "0.1.0"
+       }
+      }
+     ]
+    },
+    "error": "this changeset states the generators it expects to run, and it would run another set, so nothing was applied (DESIGN.md §8): `tiling` is stated at 0.1.0, and this changeset runs no generator, since no scope it writes is one the registered generators expand"
+   }
+  },
+  {
+   "case": "generators that run otherwise than stated",
+   "route": "changesets",
+   "status": 409,
+   "body": {
+    "code": "generators_moved",
+    "details": {
+     "differences": [
+      {
+       "generator": "carrier_pool",
+       "runs": {
+        "digest": "e48ee2fed832feccdf13e00d2db7756ab98514f5f762919bb70bc7bd19fb85ff",
+        "version": "0.1.0"
+       },
+       "stated": null
+      },
+      {
+       "generator": "cohort",
+       "runs": {
+        "digest": "29db153f538ddc017f95705a667e70cb743a1f607c1ccf843ca10e4fc7b382ac",
+        "version": "0.1.0"
+       },
+       "stated": null
+      },
+      {
+       "generator": "rack",
+       "runs": {
+        "digest": "709c050f7ce58f9aa0f6ef62b0294c20dad7bb5f46ffa5a5ab33cab766fa9726",
+        "version": "0.1.0"
+       },
+       "stated": null
+      },
+      {
+       "generator": "stamp",
+       "runs": {
+        "digest": "7f8353de04fe12e3fb05f2a10c5922e8c339e5779e97e87a3a510f9f77e7e303",
+        "version": "0.1.0"
+       },
+       "stated": null
+      },
+      {
+       "generator": "tiling",
+       "runs": {
+        "digest": "509eb66472f587963fc505cfa990dddcf1bd47f997655d56ed8f9396c5e56148",
+        "version": "0.1.0"
+       },
+       "stated": {
+        "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "version": "0.1.0"
+       }
+      }
+     ]
+    },
+    "error": "this changeset states the generators it expects to run, and it would run another set, so nothing was applied (DESIGN.md §8): `carrier_pool` is not stated, and a component names it now, so this changeset would run it at 0.1.0 with module e48ee2fed832feccdf13e00d2db7756ab98514f5f762919bb70bc7bd19fb85ff; `cohort` is not stated, and a component names it now, so this changeset would run it at 0.1.0 with module 29db153f538ddc017f95705a667e70cb743a1f607c1ccf843ca10e4fc7b382ac; `rack` is not stated, and a component names it now, so this changeset would run it at 0.1.0 with module 709c050f7ce58f9aa0f6ef62b0294c20dad7bb5f46ffa5a5ab33cab766fa9726; `stamp` is not stated, and a component names it now, so this changeset would run it at 0.1.0 with module 7f8353de04fe12e3fb05f2a10c5922e8c339e5779e97e87a3a510f9f77e7e303; `tiling` is stated at 0.1.0 with module 0000000000000000000000000000000000000000000000000000000000000000, and the registry runs it at 0.1.0 with module 509eb66472f587963fc505cfa990dddcf1bd47f997655d56ed8f9396c5e56148"
+   }
+  },
+  {
+   "case": "a payload its schema refuses",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "schema_invalid",
+    "details": {
+     "component": "template.description",
+     "entity": "41d2f13a-d178-44e0-993b-71221a6fafca",
+     "path": "/title",
+     "scope": "rec0c66b8fa/a/map",
+     "version": "0.1.0"
+    },
+    "error": "changeset refused: 41d2f13a-d178-44e0-993b-71221a6fafca: component `template.description` does not satisfy `template.description@0.1.0`: 5 is not of type \"string\""
+   }
+  },
+  {
+   "case": "a patch of nothing live",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "patch_missing_target",
+    "details": {
+     "entity": "668adb05-91ab-44e5-9a41-609f414adc2c",
+     "scope": "rec0c66b8fa/a/map"
+    },
+    "error": "changeset refused: 668adb05-91ab-44e5-9a41-609f414adc2c: patch names an entity that is not live — declare it first"
+   }
+  },
+  {
+   "case": "a delete of nothing live",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "delete_missing_target",
+    "details": {
+     "entity": "c9f9eb78-8b4b-44c6-a1e3-283985dfe209",
+     "scope": "rec0c66b8fa/a/map"
+    },
+    "error": "changeset refused: c9f9eb78-8b4b-44c6-a1e3-283985dfe209: delete names an entity that is not live"
+   }
+  },
+  {
+   "case": "a replace of nothing live",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "replace_missing_target",
+    "details": {
+     "entity": "7cd163e9-4d06-4029-85e6-d0e648245430",
+     "scope": "rec0c66b8fa/a/map"
+    },
+    "error": "changeset refused: 7cd163e9-4d06-4029-85e6-d0e648245430: replace names an entity that is not live in this scope — a replace states what a live entity of its own scope carries, so declare it first, or replace it in the scope that holds it (DESIGN.md §8)"
+   }
+  },
+  {
+   "case": "a deleted identity declared again",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "declare_on_deleted",
+    "details": {
+     "deleted": 2,
+     "entity": "acc91b6c-ee46-4e42-a1eb-640c69fb60f2",
+     "scope": "rec0c66b8fa/b/map"
+    },
+    "error": "changeset refused: acc91b6c-ee46-4e42-a1eb-640c69fb60f2: declare names an entity deleted at changeset 2 — a deleted identity is not re-declared, it stays spent"
+   }
+  },
+  {
+   "case": "an identity another scope owns",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "owned_elsewhere",
+    "details": {
+     "entity": "ea74367a-e1ba-41cc-9971-f97d12d3d4df",
+     "owner": "rec0c66b8fa/a/map",
+     "scope": "rec0c66b8fa/b/map"
+    },
+    "error": "changeset refused: ea74367a-e1ba-41cc-9971-f97d12d3d4df: declare names an identity scope rec0c66b8fa/a/map owns — a declared identity belongs to the scope that first declared it, for good, so a reference to it names one entity (DESIGN.md §4); declare a new identity here instead"
+   }
+  },
+  {
+   "case": "a reference to an identity no scope declared",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "undeclared",
+    "details": {
+     "reference": "0642588b-24e1-42cf-aa89-7e996f6c5ad6",
+     "referrer": {
+      "component": "sector",
+      "entity": "611993a5-b8b7-4bce-94e2-c88f7f94191a",
+      "override": false,
+      "path": "/members/0",
+      "scope": "rec0c66b8fa/a/map"
+     },
+     "root": "0642588b-24e1-42cf-aa89-7e996f6c5ad6"
+    },
+    "error": "changeset refused: 611993a5-b8b7-4bce-94e2-c88f7f94191a.sector/members/0 in rec0c66b8fa/a/map names `0642588b-24e1-42cf-aa89-7e996f6c5ad6`, and no scope has declared `0642588b-24e1-42cf-aa89-7e996f6c5ad6`, so it names nothing (DESIGN.md §4)"
+   }
+  },
+  {
+   "case": "a deletion its changeset's own reference names",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "dangling",
+    "details": {
+     "owner": "rec0c66b8fa/a/map",
+     "referrer": {
+      "component": "flow.node",
+      "entity": "6b5cfd2b-c7a0-4dac-bc81-ba5d5385b08b",
+      "override": false,
+      "path": "/sectors/0",
+      "scope": "rec0c66b8fa/a/flow"
+     },
+     "target": "1450a708-edc6-4258-bf43-a29c69ca4607"
+    },
+    "error": "changeset refused: 6b5cfd2b-c7a0-4dac-bc81-ba5d5385b08b.flow.node/sectors/0 in rec0c66b8fa/a/flow names `1450a708-edc6-4258-bf43-a29c69ca4607` at head, and it is not live in rec0c66b8fa/a/map, the scope that owns it, as this changeset leaves it — a reference at head may not dangle (DESIGN.md §8)"
+   }
+  },
+  {
+   "case": "a deletion still named at head",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "left_dangling",
+    "details": {
+     "more": false,
+     "targets": [
+      {
+       "derived": false,
+       "entity": "ea74367a-e1ba-41cc-9971-f97d12d3d4df",
+       "referrers": [
+        {
+         "component": "flow.node",
+         "entity": "342da573-2eb8-4e57-bbe6-1549e2ec2ca9",
+         "override": false,
+         "path": "/sectors/0",
+         "scope": "rec0c66b8fa/a/flow"
+        }
+       ],
+       "scope": "rec0c66b8fa/a/map"
+      }
+     ]
+    },
+    "error": "changeset refused: ea74367a-e1ba-41cc-9971-f97d12d3d4df: cannot delete — still referenced by 342da573-2eb8-4e57-bbe6-1549e2ec2ca9.flow.node/sectors/0 in rec0c66b8fa/a/flow"
+   }
+  },
+  {
+   "case": "a pin within one unit",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "pin_within_unit",
+    "details": {
+     "owner": "rec0c66b8fa/a/map",
+     "reference": "ea74367a-e1ba-41cc-9971-f97d12d3d4df@1",
+     "referrer": {
+      "component": "sector",
+      "entity": "f1bfafe4-7eb5-4a3a-8371-4924088d5f60",
+      "override": false,
+      "path": "/members/0",
+      "scope": "rec0c66b8fa/a/map"
+     },
+     "unit": "rec0c66b8fa/a"
+    },
+    "error": "changeset refused: f1bfafe4-7eb5-4a3a-8371-4924088d5f60.sector/members/0 in rec0c66b8fa/a/map names `ea74367a-e1ba-41cc-9971-f97d12d3d4df@1` in rec0c66b8fa/a/map, within one unit with it, whose root is rec0c66b8fa/a: within one unit a reference is at head, written bare or `@head`, and never pinned (DESIGN.md §5)"
+   }
+  },
+  {
+   "case": "a reference at head across units",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "head_across_units",
+    "details": {
+     "owner": "rec0c66b8fa/a/map",
+     "reference": "ea74367a-e1ba-41cc-9971-f97d12d3d4df",
+     "referrer": {
+      "component": "sector",
+      "entity": "7c17cb33-1c1a-4acc-9de5-f83edf57288a",
+      "override": false,
+      "path": "/members/0",
+      "scope": "rec0c66b8fa/b/map"
+     }
+    },
+    "error": "changeset refused: 7c17cb33-1c1a-4acc-9de5-f83edf57288a.sector/members/0 in rec0c66b8fa/b/map names `ea74367a-e1ba-41cc-9971-f97d12d3d4df` at head in rec0c66b8fa/a/map, another unit: across units a reference names an immutable version, `@<changeset>` of the scope that owns its target (DESIGN.md §5)"
+   }
+  },
+  {
+   "case": "a branch across units",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "branch_across_units",
+    "details": {
+     "owner": "rec0c66b8fa/a/map",
+     "reference": "ea74367a-e1ba-41cc-9971-f97d12d3d4df@main",
+     "referrer": {
+      "component": "sector",
+      "entity": "930b407f-307d-4bf7-9bdb-d593d4457a59",
+      "override": false,
+      "path": "/members/0",
+      "scope": "rec0c66b8fa/b/map"
+     }
+    },
+    "error": "changeset refused: 930b407f-307d-4bf7-9bdb-d593d4457a59.sector/members/0 in rec0c66b8fa/b/map names `ea74367a-e1ba-41cc-9971-f97d12d3d4df@main` in rec0c66b8fa/a/map, another unit, through a branch: a branch's head moves, and across units a reference names an immutable version, so it is refused rather than frozen at a changeset its author did not write — read the branch's current changeset and write that number (DESIGN.md §5)"
+   }
+  },
+  {
+   "case": "a pin past its scope's head",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "pin_beyond_head",
+    "details": {
+     "head": 1,
+     "owner": "rec0c66b8fa/a/map",
+     "pin": 99,
+     "referrer": {
+      "component": "sector",
+      "entity": "2b4b0d38-7582-4228-b161-e5c1b1d887f8",
+      "override": false,
+      "path": "/members/0",
+      "scope": "rec0c66b8fa/b/map"
+     },
+     "target": "ea74367a-e1ba-41cc-9971-f97d12d3d4df"
+    },
+    "error": "changeset refused: 2b4b0d38-7582-4228-b161-e5c1b1d887f8.sector/members/0 in rec0c66b8fa/b/map names `ea74367a-e1ba-41cc-9971-f97d12d3d4df` pinned at 99, past rec0c66b8fa/a/map's head 1 — a pin names history, and that scope has not written that changeset (DESIGN.md §5)"
+   }
+  },
+  {
+   "case": "a tag no scope holds",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "tag_not_held",
+    "details": {
+     "owner": "rec0c66b8fa/a/map",
+     "reference": "ea74367a-e1ba-41cc-9971-f97d12d3d4df@tag:v1",
+     "referrer": {
+      "component": "sector",
+      "entity": "fbd0f88a-4aaf-4b9a-82e4-8a629973c372",
+      "override": false,
+      "path": "/members/0",
+      "scope": "rec0c66b8fa/b/map"
+     },
+     "tag": "v1"
+    },
+    "error": "changeset refused: fbd0f88a-4aaf-4b9a-82e4-8a629973c372.sector/members/0 in rec0c66b8fa/b/map names `ea74367a-e1ba-41cc-9971-f97d12d3d4df@tag:v1`, and rec0c66b8fa/a/map, the scope that owns its target, holds no tag `v1` — no scope holds a tag until tags are built (DESIGN.md §15, §16), so name the changeset instead"
+   }
+  },
+  {
+   "case": "two sites pinning one another's new changesets",
+   "route": "changesets",
+   "status": 422,
+   "body": {
+    "code": "pin_cycle",
+    "details": {
+     "scopes": [
+      "rec0c66b8fa/p/a",
+      "rec0c66b8fa/p/b"
+     ]
+    },
+    "error": "changeset refused: the scopes rec0c66b8fa/p/a, rec0c66b8fa/p/b pin one another's new changesets in a cycle, so no order finalizes each before the scopes that pin it, and each generation would read another's output before it exists (DESIGN.md §8)"
+   }
+  },
+  {
+   "case": "a referring scope that does not exist",
+   "route": "resolve",
+   "status": 404,
+   "body": {
+    "code": "unknown_scope",
+    "details": {
+     "scope": "rec0c66b8fa/none"
+    },
+    "error": "scope rec0c66b8fa/none does not exist"
+   }
+  },
+  {
+   "case": "a reference no scope declared",
+   "route": "resolve",
+   "status": 404,
+   "body": {
+    "code": "resolve_undeclared",
+    "details": {
+     "reference": "01f61701-f0a4-47b6-9c07-291d33022ecd",
+     "root": "01f61701-f0a4-47b6-9c07-291d33022ecd"
+    },
+    "error": "`01f61701-f0a4-47b6-9c07-291d33022ecd` names `01f61701-f0a4-47b6-9c07-291d33022ecd`, which no scope has declared"
+   }
+  },
+  {
+   "case": "a reference to nothing live at head",
+   "route": "resolve",
+   "status": 404,
+   "body": {
+    "code": "resolve_dangling",
+    "details": {
+     "owner": "rec0c66b8fa/b/map",
+     "reference": "acc91b6c-ee46-4e42-a1eb-640c69fb60f2"
+    },
+    "error": "`acc91b6c-ee46-4e42-a1eb-640c69fb60f2` names nothing live at the head of scope `rec0c66b8fa/b/map`, which owns its target"
+   }
+  },
+  {
+   "case": "a pin within one unit",
+   "route": "resolve",
+   "status": 422,
+   "body": {
+    "code": "resolve_pin_within_unit",
+    "details": {
+     "owner": "rec0c66b8fa/a/map",
+     "reference": "ea74367a-e1ba-41cc-9971-f97d12d3d4df@1",
+     "scope": "rec0c66b8fa/a/flow"
+    },
+    "error": "`ea74367a-e1ba-41cc-9971-f97d12d3d4df@1` names scope `rec0c66b8fa/a/map` within one unit with scope rec0c66b8fa/a/flow: within one unit a reference is at head, written bare or `@head`, and never pinned (DESIGN.md §5)"
+   }
+  },
+  {
+   "case": "a reference at head across units",
+   "route": "resolve",
+   "status": 422,
+   "body": {
+    "code": "resolve_moving_across_units",
+    "details": {
+     "owner": "rec0c66b8fa/a/map",
+     "reference": "ea74367a-e1ba-41cc-9971-f97d12d3d4df",
+     "scope": "rec0c66b8fa/b/map"
+    },
+    "error": "`ea74367a-e1ba-41cc-9971-f97d12d3d4df` names scope `rec0c66b8fa/a/map`, in another unit than scope rec0c66b8fa/b/map, at head or through a branch: across units a reference names an immutable version, `@<changeset>` (DESIGN.md §5)"
+   }
+  },
+  {
+   "case": "a tag no scope holds",
+   "route": "resolve",
+   "status": 404,
+   "body": {
+    "code": "resolve_tag_not_held",
+    "details": {
+     "owner": "rec0c66b8fa/a/map",
+     "reference": "ea74367a-e1ba-41cc-9971-f97d12d3d4df@tag:v1"
+    },
+    "error": "`ea74367a-e1ba-41cc-9971-f97d12d3d4df@tag:v1` names a tag, and scope `rec0c66b8fa/a/map` holds none: no scope holds a tag until tags are built"
+   }
+  },
+  {
+   "case": "a pin at a changeset the target was not live at",
+   "route": "resolve",
+   "status": 404,
+   "body": {
+    "code": "resolve_pinned_dangling",
+    "details": {
+     "owner": "rec0c66b8fa/b/map",
+     "pin": 2,
+     "reference": "acc91b6c-ee46-4e42-a1eb-640c69fb60f2@2",
+     "root": "acc91b6c-ee46-4e42-a1eb-640c69fb60f2"
+    },
+    "error": "`acc91b6c-ee46-4e42-a1eb-640c69fb60f2@2` pinned at 2 names nothing live at that changeset of scope `rec0c66b8fa/b/map`, which owns `acc91b6c-ee46-4e42-a1eb-640c69fb60f2`"
+   }
+  },
+  {
+   "case": "a pin past its scope's head",
+   "route": "resolve",
+   "status": 404,
+   "body": {
+    "code": "resolve_pin_beyond_head",
+    "details": {
+     "head": 1,
+     "owner": "rec0c66b8fa/a/map",
+     "pin": 99,
+     "reference": "ea74367a-e1ba-41cc-9971-f97d12d3d4df@99"
+    },
+    "error": "`ea74367a-e1ba-41cc-9971-f97d12d3d4df@99` is pinned at 99, past scope `rec0c66b8fa/a/map`'s head 1 — a pin names history, and that scope has not written that changeset (DESIGN.md §5)"
+   }
+  },
+  {
+   "case": "an `at` naming a scope out of reach",
+   "route": "export",
+   "status": 409,
+   "body": {
+    "code": "at_out_of_reach",
+    "details": {
+     "scope": "rec0c66b8fa/v"
+    },
+    "error": "`at` names rec0c66b8fa/v, which the export of rec0c66b8fa/u does not read — name each scope it reads, and no other: the scopes it requests, and with `referenced` every scope a reference at head from them can reach"
+   }
+  },
+  {
+   "case": "an `at` leaving a scope of the unit out",
+   "route": "export",
+   "status": 409,
+   "body": {
+    "code": "at_left_out",
+    "details": {
+     "scopes": [
+      "rec0c66b8fa/u/map"
+     ]
+    },
+    "error": "`at` leaves out rec0c66b8fa/u/map, which the export reads — name every scope it reads, or none to read each at its head"
+   }
+  },
+  {
+   "case": "an `at` past a scope's head",
+   "route": "export",
+   "status": 409,
+   "body": {
+    "code": "at_beyond_head",
+    "details": {
+     "at": 9,
+     "head": 2,
+     "scope": "rec0c66b8fa/v"
+    },
+    "error": "`at` names changeset 9 of rec0c66b8fa/v, whose head is 2"
+   }
+  },
+  {
+   "case": "a scope pinned at two changesets",
+   "route": "export",
+   "status": 409,
+   "body": {
+    "code": "reached_twice",
+    "details": {
+     "changesets": [
+      1,
+      2
+     ],
+     "scope": "rec0c66b8fa/v"
+    },
+    "error": "rec0c66b8fa/v would be read at changesets 1 and 2, and a flagged export holds each scope at one changeset"
+   }
+  },
+  {
+   "case": "a unit of more scopes than an export holds",
+   "route": "export",
+   "status": 422,
+   "body": {
+    "code": "closure_too_large",
+    "details": {
+     "limit": 256,
+     "scope": "rec0c66b8fa/big"
+    },
+    "error": "the flagged export of rec0c66b8fa/big would hold entities from more than 256 scopes, those it requests and those its references bring entities from, and one export holds at most 256"
+   }
+  },
+  {
+   "case": "a flag that is neither 1 nor 0",
+   "route": "export",
+   "status": 400,
+   "body": {
+    "code": "export_flag_malformed",
+    "details": {
+     "flag": "nested",
+     "value": "2"
+    },
+    "error": "`nested=2` does not say which export is asked for — `nested` is `1` or `0`, the same each time it is stated"
+   }
+  },
+  {
+   "case": "a parameter the flagged export does not take",
+   "route": "export",
+   "status": 400,
+   "body": {
+    "code": "parameter_unknown",
+    "details": {
+     "parameter": "flags"
+    },
+    "error": "`flags` is not a parameter of the export — it takes `nested`, `derived` and `referenced`, each `1` or `0`, and with any of them `1`, `at` once for each scope the export reads"
+   }
+  },
+  {
+   "case": "a flagged export uploaded to import",
+   "route": "import",
+   "status": 422,
+   "body": {
+    "code": "document_flagged_export",
+    "details": {
+     "keys": [
+      "derived",
+      "nested",
+      "referenced",
+      "scope",
+      "scopes"
+     ]
+    },
+    "error": "the upload holds derived, nested, referenced, scope and scopes, which a flagged export writes and no document does — import never takes a flagged export, since a scope it holds in part would read as deletions; import the scope's plain export instead"
+   }
+  }
+ ]
+}

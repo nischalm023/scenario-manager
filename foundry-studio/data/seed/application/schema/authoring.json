@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:authoring",
+  "title": "world protocol — authoring profile",
+  "description": "How to read a document you are writing yourself. Everything the wire profile asserts, plus the two things a consumer must not assert about someone else's document but an author wants asserted about their own: on a component the core vocabulary defines, a field it does not define is a typo until proven otherwise, and an entity that carries one component but not the one it needs is unfinished. A component the core does not define passes whatever its name, plain or dotted, its fields unread: this profile knows the core's names alone, and whether another name means anything is a registry's to say, so the name is held to the grammar alone (SPEC §2, ruled 2026-10-18).",
+  "$comment": "This profile refusing a document does not make the document invalid on the wire. It means the document says something this version of the vocabulary has no definition for — a question for the spec, not a defect in the file.",
+  "allOf": [{"$ref": "urn:worldproto:0.7:document#/$defs/document"}, {"$ref": "#/$defs/strict_document"}],
+  "$defs": {
+    "strict_document": {
+      "title": "the strict overlay",
+      "description": "Where the closure reaches. A component map turns up in four places — on a record, on a template's internals, on a derived node, and inside a tiling's `derives`, which states the components its cells carry — and each is walked here so that the strict reading applies to all of them.",
+      "$comment": "This overlay names the four locations explicitly rather than substituting a schema at the point of use: a `$dynamicRef` would express it in one line, but ajv 8 resolves a cross-resource dynamic anchor to the resource root rather than to the anchored subschema, and a schema layer that only one validator reads correctly is not a schema layer. `derives` is the fourth place, added with v0.6's tiling. If a fifth ever appears, it must be added here — see README.md.",
+      "type": "object",
+      "properties": {
+        "entities": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/strict_record"}
+        }
+      }
+    },
+    "strict_record": {
+      "description": "A record's own components, plus any expansion it carries inline.",
+      "type": "object",
+      "$comment": "Archetype lenses apply only to a record that introduces an entity. A patch, an override or a suppression carries a fragment of one on purpose, and a lens read against a fragment reports a missing component that is sitting in another layer. See README.md, 'What the lenses cannot see'.",
+      "properties": {
+        "derived": {"$ref": "#/$defs/strict_derived_map"}
+      },
+      "if": {
+        "type": "object",
+        "required": ["id"],
+        "not": {
+          "anyOf": [{"required": ["patch"]}, {"required": ["derivation"]}, {"required": ["suppress"]}]
+        }
+      },
+      "then": {
+        "properties": {
+          "components": {"$ref": "#/$defs/whole_entity_components"}
+        }
+      },
+      "else": {
+        "properties": {
+          "components": {"$ref": "#/$defs/strict_components"}
+        }
+      }
+    },
+    "strict_derived_map": {
+      "description": "Everything a generator derived, however deep the chain runs. Derived content is machine-written, so it is read strictly but never lensed: an archetype is an authoring aid, and nobody authored this.",
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/strict_derived_node"}
+    },
+    "strict_derived_node": {
+      "type": "object",
+      "properties": {
+        "components": {"$ref": "#/$defs/strict_components"},
+        "derived": {"$ref": "#/$defs/strict_derived_map"}
+      }
+    },
+    "whole_entity_components": {
+      "description": "The components of something authored as a whole entity: read strictly, and read through the archetype lenses.",
+      "allOf": [
+        {"$ref": "#/$defs/strict_components"},
+        {"$ref": "urn:worldproto:0.7:archetypes#/$defs/lenses"}
+      ]
+    },
+    "strict_components": {
+      "description": "A component map with every known component closed, plus the reach into a template's internals — which are whole entities in their own right, so they are lensed too — and into a tiling's `derives`, which is a component map like any other.",
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components#/$defs/set_strict"},
+        {"$ref": "#/$defs/strict_template_internals"},
+        {"$ref": "#/$defs/strict_tiling_derives"}
+      ]
+    },
+    "strict_tiling_derives": {
+      "description": "The components a cell_grid's cells carry, read as strictly as the ones its own record carries. No lens applies: a cell is a fragment of an entity, not a whole one — its pose comes from the tiling.",
+      "type": "object",
+      "properties": {
+        "tiling": {
+          "type": "object",
+          "properties": {
+            "derives": {"$ref": "#/$defs/strict_components"}
+          }
+        }
+      }
+    },
+    "strict_template_internals": {
+      "type": "object",
+      "properties": {
+        "template": {
+          "type": "object",
+          "properties": {
+            "entities": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "components": {"$ref": "#/$defs/whole_entity_components"}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

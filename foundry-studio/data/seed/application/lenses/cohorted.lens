@@ -1,0 +1,7 @@
+
+// Census 21 and 22's cohort without its class: every cohort, whatever class it
+// names. A robot copies the reference to its class and reads nothing of the
+// class, so binding the class as well would be asking for what no robot
+// depends on.
+pattern cohorted { c: cohort; }
+lens cohorted { anchor c: cohorted; }

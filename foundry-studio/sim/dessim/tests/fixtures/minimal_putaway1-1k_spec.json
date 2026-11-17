@@ -1,0 +1,21 @@
+{
+ "world": "minimal_putaway1-1k.json",
+ "scenario": {
+  "num_skus": 10,
+  "total_inventory_units": 2000,
+  "num_orders": 500,
+  "total_order_picks": 1000,
+  "units_per_tote": 1,
+  "popular_skus_pct": 0.0,
+  "inventory_popular_share": 0.0,
+  "order_popular_share": 0.0
+ },
+ "settings": {
+  "num_htms": 4,
+  "fidelity": "CollisionDes",
+  "putaway": {
+   "enabled": true
+  },
+  "queue_factor": 3.0
+ }
+}

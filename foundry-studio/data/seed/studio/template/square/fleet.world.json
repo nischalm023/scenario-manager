@@ -1,0 +1,30 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "Square's fleet scope (template/site/square/fleet): the HTM cohort; each aisle's VTM cohort lands here when a site is made.",
+  "doc": {
+    "id": "938cc621-32c5-43ad-a51a-510da8cd65cc",
+    "name": "Square: fleet",
+    "kind": "template",
+    "depends_on": [
+      "fda5287c-b2e0-4d3e-a000-e46fa35ba40c"
+    ]
+  },
+  "entities": [
+    {
+      "id": "cb5875c1-67e3-4d55-b3c0-b9ed84040602",
+      "name": "HTM fleet",
+      "components": {
+        "cohort": {
+          "robot_class": "75fb2fbe-5260-4290-80ba-d8acf7974312@1",
+          "count": 24,
+          "assignment": {
+            "kind": "free"
+          }
+        },
+        "template.knob_binding": {
+          "/cohort/count": "htms"
+        }
+      }
+    }
+  ]
+}

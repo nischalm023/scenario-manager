@@ -1,0 +1,568 @@
+{
+  "version": 3,
+  "grid": {
+    "width": 154,
+    "depth": 103,
+    "cell_size_mm": 1000.0
+  },
+  "highways": [
+    {
+      "origin": [
+        0,
+        1
+      ],
+      "width": 154,
+      "height": 2,
+      "direction": "Eastbound"
+    },
+    {
+      "origin": [
+        0,
+        3
+      ],
+      "width": 154,
+      "height": 1,
+      "direction": "NorthSouthOnly"
+    },
+    {
+      "origin": [
+        0,
+        4
+      ],
+      "width": 154,
+      "height": 2,
+      "direction": "Westbound"
+    }
+  ],
+  "zones": [
+    {
+      "type": "relay",
+      "id": 1,
+      "origin": [
+        5,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 2,
+      "origin": [
+        8,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 3,
+      "origin": [
+        25,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 4,
+      "origin": [
+        28,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 5,
+      "origin": [
+        45,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 6,
+      "origin": [
+        48,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 7,
+      "origin": [
+        65,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 8,
+      "origin": [
+        68,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 9,
+      "origin": [
+        85,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 10,
+      "origin": [
+        88,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 11,
+      "origin": [
+        105,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 12,
+      "origin": [
+        108,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 13,
+      "origin": [
+        125,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 14,
+      "origin": [
+        128,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 15,
+      "origin": [
+        145,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 16,
+      "origin": [
+        148,
+        22
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 17,
+      "origin": [
+        125,
+        54
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 18,
+      "origin": [
+        128,
+        54
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 19,
+      "origin": [
+        145,
+        54
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    },
+    {
+      "type": "relay",
+      "id": 20,
+      "origin": [
+        148,
+        54
+      ],
+      "length": 18,
+      "sides": "Dual",
+      "vertical_tote_capacity": 10
+    }
+  ],
+  "stations": [
+    {
+      "id": 1,
+      "position": [
+        8,
+        0
+      ],
+      "presentation_cell": [
+        8,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 2,
+      "position": [
+        23,
+        0
+      ],
+      "presentation_cell": [
+        23,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          20,
+          1
+        ],
+        [
+          21,
+          1
+        ],
+        [
+          22,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 3,
+      "position": [
+        38,
+        0
+      ],
+      "presentation_cell": [
+        38,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          35,
+          1
+        ],
+        [
+          36,
+          1
+        ],
+        [
+          37,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 4,
+      "position": [
+        54,
+        0
+      ],
+      "presentation_cell": [
+        54,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          51,
+          1
+        ],
+        [
+          52,
+          1
+        ],
+        [
+          53,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 5,
+      "position": [
+        69,
+        0
+      ],
+      "presentation_cell": [
+        69,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          66,
+          1
+        ],
+        [
+          67,
+          1
+        ],
+        [
+          68,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 6,
+      "position": [
+        85,
+        0
+      ],
+      "presentation_cell": [
+        85,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          82,
+          1
+        ],
+        [
+          83,
+          1
+        ],
+        [
+          84,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 7,
+      "position": [
+        100,
+        0
+      ],
+      "presentation_cell": [
+        100,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          97,
+          1
+        ],
+        [
+          98,
+          1
+        ],
+        [
+          99,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 8,
+      "position": [
+        116,
+        0
+      ],
+      "presentation_cell": [
+        116,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          113,
+          1
+        ],
+        [
+          114,
+          1
+        ],
+        [
+          115,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 9,
+      "position": [
+        131,
+        0
+      ],
+      "presentation_cell": [
+        131,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          128,
+          1
+        ],
+        [
+          129,
+          1
+        ],
+        [
+          130,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 10,
+      "position": [
+        146,
+        0
+      ],
+      "presentation_cell": [
+        146,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          143,
+          1
+        ],
+        [
+          144,
+          1
+        ],
+        [
+          145,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    }
+  ],
+  "clip_boxes": [
+    {
+      "origin": [
+        0,
+        46
+      ],
+      "width": 115,
+      "height": 57
+    }
+  ],
+  "settings": {
+    "allow_short_picks": false,
+    "operator": {
+      "time_per_pick_secs": 9.0
+    },
+    "num_htms": 400
+  },
+  "scenario": {
+    "num_skus": 300,
+    "total_inventory_units": 7200,
+    "num_orders": 720,
+    "total_order_picks": 7200,
+    "popular_skus_pct": 0.0,
+    "inventory_popular_share": 0.0,
+    "order_popular_share": 0.0,
+    "units_per_tote": 1
+  }
+}

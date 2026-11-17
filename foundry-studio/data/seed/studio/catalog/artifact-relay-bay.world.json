@@ -1,0 +1,146 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "One bay of relay racking: the GO catalog's 5-wide double-deep rack (world-proto examples/walmart-dallas/catalog.world.json), its relays on the +y face, storing the catalog tote. Its relays bind the floor cells beside that face when the reader loads a site.",
+  "doc": {
+    "id": "9667f012-a447-46e6-a75f-beafb020e9eb",
+    "name": "Relay bay, 5 wide, double-deep, 23 levels, 4 relays",
+    "kind": "catalog",
+    "depends_on": [
+      "c00f991f-4b60-4ec5-8b3e-d261c4f9768f"
+    ]
+  },
+  "entities": [
+    {
+      "id": "611def02-6716-45f9-b10c-0e5d7c17d6a6",
+      "name": "Relay bay, 5 wide, double-deep, 23 levels, 4 relays",
+      "components": {
+        "template": {
+          "params": {},
+          "entities": [
+            {
+              "local": "rack",
+              "components": {
+                "pose": {
+                  "position": [
+                    0,
+                    0
+                  ],
+                  "heading_deg": 0
+                },
+                "rack": {
+                  "slots_wide": 5,
+                  "slots_deep": 2,
+                  "slot_pitch": [
+                    550,
+                    650
+                  ],
+                  "footprint": [
+                    2750,
+                    1300
+                  ],
+                  "levels": [
+                    {
+                      "height": 350
+                    },
+                    {
+                      "height": 400,
+                      "positions": [
+                        [
+                          340,
+                          1300
+                        ],
+                        [
+                          1030,
+                          1300
+                        ],
+                        [
+                          1720,
+                          1300
+                        ],
+                        [
+                          2410,
+                          1300
+                        ]
+                      ],
+                      "reach": 1750
+                    },
+                    {
+                      "height": 700
+                    },
+                    {
+                      "height": 1050
+                    },
+                    {
+                      "height": 1400
+                    },
+                    {
+                      "height": 1750
+                    },
+                    {
+                      "height": 2100
+                    },
+                    {
+                      "height": 2450
+                    },
+                    {
+                      "height": 2800
+                    },
+                    {
+                      "height": 3150
+                    },
+                    {
+                      "height": 3500
+                    },
+                    {
+                      "height": 3850
+                    },
+                    {
+                      "height": 4200
+                    },
+                    {
+                      "height": 4550
+                    },
+                    {
+                      "height": 4900
+                    },
+                    {
+                      "height": 5250
+                    },
+                    {
+                      "height": 5600
+                    },
+                    {
+                      "height": 5950
+                    },
+                    {
+                      "height": 6300
+                    },
+                    {
+                      "height": 6650
+                    },
+                    {
+                      "height": 7000
+                    },
+                    {
+                      "height": 7350
+                    },
+                    {
+                      "height": 7700
+                    },
+                    {
+                      "height": 8050
+                    }
+                  ]
+                },
+                "storage": {
+                  "holds": "inventory",
+                  "carrier_type": "589fed88-5b4c-40bc-b11a-1b5e96670d8e@1"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

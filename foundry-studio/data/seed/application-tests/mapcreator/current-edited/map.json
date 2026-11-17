@@ -1,0 +1,837 @@
+[
+  {
+    "floor_id": 1,
+    "vda5050_reference": {
+      "barcode": "611.117",
+      "vda5050_coordinate": "[438750,513750]"
+    },
+    "location_profiles": [
+      {
+        "location_profile_id": "LP-open",
+        "bot_orientation_details": {
+          "HTM_QT_X1": {
+            "0": {
+              "lift_height_ranges": {
+                "loaded": [
+                  [
+                    410,
+                    520
+                  ]
+                ],
+                "unloaded": [
+                  [
+                    410,
+                    470
+                  ]
+                ]
+              },
+              "ground_height_clearance": 940
+            },
+            "2": {
+              "lift_height_ranges": {
+                "loaded": [
+                  [
+                    410,
+                    520
+                  ]
+                ],
+                "unloaded": []
+              },
+              "ground_height_clearance": 940
+            }
+          },
+          "VTM_HAI_Z9_E1": {
+            "1": {
+              "lift_height_ranges": {
+                "loaded": [],
+                "unloaded": null
+              },
+              "ground_height_clearance": "all"
+            }
+          }
+        },
+        "edge_height_clearance": {}
+      },
+      {
+        "location_profile_id": "LP-narrow",
+        "bot_orientation_details": {
+          "HTM_QT_X1": {
+            "3": {
+              "lift_height_ranges": {
+                "loaded": [
+                  [
+                    400,
+                    430
+                  ]
+                ],
+                "unloaded": [
+                  [
+                    400,
+                    430
+                  ]
+                ]
+              },
+              "ground_height_clearance": 870
+            }
+          },
+          "HTM_QT_X2": {},
+          "VTM_HAI_Z9_E1": {}
+        },
+        "edge_height_clearance": {}
+      }
+    ],
+    "map_values": [
+      {
+        "coordinate": "[1,1]",
+        "barcode": "611.117",
+        "world_coordinate": "[28750,6250]",
+        "vda_world_coordinate": "[438750,513750]",
+        "size_info": [
+          625,
+          625,
+          625,
+          625
+        ],
+        "adjacency": [
+          null,
+          null,
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "neighbours": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            0
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "zone": "North Hall",
+        "sector": 1,
+        "location_profile_id": "LP-open",
+        "world_coordinate_reference_neighbour": "0,0",
+        "block": 7
+      },
+      {
+        "coordinate": "[2,1]",
+        "barcode": "621.127",
+        "world_coordinate": "[27500,6250]",
+        "vda_world_coordinate": "[437500,513750]",
+        "size_info": [
+          600,
+          650,
+          625,
+          625
+        ],
+        "adjacency": [
+          null,
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "neighbours": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "zone": "North Hall",
+        "sector": 1,
+        "location_profile_id": "LP-open",
+        "world_coordinate_reference_neighbour": "1,1"
+      },
+      {
+        "coordinate": "[3,1]",
+        "barcode": "631.137",
+        "world_coordinate": "[26250,6250]",
+        "vda_world_coordinate": "[436250,513750]",
+        "size_info": [
+          625,
+          625,
+          625,
+          625
+        ],
+        "adjacency": [
+          null,
+          [
+            2,
+            1
+          ],
+          null,
+          [
+            4,
+            1
+          ]
+        ],
+        "neighbours": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "zone": "South Hall",
+        "sector": 1,
+        "location_profile_id": "LP-open",
+        "world_coordinate_reference_neighbour": "2,1",
+        "grid_attribute": "relay_store",
+        "composite_attribute_list": [
+          "storable"
+        ],
+        "hasStorables": 0
+      },
+      {
+        "coordinate": "[4,1]",
+        "barcode": "641.147",
+        "world_coordinate": "[25000,6250]",
+        "vda_world_coordinate": "[435000,513750]",
+        "size_info": [
+          625,
+          625,
+          625,
+          625
+        ],
+        "adjacency": [
+          null,
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          null
+        ],
+        "neighbours": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "zone": "South Hall",
+        "sector": 1,
+        "location_profile_id": "LP-narrow",
+        "world_coordinate_reference_neighbour": "3,1",
+        "block": 10,
+        "conveyor_direction_attribute": 2,
+        "grid_attribute": "conveyor_entry"
+      },
+      {
+        "coordinate": "[1,2]",
+        "barcode": "612.217",
+        "world_coordinate": "[28750,7500]",
+        "vda_world_coordinate": "[438750,512500]",
+        "size_info": [
+          625,
+          625,
+          625,
+          625
+        ],
+        "adjacency": [
+          [
+            1,
+            1
+          ],
+          null,
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "neighbours": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "zone": "North Hall",
+        "sector": 1,
+        "location_profile_id": "LP-open",
+        "world_coordinate_reference_neighbour": "1,1",
+        "block": 7
+      },
+      {
+        "coordinate": "[2,2]",
+        "barcode": "622.227",
+        "world_coordinate": "[27500,7500]",
+        "vda_world_coordinate": "[437500,512500]",
+        "size_info": [
+          625,
+          625,
+          625,
+          625
+        ],
+        "adjacency": [
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          null
+        ],
+        "neighbours": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "zone": "North Hall",
+        "sector": 1,
+        "location_profile_id": "LP-open",
+        "world_coordinate_reference_neighbour": "1,2",
+        "block": 8
+      },
+      {
+        "coordinate": "[4,2]",
+        "barcode": "642.247",
+        "world_coordinate": "[25000,7500]",
+        "vda_world_coordinate": "[435000,512500]",
+        "size_info": [
+          625,
+          625,
+          625,
+          625
+        ],
+        "adjacency": [
+          [
+            4,
+            1
+          ],
+          null,
+          [
+            4,
+            3
+          ],
+          null
+        ],
+        "neighbours": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "zone": "South Hall",
+        "sector": 1,
+        "location_profile_id": "LP-narrow",
+        "world_coordinate_reference_neighbour": "3,2",
+        "dockPoint": true
+      },
+      {
+        "coordinate": "[1,3]",
+        "barcode": "613.317",
+        "world_coordinate": "[28750,8750]",
+        "vda_world_coordinate": "[438750,511250]",
+        "size_info": [
+          625,
+          625,
+          625,
+          625
+        ],
+        "adjacency": [
+          [
+            1,
+            2
+          ],
+          null,
+          null,
+          [
+            2,
+            3
+          ]
+        ],
+        "neighbours": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "blocked": true,
+        "botid": null,
+        "store_status": 0,
+        "zone": "North Hall",
+        "sector": "undefined",
+        "location_profile_id": "LP-open",
+        "world_coordinate_reference_neighbour": "1,2",
+        "floor": 1,
+        "block_reasons": [
+          "manual"
+        ]
+      },
+      {
+        "coordinate": "[2,3]",
+        "barcode": "623.327",
+        "world_coordinate": "[27500,8750]",
+        "vda_world_coordinate": "[437500,511250]",
+        "size_info": [
+          625,
+          625,
+          625,
+          625
+        ],
+        "adjacency": [
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          null,
+          [
+            3,
+            3
+          ]
+        ],
+        "neighbours": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "blocked": false,
+        "botid": "bot-17",
+        "store_status": 1,
+        "zone": "North Hall",
+        "sector": "undefined",
+        "location_profile_id": "LP-open",
+        "world_coordinate_reference_neighbour": "1,3",
+        "block": 8,
+        "block_reasons": []
+      },
+      {
+        "coordinate": "[3,3]",
+        "barcode": "633.337",
+        "world_coordinate": "[26250,8750]",
+        "vda_world_coordinate": "[436250,511250]",
+        "size_info": [
+          625,
+          625,
+          625,
+          625
+        ],
+        "adjacency": [
+          null,
+          [
+            2,
+            3
+          ],
+          null,
+          [
+            4,
+            3
+          ]
+        ],
+        "neighbours": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "zone": "Gate East",
+        "sector": "undefined",
+        "location_profile_id": "LP-open",
+        "world_coordinate_reference_neighbour": "2,3",
+        "block": 9,
+        "dockPoint": true
+      },
+      {
+        "coordinate": "[4,3]",
+        "barcode": "643.347",
+        "world_coordinate": "[25000,8750]",
+        "vda_world_coordinate": "[435000,511250]",
+        "size_info": [
+          625,
+          625,
+          625,
+          625
+        ],
+        "adjacency": [
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          null,
+          null
+        ],
+        "neighbours": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "zone": "South Hall",
+        "sector": "undefined",
+        "location_profile_id": "LP-narrow",
+        "world_coordinate_reference_neighbour": "3,3"
+      },
+      {
+        "coordinate": "[500,500]",
+        "barcode": "690.009",
+        "world_coordinate": "[20500,9600]",
+        "vda_world_coordinate": "[430500,510400]",
+        "size_info": [
+          500,
+          500,
+          500,
+          500
+        ],
+        "adjacency": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "neighbours": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "special": true,
+        "zone": "South Hall",
+        "sector": "undefined"
+      },
+      {
+        "coordinate": "[999,3]",
+        "barcode": "699.003",
+        "world_coordinate": "[33000,7400]",
+        "vda_world_coordinate": "[443003,512600]",
+        "size_info": [
+          700,
+          700,
+          700,
+          700
+        ],
+        "adjacency": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "neighbours": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "special": false,
+        "zone": "South Hall",
+        "sector": "undefined",
+        "grid_attribute": "conveyor_track"
+      },
+      {
+        "coordinate": "[999,4]",
+        "barcode": "699.004",
+        "world_coordinate": "[33000,8650]",
+        "size_info": [
+          700,
+          700,
+          700,
+          700
+        ],
+        "adjacency": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "neighbours": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "blocked": false,
+        "botid": "null",
+        "store_status": 0,
+        "zone": "South Hall"
+      }
+    ]
+  }
+]

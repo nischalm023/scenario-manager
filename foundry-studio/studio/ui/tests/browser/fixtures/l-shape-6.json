@@ -1,0 +1,2921 @@
+{
+  "prologue": {
+    "depends_on": [],
+    "doc": "e356646d-0f87-4c52-8f42-88e281220244",
+    "kind": "world",
+    "name": "Small L-shape, 6 aisles",
+    "primary_frame": "18d08c30-2106-4b8a-a354-324d5088eed1"
+  },
+  "stages": [
+    {
+      "ops": [
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:0,0/local:patch"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                6800,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            "tiling": {
+              "derives": {
+                "cell": {
+                  "traversable_by": [
+                    "htm"
+                  ]
+                }
+              },
+              "pitch": [
+                850,
+                850
+              ]
+            }
+          },
+          "id": "2392b5a1-8c25-42e5-a5f3-320aadb83268",
+          "name": "pick station floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:0,0/local:present"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                8075,
+                425
+              ]
+            },
+            "presentation_point": {
+              "for": "inventory_tote",
+              "station": "1bdcaeb2-ea6e-4874-9c51-58c15e74d495"
+            }
+          },
+          "id": "a5bd1efb-3f2a-4195-a0f8-0db295372c6a",
+          "name": "pick station presentation",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:0,0/local:station"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                8925,
+                425
+              ]
+            },
+            "station": {
+              "bins": 1,
+              "exit_direction": "+y",
+              "kind": "pick"
+            }
+          },
+          "id": "1bdcaeb2-ea6e-4874-9c51-58c15e74d495",
+          "name": "pick station",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:0,0/local:lane"
+            },
+            "queue": {
+              "discipline": "no_reverse",
+              "path": [
+                {
+                  "generator": "2392b5a1-8c25-42e5-a5f3-320aadb83268",
+                  "key": "cell:0,0"
+                },
+                {
+                  "generator": "2392b5a1-8c25-42e5-a5f3-320aadb83268",
+                  "key": "cell:1,0"
+                }
+              ]
+            }
+          },
+          "id": "c96482b2-2f58-48e2-97a6-4433e35b1618",
+          "name": "pick station: lane",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:0,0/local:stitch"
+            },
+            "stitch": {
+              "a": "2392b5a1-8c25-42e5-a5f3-320aadb83268",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "4964c6e7-44a9-4cb3-b35c-ae809ef3af9a",
+          "name": "stitch: pick station floor to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:1,0/local:patch"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                11050,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            "tiling": {
+              "derives": {
+                "cell": {
+                  "traversable_by": [
+                    "htm"
+                  ]
+                }
+              },
+              "pitch": [
+                850,
+                850
+              ]
+            }
+          },
+          "id": "74203099-2bff-4c47-97ad-48cbfc8a3b2a",
+          "name": "pick station floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:1,0/local:present"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                12325,
+                425
+              ]
+            },
+            "presentation_point": {
+              "for": "inventory_tote",
+              "station": "4c899819-b3dc-477a-96d5-38a0a9ab1429"
+            }
+          },
+          "id": "c5cf0ab7-62af-4f16-9d8a-fda9a24b66ca",
+          "name": "pick station presentation",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:1,0/local:station"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                13175,
+                425
+              ]
+            },
+            "station": {
+              "bins": 1,
+              "exit_direction": "+y",
+              "kind": "pick"
+            }
+          },
+          "id": "4c899819-b3dc-477a-96d5-38a0a9ab1429",
+          "name": "pick station",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:1,0/local:lane"
+            },
+            "queue": {
+              "discipline": "no_reverse",
+              "path": [
+                {
+                  "generator": "74203099-2bff-4c47-97ad-48cbfc8a3b2a",
+                  "key": "cell:0,0"
+                },
+                {
+                  "generator": "74203099-2bff-4c47-97ad-48cbfc8a3b2a",
+                  "key": "cell:1,0"
+                }
+              ]
+            }
+          },
+          "id": "3c6fdacc-109b-4926-a766-1a80af61911c",
+          "name": "pick station: lane",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:1,0/local:stitch"
+            },
+            "stitch": {
+              "a": "74203099-2bff-4c47-97ad-48cbfc8a3b2a",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "ec15a387-47b2-4314-b22f-ebbb5a05b707",
+          "name": "stitch: pick station floor to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:2,0/local:patch"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                15300,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            "tiling": {
+              "derives": {
+                "cell": {
+                  "traversable_by": [
+                    "htm"
+                  ]
+                }
+              },
+              "pitch": [
+                850,
+                850
+              ]
+            }
+          },
+          "id": "55dde6f3-c30a-44cc-8c12-90b35bcfe557",
+          "name": "pick station floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:2,0/local:present"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                16575,
+                425
+              ]
+            },
+            "presentation_point": {
+              "for": "inventory_tote",
+              "station": "75372036-744a-41e4-b7d5-e8b2cc85e0a8"
+            }
+          },
+          "id": "f8810dfe-cbc6-4778-9f1f-32dfa91e826e",
+          "name": "pick station presentation",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:2,0/local:station"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                17425,
+                425
+              ]
+            },
+            "station": {
+              "bins": 1,
+              "exit_direction": "+y",
+              "kind": "pick"
+            }
+          },
+          "id": "75372036-744a-41e4-b7d5-e8b2cc85e0a8",
+          "name": "pick station",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:2,0/local:lane"
+            },
+            "queue": {
+              "discipline": "no_reverse",
+              "path": [
+                {
+                  "generator": "55dde6f3-c30a-44cc-8c12-90b35bcfe557",
+                  "key": "cell:0,0"
+                },
+                {
+                  "generator": "55dde6f3-c30a-44cc-8c12-90b35bcfe557",
+                  "key": "cell:1,0"
+                }
+              ]
+            }
+          },
+          "id": "76b337d6-60f8-488e-9352-7669e22d38f4",
+          "name": "pick station: lane",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:2,0/local:stitch"
+            },
+            "stitch": {
+              "a": "55dde6f3-c30a-44cc-8c12-90b35bcfe557",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "53c8c697-ce9f-46d9-8618-8c12d92fbeaa",
+          "name": "stitch: pick station floor to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:3,0/local:patch"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                19550,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            "tiling": {
+              "derives": {
+                "cell": {
+                  "traversable_by": [
+                    "htm"
+                  ]
+                }
+              },
+              "pitch": [
+                850,
+                850
+              ]
+            }
+          },
+          "id": "9c1885cb-5486-45fa-80b9-05395d5da589",
+          "name": "pick station floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:3,0/local:present"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                20825,
+                425
+              ]
+            },
+            "presentation_point": {
+              "for": "inventory_tote",
+              "station": "2845ba56-628d-4209-8637-f99c96b38a21"
+            }
+          },
+          "id": "803dd1f5-4055-4a37-947f-d53e45c26e35",
+          "name": "pick station presentation",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:3,0/local:station"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                21675,
+                425
+              ]
+            },
+            "station": {
+              "bins": 1,
+              "exit_direction": "+y",
+              "kind": "pick"
+            }
+          },
+          "id": "2845ba56-628d-4209-8637-f99c96b38a21",
+          "name": "pick station",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:3,0/local:lane"
+            },
+            "queue": {
+              "discipline": "no_reverse",
+              "path": [
+                {
+                  "generator": "9c1885cb-5486-45fa-80b9-05395d5da589",
+                  "key": "cell:0,0"
+                },
+                {
+                  "generator": "9c1885cb-5486-45fa-80b9-05395d5da589",
+                  "key": "cell:1,0"
+                }
+              ]
+            }
+          },
+          "id": "b929e7e4-5af6-47be-83ad-9c979470be7f",
+          "name": "pick station: lane",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "39ece82d-d80e-4482-a9a6-8532336beecd/instance:3,0/local:stitch"
+            },
+            "stitch": {
+              "a": "9c1885cb-5486-45fa-80b9-05395d5da589",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "904ab03d-8b95-4561-8b81-49cdaa94e39c",
+          "name": "stitch: pick station floor to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "43525e69-0770-4337-ac37-5f64c45536af"
+            },
+            "frame": {
+              "dims": 2,
+              "parent": "18d08c30-2106-4b8a-a354-324d5088eed1",
+              "transform_to_parent": {
+                "scale": [
+                  1,
+                  1
+                ],
+                "translation": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              "units": "mm"
+            }
+          },
+          "id": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+          "name": "shell",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "4ab9557d-26da-4ba4-9dab-cabeefea5013"
+            },
+            "sector": {
+              "members": [
+                "179af509-7e02-4c70-ab8b-aa3687d3af81",
+                "5d06dadd-a886-497b-bb2c-f51d8dacae28",
+                "68d89c73-e7cd-4ef1-a44b-3abcf3a33106",
+                "b3747f70-68d0-4226-b1c0-13bf9588e41d",
+                "6375037a-e66e-41c0-89c3-5c6cb79fdfe5",
+                "82157e6c-c71c-4109-9183-6bde989b1053"
+              ]
+            }
+          },
+          "id": "8747be87-4241-4d4a-831e-a3e970307f43",
+          "name": "Inventory storage",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "4d193107-a8df-46f8-acf9-457fd13cb429"
+            },
+            "sector": {
+              "members": [
+                "1bdcaeb2-ea6e-4874-9c51-58c15e74d495",
+                "4c899819-b3dc-477a-96d5-38a0a9ab1429",
+                "75372036-744a-41e4-b7d5-e8b2cc85e0a8",
+                "2845ba56-628d-4209-8637-f99c96b38a21"
+              ]
+            }
+          },
+          "id": "b2a563a4-c431-4e4e-8fe9-c49ec3635299",
+          "name": "Pick stations",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "7a9b508b-1f25-4b67-9bc7-9dbf20127660"
+            },
+            "frame": {
+              "dims": 3,
+              "unit_mm": 1,
+              "units": "mm"
+            }
+          },
+          "id": "18d08c30-2106-4b8a-a354-324d5088eed1",
+          "name": "site",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "9f532ab9-305b-4948-b9c8-8502313d2dd2"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                1700,
+                1700
+              ],
+              "size": [
+                52700,
+                32300
+              ]
+            },
+            "tiling": {
+              "derives": {
+                "cell": {
+                  "traversable_by": [
+                    "htm"
+                  ]
+                }
+              },
+              "exclusions": [
+                {
+                  "origin": [
+                    5100,
+                    2550
+                  ],
+                  "size": [
+                    45900,
+                    12750
+                  ]
+                },
+                {
+                  "origin": [
+                    32300,
+                    18700
+                  ],
+                  "size": [
+                    20400,
+                    13600
+                  ]
+                }
+              ],
+              "pitch": [
+                850,
+                850
+              ]
+            }
+          },
+          "id": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+          "name": "floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "a0c2075d-4ca6-4385-b7dd-6d9cb6a1375b/instance:0,0/local:patch"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                0,
+                20400
+              ],
+              "size": [
+                1700,
+                2550
+              ]
+            },
+            "tiling": {
+              "derives": {
+                "cell": {
+                  "traversable_by": [
+                    "htm"
+                  ]
+                }
+              },
+              "pitch": [
+                850,
+                850
+              ]
+            }
+          },
+          "id": "557264f1-2105-4006-a7a1-b7b4f0aebf4f",
+          "name": "putaway station floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "a0c2075d-4ca6-4385-b7dd-6d9cb6a1375b/instance:0,0/local:present"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 270.0,
+              "position": [
+                425,
+                21675
+              ]
+            },
+            "presentation_point": {
+              "for": "inventory_tote",
+              "station": "38182b9f-ef49-4a47-8531-30530f0c17ad"
+            }
+          },
+          "id": "655d6318-971a-4d07-8023-75549a49deca",
+          "name": "putaway station presentation",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "a0c2075d-4ca6-4385-b7dd-6d9cb6a1375b/instance:0,0/local:station"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 270.0,
+              "position": [
+                425,
+                20825
+              ]
+            },
+            "station": {
+              "bins": 1,
+              "exit_direction": "+x",
+              "kind": "put"
+            }
+          },
+          "id": "38182b9f-ef49-4a47-8531-30530f0c17ad",
+          "name": "putaway station",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "a0c2075d-4ca6-4385-b7dd-6d9cb6a1375b/instance:0,0/local:lane"
+            },
+            "queue": {
+              "discipline": "no_reverse",
+              "path": [
+                {
+                  "generator": "557264f1-2105-4006-a7a1-b7b4f0aebf4f",
+                  "key": "cell:0,2"
+                },
+                {
+                  "generator": "557264f1-2105-4006-a7a1-b7b4f0aebf4f",
+                  "key": "cell:0,1"
+                }
+              ]
+            }
+          },
+          "id": "dd8cc52e-5803-4531-8103-17516e692f95",
+          "name": "putaway station: lane",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "a0c2075d-4ca6-4385-b7dd-6d9cb6a1375b/instance:0,0/local:stitch"
+            },
+            "stitch": {
+              "a": "557264f1-2105-4006-a7a1-b7b4f0aebf4f",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "a8775047-055c-4f41-adbc-9cfeb26be258",
+          "name": "stitch: putaway station floor to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "a0c2075d-4ca6-4385-b7dd-6d9cb6a1375b/instance:0,1/local:patch"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                0,
+                24650
+              ],
+              "size": [
+                1700,
+                2550
+              ]
+            },
+            "tiling": {
+              "derives": {
+                "cell": {
+                  "traversable_by": [
+                    "htm"
+                  ]
+                }
+              },
+              "pitch": [
+                850,
+                850
+              ]
+            }
+          },
+          "id": "01208bd3-7e2c-46ee-99ce-4c6706599b73",
+          "name": "putaway station floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "a0c2075d-4ca6-4385-b7dd-6d9cb6a1375b/instance:0,1/local:present"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 270.0,
+              "position": [
+                425,
+                25925
+              ]
+            },
+            "presentation_point": {
+              "for": "inventory_tote",
+              "station": "46a050df-e439-48eb-abea-dc0c4778500a"
+            }
+          },
+          "id": "0ca4e0a3-362b-461c-bb8a-c7551c8a469e",
+          "name": "putaway station presentation",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "a0c2075d-4ca6-4385-b7dd-6d9cb6a1375b/instance:0,1/local:station"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 270.0,
+              "position": [
+                425,
+                25075
+              ]
+            },
+            "station": {
+              "bins": 1,
+              "exit_direction": "+x",
+              "kind": "put"
+            }
+          },
+          "id": "46a050df-e439-48eb-abea-dc0c4778500a",
+          "name": "putaway station",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "a0c2075d-4ca6-4385-b7dd-6d9cb6a1375b/instance:0,1/local:lane"
+            },
+            "queue": {
+              "discipline": "no_reverse",
+              "path": [
+                {
+                  "generator": "01208bd3-7e2c-46ee-99ce-4c6706599b73",
+                  "key": "cell:0,2"
+                },
+                {
+                  "generator": "01208bd3-7e2c-46ee-99ce-4c6706599b73",
+                  "key": "cell:0,1"
+                }
+              ]
+            }
+          },
+          "id": "0692ca72-f267-422e-8e0c-e445369670e4",
+          "name": "putaway station: lane",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "a0c2075d-4ca6-4385-b7dd-6d9cb6a1375b/instance:0,1/local:stitch"
+            },
+            "stitch": {
+              "a": "01208bd3-7e2c-46ee-99ce-4c6706599b73",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "e99ff45d-9cad-4093-8df7-b7fe08a93fd2",
+          "name": "stitch: putaway station floor to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "e5b0bc84-01d4-4b7a-a9e9-c3d154c9b0da"
+            },
+            "sector": {
+              "members": [
+                "38182b9f-ef49-4a47-8531-30530f0c17ad",
+                "46a050df-e439-48eb-abea-dc0c4778500a"
+              ]
+            }
+          },
+          "id": "44e26ac8-2a40-483f-957c-fad37e302825",
+          "name": "Put stations",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "4ce5df5f-cc49-4105-bc6c-03d12b00bcdc",
+              "face": "-y",
+              "rack": "8642133a-6220-44b2-b6cb-bb2ca4371416",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:0,0/local:access_left"
+            }
+          },
+          "id": "98893ee4-d1df-4e1c-ad19-bc24696b447c",
+          "name": "access: left rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "4ce5df5f-cc49-4105-bc6c-03d12b00bcdc",
+              "face": "-y",
+              "rack": "2164eef9-f986-4902-b91c-884f33569588",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:0,0/local:access_right"
+            }
+          },
+          "id": "aef025b1-6a46-4ad4-9380-0c876bc4afdf",
+          "name": "access: right rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:0,0/local:gap_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                6800,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "8d567897-1a5a-4ca0-9963-36b00697d56d",
+          "name": "aisle's left half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:0,0/local:gap_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                12750,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "4e2d2558-5986-49b4-9749-58464e1987b7",
+          "name": "aisle's right half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:0,0/local:rack_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 90.0,
+              "position": [
+                9800,
+                5100
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "8642133a-6220-44b2-b6cb-bb2ca4371416",
+          "name": "left rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:0,0/local:rack_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 270.0,
+              "position": [
+                11450,
+                7850
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "2164eef9-f986-4902-b91c-884f33569588",
+          "name": "right rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:0,0/local:sector"
+            },
+            "sector": {
+              "members": [
+                "8642133a-6220-44b2-b6cb-bb2ca4371416",
+                "2164eef9-f986-4902-b91c-884f33569588"
+              ]
+            }
+          },
+          "id": "179af509-7e02-4c70-ab8b-aa3687d3af81",
+          "name": "aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:0,0/local:stitch_left"
+            },
+            "stitch": {
+              "a": "8d567897-1a5a-4ca0-9963-36b00697d56d",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "ba0070a3-9dfe-4955-8076-ec246de8a0bf",
+          "name": "stitch: left half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:0,0/local:stitch_right"
+            },
+            "stitch": {
+              "a": "4e2d2558-5986-49b4-9749-58464e1987b7",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "7fc0e489-8e46-4fb5-aa73-c8a8474cf7d5",
+          "name": "stitch: right half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:0,0/local:vtm_aisle"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                9800,
+                5100
+              ],
+              "size": [
+                1650,
+                11000
+              ]
+            }
+          },
+          "id": "4ce5df5f-cc49-4105-bc6c-03d12b00bcdc",
+          "name": "VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "88c679e4-56bc-49fc-a652-828c443d949a",
+              "face": "-y",
+              "rack": "37926a3f-a135-4e1a-b798-6e06aa147d2b",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:1,0/local:access_left"
+            }
+          },
+          "id": "da962e49-96aa-441f-a7f7-565cbe3e69ab",
+          "name": "access: left rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "88c679e4-56bc-49fc-a652-828c443d949a",
+              "face": "-y",
+              "rack": "c13c3cd0-e01b-4ea2-9882-cad5df8503bf",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:1,0/local:access_right"
+            }
+          },
+          "id": "606e6fc2-f15f-4ea8-9218-173587e2c1ed",
+          "name": "access: right rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:1,0/local:gap_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                14450,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "95c24dec-5252-4b35-a802-1cfde4819abf",
+          "name": "aisle's left half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:1,0/local:gap_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                20400,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "924c2f95-6ccc-4de4-8112-a6399912d427",
+          "name": "aisle's right half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:1,0/local:rack_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 90.0,
+              "position": [
+                17450,
+                5100
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "37926a3f-a135-4e1a-b798-6e06aa147d2b",
+          "name": "left rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:1,0/local:rack_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 270.0,
+              "position": [
+                19100,
+                7850
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "c13c3cd0-e01b-4ea2-9882-cad5df8503bf",
+          "name": "right rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:1,0/local:sector"
+            },
+            "sector": {
+              "members": [
+                "37926a3f-a135-4e1a-b798-6e06aa147d2b",
+                "c13c3cd0-e01b-4ea2-9882-cad5df8503bf"
+              ]
+            }
+          },
+          "id": "5d06dadd-a886-497b-bb2c-f51d8dacae28",
+          "name": "aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:1,0/local:stitch_left"
+            },
+            "stitch": {
+              "a": "95c24dec-5252-4b35-a802-1cfde4819abf",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "f1972f3e-b2a8-41d9-b11e-46592f120f0d",
+          "name": "stitch: left half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:1,0/local:stitch_right"
+            },
+            "stitch": {
+              "a": "924c2f95-6ccc-4de4-8112-a6399912d427",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "8ee530e2-f888-4902-98d5-d4e7fb7584d4",
+          "name": "stitch: right half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:1,0/local:vtm_aisle"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                17450,
+                5100
+              ],
+              "size": [
+                1650,
+                11000
+              ]
+            }
+          },
+          "id": "88c679e4-56bc-49fc-a652-828c443d949a",
+          "name": "VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "7f267f7e-4819-4da5-a9f4-af6d173816c9",
+              "face": "-y",
+              "rack": "4104a8e2-98f2-400d-8d54-3436de44ff11",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:2,0/local:access_left"
+            }
+          },
+          "id": "00fd1b32-1528-4ae0-907f-6d21e84a0c74",
+          "name": "access: left rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "7f267f7e-4819-4da5-a9f4-af6d173816c9",
+              "face": "-y",
+              "rack": "a03305fd-3401-4e63-b50b-376b3500bd31",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:2,0/local:access_right"
+            }
+          },
+          "id": "74e3e0d3-dc23-4b78-97dc-bfd2f965252b",
+          "name": "access: right rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:2,0/local:gap_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                22100,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "d9c3aaff-c8e5-4507-ba9e-c6f717d6e7ad",
+          "name": "aisle's left half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:2,0/local:gap_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                28050,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "c9f50f34-4e54-47a2-a0db-5f8957e5c321",
+          "name": "aisle's right half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:2,0/local:rack_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 90.0,
+              "position": [
+                25100,
+                5100
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "4104a8e2-98f2-400d-8d54-3436de44ff11",
+          "name": "left rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:2,0/local:rack_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 270.0,
+              "position": [
+                26750,
+                7850
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "a03305fd-3401-4e63-b50b-376b3500bd31",
+          "name": "right rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:2,0/local:sector"
+            },
+            "sector": {
+              "members": [
+                "4104a8e2-98f2-400d-8d54-3436de44ff11",
+                "a03305fd-3401-4e63-b50b-376b3500bd31"
+              ]
+            }
+          },
+          "id": "68d89c73-e7cd-4ef1-a44b-3abcf3a33106",
+          "name": "aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:2,0/local:stitch_left"
+            },
+            "stitch": {
+              "a": "d9c3aaff-c8e5-4507-ba9e-c6f717d6e7ad",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "edd3cd6d-ae5a-429c-9ccc-eea194a3e3d7",
+          "name": "stitch: left half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:2,0/local:stitch_right"
+            },
+            "stitch": {
+              "a": "c9f50f34-4e54-47a2-a0db-5f8957e5c321",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "68c31e5c-5410-4650-8498-04aa0948c748",
+          "name": "stitch: right half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:2,0/local:vtm_aisle"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                25100,
+                5100
+              ],
+              "size": [
+                1650,
+                11000
+              ]
+            }
+          },
+          "id": "7f267f7e-4819-4da5-a9f4-af6d173816c9",
+          "name": "VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "258d6194-4e1d-4f9f-bbec-2fc8ff095822",
+              "face": "-y",
+              "rack": "a6c1956e-b872-4ba9-810d-faa8d65be249",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:3,0/local:access_left"
+            }
+          },
+          "id": "2ff45d5a-c2a7-45c3-9ada-a6b00d7f3ae4",
+          "name": "access: left rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "258d6194-4e1d-4f9f-bbec-2fc8ff095822",
+              "face": "-y",
+              "rack": "35aadb04-5680-4716-9f96-d16dfb5d8ee1",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:3,0/local:access_right"
+            }
+          },
+          "id": "f72e2575-3b54-4972-8a88-6b784264c2d7",
+          "name": "access: right rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:3,0/local:gap_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                29750,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "69a81b59-4288-453e-8336-b5e739c12db3",
+          "name": "aisle's left half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:3,0/local:gap_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                35700,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "bba97403-79ad-41e8-8917-83c46de21581",
+          "name": "aisle's right half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:3,0/local:rack_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 90.0,
+              "position": [
+                32750,
+                5100
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "a6c1956e-b872-4ba9-810d-faa8d65be249",
+          "name": "left rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:3,0/local:rack_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 270.0,
+              "position": [
+                34400,
+                7850
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "35aadb04-5680-4716-9f96-d16dfb5d8ee1",
+          "name": "right rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:3,0/local:sector"
+            },
+            "sector": {
+              "members": [
+                "a6c1956e-b872-4ba9-810d-faa8d65be249",
+                "35aadb04-5680-4716-9f96-d16dfb5d8ee1"
+              ]
+            }
+          },
+          "id": "b3747f70-68d0-4226-b1c0-13bf9588e41d",
+          "name": "aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:3,0/local:stitch_left"
+            },
+            "stitch": {
+              "a": "69a81b59-4288-453e-8336-b5e739c12db3",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "b39dc438-a5f9-430e-9a28-55d4534153b7",
+          "name": "stitch: left half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:3,0/local:stitch_right"
+            },
+            "stitch": {
+              "a": "bba97403-79ad-41e8-8917-83c46de21581",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "6a91bfb8-ca83-428d-9d0e-057bb6f2ee40",
+          "name": "stitch: right half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:3,0/local:vtm_aisle"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                32750,
+                5100
+              ],
+              "size": [
+                1650,
+                11000
+              ]
+            }
+          },
+          "id": "258d6194-4e1d-4f9f-bbec-2fc8ff095822",
+          "name": "VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "15996fb0-7aa1-4bb0-8f89-3bfb41179712",
+              "face": "-y",
+              "rack": "dabd912f-f220-4f89-b7d5-70b1699c5eae",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:4,0/local:access_left"
+            }
+          },
+          "id": "b99804e5-ebed-4f25-8b3e-259807a8d30c",
+          "name": "access: left rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "15996fb0-7aa1-4bb0-8f89-3bfb41179712",
+              "face": "-y",
+              "rack": "7c02ecc8-4764-43c5-be72-aa4e3d61526d",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:4,0/local:access_right"
+            }
+          },
+          "id": "ded9532a-e79a-4268-a2a4-d53ec21a835d",
+          "name": "access: right rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:4,0/local:gap_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                37400,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "c0992772-a7a5-4739-92ff-7a846b8bad4e",
+          "name": "aisle's left half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:4,0/local:gap_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                43350,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "b0dabd20-43af-49e7-83d4-f2436117656f",
+          "name": "aisle's right half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:4,0/local:rack_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 90.0,
+              "position": [
+                40400,
+                5100
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "dabd912f-f220-4f89-b7d5-70b1699c5eae",
+          "name": "left rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:4,0/local:rack_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 270.0,
+              "position": [
+                42050,
+                7850
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "7c02ecc8-4764-43c5-be72-aa4e3d61526d",
+          "name": "right rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:4,0/local:sector"
+            },
+            "sector": {
+              "members": [
+                "dabd912f-f220-4f89-b7d5-70b1699c5eae",
+                "7c02ecc8-4764-43c5-be72-aa4e3d61526d"
+              ]
+            }
+          },
+          "id": "6375037a-e66e-41c0-89c3-5c6cb79fdfe5",
+          "name": "aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:4,0/local:stitch_left"
+            },
+            "stitch": {
+              "a": "c0992772-a7a5-4739-92ff-7a846b8bad4e",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "e5c73d69-79d9-425f-96d8-13def02b0a5e",
+          "name": "stitch: left half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:4,0/local:stitch_right"
+            },
+            "stitch": {
+              "a": "b0dabd20-43af-49e7-83d4-f2436117656f",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "28f38c6d-a703-46d2-80ec-d7eba7d6e325",
+          "name": "stitch: right half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:4,0/local:vtm_aisle"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                40400,
+                5100
+              ],
+              "size": [
+                1650,
+                11000
+              ]
+            }
+          },
+          "id": "15996fb0-7aa1-4bb0-8f89-3bfb41179712",
+          "name": "VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "8d2dd96d-9b41-4903-a064-f48a7d55be8c",
+              "face": "-y",
+              "rack": "9a3d280e-33c6-4222-97e0-81b88a228bff",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:5,0/local:access_left"
+            }
+          },
+          "id": "1c79d258-e117-43bf-8fcc-cf60fd909fd3",
+          "name": "access: left rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "access": {
+              "along": "8d2dd96d-9b41-4903-a064-f48a7d55be8c",
+              "face": "-y",
+              "rack": "64e878ed-0671-458c-8840-523f5d0f924b",
+              "serves": [
+                "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+              ]
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:5,0/local:access_right"
+            }
+          },
+          "id": "fdb2f059-3e07-45e3-9d87-08a325257963",
+          "name": "access: right rack row from the VTM aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:5,0/local:gap_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                45050,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "5b8d108e-1511-4a71-9aed-f8fcd4f18305",
+          "name": "aisle's left half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:5,0/local:gap_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 0.0,
+              "position": [
+                51000,
+                4250
+              ]
+            },
+            "stamp": {
+              "params": {
+                "size": [
+                  1700,
+                  12750
+                ]
+              },
+              "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1"
+            }
+          },
+          "id": "351ab88b-fa74-415b-84d4-d9882fea7b90",
+          "name": "aisle's right half-gap",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:5,0/local:rack_left"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 90.0,
+              "position": [
+                48050,
+                5100
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "9a3d280e-33c6-4222-97e0-81b88a228bff",
+          "name": "left rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:5,0/local:rack_right"
+            },
+            "pose": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "heading_deg": 270.0,
+              "position": [
+                49700,
+                7850
+              ]
+            },
+            "stamp": {
+              "repeat": {
+                "count": 4,
+                "step": [
+                  0,
+                  2750
+                ]
+              },
+              "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1"
+            }
+          },
+          "id": "64e878ed-0671-458c-8840-523f5d0f924b",
+          "name": "right rack row",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:5,0/local:sector"
+            },
+            "sector": {
+              "members": [
+                "9a3d280e-33c6-4222-97e0-81b88a228bff",
+                "64e878ed-0671-458c-8840-523f5d0f924b"
+              ]
+            }
+          },
+          "id": "82157e6c-c71c-4109-9183-6bde989b1053",
+          "name": "aisle",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:5,0/local:stitch_left"
+            },
+            "stitch": {
+              "a": "5b8d108e-1511-4a71-9aed-f8fcd4f18305",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "7ef7830e-6edb-4535-a2b3-16106bd970d5",
+          "name": "stitch: left half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:5,0/local:stitch_right"
+            },
+            "stitch": {
+              "a": "351ab88b-fa74-415b-84d4-d9882fea7b90",
+              "b": "abf0dcd4-07cd-4ff0-a4e5-b0463edcbbff",
+              "rule": "contact",
+              "tolerance": 100
+            }
+          },
+          "id": "0eb4441e-aad3-486c-b778-55362c2cc02e",
+          "name": "stitch: right half-gap to the floor",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:5,0/local:vtm_aisle"
+            },
+            "region": {
+              "frame": "21770238-ab75-4d5b-89d1-82cce7f4e337",
+              "origin": [
+                48050,
+                5100
+              ],
+              "size": [
+                1650,
+                11000
+              ]
+            }
+          },
+          "id": "8d2dd96d-9b41-4903-a064-f48a7d55be8c",
+          "name": "VTM aisle",
+          "op": "declare"
+        }
+      ],
+      "scope": "map"
+    },
+    {
+      "ops": [
+        {
+          "components": {
+            "cohort": {
+              "assignment": {
+                "kind": "free"
+              },
+              "count": 24,
+              "robot_class": "75fb2fbe-5260-4290-80ba-d8acf7974312@1"
+            },
+            "external_ids": {
+              "template/site/l-shape": "94d1a261-1b51-4a60-b156-5934bd6e5103"
+            }
+          },
+          "id": "ce397e10-fd23-47e2-9921-0c01fbbc8702",
+          "name": "HTM fleet",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "cohort": {
+              "assignment": {
+                "kind": "hard",
+                "to": [
+                  "179af509-7e02-4c70-ab8b-aa3687d3af81@head"
+                ]
+              },
+              "count": 2,
+              "robot_class": "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:0,0/local:vtms"
+            }
+          },
+          "id": "a908dcc5-ae1e-4463-b39e-69d9e84e34db",
+          "name": "aisle VTMs",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "cohort": {
+              "assignment": {
+                "kind": "hard",
+                "to": [
+                  "5d06dadd-a886-497b-bb2c-f51d8dacae28@head"
+                ]
+              },
+              "count": 2,
+              "robot_class": "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:1,0/local:vtms"
+            }
+          },
+          "id": "e64e2159-3f2e-46a7-b751-a0f20f0299b1",
+          "name": "aisle VTMs",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "cohort": {
+              "assignment": {
+                "kind": "hard",
+                "to": [
+                  "68d89c73-e7cd-4ef1-a44b-3abcf3a33106@head"
+                ]
+              },
+              "count": 2,
+              "robot_class": "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:2,0/local:vtms"
+            }
+          },
+          "id": "0b88acfb-1a32-4236-9d1c-3f03c8242589",
+          "name": "aisle VTMs",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "cohort": {
+              "assignment": {
+                "kind": "hard",
+                "to": [
+                  "b3747f70-68d0-4226-b1c0-13bf9588e41d@head"
+                ]
+              },
+              "count": 2,
+              "robot_class": "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:3,0/local:vtms"
+            }
+          },
+          "id": "a6fc22ee-7479-4a73-8fa8-e43196ccdf17",
+          "name": "aisle VTMs",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "cohort": {
+              "assignment": {
+                "kind": "hard",
+                "to": [
+                  "6375037a-e66e-41c0-89c3-5c6cb79fdfe5@head"
+                ]
+              },
+              "count": 2,
+              "robot_class": "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:4,0/local:vtms"
+            }
+          },
+          "id": "208a153a-dc1e-41e6-a37c-c0f71f051503",
+          "name": "aisle VTMs",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "cohort": {
+              "assignment": {
+                "kind": "hard",
+                "to": [
+                  "82157e6c-c71c-4109-9183-6bde989b1053@head"
+                ]
+              },
+              "count": 2,
+              "robot_class": "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+            },
+            "external_ids": {
+              "template/site/l-shape": "face5a62-197c-4e9a-a0b8-51732c884d65/instance:5,0/local:vtms"
+            }
+          },
+          "id": "ca874faa-eb89-457d-a283-dcfc1a84412b",
+          "name": "aisle VTMs",
+          "op": "declare"
+        }
+      ],
+      "scope": "fleet"
+    },
+    {
+      "ops": [
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "14c15ffb-ea45-46fd-ba48-20c6d5517dba"
+            },
+            "flow.agent_segment": {
+              "at_end": "hands_over",
+              "edge": "d7a17820-162d-4609-8f88-1d7c7d48a926",
+              "executor": {
+                "cohort": "ce397e10-fd23-47e2-9921-0c01fbbc8702@head"
+              },
+              "from": {
+                "node": "1d33ec55-1651-442e-a890-293410863b48",
+                "port": "presentation"
+              },
+              "step": 1,
+              "to": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "relay"
+              }
+            }
+          },
+          "id": "5748ee66-c65b-41b5-bfba-6966d4dab78e",
+          "name": "HTM fleet: Put stations to relay, inbound ended",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "17a9e599-33b2-4a5f-a2d2-adb745b10440"
+            },
+            "flow.agent_segment": {
+              "at_end": "keeps_through_work",
+              "edge": "908ac651-4e63-4c4e-b84f-ac07d1b931e2",
+              "executor": {
+                "cohort": "ce397e10-fd23-47e2-9921-0c01fbbc8702@head"
+              },
+              "from": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "relay"
+              },
+              "retained_for": [
+                "9c0d1878-adac-45b7-9ab4-40c5f8917fe8",
+                "39bff15f-9f5f-4261-8757-2be946756344"
+              ],
+              "step": 2,
+              "to": {
+                "node": "421114eb-ee71-4d73-94b1-bc356c024dab",
+                "port": "presentation"
+              }
+            }
+          },
+          "id": "48a34536-bb8e-4671-903e-917127c9d2c5",
+          "name": "HTM fleet: relay to Pick stations",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "18e1eda7-1456-47ad-9fba-53e089940986"
+            },
+            "flow.agent_segment": {
+              "at_end": "arrives",
+              "edge": "65f133e3-8e96-4ce8-af50-b8f9bd60f60f",
+              "executor": {
+                "external": true
+              },
+              "from": {
+                "node": "b9cbad04-5536-493a-8c36-fe79cb74bfb3",
+                "port": "boundary"
+              },
+              "step": 1,
+              "to": {
+                "node": "1d33ec55-1651-442e-a890-293410863b48",
+                "port": "presentation"
+              }
+            }
+          },
+          "id": "393e7d56-e1ff-4ebc-ae58-ce113ee3a3ad",
+          "name": "units arrive at Put stations",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "19b1c648-56d0-4911-85c8-c9fca1adbacf"
+            },
+            "flow.material_edge": {
+              "alternative_to": "f06af14f-88f0-4115-9151-65ff4354a5fe",
+              "bias": "fleet_pressure",
+              "from": "421114eb-ee71-4d73-94b1-bc356c024dab",
+              "moves": "inventory_tote:empty",
+              "to": "1d33ec55-1651-442e-a890-293410863b48"
+            }
+          },
+          "id": "3fd6b7a8-5f0d-47bf-83a5-1564cfbdf694",
+          "name": "Pick stations to Put stations: empty tote",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "1d39e92b-6d9e-4c73-8aee-b6614341770e"
+            },
+            "flow.agent_segment": {
+              "at_end": "hands_over",
+              "edge": "8580db5b-ebe1-426d-949d-cfd75e39aa3e",
+              "executor": {
+                "cohort": "ce397e10-fd23-47e2-9921-0c01fbbc8702@head"
+              },
+              "from": {
+                "node": "1d33ec55-1651-442e-a890-293410863b48",
+                "port": "presentation"
+              },
+              "step": 1,
+              "to": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "relay"
+              }
+            }
+          },
+          "id": "b91bb651-3e31-42fe-87aa-98d5243eb2ff",
+          "name": "HTM fleet: Put stations to relay",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "288e78f2-a618-4a49-ac48-87f2dc1175b0"
+            },
+            "flow.agent_segment": {
+              "at_end": "leaves",
+              "edge": "5cb0ec7e-c32d-4e33-a0e2-03628ec5a5c9",
+              "executor": {
+                "external": true
+              },
+              "from": {
+                "node": "421114eb-ee71-4d73-94b1-bc356c024dab",
+                "port": "presentation"
+              },
+              "step": 1,
+              "to": {
+                "node": "2cbcb73c-e6a3-4199-975e-a731ed1a73ab",
+                "port": "boundary"
+              }
+            }
+          },
+          "id": "ae5c1978-3ef2-41ef-9cea-251347495ee6",
+          "name": "orders leave in their bins",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "333aba86-3de0-4c88-8954-43d1104805a5"
+            },
+            "flow.material_edge": {
+              "from": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+              "moves": "inventory_tote:stock",
+              "opens_at_sim_ms": 0,
+              "to": "421114eb-ee71-4d73-94b1-bc356c024dab"
+            }
+          },
+          "id": "908ac651-4e63-4c4e-b84f-ac07d1b931e2",
+          "name": "Inventory storage to Pick stations: stock tote",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "45632226-7771-4764-93bd-006e1367b37e"
+            },
+            "flow.node": {
+              "kind": "sink"
+            }
+          },
+          "id": "2cbcb73c-e6a3-4199-975e-a731ed1a73ab",
+          "name": "Outbound orders",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "50cd81bd-22df-46eb-bcf0-819356911d09"
+            },
+            "flow.agent_segment": {
+              "at_end": "keeps_through_work",
+              "edge": "3fd6b7a8-5f0d-47bf-83a5-1564cfbdf694",
+              "executor": {
+                "cohort": "ce397e10-fd23-47e2-9921-0c01fbbc8702@head"
+              },
+              "from": {
+                "node": "421114eb-ee71-4d73-94b1-bc356c024dab",
+                "port": "presentation"
+              },
+              "step": 1,
+              "to": {
+                "node": "1d33ec55-1651-442e-a890-293410863b48",
+                "port": "presentation"
+              }
+            }
+          },
+          "id": "39bff15f-9f5f-4261-8757-2be946756344",
+          "name": "HTM fleet: Pick stations to Put stations",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "53f6faa4-22e5-4ad2-a85c-2730a7b8cbee"
+            },
+            "flow.agent_segment": {
+              "at_end": "hands_over",
+              "edge": "f06af14f-88f0-4115-9151-65ff4354a5fe",
+              "executor": {
+                "assigned": "from"
+              },
+              "from": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "slot"
+              },
+              "step": 1,
+              "to": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "relay"
+              }
+            }
+          },
+          "id": "ba710058-5a30-4fb6-a795-d960821552ed",
+          "name": "the aisle VTMs: slot to relay",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "68caf2db-e159-484a-84ee-e19f29894139"
+            },
+            "flow.material_edge": {
+              "from": "421114eb-ee71-4d73-94b1-bc356c024dab",
+              "moves": "inventory_tote:after_pick",
+              "returns_by": "c03b2208-fea5-48c7-8cb5-d0082ab553d1",
+              "to": "d5232cb2-45e4-4c04-a5d1-df4cd798223b"
+            }
+          },
+          "id": "1f80d785-e877-45cc-b3ec-2534a9acbf57",
+          "name": "Pick stations to Inventory storage: tote after the pick",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "6c49181b-bf33-4d95-ae7c-3dcc3b5acffe"
+            },
+            "flow.return_rule": {
+              "destination": "nearest_eligible",
+              "min_backlog": 1
+            }
+          },
+          "id": "c03b2208-fea5-48c7-8cb5-d0082ab553d1",
+          "name": "Return rule",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "8a233c09-a26d-40a1-ad9e-778692984cf7"
+            },
+            "flow.agent_segment": {
+              "at_end": "keeps_through_work",
+              "edge": "f06af14f-88f0-4115-9151-65ff4354a5fe",
+              "executor": {
+                "cohort": "ce397e10-fd23-47e2-9921-0c01fbbc8702@head"
+              },
+              "from": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "relay"
+              },
+              "step": 2,
+              "to": {
+                "node": "1d33ec55-1651-442e-a890-293410863b48",
+                "port": "presentation"
+              }
+            }
+          },
+          "id": "0ef1a20d-d2dc-4649-85e4-426a4a357739",
+          "name": "HTM fleet: relay to Put stations",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "8f344563-6420-4d32-bbbb-74e70ba31bb8"
+            },
+            "flow.material_edge": {
+              "from": "1d33ec55-1651-442e-a890-293410863b48",
+              "moves": "inventory_tote:stock",
+              "returns_by": "c03b2208-fea5-48c7-8cb5-d0082ab553d1",
+              "to": "d5232cb2-45e4-4c04-a5d1-df4cd798223b"
+            }
+          },
+          "id": "8580db5b-ebe1-426d-949d-cfd75e39aa3e",
+          "name": "Put stations to Inventory storage: stock tote",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "9a226f82-3e3f-4a65-8572-a76558dbcebc"
+            },
+            "flow.agent_segment": {
+              "at_end": "sets_down",
+              "edge": "8580db5b-ebe1-426d-949d-cfd75e39aa3e",
+              "executor": {
+                "assigned": "to"
+              },
+              "from": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "relay"
+              },
+              "step": 2,
+              "to": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "slot"
+              }
+            }
+          },
+          "id": "e20c85b9-95ac-4df5-b8a1-ccabe970ce1d",
+          "name": "the aisle VTMs: relay to slot",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "9ef26c7a-a9d1-4537-b59e-50fd97fdd8b5"
+            },
+            "flow.agent_segment": {
+              "at_end": "hands_over",
+              "edge": "1f80d785-e877-45cc-b3ec-2534a9acbf57",
+              "executor": {
+                "cohort": "ce397e10-fd23-47e2-9921-0c01fbbc8702@head"
+              },
+              "from": {
+                "node": "421114eb-ee71-4d73-94b1-bc356c024dab",
+                "port": "presentation"
+              },
+              "step": 1,
+              "to": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "relay"
+              }
+            }
+          },
+          "id": "9c0d1878-adac-45b7-9ab4-40c5f8917fe8",
+          "name": "HTM fleet: Pick stations to relay",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "a451560b-73c3-4b64-822b-88dfba022d5b"
+            },
+            "flow.material_edge": {
+              "from": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+              "moves": "inventory_tote:empty",
+              "to": "1d33ec55-1651-442e-a890-293410863b48"
+            }
+          },
+          "id": "f06af14f-88f0-4115-9151-65ff4354a5fe",
+          "name": "Inventory storage to Put stations: empty tote",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "aebb15b0-c08f-4ffd-a6c0-987d9c991018"
+            },
+            "flow.agent_segment": {
+              "at_end": "sets_down",
+              "edge": "1f80d785-e877-45cc-b3ec-2534a9acbf57",
+              "executor": {
+                "assigned": "to"
+              },
+              "from": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "relay"
+              },
+              "step": 2,
+              "to": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "slot"
+              }
+            }
+          },
+          "id": "9e81b298-6dcc-435e-bf3a-dca811fb6c2e",
+          "name": "the aisle VTMs: relay to slot after a pick",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "ba70aee2-82fd-44ee-b20b-c7bec1fd3178"
+            },
+            "flow.node": {
+              "deposit": "ranked",
+              "holds": "inventory_tote",
+              "kind": "storage",
+              "sectors": [
+                "8747be87-4241-4d4a-831e-a3e970307f43@head"
+              ]
+            }
+          },
+          "id": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+          "name": "Inventory storage",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "c0863e8a-2ec7-49ba-a361-dbeeea727197"
+            },
+            "flow.material_edge": {
+              "from": "421114eb-ee71-4d73-94b1-bc356c024dab",
+              "moves": "order:in_bin",
+              "to": "2cbcb73c-e6a3-4199-975e-a731ed1a73ab"
+            }
+          },
+          "id": "5cb0ec7e-c32d-4e33-a0e2-03628ec5a5c9",
+          "name": "Pick stations to Outbound orders: order in its bin",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "c49366e6-f554-451c-aad7-bb6200b04311"
+            },
+            "flow.node": {
+              "intake": [
+                {
+                  "admission_factor": 1.5,
+                  "moves": "inventory_tote:empty"
+                }
+              ],
+              "kind": "stations",
+              "process": {
+                "gives_by": [
+                  "65f133e3-8e96-4ce8-af50-b8f9bd60f60f"
+                ],
+                "operation": "put",
+                "receives_by": [
+                  "f06af14f-88f0-4115-9151-65ff4354a5fe",
+                  "3fd6b7a8-5f0d-47bf-83a5-1564cfbdf694"
+                ]
+              },
+              "sectors": [
+                "44e26ac8-2a40-483f-957c-fad37e302825@head"
+              ],
+              "work": {
+                "presentations_per_hour": 240,
+                "tote_swap_sim_ms": 2000
+              }
+            }
+          },
+          "id": "1d33ec55-1651-442e-a890-293410863b48",
+          "name": "Put stations",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "c7030f87-e9d8-4d14-98f0-45a2f3a29ed9"
+            },
+            "flow.node": {
+              "demand": "putaway",
+              "kind": "source"
+            }
+          },
+          "id": "b9cbad04-5536-493a-8c36-fe79cb74bfb3",
+          "name": "Inbound units",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "cef72d52-491c-47fe-b45e-d7ea8697283c"
+            },
+            "flow.agent_segment": {
+              "at_end": "sets_down",
+              "edge": "d7a17820-162d-4609-8f88-1d7c7d48a926",
+              "executor": {
+                "assigned": "to"
+              },
+              "from": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "relay"
+              },
+              "step": 2,
+              "to": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "slot"
+              }
+            }
+          },
+          "id": "a3e48e27-5678-414e-8690-36fd40efd41b",
+          "name": "the aisle VTMs: relay to slot, inbound ended",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "cf0b3cdc-4934-4988-b0ef-64ae4cb29e91"
+            },
+            "flow.material_edge": {
+              "from": "b9cbad04-5536-493a-8c36-fe79cb74bfb3",
+              "induction": {
+                "hour_gate": true,
+                "sequence": "sku_demand",
+                "units_per_tote": 1
+              },
+              "moves": "units",
+              "to": "1d33ec55-1651-442e-a890-293410863b48"
+            }
+          },
+          "id": "65f133e3-8e96-4ce8-af50-b8f9bd60f60f",
+          "name": "Inbound units to Put stations: units",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "d95b8f0d-59b9-4071-abf7-2d5e0bc546c8"
+            },
+            "flow.node": {
+              "intake": [
+                {
+                  "admission_factor": 4.0,
+                  "moves": "inventory_tote:stock"
+                }
+              ],
+              "kind": "stations",
+              "process": {
+                "gives_by": [
+                  "908ac651-4e63-4c4e-b84f-ac07d1b931e2"
+                ],
+                "operation": "pick",
+                "receives_in": "station_bins"
+              },
+              "sectors": [
+                "b2a563a4-c431-4e4e-8fe9-c49ec3635299@head"
+              ],
+              "work": {
+                "pick_sim_ms": 7000,
+                "sequencing": "all_totes",
+                "tote_swap_sim_ms": 2000
+              }
+            }
+          },
+          "id": "421114eb-ee71-4d73-94b1-bc356c024dab",
+          "name": "Pick stations",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "f8a44885-9f44-4473-997e-35e84dc0b5d8"
+            },
+            "flow.material_edge": {
+              "from": "1d33ec55-1651-442e-a890-293410863b48",
+              "moves": "inventory_tote:empty",
+              "returns_by": "c03b2208-fea5-48c7-8cb5-d0082ab553d1",
+              "to": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+              "when": {
+                "phase": "inbound_ended"
+              }
+            }
+          },
+          "id": "d7a17820-162d-4609-8f88-1d7c7d48a926",
+          "name": "Put stations to Inventory storage: empty tote once inbound ends",
+          "op": "declare"
+        },
+        {
+          "components": {
+            "external_ids": {
+              "template/site/l-shape": "ffd4b46c-7ee5-4776-8934-34d2a5d4e1a6"
+            },
+            "flow.agent_segment": {
+              "at_end": "hands_over",
+              "edge": "908ac651-4e63-4c4e-b84f-ac07d1b931e2",
+              "executor": {
+                "assigned": "from"
+              },
+              "from": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "slot"
+              },
+              "step": 1,
+              "to": {
+                "node": "d5232cb2-45e4-4c04-a5d1-df4cd798223b",
+                "port": "relay"
+              }
+            }
+          },
+          "id": "81b3ee23-860a-4a12-933e-1c5bdf2b004d",
+          "name": "the aisle VTMs: slot to relay for a pick",
+          "op": "declare"
+        }
+      ],
+      "scope": "flow"
+    },
+    {
+      "ops": [],
+      "scope": "."
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:entity",
+  "title": "world protocol — entity",
+  "description": "An entity is an identity plus a set of components, and nothing else: the components it carries are its type, and there is no type field (SPEC §2). This file is that composition — the entity as it is authored, the derived node as a generator produces it, and the arcs a generator or stitch owns.",
+  "$defs": {
+    "name": {
+      "title": "name",
+      "description": "A label for people. Not identity, never unique, never referenced — nothing may look an entity up by it (SPEC §2).",
+      "type": "string"
+    },
+    "components": {
+      "title": "components",
+      "description": "Everything this entity means, one named property bag per meaning.",
+      "$ref": "urn:worldproto:0.7:components#/$defs/set"
+    },
+    "derived_map": {
+      "title": "derived subtree",
+      "description": "A generator's expansion carried inline, keyed by the segment each derived entity is named by, nesting recursively along the derivation chain. The position in the tree spells the address, and the address is the identity, so this is a cache and never a second source of truth: a loader may trust it or re-derive, and a cache that disagrees with the source fails the load (SPEC §8).",
+      "type": "object",
+      "propertyNames": {"$ref": "urn:worldproto:0.7:values#/$defs/derivation_segment"},
+      "additionalProperties": {"$ref": "#/$defs/derived_node"}
+    },
+    "derived_node": {
+      "title": "derived entity",
+      "description": "One entity a generator produced, sitting at its own segment beneath the record that started its chain — so provenance is the position in the tree rather than a field repeating what the tree already says. A derived node is not a record, so none of the record rules apply to it (SPEC §8).",
+      "type": "object",
+      "required": ["components"],
+      "properties": {
+        "id": {
+          "description": "The address this node sits at, written out flat. The tree above it already spells that address, so stating it is optional — though tools emit it, and a node whose stated id disagrees with its position is a stale cache.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/derived_entity_id"
+        },
+        "name": {"$ref": "#/$defs/name"},
+        "components": {"$ref": "#/$defs/components"},
+        "derived": {"$ref": "#/$defs/derived_map"},
+        "edges": {"$ref": "#/$defs/edges"},
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "edges": {
+      "title": "edges",
+      "description": "The arcs owned by the generator or stitch this list hangs under. Edges are not entities in v0 — they are derived data with stable keys, so a record can still name one to suppress it (SPEC §5).",
+      "type": "array",
+      "items": {"$ref": "#/$defs/edge"}
+    },
+    "edge": {
+      "title": "edge",
+      "description": "One arc of the traversability graph: where it runs from, where it runs to, and the key that names it under its owner.",
+      "type": "object",
+      "required": ["key", "from", "to", "bidirectional"],
+      "properties": {
+        "key": {
+          "description": "`edge:{fromkey}>{tokey}` for an arc compiled inside one generator, `link:{i}` for one a stitch produced (SPEC §5).",
+          "type": "string",
+          "pattern": "^(edge:[^>]+>[^>]+|link:[0-9]+)$"
+        },
+        "from": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_id"},
+        "to": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_id"},
+        "bidirectional": {
+          "description": "Stitch links are bidirectional in v0; flow arcs are one arc each, so a two-way lane is two of them and either can be suppressed alone.",
+          "type": "boolean"
+        },
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

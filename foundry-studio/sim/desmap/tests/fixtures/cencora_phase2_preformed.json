@@ -1,0 +1,1095 @@
+{
+  "version": 3,
+  "grid": {
+    "width": 154,
+    "depth": 103,
+    "cell_size_mm": 1000.0
+  },
+  "highways": [
+    {
+      "origin": [
+        5,
+        4
+      ],
+      "width": 142,
+      "height": 2,
+      "direction": "Eastbound"
+    },
+    {
+      "origin": [
+        5,
+        6
+      ],
+      "width": 142,
+      "height": 1,
+      "direction": "NorthSouthOnly"
+    },
+    {
+      "origin": [
+        5,
+        7
+      ],
+      "width": 142,
+      "height": 2,
+      "direction": "Westbound"
+    },
+    {
+      "origin": [
+        5,
+        42
+      ],
+      "width": 142,
+      "height": 2,
+      "direction": "Westbound"
+    },
+    {
+      "origin": [
+        5,
+        44
+      ],
+      "width": 142,
+      "height": 1,
+      "direction": "NorthSouthOnly"
+    },
+    {
+      "origin": [
+        5,
+        45
+      ],
+      "width": 142,
+      "height": 2,
+      "direction": "Eastbound"
+    }
+  ],
+  "zones": [
+    {
+      "type": "relay",
+      "id": 1,
+      "origin": [
+        5,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 2,
+      "origin": [
+        11,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 3,
+      "origin": [
+        25,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 4,
+      "origin": [
+        31,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 5,
+      "origin": [
+        45,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 6,
+      "origin": [
+        51,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 7,
+      "origin": [
+        65,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 8,
+      "origin": [
+        71,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 9,
+      "origin": [
+        85,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 10,
+      "origin": [
+        91,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 11,
+      "origin": [
+        105,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 12,
+      "origin": [
+        111,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 13,
+      "origin": [
+        125,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 14,
+      "origin": [
+        131,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 15,
+      "origin": [
+        142,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 16,
+      "origin": [
+        147,
+        16
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 17,
+      "origin": [
+        125,
+        54
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 18,
+      "origin": [
+        131,
+        54
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    },
+    {
+      "type": "relay",
+      "id": 19,
+      "origin": [
+        142,
+        54
+      ],
+      "length": 24,
+      "sides": "Dual",
+      "vertical_tote_capacity": 11,
+      "zone_width_mm": 9000,
+      "zone_height_mm": 9000,
+      "real_shelf_count": 11
+    }
+  ],
+  "stations": [
+    {
+      "id": 1,
+      "position": [
+        8,
+        0
+      ],
+      "presentation_cell": [
+        8,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 2,
+      "position": [
+        23,
+        0
+      ],
+      "presentation_cell": [
+        23,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          20,
+          1
+        ],
+        [
+          21,
+          1
+        ],
+        [
+          22,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 3,
+      "position": [
+        38,
+        0
+      ],
+      "presentation_cell": [
+        38,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          35,
+          1
+        ],
+        [
+          36,
+          1
+        ],
+        [
+          37,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 4,
+      "position": [
+        54,
+        0
+      ],
+      "presentation_cell": [
+        54,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          51,
+          1
+        ],
+        [
+          52,
+          1
+        ],
+        [
+          53,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 5,
+      "position": [
+        69,
+        0
+      ],
+      "presentation_cell": [
+        69,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          66,
+          1
+        ],
+        [
+          67,
+          1
+        ],
+        [
+          68,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 6,
+      "position": [
+        85,
+        0
+      ],
+      "presentation_cell": [
+        85,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          82,
+          1
+        ],
+        [
+          83,
+          1
+        ],
+        [
+          84,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 7,
+      "position": [
+        100,
+        0
+      ],
+      "presentation_cell": [
+        100,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          97,
+          1
+        ],
+        [
+          98,
+          1
+        ],
+        [
+          99,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 8,
+      "position": [
+        116,
+        0
+      ],
+      "presentation_cell": [
+        116,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          113,
+          1
+        ],
+        [
+          114,
+          1
+        ],
+        [
+          115,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 9,
+      "position": [
+        131,
+        0
+      ],
+      "presentation_cell": [
+        131,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          128,
+          1
+        ],
+        [
+          129,
+          1
+        ],
+        [
+          130,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 10,
+      "position": [
+        146,
+        0
+      ],
+      "presentation_cell": [
+        146,
+        1
+      ],
+      "edge": "Bottom",
+      "bins": 2,
+      "queue_path": [
+        [
+          143,
+          1
+        ],
+        [
+          144,
+          1
+        ],
+        [
+          145,
+          1
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 11,
+      "position": [
+        8,
+        48
+      ],
+      "presentation_cell": [
+        8,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          5,
+          47
+        ],
+        [
+          6,
+          47
+        ],
+        [
+          7,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 12,
+      "position": [
+        15,
+        48
+      ],
+      "presentation_cell": [
+        15,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          12,
+          47
+        ],
+        [
+          13,
+          47
+        ],
+        [
+          14,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 13,
+      "position": [
+        22,
+        48
+      ],
+      "presentation_cell": [
+        22,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          19,
+          47
+        ],
+        [
+          20,
+          47
+        ],
+        [
+          21,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 14,
+      "position": [
+        29,
+        48
+      ],
+      "presentation_cell": [
+        29,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          26,
+          47
+        ],
+        [
+          27,
+          47
+        ],
+        [
+          28,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 15,
+      "position": [
+        50,
+        48
+      ],
+      "presentation_cell": [
+        50,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          47,
+          47
+        ],
+        [
+          48,
+          47
+        ],
+        [
+          49,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 16,
+      "position": [
+        57,
+        48
+      ],
+      "presentation_cell": [
+        57,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          54,
+          47
+        ],
+        [
+          55,
+          47
+        ],
+        [
+          56,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 17,
+      "position": [
+        64,
+        48
+      ],
+      "presentation_cell": [
+        64,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          61,
+          47
+        ],
+        [
+          62,
+          47
+        ],
+        [
+          63,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 18,
+      "position": [
+        71,
+        48
+      ],
+      "presentation_cell": [
+        71,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          68,
+          47
+        ],
+        [
+          69,
+          47
+        ],
+        [
+          70,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 19,
+      "position": [
+        92,
+        48
+      ],
+      "presentation_cell": [
+        92,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          89,
+          47
+        ],
+        [
+          90,
+          47
+        ],
+        [
+          91,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 20,
+      "position": [
+        99,
+        48
+      ],
+      "presentation_cell": [
+        99,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          96,
+          47
+        ],
+        [
+          97,
+          47
+        ],
+        [
+          98,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 21,
+      "position": [
+        106,
+        48
+      ],
+      "presentation_cell": [
+        106,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          103,
+          47
+        ],
+        [
+          104,
+          47
+        ],
+        [
+          105,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 22,
+      "position": [
+        114,
+        48
+      ],
+      "presentation_cell": [
+        114,
+        47
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          111,
+          47
+        ],
+        [
+          112,
+          47
+        ],
+        [
+          113,
+          47
+        ]
+      ],
+      "exit_direction": "East"
+    },
+    {
+      "id": 23,
+      "position": [
+        115,
+        50
+      ],
+      "presentation_cell": [
+        116,
+        50
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          116,
+          53
+        ],
+        [
+          116,
+          52
+        ],
+        [
+          116,
+          51
+        ]
+      ],
+      "exit_direction": "North"
+    },
+    {
+      "id": 24,
+      "position": [
+        115,
+        56
+      ],
+      "presentation_cell": [
+        116,
+        56
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          116,
+          59
+        ],
+        [
+          116,
+          58
+        ],
+        [
+          116,
+          57
+        ]
+      ],
+      "exit_direction": "North"
+    },
+    {
+      "id": 25,
+      "position": [
+        115,
+        62
+      ],
+      "presentation_cell": [
+        116,
+        62
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          116,
+          65
+        ],
+        [
+          116,
+          64
+        ],
+        [
+          116,
+          63
+        ]
+      ],
+      "exit_direction": "North"
+    },
+    {
+      "id": 26,
+      "position": [
+        115,
+        68
+      ],
+      "presentation_cell": [
+        116,
+        68
+      ],
+      "station_type": "Putaway",
+      "bins": 2,
+      "queue_path": [
+        [
+          116,
+          71
+        ],
+        [
+          116,
+          70
+        ],
+        [
+          116,
+          69
+        ]
+      ],
+      "exit_direction": "North"
+    }
+  ],
+  "clip_boxes": [
+    {
+      "origin": [
+        0,
+        49
+      ],
+      "width": 115,
+      "height": 54
+    }
+  ],
+  "fleet": {
+    "htms": 350
+  },
+  "scenario": {
+    "items_csv": "sim/desmap/tests/fixtures/cencora_data/items.csv",
+    "orders_csv": "sim/desmap/tests/fixtures/cencora_data/orders_peak_day_12_16.csv",
+    "units_per_tote": 1
+  },
+  "settings": {
+    "fidelity": "CollisionDes",
+    "queue_factor": 3.0,
+    "sim_duration": {
+      "secs": 28800,
+      "nanos": 0
+    },
+    "pick": {
+      "embargo_secs": 7200.0
+    },
+    "putaway": {
+      "enabled": true,
+      "dwell_secs": 4.5
+    }
+  }
+}

@@ -1,0 +1,548 @@
+{
+  "$comment": "Converted by desmap2proto from sim/desmap/tests/fixtures/minimal_putaway1.json. The old file places everything on one 8 x 8 integer grid of 1000 mm cells; here the same site is millimetre-first. Legacy identifiers ride as external_ids, never as identity. Every value the old format could not state is a converter parameter and is listed in this fixture's ledger under tools/desmap2proto/ledgers/.",
+  "doc": {
+    "depends_on": [],
+    "id": "76f12662-3468-56d4-ad60-f3d3d103b3c2",
+    "kind": "world",
+    "name": "minimal_putaway1.json world (converted from a desmap v3 fixture)"
+  },
+  "entities": [
+    {
+      "components": {
+        "frame": {
+          "dims": 3,
+          "unit_mm": 1,
+          "units": "mm"
+        }
+      },
+      "id": "687cfa59-0b2f-5f61-87cf-2c9b385b7f62",
+      "name": "site"
+    },
+    {
+      "components": {
+        "frame": {
+          "dims": 2,
+          "parent": "687cfa59-0b2f-5f61-87cf-2c9b385b7f62",
+          "transform_to_parent": {
+            "scale": [
+              1,
+              1
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "units": "mm"
+        }
+      },
+      "id": "6788494f-1439-58ac-b086-3e148badab14",
+      "name": "floor1"
+    },
+    {
+      "components": {
+        "frame": {
+          "$comment": "The old fixture's grid: 8 wide x 8 deep, cell_size_mm 1000. An old index names a cell, and a cell's place is its centre, so index [c,r] reads as millimetres [1000c+500, 1000r+500]: the pitch as the scale, half a cell as the translation. Declared for projection only — nothing below is positioned in it. The scale is positive: desmap fixtures are self-consistent, unlike the Map Creator exports that need a mirror, and the half-cell offset is positive with it.",
+          "dims": 2,
+          "integer_only": true,
+          "parent": "6788494f-1439-58ac-b086-3e148badab14",
+          "transform_to_parent": {
+            "scale": [
+              1000,
+              1000
+            ],
+            "translation": [
+              500,
+              500
+            ]
+          },
+          "units": "index"
+        }
+      },
+      "id": "89d1938f-40f5-587a-a474-aa0aec20652a",
+      "name": "legacy grid (desmap)"
+    },
+    {
+      "components": {
+        "region": {
+          "frame": "6788494f-1439-58ac-b086-3e148badab14",
+          "origin": [
+            0,
+            0
+          ],
+          "size": [
+            8000,
+            8000
+          ]
+        },
+        "tiling": {
+          "$comment": "The old format's implicit everywhere-grid, made explicit: 8 x 8 cells at the grid's own 1000 mm pitch. No flow is declared, so it compiles two_way (SPEC §5: flow restricts, never permits), which is what the old grid meant.",
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          },
+          "pitch": [
+            1000,
+            1000
+          ],
+          "exclusions": [
+            {
+              "$comment": "old zone 1 footprint: The old compiler marked these cells Relay and Aisle and blocked HTM travel through them edge by edge; here the floor has no cells under the steel or in the aisle at all.",
+              "origin": [
+                6000,
+                2000
+              ],
+              "size": [
+                2000,
+                4000
+              ]
+            }
+          ]
+        }
+      },
+      "id": "a683139f-9d10-5f6e-9766-dc1e6b058fa3",
+      "name": "open floor"
+    },
+    {
+      "components": {
+        "template": {
+          "$comment": "One bay, presenting its boards on the `+y` face. That face is on the steel because it is a fact about the steel; which face the STORAGE is worked from, and by whom, is the access declared beside each run. The old `sides` enum said both at once and named one.",
+          "entities": [
+            {
+              "components": {
+                "pose": {
+                  "heading_deg": 0,
+                  "position": [
+                    0,
+                    0
+                  ]
+                },
+                "rack": {
+                  "$comment": "One bay of the old zone: each grid row of a relay zone is one rack position holding vertical_tote_capacity = 10 storage levels and one handoff board, written as one list of level heights bottom-up. The shelf count is the source's; the bay's length, depth, shelf spacing, board height, board position and the reach of its relay level are not in the old format at all and are converter parameters (see the fixture's ledger). The face the board presents on is the old `sides` enum read back out.",
+                  "footprint": [
+                    1000,
+                    1000
+                  ],
+                  "levels": [
+                    {
+                      "height": 350
+                    },
+                    {
+                      "height": 400,
+                      "positions": [[500, 1000]],
+                      "reach": 1000
+                    },
+                    {
+                      "height": 700
+                    },
+                    {
+                      "height": 1050
+                    },
+                    {
+                      "height": 1400
+                    },
+                    {
+                      "height": 1750
+                    },
+                    {
+                      "height": 2100
+                    },
+                    {
+                      "height": 2450
+                    },
+                    {
+                      "height": 2800
+                    },
+                    {
+                      "height": 3150
+                    },
+                    {
+                      "height": 3500
+                    }
+                  ],
+                  "slot_pitch": [
+                    1000,
+                    1000
+                  ],
+                  "slots_deep": 1,
+                  "slots_wide": 1
+                },
+                "storage": {
+                  "holds": "inventory"
+                }
+              },
+              "local": "rack"
+            }
+          ],
+          "params": {}
+        }
+      },
+      "id": "bf6a4ebb-30e1-5538-a775-ac922dcb97c1",
+      "name": "relay bay, 1 wide, 10 levels, 1 board on +y"
+    },
+    {
+      "components": {
+        "external_ids": {
+          "desmap_rack_side": "Left",
+          "desmap_zone_id": 1
+        },
+        "pose": {
+          "frame": "6788494f-1439-58ac-b086-3e148badab14",
+          "heading_deg": 90,
+          "position": [
+            7000,
+            2000
+          ]
+        },
+        "stamp": {
+          "$comment": "Old zone 1: origin [6, 2], length 4, sides LeftOnly. This is the left rack column, grid column 6. implicit bay: 10 levels, 1 slot column, 1 board on +y",
+          "params": {},
+          "repeat": {
+            "count": 4,
+            "step": [
+              0,
+              1000
+            ]
+          },
+          "template": "bf6a4ebb-30e1-5538-a775-ac922dcb97c1"
+        }
+      },
+      "id": "8551d11a-2a0b-5f78-969c-a10f0399248a",
+      "name": "rack run: old zone 1 left face"
+    },
+    {
+      "components": {
+        "access": {
+          "$comment": "The face the storage is worked from, onto the aisle. It derives nothing — the climb is rack-internal motion — but it is what makes the old zone's vtm_count mean something, and it is where slot depth counts from. The other face, the one the boards present on, is stated on the steel.",
+          "along": "59cd81f5-642a-507f-9efd-5ac5067b6348",
+          "face": "-y",
+          "rack": "8551d11a-2a0b-5f78-969c-a10f0399248a",
+          "serves": [
+            "aac5fb19-dd16-5d95-9633-704476746442"
+          ]
+        }
+      },
+      "id": "c1ba6a3a-d43d-5d6a-97f6-b0ede2dec194",
+      "name": "access: old zone 1 left <-> inner aisle"
+    },
+    {
+      "components": {
+        "external_ids": {
+          "desmap_zone_id": 1
+        },
+        "region": {
+          "frame": "6788494f-1439-58ac-b086-3e148badab14",
+          "origin": [
+            6000,
+            2000
+          ],
+          "size": [
+            2000,
+            4000
+          ]
+        }
+      },
+      "id": "0c76980b-432c-5624-8029-43f0eb40516c",
+      "name": "old zone 1 footprint"
+    },
+    {
+      "components": {
+        "region": {
+          "$comment": "The strip the climbing class works from. It declares NO tiling, and that is the point: tiling follows locomotion (SPEC §5), and giving this lane cells would put a way in the graph that nothing drives.",
+          "frame": "6788494f-1439-58ac-b086-3e148badab14",
+          "origin": [
+            7000,
+            2000
+          ],
+          "size": [
+            1000,
+            4000
+          ]
+        }
+      },
+      "id": "59cd81f5-642a-507f-9efd-5ac5067b6348",
+      "name": "inner aisle: old zone 1"
+    },
+    {
+      "components": {
+        "external_ids": {
+          "desmap_zone_id": 1
+        },
+        "sector": {
+          "$comment": "One sector per old zone, because vtm_count is a per-zone number: the thing a cohort is hard-assigned to has to be the zone. A generator member stands for its whole expansion.",
+          "members": [
+            "8551d11a-2a0b-5f78-969c-a10f0399248a"
+          ]
+        }
+      },
+      "id": "f027f1be-ceac-5744-8f99-947d4a206679",
+      "name": "sector: old zone 1"
+    },
+    {
+      "components": {
+        "cohort": {
+          "$comment": "Old zone.vtm_count. Fleet data that lived inside a map structure, now a cohort referencing the structure.",
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "f027f1be-ceac-5744-8f99-947d4a206679"
+            ]
+          },
+          "count": 1,
+          "robot_class": "aac5fb19-dd16-5d95-9633-704476746442"
+        }
+      },
+      "id": "5cc2e5d3-acda-5dd3-9289-82b8297fe66f",
+      "name": "cohort: old zone 1 VTMs"
+    },
+    {
+      "components": {
+        "external_ids": {
+          "desmap_station_id": 1
+        },
+        "pose": {
+          "frame": "6788494f-1439-58ac-b086-3e148badab14",
+          "position": [
+            4500,
+            500
+          ]
+        },
+        "station": {
+          "$comment": "Old station 1: station_type Pick, position [4, 0], presentation_cell [3, 0], exit_direction South. The sign convention is desmap's own (queue_edges.rs: North is (0, -1) in [col, row]) and row centres increase with y in both formats, so North is -y.",
+          "bins": 1,
+          "exit_direction": "+y",
+          "kind": "pick"
+        }
+      },
+      "id": "bc220ed6-4824-5722-ab12-6dc56d207359",
+      "name": "pick station (old station 1)"
+    },
+    {
+      "components": {
+        "queue": {
+          "$comment": "The old queue_path, as full derivation addresses into the floor band the station stands on: this queue runs over another generator's cells rather than tiling its own. The old settings.putaway.queue_depth is a scenario admission limit and is parked.",
+          "discipline": "no_reverse",
+          "path": [
+            {
+              "generator": "a683139f-9d10-5f6e-9766-dc1e6b058fa3",
+              "key": "cell:2,0"
+            },
+            {
+              "generator": "a683139f-9d10-5f6e-9766-dc1e6b058fa3",
+              "key": "cell:3,0"
+            }
+          ]
+        }
+      },
+      "id": "2a29d151-68ca-4396-bfbb-15b82be5c6e9",
+      "name": "pick station (old station 1): lane"
+    },
+    {
+      "$comment": "The floor's own derived cell GAINS a presentation_point by override, keeping its pose and traversability, with an `expect` pin on where the author believes that ordinal address sits.",
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "bc220ed6-4824-5722-ab12-6dc56d207359"
+        }
+      },
+      "derivation": {
+        "generator": "a683139f-9d10-5f6e-9766-dc1e6b058fa3",
+        "key": "cell:3,0"
+      },
+      "expect": {
+        "position": [
+          3500,
+          500
+        ],
+        "tolerance": 50
+      }
+    },
+    {
+      "components": {
+        "external_ids": {
+          "desmap_station_id": 2
+        },
+        "pose": {
+          "frame": "6788494f-1439-58ac-b086-3e148badab14",
+          "position": [
+            4500,
+            7500
+          ]
+        },
+        "station": {
+          "$comment": "Old station 2: station_type Putaway, position [4, 7], presentation_cell [3, 7], exit_direction North. The sign convention is desmap's own (queue_edges.rs: North is (0, -1) in [col, row]) and row centres increase with y in both formats, so North is -y.",
+          "bins": 1,
+          "exit_direction": "-y",
+          "kind": "put"
+        }
+      },
+      "id": "97bddefd-7f64-55cb-9b2f-d8804fa18cf7",
+      "name": "put station (old station 2)"
+    },
+    {
+      "components": {
+        "queue": {
+          "$comment": "The old queue_path, as full derivation addresses into the floor band the station stands on: this queue runs over another generator's cells rather than tiling its own. The old settings.putaway.queue_depth is a scenario admission limit and is parked.",
+          "discipline": "no_reverse",
+          "path": [
+            {
+              "generator": "a683139f-9d10-5f6e-9766-dc1e6b058fa3",
+              "key": "cell:2,7"
+            },
+            {
+              "generator": "a683139f-9d10-5f6e-9766-dc1e6b058fa3",
+              "key": "cell:3,7"
+            }
+          ]
+        }
+      },
+      "id": "6bc37030-dd91-4d0f-b0a5-cc35060ae538",
+      "name": "put station (old station 2): lane"
+    },
+    {
+      "$comment": "The floor's own derived cell GAINS a presentation_point by override, keeping its pose and traversability, with an `expect` pin on where the author believes that ordinal address sits.",
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "97bddefd-7f64-55cb-9b2f-d8804fa18cf7"
+        }
+      },
+      "derivation": {
+        "generator": "a683139f-9d10-5f6e-9766-dc1e6b058fa3",
+        "key": "cell:3,7"
+      },
+      "expect": {
+        "position": [
+          3500,
+          7500
+        ],
+        "tolerance": 50
+      }
+    },
+    {
+      "$comment": "The simulator's former compiled defaults, which this test world has always run; not a real robot's figures.",
+      "components": {
+        "end_effector": {
+          "drop_secs": 2.0,
+          "pick_secs": 2.0
+        },
+        "floor_drive": {
+          "empty": {
+            "accel_mm_s2": 2000,
+            "max_speed_mm_s": 4500,
+            "quarter_turn_secs": 1.0
+          },
+          "loaded": {
+            "accel_mm_s2": 2000,
+            "max_speed_mm_s": 4200,
+            "quarter_turn_secs": 1.0
+          }
+        },
+        "robot_class": {
+          "$comment": "The old file's entire robot model is a count. Dimensions are representative; see the fixture's ledger for every invented value. No `lineage`: nobody is named as having built this class, so nobody is named.",
+          "carries": [
+            "tote"
+          ],
+          "carry_exclusive": true,
+          "configuration": "standard",
+          "footprint": [
+            850,
+            650
+          ],
+          "height": 300,
+          "locomotion": "floor",
+          "max_speed": 1800,
+          "model": "HTM",
+          "role": "htm"
+        }
+      },
+      "id": "612b4e50-e74b-5243-873d-2784da0cbf18",
+      "name": "HTM (generic)"
+    },
+    {
+      "components": {
+        "cohort": {
+          "assignment": {
+            "kind": "free"
+          },
+          "count": 4,
+          "robot_class": "612b4e50-e74b-5243-873d-2784da0cbf18"
+        }
+      },
+      "id": "27729171-fc1d-5787-a0d5-c649089eb2db",
+      "name": "cohort: HTMs"
+    },
+    {
+      "$comment": "The simulator's former compiled defaults, which this test world has always run; not a real robot's figures.",
+      "components": {
+        "end_effector": {
+          "align_before_drop_secs": 1.933,
+          "align_before_pick_secs": 1.933,
+          "drop_secs": 2.0,
+          "pick_secs": 4.0
+        },
+        "external_ids": {
+          "desmap_vtm_model": "A5"
+        },
+        "lift": {
+          "profile": {
+            "accel_mm_s2": 2000,
+            "max_speed_mm_s": 3000
+          }
+        },
+        "rack_ladder": {
+          "accel_mm_s2": 2000,
+          "max_speed_mm_s": 3000
+        },
+        "robot_class": {
+          "$comment": "Model A5 is the one thing the old map says about a VTM. `locomotion: ladder` is what makes the inner aisles untiled: this class climbs the racking and never stands on the ground.",
+          "carries": [
+            "tote"
+          ],
+          "configuration": "standard",
+          "footprint": [
+            1000,
+            1000
+          ],
+          "height": 9000,
+          "locomotion": "ladder",
+          "model": "A5",
+          "role": "vtm"
+        }
+      },
+      "id": "aac5fb19-dd16-5d95-9633-704476746442",
+      "name": "VTM A5"
+    },
+    {
+      "components": {
+        "carrier_type": {
+          "$comment": "Implicit in the old format — no carrier type exists there.",
+          "kind": "tote",
+          "size": [
+            650,
+            450,
+            300
+          ]
+        }
+      },
+      "id": "3b98e704-ba23-5b92-9559-bd715a301013",
+      "name": "tote (generic)"
+    }
+  ],
+  "primary_frame": "687cfa59-0b2f-5f61-87cf-2c9b385b7f62",
+  "proto_version": "0.7.0",
+  "required_components": [
+    "access",
+    "cohort",
+    "frame",
+    "rack",
+    "region",
+    "stamp",
+    "template",
+    "tiling"
+  ]
+}

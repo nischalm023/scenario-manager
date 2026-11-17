@@ -1,0 +1,24 @@
+[package]
+name = "pathfinder"
+version = "0.1.0"
+edition = "2024"
+description = "Reservation-aware pathfinding for warehouse robots: the SIPP search that commits a journey in windows, the reservation table and oracle it plans against, and the HTM kinematics it prices moves with"
+
+[features]
+# Emit search-decision trace events to a hook.
+pathfinder-trace = []
+# Span the hot search phases for a tracing subscriber.
+perf = ["dep:tracing"]
+
+[dependencies]
+async-trait = "0.1"
+desgraph = { path = "../desgraph" }
+desmap = { path = "../desmap" }
+desunits = { path = "../desunits" }
+parking_lot = "0.12"
+rustc-hash = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+smallvec = { version = "1", features = ["serde"] }
+thiserror = "2"
+tracing = { version = "0.1", optional = true }

@@ -1,0 +1,159 @@
+{
+  "asserts": "is",
+  "component": "light_curtain",
+  "meaning": "the entity is a light curtain: a run from its pose along its heading that a robot crosses after the pause stated for the way it crosses",
+  "owner": "agent-studio",
+  "refs": [
+    {
+      "path": "/inside",
+      "expects": "cell"
+    }
+  ],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "light_curtain",
+    "description": "the entity is a light curtain: a run from its pose along its heading that a robot crosses after the pause stated for the way it crosses",
+    "$comment": "Written for world-proto's registry from dessim's `LightCurtainComponent` (libs/dessim/src/worldmap/safeguards.rs on wip/cencora-fences-curtains at 063d32210). Both pauses are stated, because a missing figure is not a zero; dessim's loader refuses a curtain that spans no link, or whose pauses are not the ones its model takes there. Open to fields a newer writer adds, as the vocabulary's other definitions are; dessim's reader refuses a field it does not know.",
+    "type": "object",
+    "required": [
+      "length",
+      "height",
+      "entry_secs",
+      "exit_secs"
+    ],
+    "properties": {
+      "length": {
+        "description": "How far the run reaches from the pose along its heading, in steps of the pose's frame.",
+        "type": "integer",
+        "exclusiveMinimum": 0
+      },
+      "height": {
+        "description": "How tall it stands in the drawing, in steps of the primary frame.",
+        "type": "integer",
+        "exclusiveMinimum": 0
+      },
+      "entry_secs": {
+        "description": "How long a robot pauses, in simtime, before it crosses toward `inside`.",
+        "type": "number",
+        "minimum": 0
+      },
+      "exit_secs": {
+        "description": "How long a robot pauses, in simtime, before it crosses away from `inside`.",
+        "type": "number",
+        "minimum": 0
+      },
+      "inside": {
+        "description": "A cell on the inside, which says which crossing is the entry where a rule of left or right would flip under a mirrored frame; it matters only where the two pauses differ. Named by identity or by derivation address, or inside a template by a local handle, which expansion rewrites into one of those.",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/entity_id"
+          },
+          {
+            "$ref": "#/$defs/derivation_address"
+          },
+          {
+            "$ref": "#/$defs/local_ref"
+          },
+          {
+            "$ref": "#/$defs/local_derivation_address"
+          }
+        ]
+      }
+    },
+    "$defs": {
+      "entity_id": {
+        "title": "entity id",
+        "description": "Copied from data/seed/application/schema/values.json.",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/uuid"
+          },
+          {
+            "$ref": "#/$defs/derived_entity_id"
+          }
+        ]
+      },
+      "uuid": {
+        "title": "UUID",
+        "description": "Copied from data/seed/application/schema/values.json.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "derived_entity_id": {
+        "title": "derived entity id",
+        "description": "Copied from data/seed/application/schema/values.json.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/[^/@]+(/[^/@]+)*$"
+      },
+      "derivation_address": {
+        "title": "derivation address",
+        "description": "Copied from data/seed/application/schema/values.json.",
+        "type": "object",
+        "required": [
+          "generator",
+          "key"
+        ],
+        "properties": {
+          "generator": {
+            "$ref": "#/$defs/uuid"
+          },
+          "key": {
+            "$ref": "#/$defs/derivation_key"
+          }
+        }
+      },
+      "derivation_key": {
+        "title": "derivation key",
+        "description": "Copied from data/seed/application/schema/values.json.",
+        "type": "string",
+        "pattern": "^[^/@]+(/[^/@]+)*$"
+      },
+      "local_ref": {
+        "title": "local reference",
+        "description": "Copied from data/seed/application/schema/values.json.",
+        "type": "object",
+        "required": [
+          "local_ref"
+        ],
+        "properties": {
+          "local_ref": {
+            "$ref": "#/$defs/local_handle"
+          },
+          "$comment": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "local_derivation_address": {
+        "title": "local derivation address",
+        "description": "Copied from data/seed/application/schema/values.json.",
+        "type": "object",
+        "required": [
+          "local_ref",
+          "key"
+        ],
+        "properties": {
+          "local_ref": {
+            "$ref": "#/$defs/local_handle"
+          },
+          "key": {
+            "$ref": "#/$defs/derivation_key"
+          },
+          "$comment": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "local_handle": {
+        "title": "local handle",
+        "description": "Copied from data/seed/application/schema/values.json.",
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[^/]+$"
+      }
+    }
+  },
+  "status": "experimental"
+}

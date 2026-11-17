@@ -1,0 +1,20 @@
+[
+  {
+    "path": "/$comment",
+    "removed": "L-Shape's top scope (template/site/l-shape): its knobs and its card."
+  },
+  {
+    "path": "/doc/assembled_from",
+    "removed": [
+      {
+        "changeset": 1,
+        "scope": "catalog/fixtures/simulator-world-source-l-shape-6-aisles"
+      }
+    ]
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/robot_class/$comment",
+    "before": "Bootstrap source: sim/dessim/tests/fixtures/robots/quicktron_m5f.world.json. An HTM. Figures from Quicktron's M5F efficiency calculation sheet (04 M5F\u5355\u673a\u6548\u7387\u8ba1\u7b97\u8868V1.3-20251128), with the loaded figures field-calibrated to the empty ones (Vinay, 2026-06: the sheet's loaded 1.5 m/s, 1.0 m/s\u00b2 and 2.6 s quarter turn over-penalised throughput). Cencora's HTM runs these figures. The M5F(XH) column of the Ranger Relay Profile Matrix as transcribed on equipment/world-protocol-0.8, its lengths read as tenths of a millimetre; the matrix lists only the XH variant. Constant-mode and spatial-search cruise: sim/dessim/tests/fixtures/cencora_v3_spec.json, settings.htm.",
+    "after": "Bootstrap source: sim/dessim/tests/fixtures/robots/quicktron_m5f.world.json. An HTM. Figures from Quicktron's M5F efficiency calculation sheet (04 M5F\u5355\u673a\u6548\u7387\u8ba1\u7b97\u8868V1.3-20251128), with the loaded figures field-calibrated to the empty ones (Vinay, 2026-06: the sheet's loaded 1.5 m/s, 1.0 m/s\u00b2 and 2.6 s quarter turn over-penalised throughput). Cencora's HTM runs these figures. The M5F(XH) column of the Ranger Relay Profile Matrix as transcribed on equipment/world-protocol-0.8, its lengths read as tenths of a millimetre; the matrix lists only the XH variant. Constant-mode execution cruise: sim/dessim/tests/fixtures/cencora_v3_spec.json, settings.htm."
+  }
+]

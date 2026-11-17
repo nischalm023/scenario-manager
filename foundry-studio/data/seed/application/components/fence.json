@@ -1,0 +1,31 @@
+{
+  "asserts": "is",
+  "component": "fence",
+  "meaning": "the entity is a fence: a run from its pose along its heading that no robot crosses",
+  "owner": "agent-studio",
+  "refs": [],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "fence",
+    "description": "the entity is a fence: a run from its pose along its heading that no robot crosses",
+    "$comment": "Written for world-proto's registry from dessim's `FenceComponent` (libs/dessim/src/worldmap/safeguards.rs on wip/cencora-fences-curtains at 063d32210). dessim's loader drops every link the run meets and refuses a link lying along it. Open to fields a newer writer adds, as the vocabulary's other definitions are; dessim's reader refuses a field it does not know.",
+    "type": "object",
+    "required": [
+      "length",
+      "height"
+    ],
+    "properties": {
+      "length": {
+        "description": "How far the run reaches from the pose along its heading, in steps of the pose's frame.",
+        "type": "integer",
+        "exclusiveMinimum": 0
+      },
+      "height": {
+        "description": "How tall it stands in the drawing, in steps of the primary frame.",
+        "type": "integer",
+        "exclusiveMinimum": 0
+      }
+    }
+  },
+  "status": "experimental"
+}

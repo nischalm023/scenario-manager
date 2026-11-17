@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:components:fleet",
+  "title": "world protocol — fleet components",
+  "description": "The population that moves through a world: robot classes and the cohorts that mint robots, carrier pools and the carriers they mint. A cohort and a pool are generators in the same sense a tiled region is, which is what makes one damaged robot or one curated pre-fill speakable without a second mechanism. Mirrors the crate module of the same name.",
+  "$defs": {
+    "robot_class": {
+      "title": "robot class",
+      "description": "A kind of robot, distinguished by configuration as well as model: two robots on one chassis with different end effectors are two classes, because what they can carry differs. Who made it and who rebranded it ride in `lineage` — a rebrand is a party and a role, not a join key into another system or source (SPEC §10, §10.1).",
+      "type": "object",
+      "required": ["role"],
+      "properties": {
+        "role": {
+          "description": "What this class does in the operation. `htm` and `vtm` are the values in use; the field is deliberately open, because a human operator is a future role rather than a new mechanism.",
+          "type": "string",
+          "minLength": 1
+        },
+        "locomotion": {
+          "description": "How the class gets about: `floor` drives on cell_grids, `ladder` climbs the racking and needs no cells beneath it. Absent reads as `floor` — the exception is the one that has to be declared (SPEC §5).",
+          "type": "string",
+          "enum": ["floor", "ladder"]
+        },
+        "model": {"type": "string"},
+        "configuration": {
+          "description": "What distinguishes this build of the model — the end effector, the carrier fitment.",
+          "type": "string"
+        },
+        "carries": {
+          "description": "The carrier kinds this class can take.",
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "footprint": {"$ref": "urn:worldproto:0.7:values#/$defs/steps_pair_positive"},
+        "height": {
+          "description": "Overall height, checked against the lowest level of any rack whose footprint a cell_grid admitting this class crosses (SPEC §7).",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps_positive"
+        },
+        "native_frame": {
+          "description": "The vendor frame this class's own software speaks in.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        }
+      }
+    },
+    "cohort": {
+      "title": "cohort",
+      "description": "N robots of one class plus an assignment policy; a generator of individually addressable robot entities (SPEC §10).",
+      "type": "object",
+      "required": ["robot_class", "count"],
+      "properties": {
+        "robot_class": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "count": {"$ref": "urn:worldproto:0.7:values#/$defs/count"},
+        "assignment": {"$ref": "#/$defs/assignment"}
+      }
+    },
+    "assignment": {
+      "title": "assignment",
+      "description": "Where a cohort's robots may work. `hard` means they never leave the listed entities; anything else leaves them free (SPEC §7 — the validator warns when a hard assignment sends a class somewhere it cannot go).",
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "description": "How binding the assignment is. `hard` and `free` are the values in use; the reader treats anything that is not `hard` as free, so this is not closed.",
+          "type": "string",
+          "minLength": 1
+        },
+        "to": {
+          "description": "The sectors or regions a hard assignment confines the robots to.",
+          "type": "array",
+          "items": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"}
+        }
+      }
+    },
+    "robot": {
+      "title": "robot",
+      "description": "One robot: which class it is, which cohort minted it, and where it may work. Derived by a cohort or declared by hand, with the same standing either way (SPEC §10).",
+      "type": "object",
+      "required": ["robot_class", "cohort", "index"],
+      "properties": {
+        "robot_class": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "cohort": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "index": {
+          "description": "Which of the cohort's robots this is, zero-based.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/count"
+        },
+        "assignment": {"$ref": "#/$defs/assignment"}
+      }
+    },
+    "carrier_pool": {
+      "title": "carrier pool",
+      "description": "A population of carriers of one type, all carrying one permanent designation, placed by one rule; a generator of individually addressable carrier entities (SPEC §10).",
+      "type": "object",
+      "required": ["carrier_type", "designation", "count"],
+      "properties": {
+        "carrier_type": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "designation": {"$ref": "#/$defs/designation"},
+        "count": {"$ref": "urn:worldproto:0.7:values#/$defs/count"},
+        "placement": {"$ref": "#/$defs/placement"}
+      }
+    },
+    "designation": {
+      "title": "designation",
+      "description": "Which side of the operation a carrier belongs to, permanently — a per-carrier fact rather than a per-type one, which is the anti-starvation ruling (SPEC §10).",
+      "type": "string",
+      "enum": ["inventory", "order"]
+    },
+    "placement": {
+      "title": "placement",
+      "description": "Where a pool's carriers start. The rule names the scheme — a sector, storage spread across the site, named slots — and the fields the scheme needs ride alongside it, which is why this object is not closed (SPEC §10).",
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "description": "Which placement scheme applies. `sector` and `distributed_storage` are in use; the third scheme SPEC §10 names, placement into named slots, has no spelling pinned yet, so this is not closed.",
+          "type": "string",
+          "minLength": 1
+        },
+        "sector": {
+          "description": "The sector a sector-placement fills.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        }
+      }
+    },
+    "carrier": {
+      "title": "carrier",
+      "description": "One carrier: its type, the pool that minted it, its permanent designation and where it sits. Derived by a pool or declared by hand, with the same standing either way (SPEC §10).",
+      "type": "object",
+      "required": ["carrier_type", "pool", "index", "designation"],
+      "properties": {
+        "carrier_type": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "pool": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "index": {
+          "description": "Which of the pool's carriers this is, zero-based.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/count"
+        },
+        "designation": {"$ref": "#/$defs/designation"},
+        "placement": {"$ref": "#/$defs/placement"}
+      }
+    }
+  }
+}

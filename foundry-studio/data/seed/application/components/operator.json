@@ -1,0 +1,70 @@
+{
+  "asserts": "has",
+  "component": "operator",
+  "meaning": "the station has an operator, who works each tote presented there: a person, a robot arm or an induction conveyor alike, each stage of its sequence stated in seconds of simtime",
+  "owner": "agent-studio",
+  "refs": [],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "operator",
+    "description": "the station has an operator, who works each tote presented there: a person, a robot arm or an induction conveyor alike, each stage of its sequence stated in seconds of simtime",
+    "$comment": "Written for world-proto's registry from dessim's `OperatorComponent` (libs/dessim/src/worldmap/stations.rs on wip/cencora-fences-curtains at 063d32210). Every stage is stated, zero for a stage the operator lacks, because a missing figure is not a zero; only the regrip may go unstated. Open to fields a newer writer adds, as the vocabulary's other definitions are; dessim's reader refuses a field it does not know.",
+    "type": "object",
+    "required": [
+      "entry_secs",
+      "scan_secs",
+      "plan_secs",
+      "pick_secs",
+      "cycle_secs"
+    ],
+    "properties": {
+      "entry_secs": {
+        "description": "How long a tote's robot pauses, in simtime, before it enters its cell.",
+        "type": "number",
+        "minimum": 0
+      },
+      "scan_secs": {
+        "description": "From the end of that pause until the tote is scanned.",
+        "type": "number",
+        "minimum": 0
+      },
+      "plan_secs": {
+        "description": "How long the station takes to plan each tote after its scan.",
+        "type": "number",
+        "minimum": 0
+      },
+      "pick_secs": {
+        "description": "From the operator reaching the tote until the unit is out of it. Zero only at a put station, whose robot pulls out as its case lands.",
+        "type": "number",
+        "minimum": 0
+      },
+      "cycle_secs": {
+        "description": "From the operator reaching a tote until it may reach the next, for a case that needs no regrip; no shorter than the pick.",
+        "type": "number",
+        "exclusiveMinimum": 0
+      },
+      "regrip": {
+        "description": "The cases the operator puts down and grips again after its pick, at a pick station only.",
+        "type": "object",
+        "required": [
+          "secs",
+          "share"
+        ],
+        "properties": {
+          "secs": {
+            "description": "How much longer the cycle runs for such a case.",
+            "type": "number",
+            "minimum": 0
+          },
+          "share": {
+            "description": "The share of the cases that need it.",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    }
+  },
+  "status": "experimental"
+}

@@ -1,0 +1,23 @@
+{
+ "composition": "walmart",
+ "world": "minimal_easyloop.json",
+ "scenario": {
+  "num_skus": 5,
+  "total_inventory_units": 24,
+  "num_orders": 12,
+  "total_order_picks": 24,
+  "units_per_tote": 1,
+  "popular_skus_pct": 0.0,
+  "inventory_popular_share": 0.0,
+  "order_popular_share": 0.0
+ },
+ "settings": {
+  "queue_factor": 3.0,
+  "fidelity": "CollisionDes",
+  "motion_model": "htm_kinematic",
+  "sim_duration": {
+   "secs": 1800,
+   "nanos": 0
+  }
+ }
+}

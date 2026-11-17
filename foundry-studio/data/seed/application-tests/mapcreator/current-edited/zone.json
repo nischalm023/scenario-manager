@@ -1,0 +1,30 @@
+[
+  {
+    "zonerec": {
+      "zone_id": "North Hall",
+      "blocked": false,
+      "paused": false
+    }
+  },
+  {
+    "zonerec": {
+      "zone_id": "South Hall",
+      "blocked": true,
+      "paused": false
+    }
+  },
+  {
+    "zonerec": {
+      "zone_id": "Gate East",
+      "blocked": false,
+      "paused": true
+    }
+  },
+  {
+    "zonerec": {
+      "zone_id": "Spare Bay West",
+      "blocked": false,
+      "paused": false
+    }
+  }
+]

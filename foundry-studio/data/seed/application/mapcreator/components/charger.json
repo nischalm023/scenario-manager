@@ -1,0 +1,138 @@
+{
+  "asserts": "is",
+  "component": "charger",
+  "meaning": "the entity is one Map Creator charger: the cell it stands at, the cell a robot approaches from, the re-initialization cell it sends a robot to, the heading at each, and its operating mode",
+  "owner": "foundry-studio",
+  "refs": [
+    {
+      "expects": "cell",
+      "path": "/at_cell"
+    },
+    {
+      "expects": "cell",
+      "path": "/entry_cell"
+    },
+    {
+      "expects": "cell",
+      "path": "/reinit_cell"
+    }
+  ],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {
+      "entity_id": {
+        "description": "One entity of this document, by identity. A declared identity is a UUID; a derived one is its root UUID and the generator's key path, which nothing in a converted document produces.",
+        "title": "entity_id",
+        "type": "string"
+      },
+      "legacy_value": {
+        "description": "A legacy value the dump wrote, kept verbatim in whatever JSON kind it wrote it. It states no type on purpose: the round trip writes back what the dump said, and correcting a kind here would be the converter deciding what the site meant.",
+        "title": "legacy_value"
+      }
+    },
+    "$id": "urn:mapcreator-compat:0.1:components:charger",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one Map Creator charger: the cell it stands at, the cell a robot approaches from, the re-initialization cell it sends a robot to, the heading at each, and its operating mode",
+    "properties": {
+      "at_cell": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The cell Map Creator's `charger_location` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+      },
+      "at_cell_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `charger_location` verbatim, present only when the cell it names is not in this dump. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "at_direction": {
+        "description": "Map Creator's `charger_direction`, carried as the export states it.",
+        "type": [
+          "number"
+        ]
+      },
+      "charger_type": {
+        "description": "Map Creator's `charger_type`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      },
+      "entry_cell": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The cell Map Creator's `entry_point_location` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+      },
+      "entry_cell_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `entry_point_location` verbatim, present only when the cell it names is not in this dump. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "entry_direction": {
+        "description": "Map Creator's `entry_point_direction`, carried as the export states it.",
+        "type": [
+          "number"
+        ]
+      },
+      "mode": {
+        "description": "Map Creator's `mode`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      },
+      "reinit_cell": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The cell Map Creator's `reinit_point_location` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+      },
+      "reinit_cell_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `reinit_point_location` verbatim, present only when the cell it names is not in this dump. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "reinit_direction": {
+        "description": "Map Creator's `reinit_point_direction`, carried as the export states it.",
+        "type": [
+          "number"
+        ]
+      },
+      "runtime": {
+        "description": "What was happening at the site when the export was written, as the export wrote it. SPEC §1 separates a world from what is happening in it, so this is here to be dropped by a policy that decides to rather than lost by a converter that forgot — the round trip writes it back.",
+        "properties": {
+          "attached_butler_id": {
+            "description": "Map Creator's `attached_butler_id`, carried as the export states it.",
+            "type": [
+              "string"
+            ]
+          },
+          "blocked_by_butler_ids": {
+            "description": "Map Creator's `blocked_by_butler_ids`, carried as the export states it.",
+            "type": [
+              "array"
+            ]
+          },
+          "charge": {
+            "description": "Map Creator's `charge`, carried as the export states it.",
+            "type": [
+              "number"
+            ]
+          },
+          "error_reason": {
+            "description": "Map Creator's `error_reason`, carried as the export states it.",
+            "type": [
+              "string"
+            ]
+          },
+          "power_status": {
+            "description": "Map Creator's `power_status`, carried as the export states it.",
+            "type": [
+              "string"
+            ]
+          },
+          "status": {
+            "description": "Map Creator's `status`, carried as the export states it.",
+            "type": [
+              "string"
+            ]
+          }
+        },
+        "type": "object"
+      }
+    },
+    "title": "charger",
+    "type": "object"
+  },
+  "status": "ratified"
+}

@@ -1,0 +1,67 @@
+[
+  {
+    "pps_id": 1,
+    "type": "manual",
+    "version": 2,
+    "location": "711.111",
+    "allowed_modes": [
+      "pick",
+      "put",
+      "audit"
+    ],
+    "eligible_system": [
+      "sys-c"
+    ],
+    "pick_position": "712.121",
+    "pick_direction": 1,
+    "put_docking_positions": [],
+    "queue_barcodes": [
+      "721.211",
+      "731.311"
+    ],
+    "pps_points": [
+      {
+        "position_id": 1,
+        "coordinate": "[1,2]",
+        "type": "pick"
+      }
+    ],
+    "status": "ready",
+    "pps_url": "http://station-1.example.invalid/api"
+  },
+  {
+    "pps_id": "2",
+    "type": "manual",
+    "version": 2,
+    "location": "732.321",
+    "allowed_modes": [
+      "put"
+    ],
+    "eligible_system": [
+      "sys-c"
+    ],
+    "pick_position": "722.221",
+    "pick_direction": 3,
+    "put_docking_positions": [],
+    "queue_barcodes": [],
+    "docking_stations": [
+      {
+        "dock_station_id": "DS-7",
+        "dock_station_type": "rollcage",
+        "docking_type": "manual",
+        "group_id": 1,
+        "rollcage_type_id": "cage-1",
+        "tags": []
+      }
+    ],
+    "pps_points": [
+      {
+        "position_id": 1,
+        "coordinate": "[2,2]",
+        "type": "put"
+      }
+    ],
+    "status": "ready",
+    "pps_url": "http://station-2.example.invalid/api"
+  }
+]

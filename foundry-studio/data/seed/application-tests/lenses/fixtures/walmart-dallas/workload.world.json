@@ -1,0 +1,58 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "f4d76153-2dd3-42fc-9305-9ee3bfed8aa1",
+    "name": "walmart-dallas workload (references)",
+    "kind": "workload",
+    "depends_on": []
+  },
+  "required_components": [
+    "demand"
+  ],
+  "$comment": "Demand only — what the world is asked to do. Data files stay external (Walmart order/SKU extracts); this document binds them into the scenario and states the semantics the columns carry.",
+  "entities": [
+    {
+      "id": "2d6b9c75-b895-4340-bb58-ecfdd0f401c2",
+      "name": "outbound orders",
+      "components": {
+        "demand": {
+          "kind": "orders",
+          "source": {
+            "csv": "data/orders_sample.csv"
+          },
+          "bindings": {
+            "order_id": "order_id",
+            "sku": "sku",
+            "units": "units",
+            "carrier_kind": "carrier_kind",
+            "$comment": "carrier_kind per order: 'tote' or 'box' — the order file decides which orders need a box from box induction vs an empty order tote."
+          },
+          "routing": {
+            "binding": "destination",
+            "destinations": [
+              "3p_direct",
+              "buffered"
+            ],
+            "$comment": "The 'destination' CSV column carries one of these values per order: 3P orders extract immediately after picking; direct-to-store/customer orders dwell in the order buffer (hours) before extraction. The routing LOGIC is out of v0 world data (SPEC §11); the sealer return loop (~10%) is out of scope by ruling."
+          }
+        }
+      }
+    },
+    {
+      "id": "a5b0501f-9a34-4cdf-890f-49e949ff12f3",
+      "name": "inbound putaway",
+      "components": {
+        "demand": {
+          "kind": "putaway",
+          "source": {
+            "csv": "data/inbound_sample.csv"
+          },
+          "profile": {
+            "abc_distribution": true,
+            "$comment": "Pre-fill and inbound should land inventory in an ABC popularity distribution; the exact mechanism is a scenario policy, not a map fact."
+          }
+        }
+      }
+    }
+  ]
+}

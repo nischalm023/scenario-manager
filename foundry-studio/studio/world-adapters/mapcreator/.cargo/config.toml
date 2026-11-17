@@ -1,0 +1,5 @@
+# Every cargo invocation from this directory builds the component, not a host
+# binary. `wasm32-wasip2` emits a component directly, so no post-processing step
+# stands between `cargo build` and something the host can load.
+[build]
+target = "wasm32-wasip2"

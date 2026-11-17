@@ -1,0 +1,45 @@
+{
+  "component": "end_effector",
+  "owner": "agent-studio",
+  "status": "experimental",
+  "meaning": "the robot has an end effector: how it takes and places carriers, its handling and alignment times, and optional reach",
+  "asserts": "has",
+  "schema": {
+    "$comment": "Shared vocabulary proposal from the incumbent Foundry dessim robot aspects. Open to fields a newer writer adds. Numbers name their units; they are robot figures, not positions in a frame.",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the robot has an end effector: how it takes and places carriers, its handling and alignment times, and optional reach",
+    "properties": {
+      "align_before_drop_secs": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "align_before_pick_secs": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "drop_secs": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "kind": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "pick_secs": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "reach_slots_deep": {
+        "minimum": 1,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "pick_secs",
+      "drop_secs"
+    ],
+    "title": "end_effector",
+    "type": "object"
+  },
+  "refs": []
+}

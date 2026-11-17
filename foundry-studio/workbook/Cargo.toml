@@ -1,0 +1,27 @@
+[package]
+name = "workbook"
+version = "0.1.0"
+edition = "2024"
+description = "The xlsx a simulation run is reported as: the sheet layouts over the run model, and the `workbook` command that writes one from a `.worldview` recording"
+
+[dependencies]
+dessim = { path = "../sim/dessim" }
+# The tasks: a program that runs a simulation, or reads a spec or a recording that names tasks, links this crate
+# (`use native_modules as _;`), or it finds no task by name.
+native-modules = { path = "../native-modules" }
+
+clap = { version = "4", features = ["derive"] }
+rust_xlsxwriter = "0.94.0"
+
+[dev-dependencies]
+# Every use of desgraph, and of the worldview container, is in a test: the
+# sheet fixtures name stations and relays, and one test tears a recording in
+# half to prove a crashed run still yields a workbook.
+desgraph = { path = "../sim/desgraph" }
+worldview = { path = "../worldview/worldview" }
+serde_json = "1"
+zip = { version = "7.2", default-features = false, features = ["deflate"] }
+
+[[bin]]
+name = "workbook"
+path = "src/bin/workbook.rs"

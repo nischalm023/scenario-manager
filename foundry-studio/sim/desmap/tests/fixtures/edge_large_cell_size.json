@@ -1,0 +1,161 @@
+{
+  "version": 3,
+  "grid": {
+    "width": 20,
+    "depth": 20,
+    "cell_size_mm": 2000.0
+  },
+  "highways": [
+    {
+      "origin": [
+        0,
+        1
+      ],
+      "width": 20,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        2
+      ],
+      "width": 20,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        3
+      ],
+      "width": 20,
+      "height": 1,
+      "direction": "Bidirectional"
+    }
+  ],
+  "zones": [
+    {
+      "type": "rtp",
+      "id": 1,
+      "origin": [
+        1,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 2,
+      "origin": [
+        4,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 3,
+      "origin": [
+        7,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 4,
+      "origin": [
+        10,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 5,
+      "origin": [
+        13,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 6,
+      "origin": [
+        16,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    }
+  ],
+  "stations": [
+    {
+      "id": 1,
+      "position": [
+        2,
+        0
+      ],
+      "presentation_cell": [
+        2,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 2,
+      "position": [
+        7,
+        0
+      ],
+      "presentation_cell": [
+        7,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 3,
+      "position": [
+        12,
+        0
+      ],
+      "presentation_cell": [
+        12,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 4,
+      "position": [
+        17,
+        0
+      ],
+      "presentation_cell": [
+        17,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    }
+  ]
+}

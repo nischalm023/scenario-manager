@@ -1,0 +1,14 @@
+[package]
+name = "foundry-world-lenses"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+worldlens = { git = "https://github.com/greyorange/world-proto.git", rev = "cd4923516827d79fbac742179a4193627dafa43b" }
+site-model = { path = "../../sim/site-model" }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+
+[[bin]]
+name = "foundry-worldlens-check"
+path = "src/bin/check.rs"

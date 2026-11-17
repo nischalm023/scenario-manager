@@ -1,0 +1,11 @@
+{
+  "tasks": [
+    {"type": "InitializeFleet"},
+    {"type": "FillInventory", "after": ["InitializeFleet"]},
+    {"type": "LoadOrders", "after": ["FillInventory"]},
+    {"type": "FleetConservation", "after": ["FillInventory"]},
+    {"type": "PutawaySupplyDemand", "after": ["LoadOrders"]},
+    {"type": "PutawayInduction", "after": ["LoadOrders"]},
+    {"type": "PickDemand", "after": ["LoadOrders"]}
+  ]
+}

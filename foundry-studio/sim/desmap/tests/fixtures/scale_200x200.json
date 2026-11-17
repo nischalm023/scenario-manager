@@ -1,0 +1,11602 @@
+{
+  "version": 3,
+  "grid": {
+    "width": 200,
+    "depth": 200,
+    "cell_size_mm": 1000.0
+  },
+  "highways": [
+    {
+      "origin": [
+        0,
+        1
+      ],
+      "width": 200,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        2
+      ],
+      "width": 200,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        3
+      ],
+      "width": 200,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        198
+      ],
+      "width": 200,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        197
+      ],
+      "width": 200,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        196
+      ],
+      "width": 200,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        1,
+        0
+      ],
+      "width": 1,
+      "height": 200,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        2,
+        0
+      ],
+      "width": 1,
+      "height": 200,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        3,
+        0
+      ],
+      "width": 1,
+      "height": 200,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        198,
+        0
+      ],
+      "width": 1,
+      "height": 200,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        197,
+        0
+      ],
+      "width": 1,
+      "height": 200,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        196,
+        0
+      ],
+      "width": 1,
+      "height": 200,
+      "direction": "Bidirectional"
+    }
+  ],
+  "zones": [
+    {
+      "type": "relay",
+      "id": 1,
+      "origin": [
+        4,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 2,
+      "origin": [
+        7,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 3,
+      "origin": [
+        10,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 4,
+      "origin": [
+        13,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 5,
+      "origin": [
+        16,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 6,
+      "origin": [
+        19,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 7,
+      "origin": [
+        22,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 8,
+      "origin": [
+        25,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 9,
+      "origin": [
+        28,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 10,
+      "origin": [
+        31,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 11,
+      "origin": [
+        34,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 12,
+      "origin": [
+        37,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 13,
+      "origin": [
+        40,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 14,
+      "origin": [
+        43,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 15,
+      "origin": [
+        46,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 16,
+      "origin": [
+        49,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 17,
+      "origin": [
+        52,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 18,
+      "origin": [
+        55,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 19,
+      "origin": [
+        58,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 20,
+      "origin": [
+        61,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 21,
+      "origin": [
+        64,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 22,
+      "origin": [
+        67,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 23,
+      "origin": [
+        70,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 24,
+      "origin": [
+        73,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 25,
+      "origin": [
+        76,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 26,
+      "origin": [
+        79,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 27,
+      "origin": [
+        82,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 28,
+      "origin": [
+        85,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 29,
+      "origin": [
+        88,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 30,
+      "origin": [
+        91,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 31,
+      "origin": [
+        94,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 32,
+      "origin": [
+        97,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 33,
+      "origin": [
+        100,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 34,
+      "origin": [
+        103,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 35,
+      "origin": [
+        106,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 36,
+      "origin": [
+        109,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 37,
+      "origin": [
+        112,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 38,
+      "origin": [
+        115,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 39,
+      "origin": [
+        118,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 40,
+      "origin": [
+        121,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 41,
+      "origin": [
+        124,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 42,
+      "origin": [
+        127,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 43,
+      "origin": [
+        130,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 44,
+      "origin": [
+        133,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 45,
+      "origin": [
+        136,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 46,
+      "origin": [
+        139,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 47,
+      "origin": [
+        142,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 48,
+      "origin": [
+        145,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 49,
+      "origin": [
+        148,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 50,
+      "origin": [
+        151,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 51,
+      "origin": [
+        154,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 52,
+      "origin": [
+        157,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 53,
+      "origin": [
+        160,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 54,
+      "origin": [
+        163,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 55,
+      "origin": [
+        166,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 56,
+      "origin": [
+        169,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 57,
+      "origin": [
+        172,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 58,
+      "origin": [
+        175,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 59,
+      "origin": [
+        178,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 60,
+      "origin": [
+        181,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 61,
+      "origin": [
+        184,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 62,
+      "origin": [
+        187,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 63,
+      "origin": [
+        190,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 64,
+      "origin": [
+        193,
+        4
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 65,
+      "origin": [
+        4,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 66,
+      "origin": [
+        7,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 67,
+      "origin": [
+        10,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 68,
+      "origin": [
+        13,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 69,
+      "origin": [
+        16,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 70,
+      "origin": [
+        19,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 71,
+      "origin": [
+        22,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 72,
+      "origin": [
+        25,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 73,
+      "origin": [
+        28,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 74,
+      "origin": [
+        31,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 75,
+      "origin": [
+        34,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 76,
+      "origin": [
+        37,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 77,
+      "origin": [
+        40,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 78,
+      "origin": [
+        43,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 79,
+      "origin": [
+        46,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 80,
+      "origin": [
+        49,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 81,
+      "origin": [
+        52,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 82,
+      "origin": [
+        55,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 83,
+      "origin": [
+        58,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 84,
+      "origin": [
+        61,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 85,
+      "origin": [
+        64,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 86,
+      "origin": [
+        67,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 87,
+      "origin": [
+        70,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 88,
+      "origin": [
+        73,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 89,
+      "origin": [
+        76,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 90,
+      "origin": [
+        79,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 91,
+      "origin": [
+        82,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 92,
+      "origin": [
+        85,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 93,
+      "origin": [
+        88,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 94,
+      "origin": [
+        91,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 95,
+      "origin": [
+        94,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 96,
+      "origin": [
+        97,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 97,
+      "origin": [
+        100,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 98,
+      "origin": [
+        103,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 99,
+      "origin": [
+        106,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 100,
+      "origin": [
+        109,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 101,
+      "origin": [
+        112,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 102,
+      "origin": [
+        115,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 103,
+      "origin": [
+        118,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 104,
+      "origin": [
+        121,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 105,
+      "origin": [
+        124,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 106,
+      "origin": [
+        127,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 107,
+      "origin": [
+        130,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 108,
+      "origin": [
+        133,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 109,
+      "origin": [
+        136,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 110,
+      "origin": [
+        139,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 111,
+      "origin": [
+        142,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 112,
+      "origin": [
+        145,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 113,
+      "origin": [
+        148,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 114,
+      "origin": [
+        151,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 115,
+      "origin": [
+        154,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 116,
+      "origin": [
+        157,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 117,
+      "origin": [
+        160,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 118,
+      "origin": [
+        163,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 119,
+      "origin": [
+        166,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 120,
+      "origin": [
+        169,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 121,
+      "origin": [
+        172,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 122,
+      "origin": [
+        175,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 123,
+      "origin": [
+        178,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 124,
+      "origin": [
+        181,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 125,
+      "origin": [
+        184,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 126,
+      "origin": [
+        187,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 127,
+      "origin": [
+        190,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 128,
+      "origin": [
+        193,
+        15
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 129,
+      "origin": [
+        4,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 130,
+      "origin": [
+        7,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 131,
+      "origin": [
+        10,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 132,
+      "origin": [
+        13,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 133,
+      "origin": [
+        16,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 134,
+      "origin": [
+        19,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 135,
+      "origin": [
+        22,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 136,
+      "origin": [
+        25,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 137,
+      "origin": [
+        28,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 138,
+      "origin": [
+        31,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 139,
+      "origin": [
+        34,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 140,
+      "origin": [
+        37,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 141,
+      "origin": [
+        40,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 142,
+      "origin": [
+        43,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 143,
+      "origin": [
+        46,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 144,
+      "origin": [
+        49,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 145,
+      "origin": [
+        52,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 146,
+      "origin": [
+        55,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 147,
+      "origin": [
+        58,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 148,
+      "origin": [
+        61,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 149,
+      "origin": [
+        64,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 150,
+      "origin": [
+        67,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 151,
+      "origin": [
+        70,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 152,
+      "origin": [
+        73,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 153,
+      "origin": [
+        76,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 154,
+      "origin": [
+        79,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 155,
+      "origin": [
+        82,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 156,
+      "origin": [
+        85,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 157,
+      "origin": [
+        88,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 158,
+      "origin": [
+        91,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 159,
+      "origin": [
+        94,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 160,
+      "origin": [
+        97,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 161,
+      "origin": [
+        100,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 162,
+      "origin": [
+        103,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 163,
+      "origin": [
+        106,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 164,
+      "origin": [
+        109,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 165,
+      "origin": [
+        112,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 166,
+      "origin": [
+        115,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 167,
+      "origin": [
+        118,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 168,
+      "origin": [
+        121,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 169,
+      "origin": [
+        124,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 170,
+      "origin": [
+        127,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 171,
+      "origin": [
+        130,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 172,
+      "origin": [
+        133,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 173,
+      "origin": [
+        136,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 174,
+      "origin": [
+        139,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 175,
+      "origin": [
+        142,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 176,
+      "origin": [
+        145,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 177,
+      "origin": [
+        148,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 178,
+      "origin": [
+        151,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 179,
+      "origin": [
+        154,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 180,
+      "origin": [
+        157,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 181,
+      "origin": [
+        160,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 182,
+      "origin": [
+        163,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 183,
+      "origin": [
+        166,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 184,
+      "origin": [
+        169,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 185,
+      "origin": [
+        172,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 186,
+      "origin": [
+        175,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 187,
+      "origin": [
+        178,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 188,
+      "origin": [
+        181,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 189,
+      "origin": [
+        184,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 190,
+      "origin": [
+        187,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 191,
+      "origin": [
+        190,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 192,
+      "origin": [
+        193,
+        26
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 193,
+      "origin": [
+        4,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 194,
+      "origin": [
+        7,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 195,
+      "origin": [
+        10,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 196,
+      "origin": [
+        13,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 197,
+      "origin": [
+        16,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 198,
+      "origin": [
+        19,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 199,
+      "origin": [
+        22,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 200,
+      "origin": [
+        25,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 201,
+      "origin": [
+        28,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 202,
+      "origin": [
+        31,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 203,
+      "origin": [
+        34,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 204,
+      "origin": [
+        37,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 205,
+      "origin": [
+        40,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 206,
+      "origin": [
+        43,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 207,
+      "origin": [
+        46,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 208,
+      "origin": [
+        49,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 209,
+      "origin": [
+        52,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 210,
+      "origin": [
+        55,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 211,
+      "origin": [
+        58,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 212,
+      "origin": [
+        61,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 213,
+      "origin": [
+        64,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 214,
+      "origin": [
+        67,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 215,
+      "origin": [
+        70,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 216,
+      "origin": [
+        73,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 217,
+      "origin": [
+        76,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 218,
+      "origin": [
+        79,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 219,
+      "origin": [
+        82,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 220,
+      "origin": [
+        85,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 221,
+      "origin": [
+        88,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 222,
+      "origin": [
+        91,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 223,
+      "origin": [
+        94,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 224,
+      "origin": [
+        97,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 225,
+      "origin": [
+        100,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 226,
+      "origin": [
+        103,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 227,
+      "origin": [
+        106,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 228,
+      "origin": [
+        109,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 229,
+      "origin": [
+        112,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 230,
+      "origin": [
+        115,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 231,
+      "origin": [
+        118,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 232,
+      "origin": [
+        121,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 233,
+      "origin": [
+        124,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 234,
+      "origin": [
+        127,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 235,
+      "origin": [
+        130,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 236,
+      "origin": [
+        133,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 237,
+      "origin": [
+        136,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 238,
+      "origin": [
+        139,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 239,
+      "origin": [
+        142,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 240,
+      "origin": [
+        145,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 241,
+      "origin": [
+        148,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 242,
+      "origin": [
+        151,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 243,
+      "origin": [
+        154,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 244,
+      "origin": [
+        157,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 245,
+      "origin": [
+        160,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 246,
+      "origin": [
+        163,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 247,
+      "origin": [
+        166,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 248,
+      "origin": [
+        169,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 249,
+      "origin": [
+        172,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 250,
+      "origin": [
+        175,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 251,
+      "origin": [
+        178,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 252,
+      "origin": [
+        181,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 253,
+      "origin": [
+        184,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 254,
+      "origin": [
+        187,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 255,
+      "origin": [
+        190,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 256,
+      "origin": [
+        193,
+        37
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 257,
+      "origin": [
+        4,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 258,
+      "origin": [
+        7,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 259,
+      "origin": [
+        10,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 260,
+      "origin": [
+        13,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 261,
+      "origin": [
+        16,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 262,
+      "origin": [
+        19,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 263,
+      "origin": [
+        22,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 264,
+      "origin": [
+        25,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 265,
+      "origin": [
+        28,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 266,
+      "origin": [
+        31,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 267,
+      "origin": [
+        34,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 268,
+      "origin": [
+        37,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 269,
+      "origin": [
+        40,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 270,
+      "origin": [
+        43,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 271,
+      "origin": [
+        46,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 272,
+      "origin": [
+        49,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 273,
+      "origin": [
+        52,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 274,
+      "origin": [
+        55,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 275,
+      "origin": [
+        58,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 276,
+      "origin": [
+        61,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 277,
+      "origin": [
+        64,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 278,
+      "origin": [
+        67,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 279,
+      "origin": [
+        70,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 280,
+      "origin": [
+        73,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 281,
+      "origin": [
+        76,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 282,
+      "origin": [
+        79,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 283,
+      "origin": [
+        82,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 284,
+      "origin": [
+        85,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 285,
+      "origin": [
+        88,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 286,
+      "origin": [
+        91,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 287,
+      "origin": [
+        94,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 288,
+      "origin": [
+        97,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 289,
+      "origin": [
+        100,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 290,
+      "origin": [
+        103,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 291,
+      "origin": [
+        106,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 292,
+      "origin": [
+        109,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 293,
+      "origin": [
+        112,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 294,
+      "origin": [
+        115,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 295,
+      "origin": [
+        118,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 296,
+      "origin": [
+        121,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 297,
+      "origin": [
+        124,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 298,
+      "origin": [
+        127,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 299,
+      "origin": [
+        130,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 300,
+      "origin": [
+        133,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 301,
+      "origin": [
+        136,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 302,
+      "origin": [
+        139,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 303,
+      "origin": [
+        142,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 304,
+      "origin": [
+        145,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 305,
+      "origin": [
+        148,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 306,
+      "origin": [
+        151,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 307,
+      "origin": [
+        154,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 308,
+      "origin": [
+        157,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 309,
+      "origin": [
+        160,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 310,
+      "origin": [
+        163,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 311,
+      "origin": [
+        166,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 312,
+      "origin": [
+        169,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 313,
+      "origin": [
+        172,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 314,
+      "origin": [
+        175,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 315,
+      "origin": [
+        178,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 316,
+      "origin": [
+        181,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 317,
+      "origin": [
+        184,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 318,
+      "origin": [
+        187,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 319,
+      "origin": [
+        190,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 320,
+      "origin": [
+        193,
+        48
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 321,
+      "origin": [
+        4,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 322,
+      "origin": [
+        7,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 323,
+      "origin": [
+        10,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 324,
+      "origin": [
+        13,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 325,
+      "origin": [
+        16,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 326,
+      "origin": [
+        19,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 327,
+      "origin": [
+        22,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 328,
+      "origin": [
+        25,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 329,
+      "origin": [
+        28,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 330,
+      "origin": [
+        31,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 331,
+      "origin": [
+        34,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 332,
+      "origin": [
+        37,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 333,
+      "origin": [
+        40,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 334,
+      "origin": [
+        43,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 335,
+      "origin": [
+        46,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 336,
+      "origin": [
+        49,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 337,
+      "origin": [
+        52,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 338,
+      "origin": [
+        55,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 339,
+      "origin": [
+        58,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 340,
+      "origin": [
+        61,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 341,
+      "origin": [
+        64,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 342,
+      "origin": [
+        67,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 343,
+      "origin": [
+        70,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 344,
+      "origin": [
+        73,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 345,
+      "origin": [
+        76,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 346,
+      "origin": [
+        79,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 347,
+      "origin": [
+        82,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 348,
+      "origin": [
+        85,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 349,
+      "origin": [
+        88,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 350,
+      "origin": [
+        91,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 351,
+      "origin": [
+        94,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 352,
+      "origin": [
+        97,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 353,
+      "origin": [
+        100,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 354,
+      "origin": [
+        103,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 355,
+      "origin": [
+        106,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 356,
+      "origin": [
+        109,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 357,
+      "origin": [
+        112,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 358,
+      "origin": [
+        115,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 359,
+      "origin": [
+        118,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 360,
+      "origin": [
+        121,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 361,
+      "origin": [
+        124,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 362,
+      "origin": [
+        127,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 363,
+      "origin": [
+        130,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 364,
+      "origin": [
+        133,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 365,
+      "origin": [
+        136,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 366,
+      "origin": [
+        139,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 367,
+      "origin": [
+        142,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 368,
+      "origin": [
+        145,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 369,
+      "origin": [
+        148,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 370,
+      "origin": [
+        151,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 371,
+      "origin": [
+        154,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 372,
+      "origin": [
+        157,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 373,
+      "origin": [
+        160,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 374,
+      "origin": [
+        163,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 375,
+      "origin": [
+        166,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 376,
+      "origin": [
+        169,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 377,
+      "origin": [
+        172,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 378,
+      "origin": [
+        175,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 379,
+      "origin": [
+        178,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 380,
+      "origin": [
+        181,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 381,
+      "origin": [
+        184,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 382,
+      "origin": [
+        187,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 383,
+      "origin": [
+        190,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 384,
+      "origin": [
+        193,
+        59
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 385,
+      "origin": [
+        4,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 386,
+      "origin": [
+        7,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 387,
+      "origin": [
+        10,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 388,
+      "origin": [
+        13,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 389,
+      "origin": [
+        16,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 390,
+      "origin": [
+        19,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 391,
+      "origin": [
+        22,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 392,
+      "origin": [
+        25,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 393,
+      "origin": [
+        28,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 394,
+      "origin": [
+        31,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 395,
+      "origin": [
+        34,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 396,
+      "origin": [
+        37,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 397,
+      "origin": [
+        40,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 398,
+      "origin": [
+        43,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 399,
+      "origin": [
+        46,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 400,
+      "origin": [
+        49,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 401,
+      "origin": [
+        52,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 402,
+      "origin": [
+        55,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 403,
+      "origin": [
+        58,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 404,
+      "origin": [
+        61,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 405,
+      "origin": [
+        64,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 406,
+      "origin": [
+        67,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 407,
+      "origin": [
+        70,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 408,
+      "origin": [
+        73,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 409,
+      "origin": [
+        76,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 410,
+      "origin": [
+        79,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 411,
+      "origin": [
+        82,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 412,
+      "origin": [
+        85,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 413,
+      "origin": [
+        88,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 414,
+      "origin": [
+        91,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 415,
+      "origin": [
+        94,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 416,
+      "origin": [
+        97,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 417,
+      "origin": [
+        100,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 418,
+      "origin": [
+        103,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 419,
+      "origin": [
+        106,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 420,
+      "origin": [
+        109,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 421,
+      "origin": [
+        112,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 422,
+      "origin": [
+        115,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 423,
+      "origin": [
+        118,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 424,
+      "origin": [
+        121,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 425,
+      "origin": [
+        124,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 426,
+      "origin": [
+        127,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 427,
+      "origin": [
+        130,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 428,
+      "origin": [
+        133,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 429,
+      "origin": [
+        136,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 430,
+      "origin": [
+        139,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 431,
+      "origin": [
+        142,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 432,
+      "origin": [
+        145,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 433,
+      "origin": [
+        148,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 434,
+      "origin": [
+        151,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 435,
+      "origin": [
+        154,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 436,
+      "origin": [
+        157,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 437,
+      "origin": [
+        160,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 438,
+      "origin": [
+        163,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 439,
+      "origin": [
+        166,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 440,
+      "origin": [
+        169,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 441,
+      "origin": [
+        172,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 442,
+      "origin": [
+        175,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 443,
+      "origin": [
+        178,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 444,
+      "origin": [
+        181,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 445,
+      "origin": [
+        184,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 446,
+      "origin": [
+        187,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 447,
+      "origin": [
+        190,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 448,
+      "origin": [
+        193,
+        70
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 449,
+      "origin": [
+        4,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 450,
+      "origin": [
+        7,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 451,
+      "origin": [
+        10,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 452,
+      "origin": [
+        13,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 453,
+      "origin": [
+        16,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 454,
+      "origin": [
+        19,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 455,
+      "origin": [
+        22,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 456,
+      "origin": [
+        25,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 457,
+      "origin": [
+        28,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 458,
+      "origin": [
+        31,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 459,
+      "origin": [
+        34,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 460,
+      "origin": [
+        37,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 461,
+      "origin": [
+        40,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 462,
+      "origin": [
+        43,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 463,
+      "origin": [
+        46,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 464,
+      "origin": [
+        49,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 465,
+      "origin": [
+        52,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 466,
+      "origin": [
+        55,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 467,
+      "origin": [
+        58,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 468,
+      "origin": [
+        61,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 469,
+      "origin": [
+        64,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 470,
+      "origin": [
+        67,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 471,
+      "origin": [
+        70,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 472,
+      "origin": [
+        73,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 473,
+      "origin": [
+        76,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 474,
+      "origin": [
+        79,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 475,
+      "origin": [
+        82,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 476,
+      "origin": [
+        85,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 477,
+      "origin": [
+        88,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 478,
+      "origin": [
+        91,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 479,
+      "origin": [
+        94,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 480,
+      "origin": [
+        97,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 481,
+      "origin": [
+        100,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 482,
+      "origin": [
+        103,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 483,
+      "origin": [
+        106,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 484,
+      "origin": [
+        109,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 485,
+      "origin": [
+        112,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 486,
+      "origin": [
+        115,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 487,
+      "origin": [
+        118,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 488,
+      "origin": [
+        121,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 489,
+      "origin": [
+        124,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 490,
+      "origin": [
+        127,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 491,
+      "origin": [
+        130,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 492,
+      "origin": [
+        133,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 493,
+      "origin": [
+        136,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 494,
+      "origin": [
+        139,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 495,
+      "origin": [
+        142,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 496,
+      "origin": [
+        145,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 497,
+      "origin": [
+        148,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 498,
+      "origin": [
+        151,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 499,
+      "origin": [
+        154,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 500,
+      "origin": [
+        157,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 501,
+      "origin": [
+        160,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 502,
+      "origin": [
+        163,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 503,
+      "origin": [
+        166,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 504,
+      "origin": [
+        169,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 505,
+      "origin": [
+        172,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 506,
+      "origin": [
+        175,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 507,
+      "origin": [
+        178,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 508,
+      "origin": [
+        181,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 509,
+      "origin": [
+        184,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 510,
+      "origin": [
+        187,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 511,
+      "origin": [
+        190,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 512,
+      "origin": [
+        193,
+        81
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 513,
+      "origin": [
+        4,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 514,
+      "origin": [
+        7,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 515,
+      "origin": [
+        10,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 516,
+      "origin": [
+        13,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 517,
+      "origin": [
+        16,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 518,
+      "origin": [
+        19,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 519,
+      "origin": [
+        22,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 520,
+      "origin": [
+        25,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 521,
+      "origin": [
+        28,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 522,
+      "origin": [
+        31,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 523,
+      "origin": [
+        34,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 524,
+      "origin": [
+        37,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 525,
+      "origin": [
+        40,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 526,
+      "origin": [
+        43,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 527,
+      "origin": [
+        46,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 528,
+      "origin": [
+        49,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 529,
+      "origin": [
+        52,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 530,
+      "origin": [
+        55,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 531,
+      "origin": [
+        58,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 532,
+      "origin": [
+        61,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 533,
+      "origin": [
+        64,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 534,
+      "origin": [
+        67,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 535,
+      "origin": [
+        70,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 536,
+      "origin": [
+        73,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 537,
+      "origin": [
+        76,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 538,
+      "origin": [
+        79,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 539,
+      "origin": [
+        82,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 540,
+      "origin": [
+        85,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 541,
+      "origin": [
+        88,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 542,
+      "origin": [
+        91,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 543,
+      "origin": [
+        94,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 544,
+      "origin": [
+        97,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 545,
+      "origin": [
+        100,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 546,
+      "origin": [
+        103,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 547,
+      "origin": [
+        106,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 548,
+      "origin": [
+        109,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 549,
+      "origin": [
+        112,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 550,
+      "origin": [
+        115,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 551,
+      "origin": [
+        118,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 552,
+      "origin": [
+        121,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 553,
+      "origin": [
+        124,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 554,
+      "origin": [
+        127,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 555,
+      "origin": [
+        130,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 556,
+      "origin": [
+        133,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 557,
+      "origin": [
+        136,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 558,
+      "origin": [
+        139,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 559,
+      "origin": [
+        142,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 560,
+      "origin": [
+        145,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 561,
+      "origin": [
+        148,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 562,
+      "origin": [
+        151,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 563,
+      "origin": [
+        154,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 564,
+      "origin": [
+        157,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 565,
+      "origin": [
+        160,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 566,
+      "origin": [
+        163,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 567,
+      "origin": [
+        166,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 568,
+      "origin": [
+        169,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 569,
+      "origin": [
+        172,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 570,
+      "origin": [
+        175,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 571,
+      "origin": [
+        178,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 572,
+      "origin": [
+        181,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 573,
+      "origin": [
+        184,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 574,
+      "origin": [
+        187,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 575,
+      "origin": [
+        190,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 576,
+      "origin": [
+        193,
+        92
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 577,
+      "origin": [
+        4,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 578,
+      "origin": [
+        7,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 579,
+      "origin": [
+        10,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 580,
+      "origin": [
+        13,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 581,
+      "origin": [
+        16,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 582,
+      "origin": [
+        19,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 583,
+      "origin": [
+        22,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 584,
+      "origin": [
+        25,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 585,
+      "origin": [
+        28,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 586,
+      "origin": [
+        31,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 587,
+      "origin": [
+        34,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 588,
+      "origin": [
+        37,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 589,
+      "origin": [
+        40,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 590,
+      "origin": [
+        43,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 591,
+      "origin": [
+        46,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 592,
+      "origin": [
+        49,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 593,
+      "origin": [
+        52,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 594,
+      "origin": [
+        55,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 595,
+      "origin": [
+        58,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 596,
+      "origin": [
+        61,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 597,
+      "origin": [
+        64,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 598,
+      "origin": [
+        67,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 599,
+      "origin": [
+        70,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 600,
+      "origin": [
+        73,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 601,
+      "origin": [
+        76,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 602,
+      "origin": [
+        79,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 603,
+      "origin": [
+        82,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 604,
+      "origin": [
+        85,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 605,
+      "origin": [
+        88,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 606,
+      "origin": [
+        91,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 607,
+      "origin": [
+        94,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 608,
+      "origin": [
+        97,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 609,
+      "origin": [
+        100,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 610,
+      "origin": [
+        103,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 611,
+      "origin": [
+        106,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 612,
+      "origin": [
+        109,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 613,
+      "origin": [
+        112,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 614,
+      "origin": [
+        115,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 615,
+      "origin": [
+        118,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 616,
+      "origin": [
+        121,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 617,
+      "origin": [
+        124,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 618,
+      "origin": [
+        127,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 619,
+      "origin": [
+        130,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 620,
+      "origin": [
+        133,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 621,
+      "origin": [
+        136,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 622,
+      "origin": [
+        139,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 623,
+      "origin": [
+        142,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 624,
+      "origin": [
+        145,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 625,
+      "origin": [
+        148,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 626,
+      "origin": [
+        151,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 627,
+      "origin": [
+        154,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 628,
+      "origin": [
+        157,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 629,
+      "origin": [
+        160,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 630,
+      "origin": [
+        163,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 631,
+      "origin": [
+        166,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 632,
+      "origin": [
+        169,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 633,
+      "origin": [
+        172,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 634,
+      "origin": [
+        175,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 635,
+      "origin": [
+        178,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 636,
+      "origin": [
+        181,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 637,
+      "origin": [
+        184,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 638,
+      "origin": [
+        187,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 639,
+      "origin": [
+        190,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 640,
+      "origin": [
+        193,
+        103
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 641,
+      "origin": [
+        4,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 642,
+      "origin": [
+        7,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 643,
+      "origin": [
+        10,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 644,
+      "origin": [
+        13,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 645,
+      "origin": [
+        16,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 646,
+      "origin": [
+        19,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 647,
+      "origin": [
+        22,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 648,
+      "origin": [
+        25,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 649,
+      "origin": [
+        28,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 650,
+      "origin": [
+        31,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 651,
+      "origin": [
+        34,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 652,
+      "origin": [
+        37,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 653,
+      "origin": [
+        40,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 654,
+      "origin": [
+        43,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 655,
+      "origin": [
+        46,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 656,
+      "origin": [
+        49,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 657,
+      "origin": [
+        52,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 658,
+      "origin": [
+        55,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 659,
+      "origin": [
+        58,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 660,
+      "origin": [
+        61,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 661,
+      "origin": [
+        64,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 662,
+      "origin": [
+        67,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 663,
+      "origin": [
+        70,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 664,
+      "origin": [
+        73,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 665,
+      "origin": [
+        76,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 666,
+      "origin": [
+        79,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 667,
+      "origin": [
+        82,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 668,
+      "origin": [
+        85,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 669,
+      "origin": [
+        88,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 670,
+      "origin": [
+        91,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 671,
+      "origin": [
+        94,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 672,
+      "origin": [
+        97,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 673,
+      "origin": [
+        100,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 674,
+      "origin": [
+        103,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 675,
+      "origin": [
+        106,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 676,
+      "origin": [
+        109,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 677,
+      "origin": [
+        112,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 678,
+      "origin": [
+        115,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 679,
+      "origin": [
+        118,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 680,
+      "origin": [
+        121,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 681,
+      "origin": [
+        124,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 682,
+      "origin": [
+        127,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 683,
+      "origin": [
+        130,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 684,
+      "origin": [
+        133,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 685,
+      "origin": [
+        136,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 686,
+      "origin": [
+        139,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 687,
+      "origin": [
+        142,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 688,
+      "origin": [
+        145,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 689,
+      "origin": [
+        148,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 690,
+      "origin": [
+        151,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 691,
+      "origin": [
+        154,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 692,
+      "origin": [
+        157,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 693,
+      "origin": [
+        160,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 694,
+      "origin": [
+        163,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 695,
+      "origin": [
+        166,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 696,
+      "origin": [
+        169,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 697,
+      "origin": [
+        172,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 698,
+      "origin": [
+        175,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 699,
+      "origin": [
+        178,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 700,
+      "origin": [
+        181,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 701,
+      "origin": [
+        184,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 702,
+      "origin": [
+        187,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 703,
+      "origin": [
+        190,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 704,
+      "origin": [
+        193,
+        114
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 705,
+      "origin": [
+        4,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 706,
+      "origin": [
+        7,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 707,
+      "origin": [
+        10,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 708,
+      "origin": [
+        13,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 709,
+      "origin": [
+        16,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 710,
+      "origin": [
+        19,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 711,
+      "origin": [
+        22,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 712,
+      "origin": [
+        25,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 713,
+      "origin": [
+        28,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 714,
+      "origin": [
+        31,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 715,
+      "origin": [
+        34,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 716,
+      "origin": [
+        37,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 717,
+      "origin": [
+        40,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 718,
+      "origin": [
+        43,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 719,
+      "origin": [
+        46,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 720,
+      "origin": [
+        49,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 721,
+      "origin": [
+        52,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 722,
+      "origin": [
+        55,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 723,
+      "origin": [
+        58,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 724,
+      "origin": [
+        61,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 725,
+      "origin": [
+        64,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 726,
+      "origin": [
+        67,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 727,
+      "origin": [
+        70,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 728,
+      "origin": [
+        73,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 729,
+      "origin": [
+        76,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 730,
+      "origin": [
+        79,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 731,
+      "origin": [
+        82,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 732,
+      "origin": [
+        85,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 733,
+      "origin": [
+        88,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 734,
+      "origin": [
+        91,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 735,
+      "origin": [
+        94,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 736,
+      "origin": [
+        97,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 737,
+      "origin": [
+        100,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 738,
+      "origin": [
+        103,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 739,
+      "origin": [
+        106,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 740,
+      "origin": [
+        109,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 741,
+      "origin": [
+        112,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 742,
+      "origin": [
+        115,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 743,
+      "origin": [
+        118,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 744,
+      "origin": [
+        121,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 745,
+      "origin": [
+        124,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 746,
+      "origin": [
+        127,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 747,
+      "origin": [
+        130,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 748,
+      "origin": [
+        133,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 749,
+      "origin": [
+        136,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 750,
+      "origin": [
+        139,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 751,
+      "origin": [
+        142,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 752,
+      "origin": [
+        145,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 753,
+      "origin": [
+        148,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 754,
+      "origin": [
+        151,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 755,
+      "origin": [
+        154,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 756,
+      "origin": [
+        157,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 757,
+      "origin": [
+        160,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 758,
+      "origin": [
+        163,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 759,
+      "origin": [
+        166,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 760,
+      "origin": [
+        169,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 761,
+      "origin": [
+        172,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 762,
+      "origin": [
+        175,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 763,
+      "origin": [
+        178,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 764,
+      "origin": [
+        181,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 765,
+      "origin": [
+        184,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 766,
+      "origin": [
+        187,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 767,
+      "origin": [
+        190,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 768,
+      "origin": [
+        193,
+        125
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 769,
+      "origin": [
+        4,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 770,
+      "origin": [
+        7,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 771,
+      "origin": [
+        10,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 772,
+      "origin": [
+        13,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 773,
+      "origin": [
+        16,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 774,
+      "origin": [
+        19,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 775,
+      "origin": [
+        22,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 776,
+      "origin": [
+        25,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 777,
+      "origin": [
+        28,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 778,
+      "origin": [
+        31,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 779,
+      "origin": [
+        34,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 780,
+      "origin": [
+        37,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 781,
+      "origin": [
+        40,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 782,
+      "origin": [
+        43,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 783,
+      "origin": [
+        46,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 784,
+      "origin": [
+        49,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 785,
+      "origin": [
+        52,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 786,
+      "origin": [
+        55,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 787,
+      "origin": [
+        58,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 788,
+      "origin": [
+        61,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 789,
+      "origin": [
+        64,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 790,
+      "origin": [
+        67,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 791,
+      "origin": [
+        70,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 792,
+      "origin": [
+        73,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 793,
+      "origin": [
+        76,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 794,
+      "origin": [
+        79,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 795,
+      "origin": [
+        82,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 796,
+      "origin": [
+        85,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 797,
+      "origin": [
+        88,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 798,
+      "origin": [
+        91,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 799,
+      "origin": [
+        94,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 800,
+      "origin": [
+        97,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 801,
+      "origin": [
+        100,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 802,
+      "origin": [
+        103,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 803,
+      "origin": [
+        106,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 804,
+      "origin": [
+        109,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 805,
+      "origin": [
+        112,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 806,
+      "origin": [
+        115,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 807,
+      "origin": [
+        118,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 808,
+      "origin": [
+        121,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 809,
+      "origin": [
+        124,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 810,
+      "origin": [
+        127,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 811,
+      "origin": [
+        130,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 812,
+      "origin": [
+        133,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 813,
+      "origin": [
+        136,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 814,
+      "origin": [
+        139,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 815,
+      "origin": [
+        142,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 816,
+      "origin": [
+        145,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 817,
+      "origin": [
+        148,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 818,
+      "origin": [
+        151,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 819,
+      "origin": [
+        154,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 820,
+      "origin": [
+        157,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 821,
+      "origin": [
+        160,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 822,
+      "origin": [
+        163,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 823,
+      "origin": [
+        166,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 824,
+      "origin": [
+        169,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 825,
+      "origin": [
+        172,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 826,
+      "origin": [
+        175,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 827,
+      "origin": [
+        178,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 828,
+      "origin": [
+        181,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 829,
+      "origin": [
+        184,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 830,
+      "origin": [
+        187,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 831,
+      "origin": [
+        190,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 832,
+      "origin": [
+        193,
+        136
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 833,
+      "origin": [
+        4,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 834,
+      "origin": [
+        7,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 835,
+      "origin": [
+        10,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 836,
+      "origin": [
+        13,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 837,
+      "origin": [
+        16,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 838,
+      "origin": [
+        19,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 839,
+      "origin": [
+        22,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 840,
+      "origin": [
+        25,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 841,
+      "origin": [
+        28,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 842,
+      "origin": [
+        31,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 843,
+      "origin": [
+        34,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 844,
+      "origin": [
+        37,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 845,
+      "origin": [
+        40,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 846,
+      "origin": [
+        43,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 847,
+      "origin": [
+        46,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 848,
+      "origin": [
+        49,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 849,
+      "origin": [
+        52,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 850,
+      "origin": [
+        55,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 851,
+      "origin": [
+        58,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 852,
+      "origin": [
+        61,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 853,
+      "origin": [
+        64,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 854,
+      "origin": [
+        67,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 855,
+      "origin": [
+        70,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 856,
+      "origin": [
+        73,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 857,
+      "origin": [
+        76,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 858,
+      "origin": [
+        79,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 859,
+      "origin": [
+        82,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 860,
+      "origin": [
+        85,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 861,
+      "origin": [
+        88,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 862,
+      "origin": [
+        91,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 863,
+      "origin": [
+        94,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 864,
+      "origin": [
+        97,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 865,
+      "origin": [
+        100,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 866,
+      "origin": [
+        103,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 867,
+      "origin": [
+        106,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 868,
+      "origin": [
+        109,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 869,
+      "origin": [
+        112,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 870,
+      "origin": [
+        115,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 871,
+      "origin": [
+        118,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 872,
+      "origin": [
+        121,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 873,
+      "origin": [
+        124,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 874,
+      "origin": [
+        127,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 875,
+      "origin": [
+        130,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 876,
+      "origin": [
+        133,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 877,
+      "origin": [
+        136,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 878,
+      "origin": [
+        139,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 879,
+      "origin": [
+        142,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 880,
+      "origin": [
+        145,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 881,
+      "origin": [
+        148,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 882,
+      "origin": [
+        151,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 883,
+      "origin": [
+        154,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 884,
+      "origin": [
+        157,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 885,
+      "origin": [
+        160,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 886,
+      "origin": [
+        163,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 887,
+      "origin": [
+        166,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 888,
+      "origin": [
+        169,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 889,
+      "origin": [
+        172,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 890,
+      "origin": [
+        175,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 891,
+      "origin": [
+        178,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 892,
+      "origin": [
+        181,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 893,
+      "origin": [
+        184,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 894,
+      "origin": [
+        187,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 895,
+      "origin": [
+        190,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 896,
+      "origin": [
+        193,
+        147
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 897,
+      "origin": [
+        4,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 898,
+      "origin": [
+        7,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 899,
+      "origin": [
+        10,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 900,
+      "origin": [
+        13,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 901,
+      "origin": [
+        16,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 902,
+      "origin": [
+        19,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 903,
+      "origin": [
+        22,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 904,
+      "origin": [
+        25,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 905,
+      "origin": [
+        28,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 906,
+      "origin": [
+        31,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 907,
+      "origin": [
+        34,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 908,
+      "origin": [
+        37,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 909,
+      "origin": [
+        40,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 910,
+      "origin": [
+        43,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 911,
+      "origin": [
+        46,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 912,
+      "origin": [
+        49,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 913,
+      "origin": [
+        52,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 914,
+      "origin": [
+        55,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 915,
+      "origin": [
+        58,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 916,
+      "origin": [
+        61,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 917,
+      "origin": [
+        64,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 918,
+      "origin": [
+        67,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 919,
+      "origin": [
+        70,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 920,
+      "origin": [
+        73,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 921,
+      "origin": [
+        76,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 922,
+      "origin": [
+        79,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 923,
+      "origin": [
+        82,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 924,
+      "origin": [
+        85,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 925,
+      "origin": [
+        88,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 926,
+      "origin": [
+        91,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 927,
+      "origin": [
+        94,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 928,
+      "origin": [
+        97,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 929,
+      "origin": [
+        100,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 930,
+      "origin": [
+        103,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 931,
+      "origin": [
+        106,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 932,
+      "origin": [
+        109,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 933,
+      "origin": [
+        112,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 934,
+      "origin": [
+        115,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 935,
+      "origin": [
+        118,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 936,
+      "origin": [
+        121,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 937,
+      "origin": [
+        124,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 938,
+      "origin": [
+        127,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 939,
+      "origin": [
+        130,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 940,
+      "origin": [
+        133,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 941,
+      "origin": [
+        136,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 942,
+      "origin": [
+        139,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 943,
+      "origin": [
+        142,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 944,
+      "origin": [
+        145,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 945,
+      "origin": [
+        148,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 946,
+      "origin": [
+        151,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 947,
+      "origin": [
+        154,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 948,
+      "origin": [
+        157,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 949,
+      "origin": [
+        160,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 950,
+      "origin": [
+        163,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 951,
+      "origin": [
+        166,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 952,
+      "origin": [
+        169,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 953,
+      "origin": [
+        172,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 954,
+      "origin": [
+        175,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 955,
+      "origin": [
+        178,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 956,
+      "origin": [
+        181,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 957,
+      "origin": [
+        184,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 958,
+      "origin": [
+        187,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 959,
+      "origin": [
+        190,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 960,
+      "origin": [
+        193,
+        158
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 961,
+      "origin": [
+        4,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 962,
+      "origin": [
+        7,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 963,
+      "origin": [
+        10,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 964,
+      "origin": [
+        13,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 965,
+      "origin": [
+        16,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 966,
+      "origin": [
+        19,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 967,
+      "origin": [
+        22,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 968,
+      "origin": [
+        25,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 969,
+      "origin": [
+        28,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 970,
+      "origin": [
+        31,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 971,
+      "origin": [
+        34,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 972,
+      "origin": [
+        37,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 973,
+      "origin": [
+        40,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 974,
+      "origin": [
+        43,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 975,
+      "origin": [
+        46,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 976,
+      "origin": [
+        49,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 977,
+      "origin": [
+        52,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 978,
+      "origin": [
+        55,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 979,
+      "origin": [
+        58,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 980,
+      "origin": [
+        61,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 981,
+      "origin": [
+        64,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 982,
+      "origin": [
+        67,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 983,
+      "origin": [
+        70,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 984,
+      "origin": [
+        73,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 985,
+      "origin": [
+        76,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 986,
+      "origin": [
+        79,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 987,
+      "origin": [
+        82,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 988,
+      "origin": [
+        85,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 989,
+      "origin": [
+        88,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 990,
+      "origin": [
+        91,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 991,
+      "origin": [
+        94,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 992,
+      "origin": [
+        97,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 993,
+      "origin": [
+        100,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 994,
+      "origin": [
+        103,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 995,
+      "origin": [
+        106,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 996,
+      "origin": [
+        109,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 997,
+      "origin": [
+        112,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 998,
+      "origin": [
+        115,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 999,
+      "origin": [
+        118,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1000,
+      "origin": [
+        121,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1001,
+      "origin": [
+        124,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1002,
+      "origin": [
+        127,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1003,
+      "origin": [
+        130,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1004,
+      "origin": [
+        133,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1005,
+      "origin": [
+        136,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1006,
+      "origin": [
+        139,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1007,
+      "origin": [
+        142,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1008,
+      "origin": [
+        145,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1009,
+      "origin": [
+        148,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1010,
+      "origin": [
+        151,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1011,
+      "origin": [
+        154,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1012,
+      "origin": [
+        157,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1013,
+      "origin": [
+        160,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1014,
+      "origin": [
+        163,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1015,
+      "origin": [
+        166,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1016,
+      "origin": [
+        169,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1017,
+      "origin": [
+        172,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1018,
+      "origin": [
+        175,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1019,
+      "origin": [
+        178,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1020,
+      "origin": [
+        181,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1021,
+      "origin": [
+        184,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1022,
+      "origin": [
+        187,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1023,
+      "origin": [
+        190,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1024,
+      "origin": [
+        193,
+        169
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1025,
+      "origin": [
+        4,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1026,
+      "origin": [
+        7,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1027,
+      "origin": [
+        10,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1028,
+      "origin": [
+        13,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1029,
+      "origin": [
+        16,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1030,
+      "origin": [
+        19,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1031,
+      "origin": [
+        22,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1032,
+      "origin": [
+        25,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1033,
+      "origin": [
+        28,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1034,
+      "origin": [
+        31,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1035,
+      "origin": [
+        34,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1036,
+      "origin": [
+        37,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1037,
+      "origin": [
+        40,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1038,
+      "origin": [
+        43,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1039,
+      "origin": [
+        46,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1040,
+      "origin": [
+        49,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1041,
+      "origin": [
+        52,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1042,
+      "origin": [
+        55,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1043,
+      "origin": [
+        58,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1044,
+      "origin": [
+        61,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1045,
+      "origin": [
+        64,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1046,
+      "origin": [
+        67,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1047,
+      "origin": [
+        70,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1048,
+      "origin": [
+        73,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1049,
+      "origin": [
+        76,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1050,
+      "origin": [
+        79,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1051,
+      "origin": [
+        82,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1052,
+      "origin": [
+        85,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1053,
+      "origin": [
+        88,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1054,
+      "origin": [
+        91,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1055,
+      "origin": [
+        94,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1056,
+      "origin": [
+        97,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1057,
+      "origin": [
+        100,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1058,
+      "origin": [
+        103,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1059,
+      "origin": [
+        106,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1060,
+      "origin": [
+        109,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1061,
+      "origin": [
+        112,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1062,
+      "origin": [
+        115,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1063,
+      "origin": [
+        118,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1064,
+      "origin": [
+        121,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1065,
+      "origin": [
+        124,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1066,
+      "origin": [
+        127,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1067,
+      "origin": [
+        130,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1068,
+      "origin": [
+        133,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1069,
+      "origin": [
+        136,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1070,
+      "origin": [
+        139,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1071,
+      "origin": [
+        142,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1072,
+      "origin": [
+        145,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1073,
+      "origin": [
+        148,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1074,
+      "origin": [
+        151,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1075,
+      "origin": [
+        154,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1076,
+      "origin": [
+        157,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1077,
+      "origin": [
+        160,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1078,
+      "origin": [
+        163,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1079,
+      "origin": [
+        166,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1080,
+      "origin": [
+        169,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1081,
+      "origin": [
+        172,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1082,
+      "origin": [
+        175,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1083,
+      "origin": [
+        178,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1084,
+      "origin": [
+        181,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1085,
+      "origin": [
+        184,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1086,
+      "origin": [
+        187,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1087,
+      "origin": [
+        190,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 1088,
+      "origin": [
+        193,
+        180
+      ],
+      "length": 10,
+      "vertical_tote_capacity": 8
+    }
+  ],
+  "stations": [
+    {
+      "id": 1,
+      "position": [
+        77,
+        0
+      ],
+      "presentation_cell": [
+        77,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 2,
+      "position": [
+        82,
+        0
+      ],
+      "presentation_cell": [
+        82,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 3,
+      "position": [
+        87,
+        0
+      ],
+      "presentation_cell": [
+        87,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 4,
+      "position": [
+        92,
+        0
+      ],
+      "presentation_cell": [
+        92,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 5,
+      "position": [
+        97,
+        0
+      ],
+      "presentation_cell": [
+        97,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 6,
+      "position": [
+        102,
+        0
+      ],
+      "presentation_cell": [
+        102,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 7,
+      "position": [
+        107,
+        0
+      ],
+      "presentation_cell": [
+        107,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 8,
+      "position": [
+        112,
+        0
+      ],
+      "presentation_cell": [
+        112,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 9,
+      "position": [
+        117,
+        0
+      ],
+      "presentation_cell": [
+        117,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 10,
+      "position": [
+        122,
+        0
+      ],
+      "presentation_cell": [
+        122,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 11,
+      "position": [
+        77,
+        199
+      ],
+      "presentation_cell": [
+        77,
+        198
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 12,
+      "position": [
+        82,
+        199
+      ],
+      "presentation_cell": [
+        82,
+        198
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 13,
+      "position": [
+        87,
+        199
+      ],
+      "presentation_cell": [
+        87,
+        198
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 14,
+      "position": [
+        92,
+        199
+      ],
+      "presentation_cell": [
+        92,
+        198
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 15,
+      "position": [
+        97,
+        199
+      ],
+      "presentation_cell": [
+        97,
+        198
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 16,
+      "position": [
+        102,
+        199
+      ],
+      "presentation_cell": [
+        102,
+        198
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 17,
+      "position": [
+        107,
+        199
+      ],
+      "presentation_cell": [
+        107,
+        198
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 18,
+      "position": [
+        112,
+        199
+      ],
+      "presentation_cell": [
+        112,
+        198
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 19,
+      "position": [
+        117,
+        199
+      ],
+      "presentation_cell": [
+        117,
+        198
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 20,
+      "position": [
+        122,
+        199
+      ],
+      "presentation_cell": [
+        122,
+        198
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 21,
+      "position": [
+        0,
+        77
+      ],
+      "presentation_cell": [
+        1,
+        77
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 22,
+      "position": [
+        0,
+        82
+      ],
+      "presentation_cell": [
+        1,
+        82
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 23,
+      "position": [
+        0,
+        87
+      ],
+      "presentation_cell": [
+        1,
+        87
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 24,
+      "position": [
+        0,
+        92
+      ],
+      "presentation_cell": [
+        1,
+        92
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 25,
+      "position": [
+        0,
+        97
+      ],
+      "presentation_cell": [
+        1,
+        97
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 26,
+      "position": [
+        0,
+        102
+      ],
+      "presentation_cell": [
+        1,
+        102
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 27,
+      "position": [
+        0,
+        107
+      ],
+      "presentation_cell": [
+        1,
+        107
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 28,
+      "position": [
+        0,
+        112
+      ],
+      "presentation_cell": [
+        1,
+        112
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 29,
+      "position": [
+        0,
+        117
+      ],
+      "presentation_cell": [
+        1,
+        117
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 30,
+      "position": [
+        0,
+        122
+      ],
+      "presentation_cell": [
+        1,
+        122
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 31,
+      "position": [
+        199,
+        77
+      ],
+      "presentation_cell": [
+        198,
+        77
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 32,
+      "position": [
+        199,
+        82
+      ],
+      "presentation_cell": [
+        198,
+        82
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 33,
+      "position": [
+        199,
+        87
+      ],
+      "presentation_cell": [
+        198,
+        87
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 34,
+      "position": [
+        199,
+        92
+      ],
+      "presentation_cell": [
+        198,
+        92
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 35,
+      "position": [
+        199,
+        97
+      ],
+      "presentation_cell": [
+        198,
+        97
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 36,
+      "position": [
+        199,
+        102
+      ],
+      "presentation_cell": [
+        198,
+        102
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 37,
+      "position": [
+        199,
+        107
+      ],
+      "presentation_cell": [
+        198,
+        107
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 38,
+      "position": [
+        199,
+        112
+      ],
+      "presentation_cell": [
+        198,
+        112
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 39,
+      "position": [
+        199,
+        117
+      ],
+      "presentation_cell": [
+        198,
+        117
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 40,
+      "position": [
+        199,
+        122
+      ],
+      "presentation_cell": [
+        198,
+        122
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    }
+  ]
+}

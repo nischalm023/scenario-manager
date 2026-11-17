@@ -1,0 +1,26 @@
+# Baseline Foundry application generators. check.py renders explicit WPS and
+# Foundry dependency paths into a temporary WASM workspace. The host tests are
+# a separate workspace and exercise these exact built components.
+[workspace]
+resolver = "2"
+members = ["rack", "stamp", "tiling", "cohort", "carrier_pool", "identity"]
+exclude = ["tests"]
+
+[workspace.package]
+edition = "2021"
+publish = false
+
+[workspace.dependencies]
+worldgen-sdk = { path = "@WPS@/generator/sdk" }
+foundry-spatial = { path = "@FOUNDRY@/studio/world-spatial" }
+serde = { version = "1", features = ["derive"] }
+# Every float read as the double its spelling names, as the host reads it (the
+# root Cargo.toml says why).
+serde_json = { version = "1", features = ["float_roundtrip"] }
+
+# A generator travels as bytes, so its size is part of its cost.
+[profile.release]
+opt-level = "s"
+lto = true
+strip = true
+panic = "abort"

@@ -1,0 +1,71 @@
+[package]
+name = "dessim"
+version = "0.1.0"
+edition = "2024"
+description = "Discrete-event simulation library for warehouse throughput analysis"
+
+[features]
+trace = ["dep:tracing", "dep:tracing-subscriber"]
+perf = ["trace", "pathfinder/perf"]
+debug-logs = []
+pathfinder-trace = ["pathfinder/pathfinder-trace"]
+# Provenance from the build stamp rather than the checkout (`harness::identity`).
+walmart-demo = []
+# The slow gate: the whole-fixture simulations and the scale benchmarks the
+# fast gate (`cargo nextest run`) skips. They carry
+# `#[cfg_attr(not(feature = "slow-gate"), ignore = "...")]`, so this feature
+# un-ignores them for `scripts/test-slow-gate.sh` and the nightly workflow.
+slow-gate = []
+# The fixtures other crates' unit tests drive: `model::test_model` and the
+# test-only seams it and they call (`States::provide`, `Scheduler::add_service`,
+# `CellRegistry::vacate_count`). Off by default; a crate turns it on from its
+# dev-dependency on dessim.
+test-support = []
+
+[dependencies]
+# The warehouse site model: typed components and the world graph the map is built from.
+site-model = { path = "../site-model" }
+# The predicate engine over a derived world. `worldmap::machine` is its first
+# consumer inside the simulator: which entity IS one EasyLoop, and which cells
+# belong to it, are matched against the shipped pattern library rather than
+# re-scanned here, so the loader and `data/seed/application/lenses/world.lens` cannot disagree
+# about what a machine is.
+worldlens = { git = "https://github.com/greyorange/world-proto.git", rev = "cd4923516827d79fbac742179a4193627dafa43b" }
+# The `.worldview` a run is recorded as: the container and the frame
+# vocabulary. `metrics::worldview` is the only module that speaks it.
+worldview = { path = "../../worldview/worldview" }
+async-trait = "0.1"
+chrono = "0.4"
+csv = "1"
+dashmap = "6"
+desgraph = { path = "../desgraph" }
+desunits = { path = "../desunits" }
+derive_more = { version = "2", features = ["display"] }
+desmap = { path = "../desmap" }
+pathfinder = { path = "../pathfinder" }
+dessim-stream-macros = { path = "../dessim-stream-macros" }
+linkme = "0.3.37"
+dessim-task-macros = { path = "../dessim-task-macros" }
+dessim-trace-macros = { path = "../dessim-trace-macros" }
+parking_lot = "0.12"
+petgraph = "0.8"
+rayon = "1.10"
+rmp-serde = "1"
+ankurah-signals = { version = "0.9.3", features = ["tokio", "deterministic"] }
+rustc-hash = "2"
+serde = { version = "1", features = ["derive", "rc"] }
+serde_bytes = "0.11"
+serde_json = "1"
+thiserror = "2"
+smallvec = { version = "1", features = ["serde"] }
+tokio = { version = "1", features = ["macros", "rt", "sync", "time"] }
+tracing = { version = "0.1", optional = true }
+tracing-subscriber = { version = "0.3", optional = true, features = ["registry"] }
+zstd = "0.13"
+
+[dev-dependencies]
+tempfile = "3"
+serde_json = "1"
+# `scheduler::tests::the_watchdog_waking_does_not_move_where_the_sim_time_limit_stops_the_run`: `test-util` lets the
+# test pause tokio's clock, which the scheduler's watchdog timer reads, and move it by hand to play a slow machine.
+tokio = { version = "1", features = ["test-util"] }

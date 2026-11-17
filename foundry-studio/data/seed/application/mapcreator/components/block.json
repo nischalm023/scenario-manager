@@ -1,0 +1,84 @@
+{
+  "asserts": "has",
+  "component": "block",
+  "meaning": "the entity is one Map Creator block — a named cell group the orchestrator runs as a queue or a waiting area — carrying the kind, the sequenced-queue extras, and the cells where the core component has no way to name them",
+  "owner": "foundry-studio",
+  "refs": [
+    {
+      "expects": "cell",
+      "path": "/cells/*"
+    }
+  ],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {
+      "entity_id": {
+        "description": "One entity of this document, by identity. A declared identity is a UUID; a derived one is its root UUID and the generator's key path, which nothing in a converted document produces.",
+        "title": "entity_id",
+        "type": "string"
+      },
+      "entity_ids": {
+        "description": "Entities of this document by identity, in the order the Map Creator file states them.",
+        "items": {
+          "$ref": "#/$defs/entity_id"
+        },
+        "title": "entity_ids",
+        "type": "array"
+      },
+      "legacy_value": {
+        "description": "A legacy value the dump wrote, kept verbatim in whatever JSON kind it wrote it. It states no type on purpose: the round trip writes back what the dump said, and correcting a kind here would be the converter deciding what the site meant.",
+        "title": "legacy_value"
+      },
+      "placed_legacy_values": {
+        "description": "Legacy values a Map Creator list holds that named nothing in the dump, each with `at`, its place in the list counting from zero, and `value`, the value verbatim.",
+        "items": {
+          "properties": {
+            "at": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "value": {
+              "$ref": "#/$defs/legacy_value"
+            }
+          },
+          "required": [
+            "at",
+            "value"
+          ],
+          "type": "object"
+        },
+        "title": "placed_legacy_values",
+        "type": "array"
+      }
+    },
+    "$id": "urn:mapcreator-compat:0.1:components:block",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one Map Creator block — a named cell group the orchestrator runs as a queue or a waiting area — carrying the kind, the sequenced-queue extras, and the cells where the core component has no way to name them",
+    "properties": {
+      "cells": {
+        "$ref": "#/$defs/entity_ids",
+        "description": "The cells this block covers, in order, by entity identity — for a block whose kind gives it no core component to state them in. SPEC §10 makes a waiting area's capacity its cell count and gives it no way to name its cells."
+      },
+      "coordinates_unresolved": {
+        "$ref": "#/$defs/placed_legacy_values",
+        "description": "The entries of Map Creator's `entity_details.coordinates` that name a cell that is not in this dump, each verbatim with its place in the list the file states. The entries that resolved are references in their own order, and the export writes each of these back at its place among them. Present only when an entry named nothing."
+      },
+      "entity_type": {
+        "description": "Map Creator's `entity_type` for the block — `queue`, `sequenced_queue`, `waiting` or a conveyor touch point — which decides which core component sits beside this one.",
+        "type": "string"
+      },
+      "extra_details": {
+        "description": "Map Creator's `extra_details`, carried as the export states it.",
+        "type": [
+          "object"
+        ]
+      }
+    },
+    "required": [
+      "entity_type"
+    ],
+    "title": "block",
+    "type": "object"
+  },
+  "status": "ratified"
+}

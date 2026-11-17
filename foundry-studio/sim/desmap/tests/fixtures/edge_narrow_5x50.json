@@ -1,0 +1,118 @@
+{
+  "version": 3,
+  "grid": {
+    "width": 5,
+    "depth": 50,
+    "cell_size_mm": 1000.0
+  },
+  "highways": [
+    {
+      "origin": [
+        0,
+        1
+      ],
+      "width": 5,
+      "height": 1,
+      "direction": "Bidirectional"
+    }
+  ],
+  "zones": [
+    {
+      "type": "rtp",
+      "id": 1,
+      "origin": [
+        1,
+        2
+      ],
+      "rows": 10,
+      "cols": 1
+    },
+    {
+      "type": "rtp",
+      "id": 2,
+      "origin": [
+        3,
+        2
+      ],
+      "rows": 10,
+      "cols": 1
+    },
+    {
+      "type": "rtp",
+      "id": 3,
+      "origin": [
+        1,
+        13
+      ],
+      "rows": 10,
+      "cols": 1
+    },
+    {
+      "type": "rtp",
+      "id": 4,
+      "origin": [
+        3,
+        13
+      ],
+      "rows": 10,
+      "cols": 1
+    },
+    {
+      "type": "rtp",
+      "id": 5,
+      "origin": [
+        1,
+        24
+      ],
+      "rows": 10,
+      "cols": 1
+    },
+    {
+      "type": "rtp",
+      "id": 6,
+      "origin": [
+        3,
+        24
+      ],
+      "rows": 10,
+      "cols": 1
+    },
+    {
+      "type": "rtp",
+      "id": 7,
+      "origin": [
+        1,
+        35
+      ],
+      "rows": 10,
+      "cols": 1
+    },
+    {
+      "type": "rtp",
+      "id": 8,
+      "origin": [
+        3,
+        35
+      ],
+      "rows": 10,
+      "cols": 1
+    }
+  ],
+  "stations": [
+    {
+      "id": 1,
+      "position": [
+        2,
+        0
+      ],
+      "presentation_cell": [
+        2,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    }
+  ]
+}

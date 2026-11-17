@@ -1,0 +1,636 @@
+LEGACY NAMES LIVE HERE ON PURPOSE. This patch teaches MASTER's desvis the
+render dump, so it says `--profile` and `.desprofile`, which is what master
+calls a recording; the branch's "no legacy spelling left" grep gate excludes
+this file and scripts/worldview/parity_b.sh by name for that reason.
+
+It is applied to the pinned master worktree's detached HEAD by
+scripts/worldview/parity_b.sh and reverted before that script exits. The module
+it adds is the branch's desvis/src/app/render_dump.rs with four deliberate
+differences, named in its own charter; keep the two in step.
+
+diff --git a/apps/desvis/src/app/mod.rs b/apps/desvis/src/app/mod.rs
+index 739f54517..ef11ca2b1 100644
+--- a/apps/desvis/src/app/mod.rs
++++ b/apps/desvis/src/app/mod.rs
+@@ -14,6 +14,7 @@ mod inspector;
+ mod path_overlay;
+ mod playback;
+ mod polling;
++pub(crate) mod render_dump;
+ mod selection;
+ mod sim_lifecycle;
+ mod tote_state;
+diff --git a/apps/desvis/src/app/render_dump.rs b/apps/desvis/src/app/render_dump.rs
+new file mode 100644
+index 000000000..12d06c594
+--- /dev/null
++++ b/apps/desvis/src/app/render_dump.rs
+@@ -0,0 +1,530 @@
++//! Within `app`, the RENDER DUMP is the set of arrays desvis's renderer would
++//! upload for one simulated instant, written to files instead of to the GPU.
++//!
++//! HARNESS PATCH, not master's own code: it is applied to the pinned master
++//! worktree's detached HEAD so that master's desvis can be asked what it would
++//! draw, and reverted afterwards. Its twin lives on the `.worldview` branch at
++//! the same path; the two must stay field for field identical, and the layout
++//! is written down in `docs/designs/worldview-render-dump.md` there. It
++//! differs in five places only: this charter, reading master's own container,
++//! the pass over the profile in `run` that states master's recorded positions
++//! and headings at the precision a `.worldview` carries, `carried_reserved_cells`
++//! below, and master's spelling of the flag.
++
++use std::fmt::Write as _;
++use std::fs::{create_dir_all, write};
++use std::path::Path;
++
++use desgraph::WorldPos;
++use dessim::metrics::profile::read_profile;
++use rustc_hash::FxHashSet;
++
++use super::DesvisApp;
++use crate::gpu::renderer::cell_layer::{CellInstance, rewrite_with_heatmap};
++use crate::gpu::renderer::{BotInstance, ToteInstance, build_bot_instances};
++use crate::traffic::TrafficCache;
++use crate::types::{DataSource, HeatmapData, HeatmapMode, ViewMode};
++
++/// The field types a dumped row is made of. Every value is little-endian and
++/// sits immediately after the one before it, so a row has no padding at all.
++#[derive(Clone, Copy)]
++enum Ty {
++    U8,
++    U32,
++    I32,
++    U64,
++    F32,
++}
++
++impl Ty {
++    fn width(self) -> usize {
++        match self {
++            Self::U8 => 1,
++            Self::U32 | Self::I32 | Self::F32 => 4,
++            Self::U64 => 8,
++        }
++    }
++
++    fn name(self) -> &'static str {
++        match self {
++            Self::U8 => "u8",
++            Self::U32 => "u32",
++            Self::I32 => "i32",
++            Self::U64 => "u64",
++            Self::F32 => "f32",
++        }
++    }
++}
++
++type Layout = &'static [(&'static str, Ty)];
++
++const BOTS: Layout = &[
++    ("bot_id", Ty::U32),
++    ("world_x", Ty::F32),
++    ("world_y", Ty::F32),
++    ("world_z", Ty::F32),
++    ("bot_type", Ty::U32),
++    ("highlight", Ty::U32),
++    ("heading_mrad", Ty::I32),
++];
++
++const TOTES: Layout = &[
++    ("tote_id", Ty::U32),
++    ("contents_units", Ty::U64),
++    ("world_x", Ty::F32),
++    ("world_y", Ty::F32),
++    ("world_z", Ty::F32),
++    ("tote_type", Ty::U32),
++    ("designation", Ty::U32),
++    ("heading_mrad", Ty::I32),
++    ("pitch", Ty::F32),
++    ("physical_type", Ty::U32),
++];
++
++const CELLS: Layout = &[
++    ("min_x", Ty::F32),
++    ("min_y", Ty::F32),
++    ("size_x", Ty::F32),
++    ("size_y", Ty::F32),
++    ("cell_kind", Ty::U32),
++    ("rack_levels", Ty::U32),
++    ("heatmap_vtm", Ty::F32),
++    ("heatmap_htm", Ty::F32),
++    ("reserved", Ty::U32),
++    ("depth_bias", Ty::F32),
++    ("heading_rad", Ty::F32),
++    ("pad", Ty::U32),
++];
++
++const RESERVED: Layout = &[("reserved", Ty::U8)];
++
++const HEAT: Layout = &[("heatmap_vtm", Ty::F32), ("heatmap_htm", Ty::F32)];
++
++const TRAFFIC: Layout = &[("wait", Ty::F32), ("speed", Ty::F32)];
++
++/// One named array of the dump: the bytes, and the layout the manifest states
++/// so a reader never has to guess where a field starts.
++struct Array {
++    name: &'static str,
++    layout: Layout,
++    rows: usize,
++    bytes: Vec<u8>,
++}
++
++/// Builds rows field by field. Nothing here rounds, scales or reorders — the
++/// values are the f32 bit patterns the renderer computed.
++#[derive(Default)]
++struct Row {
++    bytes: Vec<u8>,
++    /// Where a NaN was written, as a byte offset into `bytes`. Only the first
++    /// is kept; [`Array::new`] turns it into a row and a field name.
++    nan_at: Option<usize>,
++}
++
++impl Row {
++    fn u8(&mut self, v: u8) {
++        self.bytes.push(v);
++    }
++    fn u32(&mut self, v: u32) {
++        self.bytes.extend_from_slice(&v.to_le_bytes());
++    }
++    /// A heading is stated in whole milliradians on both sides of harness B,
++    /// because that is all a recording carries (the round-2a ruling): the
++    /// branch's radians are a milliradian count divided by a thousand, and
++    /// master's are the raw f32 the observer derived.
++    ///
++    /// The arithmetic is `wire::milliradians`' own, spelled out rather than
++    /// imported so that master's copy of this file says the same thing.
++    ///
++    /// The NaN check happens BEFORE the cast, because `f32 as i32` turns a NaN
++    /// into 0 — a heading pointing along +x, which no later scan can tell from
++    /// a real one.
++    fn heading_mrad(&mut self, radians: f32) {
++        if radians.is_nan() {
++            self.nan_at.get_or_insert(self.bytes.len());
++        }
++        self.bytes.extend_from_slice(&((f64::from(radians) * 1_000.0).round() as i32).to_le_bytes());
++    }
++    fn u64(&mut self, v: u64) {
++        self.bytes.extend_from_slice(&v.to_le_bytes());
++    }
++    fn f32(&mut self, v: f32) {
++        self.bytes.extend_from_slice(&v.to_le_bytes());
++    }
++    /// A position is stated in whole millimetres on both sides of harness B,
++    /// because that is all a recording carries (the 2026-09-18 ruling): the
++    /// branch's coordinates are whole millimetres the renderer interpolated in
++    /// f64, and master's are the f64 its own observer computed, so the two
++    /// land on the same millimetre rather than a fraction apart.
++    ///
++    /// `RenderFrame::world_mm` is a plain divide by a thousand, so rounding a
++    /// render metre back to the nearest thousandth here rounds the millimetre
++    /// itself. Spelled out rather than imported so that master's copy of this
++    /// file says the same thing.
++    fn world_mm(&mut self, metres: f32) {
++        if metres.is_nan() {
++            self.nan_at.get_or_insert(self.bytes.len());
++        }
++        self.bytes.extend_from_slice(&(((f64::from(metres) * 1_000.0).round() / 1_000.0) as f32).to_le_bytes());
++    }
++}
++
++impl Array {
++    fn new(name: &'static str, layout: Layout, rows: usize, row: Row) -> Result<Self, String> {
++        let stride: usize = layout.iter().map(|(_, ty)| ty.width()).sum();
++        if row.bytes.len() != rows * stride {
++            return Err(format!("{name}: {} bytes for {rows} rows of {stride}", row.bytes.len()));
++        }
++        if let Some(at) = row.nan_at {
++            return Err(format!("{name}: {} is NaN", Self::field_at(layout, stride, at)));
++        }
++        let array = Self { name, layout, rows, bytes: row.bytes };
++        array.refuse_nan()?;
++        Ok(array)
++    }
++
++    /// Which row and field a byte offset falls in, for a message about it.
++    fn field_at(layout: Layout, stride: usize, at: usize) -> String {
++        let (row, mut within) = (at / stride, at % stride);
++        for (field, ty) in layout {
++            if within < ty.width() {
++                return format!("row {row} field {field}");
++            }
++            within -= ty.width();
++        }
++        format!("row {row} byte {}", at % stride)
++    }
++
++    /// A NaN coordinate draws nothing and compares unequal to itself, so a
++    /// dump carrying one is a defect report, not a baseline.
++    fn refuse_nan(&self) -> Result<(), String> {
++        let stride: usize = self.layout.iter().map(|(_, ty)| ty.width()).sum();
++        for index in 0..self.rows {
++            let mut at = index * stride;
++            for (field, ty) in self.layout {
++                if matches!(ty, Ty::F32) {
++                    let word = u32::from_le_bytes([
++                        self.bytes[at],
++                        self.bytes[at + 1],
++                        self.bytes[at + 2],
++                        self.bytes[at + 3],
++                    ]);
++                    if f32::from_bits(word).is_nan() {
++                        return Err(format!("{}: row {index} field {field} is NaN", self.name));
++                    }
++                }
++                at += ty.width();
++            }
++        }
++        Ok(())
++    }
++
++    fn manifest_entry(&self, tick_ms: u64, file: &str) -> String {
++        let mut fields = String::new();
++        let mut offset = 0usize;
++        for (field, ty) in self.layout {
++            if !fields.is_empty() {
++                fields.push_str(", ");
++            }
++            let _ = write!(fields, r#"{{"name": "{field}", "type": "{}", "offset": {offset}}}"#, ty.name());
++            offset += ty.width();
++        }
++        format!(
++            r#"    {{"tick_ms": {tick_ms}, "array": "{}", "file": "{file}", "stride": {offset}, "rows": {}, "fields": [{fields}]}}"#,
++            self.name, self.rows
++        )
++    }
++}
++
++fn bot_rows(instances: &[BotInstance], ids: &[u32]) -> Result<Array, String> {
++    let mut row = Row::default();
++    for (instance, &id) in instances.iter().zip(ids) {
++        row.u32(id);
++        row.world_mm(instance.world_x);
++        row.world_mm(instance.world_y);
++        row.f32(instance.world_z);
++        row.u32(instance.bot_type);
++        row.u32(instance.highlight);
++        row.heading_mrad(instance.heading);
++    }
++    Array::new("bots", BOTS, instances.len(), row)
++}
++
++fn tote_rows(instances: &[ToteInstance]) -> Result<Array, String> {
++    let mut row = Row::default();
++    for instance in instances {
++        row.u32(instance.tote_id);
++        row.u64(instance.contents_units);
++        row.world_mm(instance.world_x);
++        row.world_mm(instance.world_y);
++        row.f32(instance.world_z);
++        row.u32(instance.tote_type);
++        row.u32(instance.designation);
++        row.heading_mrad(instance.heading);
++        row.f32(instance.pitch);
++        row.u32(instance.physical_type);
++    }
++    Array::new("totes", TOTES, instances.len(), row)
++}
++
++fn cell_rows(instances: &[CellInstance]) -> Result<Array, String> {
++    let mut row = Row::default();
++    for instance in instances {
++        row.f32(instance.min_x);
++        row.f32(instance.min_y);
++        row.f32(instance.size_x);
++        row.f32(instance.size_y);
++        row.u32(instance.cell_kind);
++        row.u32(instance.rack_levels);
++        row.f32(instance.heatmap_vtm);
++        row.f32(instance.heatmap_htm);
++        row.u32(instance.reserved);
++        row.f32(instance.depth_bias);
++        row.f32(instance.heading_rad);
++        row.u32(instance._pad);
++    }
++    Array::new("cells", CELLS, instances.len(), row)
++}
++
++fn reserved_rows(flags: &[bool]) -> Result<Array, String> {
++    let mut row = Row::default();
++    for &flag in flags {
++        row.u8(u8::from(flag));
++    }
++    Array::new("reserved", RESERVED, flags.len(), row)
++}
++
++/// The two tint columns the traffic overlay paints: how much of a cell's
++/// exposure was spent waiting, and the mean moving speed over it. −1 is the
++/// overlay's own "nothing measured here", not a missing value.
++fn traffic_rows(traffic: &TrafficCache, cells: usize) -> Result<Array, String> {
++    let mut row = Row::default();
++    for id in 0..cells {
++        row.f32(traffic.intensity(id as u32, HeatmapMode::HtmWait));
++        row.f32(traffic.intensity(id as u32, HeatmapMode::HtmSpeed));
++    }
++    Array::new("traffic", TRAFFIC, cells, row)
++}
++
++/// The two tint columns an overlay paints, normalised the way
++/// `rewrite_with_heatmap` normalises them — the numbers the shader reads.
++fn heat_rows(name: &'static str, heat: &HeatmapData, cells: usize) -> Result<Array, String> {
++    let global_max = heat.vtm_max.max(heat.htm_max).max(1) as f32;
++    let mut row = Row::default();
++    for id in 0..cells {
++        row.f32(heat.vtm_counts.get(id).copied().unwrap_or(0) as f32 / global_max);
++        row.f32(heat.htm_counts.get(id).copied().unwrap_or(0) as f32 / global_max);
++    }
++    Array::new(name, HEAT, cells, row)
++}
++
++impl DesvisApp {
++    /// What a playback frame uploads at the cursor's instant: the bots, the
++    /// totes, the per-cell rows, the reservation flags and the slice's heat.
++    ///
++    /// The view is the one realtime playback puts the app in — State, with the
++    /// heat overlay off — so the cell rows carry geometry and the live relay
++    /// reservations, and the heat overlay is dumped on its own beside them.
++    fn upload_at(&mut self, tick_ms: u64) -> Result<Vec<Array>, String> {
++        self.view_mode = ViewMode::State;
++        self.heatmap_mode = HeatmapMode::Off;
++        self.playback_active = true;
++        self.playback_engaged = true;
++        self.time_cursor_ms = tick_ms as f64;
++        self.update_grid_for_cursor();
++
++        // Both ends walk their own hash map to place robots and
++        // `build_bot_instances` then puts the HTMs first so the two glyph
++        // draws stay contiguous, so the dump builds one marker at a time and
++        // states them by ascending id; the draw order never enters the file.
++        let highlights = self.bot_highlight_set();
++        let mut rows: Vec<(u32, BotInstance)> = Vec::new();
++        for marker in &self.bot_positions {
++            let one = [marker.clone()];
++            let (built, _) = build_bot_instances(&one, &self.frame, &self.cell_infos, &self.rack_visual, |bot| {
++                highlights.classify(bot)
++            });
++            if let Some(instance) = built.into_iter().next() {
++                rows.push((marker.bot_id, instance));
++            }
++        }
++        rows.sort_by_key(|(id, _)| *id);
++        let (ids, bots): (Vec<u32>, Vec<BotInstance>) = rows.into_iter().unzip();
++
++        let mut totes = self.build_tote_instances_for_cursor();
++        totes.sort_by_key(|tote| tote.tote_id);
++
++        let reserved = self.carried_reserved_cells();
++        let cells = rewrite_with_heatmap(
++            &self.cell_infos,
++            self.heatmap_data.as_ref(),
++            self.heatmap_mode,
++            &self.traffic,
++            &self.frame,
++            self.rack_visual.uniform_levels,
++            &reserved,
++        );
++
++        let mut arrays =
++            vec![bot_rows(&bots, &ids)?, tote_rows(&totes)?, cell_rows(&cells)?, reserved_rows(&reserved)?];
++        // The slice's overlay as the app now holds it — the count off the step
++        // cells that `update_grid_for_cursor` just put there, not a second
++        // derivation of it. The recording also carries per-slice heat
++        // increments, and desvis draws none of them yet: they are for the
++        // browser in phase 2, and drawing them would change this picture.
++        if let Some(heat) = &self.heatmap_data {
++            arrays.push(heat_rows("slice_heat", heat, self.cell_infos.len())?);
++        }
++
++        // The traffic overlay reads the motion spans, which are the newest
++        // thing in a recording, so the dump asks for them in the view that
++        // draws them and then puts the app back.
++        self.view_mode = ViewMode::Simulation;
++        self.heatmap_mode = HeatmapMode::HtmWait;
++        self.refresh_traffic();
++        arrays.push(traffic_rows(&self.traffic, self.cell_infos.len())?);
++        self.view_mode = ViewMode::State;
++        self.heatmap_mode = HeatmapMode::Off;
++        Ok(arrays)
++    }
++
++    /// Which relay cells are held at the cursor, carried forward from the
++    /// run's first slice through every transition since.
++    ///
++    /// `build_reserved_cells` reads each slice's own `start_reserved`, which
++    /// the observer re-snapshots when it CREATES the slice — for a slice
++    /// created out of order that is a set from a later instant, so it does not
++    /// follow from the transitions beside it. A `.worldview` seeds the set once
++    /// and moves it, so this is the set both sides can be asked for.
++    fn carried_reserved_cells(&self) -> Vec<bool> {
++        let mut flags = vec![false; self.cell_infos.len()];
++        let Some(slice_idx) = self.current_heatmap_slice_idx else { return flags };
++        let mut held: FxHashSet<u32> = self
++            .time_series
++            .first()
++            .map(|first| first.relay_state.start_reserved.iter().copied().collect())
++            .unwrap_or_default();
++        for earlier in self.time_series.iter().take(slice_idx) {
++            for &(cell_id, _, reserved) in &earlier.relay_state.transitions {
++                match reserved {
++                    true => held.insert(cell_id),
++                    false => held.remove(&cell_id),
++                };
++            }
++        }
++        if let Some(record) = self.time_series.get(slice_idx) {
++            let offset_ms = (self.time_cursor_ms - record.start_ms as f64).max(0.0) as u64;
++            for &(cell_id, at, reserved) in &record.relay_state.transitions {
++                if at <= offset_ms {
++                    match reserved {
++                        true => held.insert(cell_id),
++                        false => held.remove(&cell_id),
++                    };
++                }
++            }
++        }
++        for cell_id in held {
++            if let Some(flag) = flags.get_mut(cell_id as usize) {
++                *flag = true;
++            }
++        }
++        flags
++    }
++
++    /// The instant the run ended at, which is where the run-total overlay is
++    /// dumped. It is the summary's own sim time, never a slice boundary, and
++    /// never earlier than the last slice a recording holds.
++    fn run_end_ms(&self) -> u64 {
++        let DataSource::Profile(profile) = &self.data_source else { return 0 };
++        let ended = (profile.summary.sim_time_secs * 1000.0).round().max(0.0) as u64;
++        ended.max(self.time_series.last().map(|slice| slice.start_ms).unwrap_or(0))
++    }
++}
++
++/// The millimetres a `.worldview` would carry for this point: whole ones,
++/// halves away from zero, which is what the branch's `write.rs::whole_mm`
++/// writes and therefore all its desvis ever reads.
++fn as_recorded(pos: WorldPos) -> WorldPos {
++    WorldPos { x_mm: pos.x_mm.round(), y_mm: pos.y_mm.round() }
++}
++
++/// The heading a `.worldview` would carry: out to whole milliradians and back
++/// again, which is the branch's `wire.rs::milliradians` followed by its
++/// `wire.rs::radians`, i32 intermediate and all.
++fn heading_as_recorded(radians: f32) -> f32 {
++    let milliradians = (f64::from(radians) * 1_000.0).round() as i32;
++    (f64::from(milliradians) / 1_000.0) as f32
++}
++
++/// Dump every tick of `ticks` into `out`, in the order given, from one app
++/// built once: a marker desvis placed in an earlier slice stays where it
++/// stands until a later slice moves it, exactly as a playback session does.
++///
++/// The run-total heat overlay belongs to the run's END instant and to no
++/// other, so that instant is appended when the list leaves it out.
++pub(crate) fn run(recording: &Path, ticks: &[u64], out: &Path) -> Result<(), String> {
++    let named = |e: String| format!("{}: {e}", recording.display());
++    let mut profile = read_profile(recording).map_err(|e| named(e))?;
++    // Master is asked what it draws from numbers of the precision a
++    // `.worldview` carries. Master's observer keeps a position as
++    // full-precision f64 millimetres and a heading as the f32 it derived,
++    // while the branch reads whole millimetres and whole milliradians, so the
++    // two interpolate between different endpoints and land up to half a
++    // millimetre apart. Rounding the RESULT on both sides cannot close that;
++    // rounding the INPUTS here does, and it is the branch's own writing
++    // arithmetic that does the rounding. Only these fields are touched: every
++    // cell, counter, motion span and journal row stays as master recorded it.
++    for slice in &mut profile.time_slices {
++        for location in slice.bot_locations.values_mut() {
++            location.start_pos = as_recorded(location.start_pos);
++            location.start_heading_rad = location.start_heading_rad.map(heading_as_recorded);
++            for step in &mut location.steps {
++                step.pos = as_recorded(step.pos);
++            }
++        }
++    }
++    // Master's `from_profile` neither fails nor takes a path; everything this
++    // module computes after it still names the recording.
++    let mut app = DesvisApp::from_profile(profile);
++    let app = &mut app;
++    // The overlay the app opens on, before any cursor move replaces it with a
++    // slice's own count: the run total, read off the recording's counters.
++    let opened_on = app.heatmap_data.as_ref().ok_or_else(|| named("it states no cumulative heat".to_string()))?;
++    let mut run_total = Some(heat_rows("heat", opened_on, app.cell_infos.len()).map_err(|e| named(e))?);
++    let end_ms = app.run_end_ms();
++
++    let mut wanted: Vec<u64> = ticks.to_vec();
++    for (index, tick) in wanted.iter().enumerate() {
++        if wanted[..index].contains(tick) {
++            return Err(named(format!("the instant {tick} is listed twice")));
++        }
++    }
++    if !wanted.contains(&end_ms) {
++        wanted.push(end_ms);
++    }
++
++    create_dir_all(out).map_err(|e| format!("{}: {e}", out.display()))?;
++    let mut entries: Vec<String> = Vec::new();
++    for &tick_ms in &wanted {
++        let mut arrays = app.upload_at(tick_ms).map_err(|e| named(e))?;
++        if tick_ms == end_ms
++            && let Some(heat) = run_total.take()
++        {
++            arrays.push(heat);
++        }
++        for array in &arrays {
++            let file = format!("t{tick_ms}.{}.bin", array.name);
++            write(out.join(&file), &array.bytes).map_err(|e| format!("{file}: {e}"))?;
++            entries.push(array.manifest_entry(tick_ms, &file));
++        }
++    }
++    let manifest = format!(
++        "{{\n  \"schema\": \"worldview-render-dump/1\",\n  \"recording\": {:?},\n  \"run_end_ms\": {end_ms},\n  \"ticks_ms\": [{}],\n  \"arrays\": [\n{}\n  ]\n}}\n",
++        recording.display().to_string(),
++        wanted.iter().map(|t| t.to_string()).collect::<Vec<_>>().join(", "),
++        entries.join(",\n")
++    );
++    write(out.join("manifest.json"), manifest).map_err(|e| format!("manifest.json: {e}"))?;
++    println!("dumped {} instants to {}, the run total at {end_ms} ms", wanted.len(), out.display());
++    Ok(())
++}
+diff --git a/apps/desvis/src/gpu/renderer/cell_layer.rs b/apps/desvis/src/gpu/renderer/cell_layer.rs
+index db3586c9a..c10b09b7c 100644
+--- a/apps/desvis/src/gpu/renderer/cell_layer.rs
++++ b/apps/desvis/src/gpu/renderer/cell_layer.rs
+@@ -324,7 +324,7 @@ pub(super) fn build_cell_instances(
+ /// Rebuild the per-cell prefix with heatmap and reservation values folded
+ /// in, BY CELL ID. MUST reproduce `build_cell_instances`'s geometry exactly
+ /// -- it overwrites the same buffer -- which is why both call `instance_of`.
+-pub(super) fn rewrite_with_heatmap(
++pub(crate) fn rewrite_with_heatmap(
+     cell_infos: &[Option<CellInfo>],
+     heatmap: Option<&HeatmapData>,
+     mode: HeatmapMode,
+diff --git a/apps/desvis/src/main.rs b/apps/desvis/src/main.rs
+index 46fde384c..815d6ef37 100644
+--- a/apps/desvis/src/main.rs
++++ b/apps/desvis/src/main.rs
+@@ -16,7 +16,7 @@
+ use std::path::PathBuf;
+ use std::time::Duration;
+ 
+-use clap::{Parser, Subcommand};
++use clap::{ArgAction, Parser, Subcommand};
+ 
+ fn parse_duration_arg(s: &str) -> Result<Duration, String> {
+     dessim::utils::parse_human_duration(s)
+@@ -77,6 +77,17 @@ pub(crate) struct GuiArgs {
+     /// Path to a .desprofile file for playback mode.
+     #[arg(long)]
+     profile: Option<PathBuf>,
++    /// Harness patch: write the arrays the renderer would upload at each
++    /// listed simulated instant into a directory, instead of opening a window.
++    /// Takes a comma-separated millisecond list and the directory.
++    #[arg(
++        long,
++        num_args = 2,
++        value_names = ["TICKS_MS", "OUT_DIR"],
++        action = ArgAction::Set,
++        requires = "profile"
++    )]
++    dump_render: Option<Vec<String>>,
+     /// Auto-start simulation on launch (GUI stays open for observation).
+     #[arg(long)]
+     run: bool,
+@@ -277,6 +288,33 @@ fn main() -> eframe::Result {
+                 .unwrap_or_else(|e| panic!("{}", e));
+             Ok(())
+         }
++        None if cli.gui.dump_render.is_some() => {
++            // clap holds both halves to the flag: --profile is required beside
++            // it, and the flag takes exactly two values. The arms below say so
++            // anyway rather than reaching into the vector blind.
++            let (Some(words), Some(recording)) = (cli.gui.dump_render, cli.gui.profile) else {
++                eprintln!("--dump-render needs --profile <file>");
++                std::process::exit(2);
++            };
++            let [list, out] = words.as_slice() else {
++                eprintln!("--dump-render takes exactly two values: <TICKS_MS> <OUT_DIR>");
++                std::process::exit(2);
++            };
++            let ticks: Vec<u64> = list
++                .split(',')
++                .map(|word| {
++                    word.trim().parse().unwrap_or_else(|e| {
++                        eprintln!("--dump-render: '{}' is not a millisecond count: {e}", word.trim());
++                        std::process::exit(2);
++                    })
++                })
++                .collect();
++            app::render_dump::run(&recording, &ticks, PathBuf::from(out).as_path()).unwrap_or_else(|e| {
++                eprintln!("--dump-render: {e}");
++                std::process::exit(1);
++            });
++            Ok(())
++        }
+         None if cli.gui.headless => {
+             let map = cli.gui.map.expect("map path required for --headless mode").to_string_lossy().to_string();
+             bench::run_fresh(

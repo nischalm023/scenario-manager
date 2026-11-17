@@ -1,0 +1,522 @@
+{
+  "asserts": "is",
+  "component": "flow.node",
+  "meaning": "the entity is a schematic place in a site's flow: a group of stations doing one operation, a storage, a group of belt machines, or a boundary where product or orders enter or leave; never one station",
+  "owner": "agent-studio",
+  "refs": [
+    {
+      "path": "/sectors/*",
+      "expects": "sector"
+    },
+    {
+      "path": "/process/gives_by/*",
+      "expects": "flow.material_edge"
+    },
+    {
+      "path": "/process/receives_by/*",
+      "expects": "flow.material_edge"
+    }
+  ],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "flow.node",
+    "description": "the entity is a schematic place in a site's flow: a group of stations doing one operation, a storage, a group of belt machines, or a boundary where product or orders enter or leave; never one station",
+    "$comment": "Written for world-proto's registry from Agent Studio's 06-flow-panel-and-compiler.md section 3.1 (notes/agent-studio-2026-10-17/design/specs/06-flow-panel-and-compiler.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "kind"
+    ],
+    "properties": {
+      "kind": {
+        "description": "What kind of place.",
+        "enum": [
+          "stations",
+          "storage",
+          "conveyance",
+          "source",
+          "sink"
+        ]
+      },
+      "sectors": {
+        "description": "The explicit-member sectors this node stands for; its members are their union, without repeats, ordered by entity id.",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "$ref": "#/$defs/reference"
+        }
+      },
+      "process": {
+        "$ref": "#/$defs/process"
+      },
+      "holds": {
+        "description": "What rests in a storage: inventory totes, empty order containers, or closed orders.",
+        "enum": [
+          "inventory_tote",
+          "order_container",
+          "closed_order"
+        ]
+      },
+      "demand": {
+        "description": "Which stream of the scenario's workload enters at a source.",
+        "enum": [
+          "putaway",
+          "orders"
+        ]
+      },
+      "work": {
+        "$ref": "#/$defs/work"
+      },
+      "intake": {
+        "description": "One entry per carrier state the node receives by robot.",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "$ref": "#/$defs/intake_entry"
+        }
+      },
+      "deposit": {
+        "description": "How a slot is chosen for a tote entering this storage: ranked by the deposit score, or uniformly among the candidates from the run's seeded stream.",
+        "enum": [
+          "ranked",
+          "random"
+        ],
+        "default": "ranked"
+      }
+    },
+    "allOf": [
+      {
+        "if": {
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "stations",
+                "storage",
+                "conveyance"
+              ]
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "sectors"
+          ]
+        }
+      },
+      {
+        "if": {
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "source",
+                "sink"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "sectors": false
+          }
+        }
+      },
+      {
+        "if": {
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "stations",
+                "conveyance"
+              ]
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "process"
+          ]
+        }
+      },
+      {
+        "if": {
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "storage"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "holds"
+          ]
+        }
+      },
+      {
+        "if": {
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "source"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "demand"
+          ]
+        }
+      },
+      {
+        "if": {
+          "required": [
+            "process"
+          ],
+          "properties": {
+            "process": {
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "pick"
+                }
+              }
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "work"
+          ],
+          "properties": {
+            "work": {
+              "required": [
+                "pick_sim_ms"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "required": [
+            "process"
+          ],
+          "properties": {
+            "process": {
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "put"
+                }
+              }
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "work"
+          ],
+          "properties": {
+            "work": {
+              "required": [
+                "presentations_per_hour"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "required": [
+            "process"
+          ],
+          "properties": {
+            "process": {
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "extract"
+                }
+              }
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "work"
+          ],
+          "properties": {
+            "work": {
+              "required": [
+                "extraction_sim_ms"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "required": [
+            "kind",
+            "holds"
+          ],
+          "properties": {
+            "kind": {
+              "const": "storage"
+            },
+            "holds": {
+              "const": "closed_order"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "work"
+          ],
+          "properties": {
+            "work": {
+              "required": [
+                "dwell_sim_ms"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "required": [
+            "intake"
+          ],
+          "properties": {
+            "intake": {
+              "contains": {
+                "required": [
+                  "max_inflight"
+                ]
+              }
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "process"
+          ],
+          "properties": {
+            "process": {
+              "required": [
+                "operation"
+              ],
+              "properties": {
+                "operation": {
+                  "const": "pick"
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "$defs": {
+      "process": {
+        "title": "process",
+        "description": "The operation a stations or conveyance node runs, and what synchronizes it: the edges bringing what units come out of (`gives_by`) and what they go into (`receives_by`), or `receives_in: station_bins` where orders sit in the stations' bins.",
+        "type": "object",
+        "required": [
+          "operation"
+        ],
+        "properties": {
+          "operation": {
+            "enum": [
+              "pick",
+              "put",
+              "create_container",
+              "extract"
+            ]
+          },
+          "gives_by": {
+            "description": "Material edges bringing the carriers units come out of.",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/reference"
+            }
+          },
+          "receives_by": {
+            "description": "Material edges bringing the carriers units go into.",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/reference"
+            }
+          },
+          "receives_in": {
+            "const": "station_bins"
+          }
+        }
+      },
+      "work": {
+        "title": "work",
+        "description": "The node's work figures, by operation: required where a consumer reads them, never falling back to a setting. Simtime durations are whole milliseconds.",
+        "type": "object",
+        "properties": {
+          "pick_sim_ms": {
+            "description": "Pick: the simtime one pick takes.",
+            "type": "integer",
+            "minimum": 0
+          },
+          "pallet_swap_sim_ms": {
+            "description": "Pick: the simtime a pallet swap takes.",
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          },
+          "sequencing": {
+            "description": "Pick: how the next tote is chosen among open orders; a value the chosen runner image accepts.",
+            "type": "string",
+            "minLength": 1,
+            "default": "all_totes"
+          },
+          "pace_to_station": {
+            "description": "Pick: dispatch each tote to arrive for its station's next presentation slot instead of as soon as it can; an experiment.",
+            "type": "boolean",
+            "default": false
+          },
+          "fairness": {
+            "description": "Pick: the most consecutive picks from one order while another bin's head is ready.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "layer_size": {
+            "description": "Pick: the size of a tote layer under layer sequencing.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "max_open_orders": {
+            "description": "Pick on conveyance: the most orders open at once; absent, no cap.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "presentations_per_hour": {
+            "description": "Put: the per-station fill pace.",
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "extraction_sim_ms": {
+            "description": "Extract: the simtime one extraction takes.",
+            "type": "integer",
+            "minimum": 0
+          },
+          "isolated": {
+            "description": "Extract and create_container: an experiment switch that keeps robots; an isolated extraction takes no time and sends the HTM to its egress, and an isolated box induction makes the carton on an empty HTM where it stands.",
+            "type": "boolean",
+            "default": false
+          },
+          "dwell_sim_ms": {
+            "description": "Closed-order storage: the simtime a closed order stands here.",
+            "type": "integer",
+            "minimum": 0
+          },
+          "tote_swap_sim_ms": {
+            "description": "Display only: the simtime from one tote leaving a presentation to the next arriving there; the compiler never reads it.",
+            "type": "integer",
+            "minimum": 0
+          },
+          "map_figures": {
+            "description": "The map members' own figures are display only.",
+            "const": "display_only"
+          }
+        }
+      },
+      "intake_entry": {
+        "title": "intake entry",
+        "description": "Admission for one carrier state: each member admits at most ceil(admission_factor x F_max / P) + 2 such carriers in flight.",
+        "type": "object",
+        "required": [
+          "moves",
+          "admission_factor"
+        ],
+        "properties": {
+          "moves": {
+            "$ref": "#/$defs/carrier_state"
+          },
+          "admission_factor": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "max_inflight": {
+            "description": "Pins the cap; pick only.",
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "carrier_state": {
+        "title": "carrier state",
+        "enum": [
+          "inventory_tote:stock",
+          "inventory_tote:empty",
+          "inventory_tote:after_pick",
+          "order_container:empty",
+          "order_container:new",
+          "order:closed",
+          "order:in_bin"
+        ]
+      },
+      "reference": {
+        "title": "reference",
+        "description": "Another entity, by identity: a declared UUID or a derivation address, bare or with a pin. Which pin a field takes is the pin rule's to enforce: within the referrer's unit bare or `@head`, across units a changeset (a tag once tags land).",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/entity_id"
+          },
+          {
+            "$ref": "urn:world-graph-server:defs#/$defs/version_pin"
+          }
+        ]
+      },
+      "entity_id": {
+        "title": "entity id",
+        "description": "A declared entity's UUID or a derived entity's address, either arm (SPEC section 3).",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/uuid"
+          },
+          {
+            "$ref": "#/$defs/derived_entity_id"
+          }
+        ]
+      },
+      "uuid": {
+        "title": "UUID",
+        "description": "Copied from proto/schema/values.json at c384e59.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "derived_entity_id": {
+        "title": "derived entity id",
+        "description": "Copied from proto/schema/values.json at c384e59.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+(/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+)*$"
+      }
+    }
+  },
+  "status": "experimental"
+}

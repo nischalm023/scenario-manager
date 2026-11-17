@@ -1,0 +1,26 @@
+[package]
+name = "studio-metrics"
+version = "0.1.0"
+edition = "2024"
+description = "A run's metrics computed from its WorldView recording as the streaming server serves them: the catalogue of what is computed, and the follower that turns an attempt's frames into every metric's rows"
+
+[dependencies]
+studio-protocol = { path = "../protocol" }
+desunits = { path = "../../sim/desunits" }
+# The container's frames read off the wire or a file: the scenario block's descriptors, roster and slice width, each
+# delta's scalars, tables and robot state sections.
+worldview = { path = "../../worldview/worldview" }
+# The journal readers and the report builders desvis and the workbook call, so the report tabs here are theirs, and the
+# span engine the series of time in a state read the robot state channel through.
+dessim = { path = "../../sim/dessim" }
+# The pick station's id, one of the keys a report tab states rows for.
+desgraph = { path = "../../sim/desgraph" }
+rustc-hash = "2"
+thiserror = "2"
+
+[dev-dependencies]
+# The tasks, which the runs `tests/live_and_rebuilt.rs` prepares find by name.
+native-modules = { path = "../../native-modules" }
+# `fixtures/canned/recording.worldview` is simrunner's: three hours of a repository world, the recording the result
+# routes' numbers are tested against.
+serde_json = "1"

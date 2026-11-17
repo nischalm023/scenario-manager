@@ -1,0 +1,99 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation at the root. docs/ stays in: the UI's Docs section bundles documents from it
+# (studio/ui/src/docs/manifest.ts), and no image keeps it past its build stage.
+*.md
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.npm/
+.yarn/
+
+# Build outputs
+dist/
+build/
+target/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+.pytest_cache/
+*.egg-info/
+.coverage
+htmlcov/
+
+# Test files
+*.test.js
+*.spec.js
+*.test.ts
+*.spec.ts
+coverage/
+.nyc_output/
+
+# Environment
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Scratch
+tmp/
+
+# Logs
+logs/
+*.log
+
+# Profiling
+profiling_results/
+
+# Authored application schema/lens assets are compile-time inputs. Site inputs,
+# snapshots and test corpora stay outside production image builds.
+data/*
+!data/seed/
+data/seed/*
+!data/seed/application/
+
+# Crucible dev runner leftovers: a checkout's scratch database, logs and
+# recordings, none of which belong in a build context.
+studio/runs/.dev-log/
+studio/runs/.dev-state/
+studio/runs/.dev-storage/
+studio/runs/.dev-temp/
+# The root dev.sh's own: the stack's logs, pids, ports, the run-object store and the runners' output folders.
+studio/.dev-log/
+studio/.dev-state/
+
+# The viewer's wasm is built inside the image; a host build of it would be a
+# staler copy shipped by accident.
+studio/viewer/js/src/wasm/
+studio/viewer/js/dist/

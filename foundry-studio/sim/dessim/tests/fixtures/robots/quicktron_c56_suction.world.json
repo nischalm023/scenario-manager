@@ -1,0 +1,62 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "99de4bc3-17fa-4290-8d39-4a2902e0db49",
+    "kind": "catalog",
+    "name": "Quicktron C56 with suction cup (DFW6 relay storage VTM)"
+  },
+  "$comment": "The VTM that works DFW6's relay storage aisles, 40 in the map as 'VTM (vacuum)'. Figures are the bot specifications Vinay directed on 2026-09-21, from GreyOrange's hardware team (docs/walmart-facts.md section 6b): provisional, 'to be used for this week' while HAI vetting is in progress. The model is disputed: MOM Day 1 says a suction-cup C56, and Vinay asks 'A42T vacuum vtm?'. Height bears on it: DFW6's top storage level sits near 9.4 m (23 levels from 800 mm, 390.9 mm apart; facts file section 2); the matrix's plain C56 builds are customisable from 2 m to 7 m, its tallest C56 (the Boots C56-ST) stands 9.137 m, and HAI's A42T reaches 12 m. The matrix's C56-S-2D column differs from the directive: 600 mm/s² acceleration, a 1.8 m/s laden speed, and turns of 3.2 s and 6.4 s.",
+  "entities": [
+    {
+      "id": "9de4d196-b289-4b2e-af9e-cfcf5e91c469",
+      "name": "C56, suction cup",
+      "components": {
+        "lineage": [
+          {
+            "party": "Quicktron",
+            "role": "manufacturer",
+            "designation": "C56",
+            "options": [
+              {
+                "name": "suction cup",
+                "designation": "C56-S"
+              }
+            ]
+          }
+        ],
+        "body": {
+          "footprint_mm": [
+            1780,
+            1000
+          ],
+          "$comment": "The C56-S-2D column of the Ranger Relay Profile Matrix as transcribed on equipment/world-protocol-0.8, its lengths read as tenths of a millimetre. Its height is customisable from 2 m to 7 m, and DFW6's build is not stated."
+        },
+        "floor_drive": {
+          "loaded": {
+            "max_speed_mm_s": 1500,
+            "accel_mm_s2": 500
+          },
+          "empty": {
+            "max_speed_mm_s": 1500,
+            "accel_mm_s2": 500
+          },
+          "$comment": "The directive states no turn times, and the simulator needs none: it keeps DFW6's VTMs in their aisles."
+        },
+        "lift": {
+          "profile": {
+            "max_speed_mm_s": 1500,
+            "accel_mm_s2": 500
+          },
+          "$comment": "The directive gives one VTM speed and acceleration; the simulator applies them to the lift as well, which is still to be confirmed."
+        },
+        "end_effector": {
+          "kind": "suction_cup",
+          "pick_secs": 4.0,
+          "drop_secs": 4.0,
+          "align_before_pick_secs": 3.56,
+          "align_before_drop_secs": 2.3
+        }
+      }
+    }
+  ]
+}

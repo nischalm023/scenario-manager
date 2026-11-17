@@ -1,0 +1,21 @@
+{
+ "world": "minimal_pick_only.json",
+ "scenario": {
+  "num_skus": 10,
+  "total_inventory_units": 200,
+  "num_orders": 20,
+  "total_order_picks": 20,
+  "units_per_tote": 1,
+  "popular_skus_pct": 0.0,
+  "inventory_popular_share": 0.0,
+  "order_popular_share": 0.0
+ },
+ "settings": {
+  "num_htms": 1,
+  "fidelity": "CollisionDes",
+  "putaway": {
+   "enabled": false
+  },
+  "queue_factor": 1.0
+ }
+}

@@ -1,0 +1,16 @@
+[workspace]
+
+# Keep native oracle identities on the explicit WPS checkout used by this test.
+[patch."https://github.com/greyorange/world-proto.git"]
+worldprotocol-core = { path = "@WPS@/proto/core" }
+
+[package]
+name = "foundry-generators-parity"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+worldgen-host = { path = "@WPS@/generator/host" }
+site-model = { path = "@FOUNDRY@/sim/site-model" }
+serde_json = { version = "1", features = ["float_roundtrip"] }

@@ -1,0 +1,42 @@
+{
+  "component": "template.description",
+  "status": "experimental",
+  "owner": "agent-studio",
+  "asserts": "is",
+  "meaning": "the entity is a site template's card: its title, its one-line description, and what it was built from",
+  "_notes": [
+    "`owner` is `agent-studio`, who answers for this shape today; the registry moves ownership freely (world-proto server/DESIGN.md section 7). Lead decided, say if not.",
+    "The schema is open to fields it does not name, as every registry schema is (world-proto SPEC section 9's lenient reading), so a misspelt optional field passes WPS and is carried unread. Lead decided, say if not.",
+    "Registered because the template spec keeps a card's text in a component, an earlier lead decision under Daniel's naming ruling (briefs/w3-00-rulings.md, D92: `template.description` \"if a template's card text still needs a component\"). Say if not.",
+    "Not in the schema: one card per template, on an entity of the template's top scope."
+  ],
+  "refs": [],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "template.description",
+    "description": "the entity is a site template's card: its title, its one-line description, and what it was built from",
+    "$comment": "Written for world-proto's registry from Agent Studio's 05-template-workflow.md section 3.2 (notes/agent-studio-2026-10-17/design/specs/05-template-workflow.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "title",
+      "text"
+    ],
+    "properties": {
+      "title": {
+        "description": "The card's title.",
+        "type": "string",
+        "maxLength": 80
+      },
+      "text": {
+        "description": "What the template lays out, in a line.",
+        "type": "string",
+        "maxLength": 600
+      },
+      "built_from": {
+        "description": "Where the template came from.",
+        "type": "string",
+        "maxLength": 200
+      }
+    }
+  }
+}

@@ -1,0 +1,366 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:components",
+  "title": "world protocol — the component set",
+  "description": "The register of every component name this version of the protocol knows, and the two readings of a component map: the lenient one a consumer must use on the wire, and the strict one an author wants on a document they are writing by hand. The set of components an entity carries is its type — there is no type field — so this file is where an entity's meaning is assembled (SPEC §2).",
+  "$defs": {
+    "set": {
+      "title": "component map (lenient)",
+      "description": "An entity's components, read the way SPEC §9 requires a consumer to read them: a name this version knows must have the right shape, a name it does not know is carried and ignored. That is what lets one team attach a component without negotiating with every other consumer.",
+      "type": "object",
+      "properties": {
+        "access": {"$ref": "urn:worldproto:0.7:components:structure#/$defs/access"},
+        "access_cell": {"$ref": "urn:worldproto:0.7:components:structure#/$defs/access_cell"},
+        "carrier": {"$ref": "urn:worldproto:0.7:components:fleet#/$defs/carrier"},
+        "carrier_pool": {"$ref": "urn:worldproto:0.7:components:fleet#/$defs/carrier_pool"},
+        "carrier_type": {"$ref": "urn:worldproto:0.7:components:product#/$defs/carrier_type"},
+        "cell": {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/cell"},
+        "cohort": {"$ref": "urn:worldproto:0.7:components:fleet#/$defs/cohort"},
+        "demand": {"$ref": "urn:worldproto:0.7:components:product#/$defs/demand"},
+        "external_ids": {"$ref": "urn:worldproto:0.7:components:identity#/$defs/external_ids"},
+        "flow": {"$ref": "urn:worldproto:0.7:components:structure#/$defs/flow"},
+        "frame": {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/frame"},
+        "induct": {"$ref": "urn:worldproto:0.7:components:product#/$defs/induct"},
+        "lineage": {"$ref": "urn:worldproto:0.7:components:product#/$defs/lineage"},
+        "charging": {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/charging"},
+        "pick": {"$ref": "urn:worldproto:0.7:components:product#/$defs/pick"},
+        "port": {"$ref": "urn:worldproto:0.7:components:product#/$defs/port"},
+        "pose": {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/pose"},
+        "presentation_point": {"$ref": "urn:worldproto:0.7:components:product#/$defs/presentation_point"},
+        "queue": {"$ref": "urn:worldproto:0.7:components:product#/$defs/queue"},
+        "rack": {"$ref": "urn:worldproto:0.7:components:structure#/$defs/rack"},
+        "region": {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/region"},
+        "relay": {"$ref": "urn:worldproto:0.7:components:structure#/$defs/relay"},
+        "robot": {"$ref": "urn:worldproto:0.7:components:fleet#/$defs/robot"},
+        "robot_class": {"$ref": "urn:worldproto:0.7:components:fleet#/$defs/robot_class"},
+        "sector": {"$ref": "urn:worldproto:0.7:components:product#/$defs/sector"},
+        "slot": {"$ref": "urn:worldproto:0.7:components:structure#/$defs/slot"},
+        "stamp": {"$ref": "urn:worldproto:0.7:components:product#/$defs/stamp"},
+        "station": {"$ref": "urn:worldproto:0.7:components:product#/$defs/station"},
+        "stitch": {"$ref": "urn:worldproto:0.7:components:structure#/$defs/stitch"},
+        "storage": {"$ref": "urn:worldproto:0.7:components:structure#/$defs/storage"},
+        "template": {"$ref": "urn:worldproto:0.7:components:product#/$defs/template"},
+        "tiling": {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/tiling"},
+        "waiting": {"$ref": "urn:worldproto:0.7:components:product#/$defs/waiting"}
+      }
+    },
+    "set_strict": {
+      "title": "component map (strict)",
+      "description": "The same components, read the way an author wants their own draft read: on a component this version defines, a field it does not define is a typo until proven otherwise. A component this version does not define passes whatever its name, plain or dotted, its fields unread as on the wire: whether a name means anything is a registry's to say, so the name is held to the grammar alone (ruled 2026-10-18).",
+      "$comment": "Every name in `set` appears here too, wrapped so the closure applies; the sync test checks the two lists match each other and the reader's own register.",
+      "type": "object",
+      "properties": {
+        "access": {"$ref": "#/$defs/closed_access"},
+        "access_cell": {"$ref": "#/$defs/closed_access_cell"},
+        "carrier": {"$ref": "#/$defs/closed_carrier"},
+        "carrier_pool": {"$ref": "#/$defs/closed_carrier_pool"},
+        "carrier_type": {"$ref": "#/$defs/closed_carrier_type"},
+        "cell": {"$ref": "#/$defs/closed_cell"},
+        "cohort": {"$ref": "#/$defs/closed_cohort"},
+        "demand": {"$ref": "#/$defs/closed_demand"},
+        "external_ids": {"$ref": "urn:worldproto:0.7:components:identity#/$defs/external_ids"},
+        "flow": {"$ref": "#/$defs/closed_flow"},
+        "frame": {"$ref": "#/$defs/closed_frame"},
+        "induct": {"$ref": "#/$defs/closed_induct"},
+        "lineage": {
+          "$comment": "Read the same way in both profiles, like `external_ids` and for a related reason: a lineage is a list, and a list has no unnamed keys for the closure to refuse. Its entries carry the fields `product.json` names.",
+          "$ref": "urn:worldproto:0.7:components:product#/$defs/lineage"
+        },
+        "charging": {"$ref": "#/$defs/closed_charging"},
+        "pick": {"$ref": "#/$defs/closed_pick"},
+        "port": {"$ref": "#/$defs/closed_port"},
+        "pose": {"$ref": "#/$defs/closed_pose"},
+        "presentation_point": {"$ref": "#/$defs/closed_presentation_point"},
+        "queue": {"$ref": "#/$defs/closed_queue"},
+        "rack": {"$ref": "#/$defs/closed_rack"},
+        "region": {"$ref": "#/$defs/closed_region"},
+        "relay": {"$ref": "#/$defs/closed_relay"},
+        "robot": {"$ref": "#/$defs/closed_robot"},
+        "robot_class": {"$ref": "#/$defs/closed_robot_class"},
+        "sector": {"$ref": "#/$defs/closed_sector"},
+        "slot": {"$ref": "#/$defs/closed_slot"},
+        "stamp": {"$ref": "#/$defs/closed_stamp"},
+        "station": {"$ref": "#/$defs/closed_station"},
+        "stitch": {"$ref": "#/$defs/closed_stitch"},
+        "storage": {"$ref": "#/$defs/closed_storage"},
+        "template": {"$ref": "#/$defs/closed_template"},
+        "tiling": {"$ref": "#/$defs/closed_tiling"},
+        "waiting": {"$ref": "#/$defs/closed_waiting"}
+      },
+      "propertyNames": {"$ref": "#/$defs/component_name"}
+    },
+    "core_name": {
+      "title": "core component name",
+      "description": "A component name this version of the protocol defines. Kept in one place so the sync test has one list to compare against the reader's own register.",
+      "type": "string",
+      "enum": [
+        "access",
+        "access_cell",
+        "carrier",
+        "carrier_pool",
+        "carrier_type",
+        "cell",
+        "cohort",
+        "demand",
+        "external_ids",
+        "flow",
+        "frame",
+        "induct",
+        "lineage",
+        "charging",
+        "pick",
+        "port",
+        "pose",
+        "presentation_point",
+        "queue",
+        "rack",
+        "region",
+        "relay",
+        "robot",
+        "robot_class",
+        "sector",
+        "slot",
+        "stamp",
+        "station",
+        "stitch",
+        "storage",
+        "template",
+        "tiling",
+        "waiting"
+      ]
+    },
+    "extension_name": {
+      "title": "extension component name",
+      "description": "Any legal component name, for a component beyond the core's: plain, as SPEC §2 names a product's, a vendor's and an experiment's (`easyloop`), or dotted where a plain name would collide with a component of a different meaning (`mapcreator.station` beside `station`). The grammar is the one a registry holds every name to — segments of `[a-z0-9_]` joined by `.` — and it is the whole check: whether a name is defined is a registry's question, not this schema's (ruled 2026-10-18). The core's own names fit it too.",
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(\\.[a-z0-9_]+)*$"
+    },
+    "component_name": {
+      "title": "component name",
+      "description": "What a key of a component map may be: a core name, any other legal component name, or `$comment`, which sits among components as freely as it sits inside one (SPEC §2).",
+      "anyOf": [{"$ref": "#/$defs/core_name"}, {"$ref": "#/$defs/extension_name"}, {"const": "$comment"}]
+    },
+    "declarable_name": {
+      "title": "declarable component name",
+      "description": "A name a document may list in `required_components`: any legal component name, the core's or another's, but never an annotation key. A reader that does not know a name listed there refuses the document (SPEC §9).",
+      "anyOf": [{"$ref": "#/$defs/core_name"}, {"$ref": "#/$defs/extension_name"}]
+    },
+    "closed_access": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:structure#/$defs/access"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_access_cell": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:structure#/$defs/access_cell"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_carrier": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:fleet#/$defs/carrier"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_carrier_pool": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:fleet#/$defs/carrier_pool"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_carrier_type": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/carrier_type"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_cell": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/cell"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_cohort": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:fleet#/$defs/cohort"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_demand": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/demand"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_flow": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:structure#/$defs/flow"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_frame": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/frame"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_induct": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/induct"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_charging": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/charging"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_pick": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/pick"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_port": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/port"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_pose": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/pose"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_presentation_point": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/presentation_point"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_queue": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/queue"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_rack": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:structure#/$defs/rack"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_region": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/region"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_relay": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:structure#/$defs/relay"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_robot": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:fleet#/$defs/robot"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_robot_class": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:fleet#/$defs/robot_class"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_sector": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/sector"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_slot": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:structure#/$defs/slot"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_stamp": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/stamp"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_station": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/station"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_stitch": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:structure#/$defs/stitch"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_storage": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:structure#/$defs/storage"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_template": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/template"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_tiling": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:spatial#/$defs/tiling"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    },
+    "closed_waiting": {
+      "allOf": [
+        {"$ref": "urn:worldproto:0.7:components:product#/$defs/waiting"},
+        {"$ref": "urn:worldproto:0.7:values#/$defs/annotations"}
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

@@ -1,0 +1,516 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "Cencora NDC2's flow scope (customer/cencora/site/ndc2/flow): putaway and pick through the relay racking, the L-Shape template's flow over Cencora's 16 put stations, 10 pick stations and 19 aisles, so that a Studio run of the site needs no launch line. Each quantity a run reads is the one Dematic's Scenario 13 ran with (its spec, libs/dessim/tests/fixtures/cencora_v3_da50_scenario13_spec.json, which `main` does not carry but the delivery branch wip/dematic-batch-13-14 does at a12eec2ce, and its launch line) but three, each standing in for what this tree does not have. The put stations' 261.4 presentations an hour is Scenario 5's (sim/dessim/tests/fixtures/cencora_v3_da50_scenario5_spec.json), since in Scenario 13 each put station's operator paced induction. The pick stations' 6.77 s pick is Scenario 5's operator time; Scenario 13's spec carries it too, but there the operator each pick station's world states, the Mujin arm, timed every pick. Their sequencing is `sequenced`, standing in for Scenario 13's `strict`. Neither `strict`, nor one pallet at a time, nor stations worked by their operators, nor the uncrossed draw of random slots is stated, since this tree does not have them. Scenario 13's launch line set putaway.random_slots_uncrossed, which draws a deposit's random relay among those a DA50 can serve without crossing the other DA50 on its aisle's shared rail, and among all the candidates when there is none; this run always draws among all the candidates. The map states each station's operator, and nothing on this tree reads it.",
+  "doc": {
+    "id": "90f95193-2c91-4a42-a506-930d4c964c45",
+    "name": "Cencora NDC2: flow",
+    "kind": "world",
+    "depends_on": []
+  },
+  "entities": [
+    {
+      "id": "881729de-53f0-47bd-8e46-d2c93a8a751f",
+      "name": "Inbound cases",
+      "components": {
+        "flow.node": {
+          "kind": "source",
+          "demand": "putaway"
+        }
+      }
+    },
+    {
+      "id": "23f6fdc4-8882-4b65-a70e-7a1a8b9c9761",
+      "name": "Put stations",
+      "components": {
+        "flow.node": {
+          "$comment": "A fill pace of 261.4 an hour (a 13.77 s fill), as cencora_v3_da50_scenario5_spec.json states it, since in Scenario 13 each put station's operator paced induction and nothing on this tree reads an operator. The run reads the fill pace; the 2.23 s tote swap only feeds the panel's all-in rate, 225 cases an hour a station, Scenario 5's induction all-in. Admission 2.5, Scenario 13's putaway.admission_factor.",
+          "kind": "stations",
+          "sectors": [
+            "78a2d30d-b964-4965-b7c1-cadcd6c6c5c0"
+          ],
+          "process": {
+            "operation": "put",
+            "gives_by": [
+              "298ddfb9-f337-4091-a75e-ef7434aa9ce4"
+            ],
+            "receives_by": [
+              "ff4265e2-bdd5-490a-83bb-f77a34d2761b",
+              "4e781bce-ff16-4d25-9280-cf3810f44545"
+            ]
+          },
+          "work": {
+            "presentations_per_hour": 261.4,
+            "tote_swap_sim_ms": 2230
+          },
+          "intake": [
+            {
+              "moves": "inventory_tote:empty",
+              "admission_factor": 2.5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+      "name": "Inventory storage",
+      "components": {
+        "flow.node": {
+          "$comment": "Random slots, as Scenario 13's spec states (putaway.random_slots). Scenario 13's launch line also made the draw prefer relays a DA50 serves without crossing the other DA50 on its rail, which this tree does not have: see this document's opening comment.",
+          "kind": "storage",
+          "sectors": [
+            "f7b7474c-53c3-4579-8f46-42982e159731"
+          ],
+          "holds": "inventory_tote",
+          "deposit": "random"
+        }
+      }
+    },
+    {
+      "id": "66952750-badc-473b-b2a2-721197e96e7d",
+      "name": "Pick stations",
+      "components": {
+        "flow.node": {
+          "$comment": "A pick of 6.77 s, Scenario 5's operator time (cencora_v3_da50_scenario5_spec.json), standing in for the Mujin arm that timed every pick in Scenario 13, since nothing on this tree reads an operator. The run reads the pick's duration; the 2.23 s tote swap only feeds the panel's all-in rate, 400 picks an hour a station, the arm's 9.0 s cycle. Sequenced, the mode a run reads that is nearest Scenario 13's strict. Admission 6, Scenario 13's queue_factor.",
+          "kind": "stations",
+          "sectors": [
+            "51b3b775-5f85-4016-a946-4de6ba35c042"
+          ],
+          "process": {
+            "operation": "pick",
+            "gives_by": [
+              "3d835380-a70e-4b4c-a330-9cbbf0fbd66b"
+            ],
+            "receives_in": "station_bins"
+          },
+          "work": {
+            "pick_sim_ms": 6770,
+            "sequencing": "sequenced",
+            "tote_swap_sim_ms": 2230
+          },
+          "intake": [
+            {
+              "moves": "inventory_tote:stock",
+              "admission_factor": 6.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2cb36fb5-390b-4163-ba8d-e06fd001b115",
+      "name": "Outbound pallets",
+      "components": {
+        "flow.node": {
+          "kind": "sink"
+        }
+      }
+    },
+    {
+      "id": "8aa34c5f-7f33-4fdc-af40-7357909102cb",
+      "name": "Return rule",
+      "components": {
+        "flow.return_rule": {
+          "min_backlog": 1,
+          "destination": "nearest_eligible"
+        }
+      }
+    },
+    {
+      "id": "298ddfb9-f337-4091-a75e-ef7434aa9ce4",
+      "name": "Inbound cases to Put stations: cases",
+      "components": {
+        "flow.material_edge": {
+          "$comment": "No hour gate (Scenario 13's putaway.ignore_hour_gate); one case to a tote.",
+          "from": "881729de-53f0-47bd-8e46-d2c93a8a751f",
+          "to": "23f6fdc4-8882-4b65-a70e-7a1a8b9c9761",
+          "moves": "units",
+          "induction": {
+            "sequence": "sku_demand",
+            "hour_gate": false,
+            "units_per_tote": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "ff4265e2-bdd5-490a-83bb-f77a34d2761b",
+      "name": "Inventory storage to Put stations: empty tote",
+      "components": {
+        "flow.material_edge": {
+          "$comment": "Once the scheduler's clock reaches simtime 7,150 s (Scenario 13's putaway.forbid_rack_after_secs), the racking is no longer chosen as the source of an empty tote for a put station, though a supply chosen before then may still depart the racking later in simtime; from then on only emptied pick totes are chosen to feed induction.",
+          "from": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+          "to": "23f6fdc4-8882-4b65-a70e-7a1a8b9c9761",
+          "moves": "inventory_tote:empty",
+          "until_sim_ms": 7150000
+        }
+      }
+    },
+    {
+      "id": "4e781bce-ff16-4d25-9280-cf3810f44545",
+      "name": "Pick stations to Put stations: empty tote",
+      "components": {
+        "flow.material_edge": {
+          "from": "66952750-badc-473b-b2a2-721197e96e7d",
+          "to": "23f6fdc4-8882-4b65-a70e-7a1a8b9c9761",
+          "moves": "inventory_tote:empty",
+          "alternative_to": "ff4265e2-bdd5-490a-83bb-f77a34d2761b",
+          "bias": "fleet_pressure"
+        }
+      }
+    },
+    {
+      "id": "14efd5b8-0d10-4f30-bb69-2d87ef2e42d9",
+      "name": "Put stations to Inventory storage: stock tote",
+      "components": {
+        "flow.material_edge": {
+          "from": "23f6fdc4-8882-4b65-a70e-7a1a8b9c9761",
+          "to": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+          "moves": "inventory_tote:stock",
+          "returns_by": "8aa34c5f-7f33-4fdc-af40-7357909102cb"
+        }
+      }
+    },
+    {
+      "id": "f166cf91-c0ac-4264-b724-84fb2f632ebc",
+      "name": "Put stations to Inventory storage: empty tote once inbound ends",
+      "components": {
+        "flow.material_edge": {
+          "from": "23f6fdc4-8882-4b65-a70e-7a1a8b9c9761",
+          "to": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+          "moves": "inventory_tote:empty",
+          "when": {
+            "phase": "inbound_ended"
+          },
+          "returns_by": "8aa34c5f-7f33-4fdc-af40-7357909102cb"
+        }
+      }
+    },
+    {
+      "id": "3d835380-a70e-4b4c-a330-9cbbf0fbd66b",
+      "name": "Inventory storage to Pick stations: stock tote",
+      "components": {
+        "flow.material_edge": {
+          "$comment": "No pick begins before simtime 2 h (Scenario 13's pick.embargo_secs): two hours of putaway alone.",
+          "from": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+          "to": "66952750-badc-473b-b2a2-721197e96e7d",
+          "moves": "inventory_tote:stock",
+          "opens_at_sim_ms": 7200000
+        }
+      }
+    },
+    {
+      "id": "2e6293eb-e6a0-4e66-be61-ab8b79f8b380",
+      "name": "Pick stations to Inventory storage: tote after the pick",
+      "components": {
+        "flow.material_edge": {
+          "from": "66952750-badc-473b-b2a2-721197e96e7d",
+          "to": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+          "moves": "inventory_tote:after_pick",
+          "returns_by": "8aa34c5f-7f33-4fdc-af40-7357909102cb"
+        }
+      }
+    },
+    {
+      "id": "e1dbc343-8bcb-41f2-b772-644d16a3f4a1",
+      "name": "Pick stations to Outbound pallets: pallet in its bin",
+      "components": {
+        "flow.material_edge": {
+          "from": "66952750-badc-473b-b2a2-721197e96e7d",
+          "to": "2cb36fb5-390b-4163-ba8d-e06fd001b115",
+          "moves": "order:in_bin"
+        }
+      }
+    },
+    {
+      "id": "9e1d72c1-157e-4c5c-af1b-884b77eb0748",
+      "name": "cases arrive at Put stations",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "298ddfb9-f337-4091-a75e-ef7434aa9ce4",
+          "step": 1,
+          "from": {
+            "node": "881729de-53f0-47bd-8e46-d2c93a8a751f",
+            "port": "boundary"
+          },
+          "to": {
+            "node": "23f6fdc4-8882-4b65-a70e-7a1a8b9c9761",
+            "port": "presentation"
+          },
+          "executor": {
+            "external": true
+          },
+          "at_end": "arrives"
+        }
+      }
+    },
+    {
+      "id": "f95582bd-cd7b-4c4c-a1e4-55ffc6f88051",
+      "name": "the aisle's VTMs: slot to relay",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "ff4265e2-bdd5-490a-83bb-f77a34d2761b",
+          "step": 1,
+          "from": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "slot"
+          },
+          "to": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "relay"
+          },
+          "executor": {
+            "assigned": "from"
+          },
+          "at_end": "hands_over"
+        }
+      }
+    },
+    {
+      "id": "5a9f562b-458b-4b8b-94fe-ee4607bb2fb8",
+      "name": "HTMs: relay to Put stations",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "ff4265e2-bdd5-490a-83bb-f77a34d2761b",
+          "step": 2,
+          "from": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "relay"
+          },
+          "to": {
+            "node": "23f6fdc4-8882-4b65-a70e-7a1a8b9c9761",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "97f1a2ea-6176-5c07-a77b-899ecf57885f"
+          },
+          "at_end": "keeps_through_work"
+        }
+      }
+    },
+    {
+      "id": "bd5b8140-37f0-47e4-a1bc-3778253f207a",
+      "name": "HTMs: Pick stations to Put stations",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "4e781bce-ff16-4d25-9280-cf3810f44545",
+          "step": 1,
+          "from": {
+            "node": "66952750-badc-473b-b2a2-721197e96e7d",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "23f6fdc4-8882-4b65-a70e-7a1a8b9c9761",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "97f1a2ea-6176-5c07-a77b-899ecf57885f"
+          },
+          "at_end": "keeps_through_work"
+        }
+      }
+    },
+    {
+      "id": "22f3ef3d-4dc9-4b04-bf09-722ace584524",
+      "name": "HTMs: Put stations to relay",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "14efd5b8-0d10-4f30-bb69-2d87ef2e42d9",
+          "step": 1,
+          "from": {
+            "node": "23f6fdc4-8882-4b65-a70e-7a1a8b9c9761",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "97f1a2ea-6176-5c07-a77b-899ecf57885f"
+          },
+          "at_end": "hands_over"
+        }
+      }
+    },
+    {
+      "id": "962b7607-0c88-4320-b722-7b2e1248ee7e",
+      "name": "the aisle's VTMs: relay to slot",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "14efd5b8-0d10-4f30-bb69-2d87ef2e42d9",
+          "step": 2,
+          "from": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "relay"
+          },
+          "to": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down"
+        }
+      }
+    },
+    {
+      "id": "053c5c3c-97e1-4280-890b-178fe44af836",
+      "name": "HTMs: Put stations to relay, inbound ended",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "f166cf91-c0ac-4264-b724-84fb2f632ebc",
+          "step": 1,
+          "from": {
+            "node": "23f6fdc4-8882-4b65-a70e-7a1a8b9c9761",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "97f1a2ea-6176-5c07-a77b-899ecf57885f"
+          },
+          "at_end": "hands_over"
+        }
+      }
+    },
+    {
+      "id": "07135840-5075-414a-9f2c-8fcfd489a6d5",
+      "name": "the aisle's VTMs: relay to slot, inbound ended",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "f166cf91-c0ac-4264-b724-84fb2f632ebc",
+          "step": 2,
+          "from": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "relay"
+          },
+          "to": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down"
+        }
+      }
+    },
+    {
+      "id": "c073b2f4-3250-4ba4-b33e-6440e0ca36a6",
+      "name": "the aisle's VTMs: slot to relay for a pick",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "3d835380-a70e-4b4c-a330-9cbbf0fbd66b",
+          "step": 1,
+          "from": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "slot"
+          },
+          "to": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "relay"
+          },
+          "executor": {
+            "assigned": "from"
+          },
+          "at_end": "hands_over"
+        }
+      }
+    },
+    {
+      "id": "760b27b7-a25f-4ecb-8287-28063fbcadb2",
+      "name": "HTMs: relay to Pick stations",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "3d835380-a70e-4b4c-a330-9cbbf0fbd66b",
+          "step": 2,
+          "from": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "relay"
+          },
+          "to": {
+            "node": "66952750-badc-473b-b2a2-721197e96e7d",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "97f1a2ea-6176-5c07-a77b-899ecf57885f"
+          },
+          "at_end": "keeps_through_work",
+          "retained_for": [
+            "cae09cb7-2bb3-47f4-9d47-3b2e628a8f6e",
+            "bd5b8140-37f0-47e4-a1bc-3778253f207a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cae09cb7-2bb3-47f4-9d47-3b2e628a8f6e",
+      "name": "HTMs: Pick stations to relay",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "2e6293eb-e6a0-4e66-be61-ab8b79f8b380",
+          "step": 1,
+          "from": {
+            "node": "66952750-badc-473b-b2a2-721197e96e7d",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "97f1a2ea-6176-5c07-a77b-899ecf57885f"
+          },
+          "at_end": "hands_over"
+        }
+      }
+    },
+    {
+      "id": "70cd8e29-312d-437e-b744-bf7db18d62e6",
+      "name": "the aisle's VTMs: relay to slot after a pick",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "2e6293eb-e6a0-4e66-be61-ab8b79f8b380",
+          "step": 2,
+          "from": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "relay"
+          },
+          "to": {
+            "node": "b3329a4a-5a17-48ea-b369-517ff26bf95a",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down"
+        }
+      }
+    },
+    {
+      "id": "00f171e7-46e4-4052-b087-699103f670fa",
+      "name": "pallets leave in their bins",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "e1dbc343-8bcb-41f2-b772-644d16a3f4a1",
+          "step": 1,
+          "from": {
+            "node": "66952750-badc-473b-b2a2-721197e96e7d",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "2cb36fb5-390b-4163-ba8d-e06fd001b115",
+            "port": "boundary"
+          },
+          "executor": {
+            "external": true
+          },
+          "at_end": "leaves"
+        }
+      }
+    }
+  ]
+}

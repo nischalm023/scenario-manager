@@ -1,0 +1,20 @@
+[package]
+name = "kube-invoker"
+version = "0.1.0"
+edition = "2024"
+description = "The Kubernetes implementation of run-invocation's Invoker (spec 08 section 3.5): one batch/v1 Job per attempt, its job spec and token in a Secret the Job owns, and the Job's conditions and pods read back as the loops' JobStatus"
+
+[dependencies]
+run-invocation = { path = "../run-invocation" }
+studio-protocol = { path = "../protocol" }
+# The client alone, no controller runtime or derive, over rustls. `aws-lc-rs` names rustls's crypto provider: the API,
+# which hosts this invoker, already compiles rustls with it through reqwest, and rustls refuses to choose when two
+# providers are compiled in, so kube is told the same one and installs it as the process default when nothing has.
+kube = { version = "4", default-features = false, features = ["client", "rustls-tls", "aws-lc-rs"] }
+k8s-openapi = { version = "0.28", features = ["latest"] }
+rustc-hash = "2"
+serde_json = "1"
+tokio = { version = "1", features = ["rt"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt", "time"] }

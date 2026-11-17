@@ -1,0 +1,29 @@
+{
+  "asserts": "has",
+  "component": "template.target_scope",
+  "meaning": "the entity has a scope of the made site to land in other than the one its placement lands in, named relative to the site's root",
+  "owner": "agent-studio",
+  "refs": [],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "template.target_scope",
+    "description": "the entity has a scope of the made site to land in other than the one its placement lands in, named relative to the site's root",
+    "$comment": "Written for world-proto's registry from Agent Studio's 05-template-workflow.md section 3.2 (notes/agent-studio-2026-10-17/design/specs/05-template-workflow.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "scope"
+    ],
+    "properties": {
+      "scope": {
+        "description": "`.` for the site's root, or its `map`, `flow` or `fleet` scope.",
+        "enum": [
+          ".",
+          "map",
+          "flow",
+          "fleet"
+        ]
+      }
+    }
+  },
+  "status": "experimental"
+}

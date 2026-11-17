@@ -1,0 +1,48 @@
+[package]
+name = "native-modules"
+version = "0.1.0"
+edition = "2024"
+description = "The modules this repository compiles into the simulator, beside the ones a user will script: the record types of the typed streams a run reads, and the tasks"
+
+[features]
+# The slow gate (`scripts/test-slow-gate.sh`): the whole-fixture simulations under `tests/` carry
+# `#[cfg_attr(not(feature = "slow-gate"), ignore = "...")]`, and span parity adds a slice of DFW6 to the small floor.
+slow-gate = []
+# `order_queue`'s instrumented pass; it turns on dessim's `perf` feature too.
+perf = ["dessim/perf", "dep:tracing"]
+
+[dependencies]
+# The core the tasks run in. It must never depend on this crate.
+dessim = { path = "../sim/dessim" }
+async-trait = "0.1"
+desgraph = { path = "../sim/desgraph" }
+derive_more = { version = "2", features = ["display"] }
+desmap = { path = "../sim/desmap" }
+pathfinder = { path = "../sim/pathfinder" }
+rustc-hash = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+smallvec = { version = "1", features = ["serde"] }
+tokio = { version = "1", features = ["macros", "rt", "sync", "time"] }
+tracing = { version = "0.1", optional = true }
+
+[dev-dependencies]
+# The core's test fixtures (`model::test_model`) and test-only seams, which the tasks' tests drive.
+dessim = { path = "../sim/dessim", features = ["test-support"] }
+# Span parity reads the recordings its runs write.
+worldview = { path = "../worldview/worldview" }
+tempfile = "3"
+# `flagged_export::written_out`: the tests write a world out as WPS writes a site.
+site-model = { path = "../sim/site-model", features = ["test-support"] }
+# `SimTime`, the simulator's type for an instant of world time, which the tests read the example lines into.
+desunits = { path = "../sim/desunits" }
+# The tests generate each type's JSON Schema from its struct, hold the checked-in file to it, and validate
+# an example line of each type against it.
+jsonschema = { version = "0.26", default-features = false }
+schemars = "1"
+
+# `traffic_report` is parked in `migration/` until it is given its home, so its entry point is stated here: Cargo does
+# not look for a binary there.
+[[bin]]
+name = "traffic_report"
+path = "src/migration/traffic_report.rs"

@@ -1,0 +1,157 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "7f2a5c18-9b40-4e63-8d15-3a7c0e9f2b46",
+    "name": "ten rack shapes neither site has",
+    "kind": "world"
+  },
+  "primary_frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512",
+  "required_components": ["frame", "pose", "rack"],
+  "$comment": "Hand-made, because both shipped sites state one rack shape between them: storage levels with a single relay level among them. Every bay below turns on an Option or a boundary that either implementation could change without noticing — an empty positions list against an absent one, a null against a missing field, a count of zero, a level list of none. They are declared rather than stamped so the reference reader expands them directly and the two sides can be set beside each other shape by shape.",
+  "entities": [
+    {
+      "id": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512",
+      "name": "site",
+      "components": {
+        "frame": { "dims": 3, "units": "mm", "unit_mm": 1 }
+      }
+    },
+    {
+      "id": "aa000000-0000-4000-8000-000000000001",
+      "name": "a bay with no levels at all",
+      "components": {
+        "pose": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "position": [0, 0], "heading_deg": 0 },
+        "rack": { "slots_wide": 2, "slots_deep": 2, "footprint": [1100, 1300], "levels": [] }
+      }
+    },
+    {
+      "id": "aa000000-0000-4000-8000-000000000002",
+      "name": "a relay level whose positions list is empty",
+      "components": {
+        "pose": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "position": [3000, 0], "heading_deg": 0 },
+        "rack": {
+          "slots_wide": 2,
+          "slots_deep": 1,
+          "footprint": [1100, 650],
+          "levels": [
+            { "height": 350 },
+            { "height": 400, "reach": 1750, "positions": [] },
+            { "height": 900 }
+          ]
+        }
+      }
+    },
+    {
+      "id": "aa000000-0000-4000-8000-000000000003",
+      "name": "a level stating positions as null, which is storage",
+      "components": {
+        "pose": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "position": [6000, 0], "heading_deg": 0 },
+        "rack": {
+          "slots_wide": 2,
+          "slots_deep": 1,
+          "footprint": [1100, 650],
+          "levels": [{ "height": 350, "positions": null }, { "height": 900 }]
+        }
+      }
+    },
+    {
+      "id": "aa000000-0000-4000-8000-000000000004",
+      "name": "a storage level that states a reach nobody reads",
+      "components": {
+        "pose": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "position": [9000, 0], "heading_deg": 0 },
+        "rack": {
+          "slots_wide": 1,
+          "slots_deep": 2,
+          "footprint": [550, 1300],
+          "levels": [{ "height": 350, "reach": 1750 }, { "height": 900 }]
+        }
+      }
+    },
+    {
+      "id": "aa000000-0000-4000-8000-000000000005",
+      "name": "two relay levels in one bay",
+      "components": {
+        "pose": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "position": [12000, 0], "heading_deg": 0 },
+        "rack": {
+          "slots_wide": 2,
+          "slots_deep": 1,
+          "footprint": [1100, 650],
+          "levels": [
+            { "height": 350, "reach": 1750, "positions": [[340, 650], [1030, 650]] },
+            { "height": 900 },
+            { "height": 1450, "reach": 1200, "positions": [[340, 650]] }
+          ]
+        }
+      }
+    },
+    {
+      "id": "aa000000-0000-4000-8000-000000000006",
+      "name": "a bay no positions wide",
+      "components": {
+        "pose": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "position": [15000, 0], "heading_deg": 0 },
+        "rack": {
+          "slots_wide": 0,
+          "slots_deep": 3,
+          "footprint": [0, 1950],
+          "levels": [{ "height": 350 }, { "height": 900 }]
+        }
+      }
+    },
+    {
+      "id": "aa000000-0000-4000-8000-000000000007",
+      "name": "a bay no positions deep",
+      "components": {
+        "pose": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "position": [18000, 0], "heading_deg": 0 },
+        "rack": {
+          "slots_wide": 3,
+          "slots_deep": 0,
+          "footprint": [1650, 0],
+          "levels": [{ "height": 350 }, { "height": 900 }]
+        }
+      }
+    },
+    {
+      "id": "aa000000-0000-4000-8000-000000000008",
+      "name": "heights rising through negative and zero",
+      "components": {
+        "pose": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "position": [21000, 0], "heading_deg": 0 },
+        "rack": {
+          "slots_wide": 1,
+          "slots_deep": 1,
+          "footprint": [550, 650],
+          "levels": [{ "height": -900 }, { "height": 0 }, { "height": 900 }]
+        }
+      }
+    },
+    {
+      "id": "aa000000-0000-4000-8000-000000000009",
+      "name": "a bay stating no slot pitch",
+      "components": {
+        "pose": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "position": [24000, 0], "heading_deg": 0 },
+        "rack": {
+          "slots_wide": 2,
+          "slots_deep": 2,
+          "footprint": [1100, 1300],
+          "levels": [{ "height": 350 }, { "height": 900 }]
+        }
+      }
+    },
+    {
+      "id": "aa000000-0000-4000-8000-00000000000a",
+      "name": "a bay of relay levels and no storage at all",
+      "components": {
+        "pose": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "position": [27000, 0], "heading_deg": 0 },
+        "rack": {
+          "slots_wide": 4,
+          "slots_deep": 2,
+          "slot_pitch": [550, 650],
+          "footprint": [2200, 1300],
+          "levels": [
+            { "height": 350, "reach": 1750, "positions": [[340, 1300]] },
+            { "height": 900, "reach": 1750, "positions": [[340, 1300], [1030, 1300]] }
+          ]
+        }
+      }
+    }
+  ]
+}

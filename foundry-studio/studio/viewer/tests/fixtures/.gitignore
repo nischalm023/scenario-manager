@@ -1,0 +1,5 @@
+# A recording is ordinarily a run's output and the root .gitignore excludes
+# every one of them. This folder's is not output: it is the fixture the
+# browser viewer's rows are compared against desvis's by scripts/worldview/viewer_rows.sh,
+# and a checkout without it cannot run that gate at all.
+!*.worldview

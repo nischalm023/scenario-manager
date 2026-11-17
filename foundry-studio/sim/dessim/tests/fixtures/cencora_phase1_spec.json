@@ -1,0 +1,16 @@
+{
+ "world": "cencora_phase1.json",
+ "scenario": {
+  "num_skus": 300,
+  "total_inventory_units": 9600,
+  "num_orders": 960,
+  "total_order_picks": 9600,
+  "popular_skus_pct": 0.0,
+  "inventory_popular_share": 0.0,
+  "order_popular_share": 0.0,
+  "units_per_tote": 1
+ },
+ "settings": {
+  "fidelity": "CollisionDes"
+ }
+}

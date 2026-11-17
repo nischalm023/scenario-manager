@@ -1,0 +1,49 @@
+{
+  "asserts": "is",
+  "component": "conveyor",
+  "meaning": "the entity is one Map Creator conveyor: an ordered chain of steps with entry and exit ports, each port naming the cell a robot stands on, the handoff height and the heading",
+  "owner": "foundry-studio",
+  "refs": [],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {},
+    "$id": "urn:mapcreator-compat:0.1:components:conveyor",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one Map Creator conveyor: an ordered chain of steps with entry and exit ports, each port naming the cell a robot stands on, the handoff height and the heading",
+    "properties": {
+      "connected_conveyors": {
+        "description": "Map Creator's `connected_conveyors`, carried as the export states it.",
+        "type": [
+          "array"
+        ]
+      },
+      "display_name": {
+        "description": "Map Creator's `display_name`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      },
+      "entry_points": {
+        "description": "Map Creator's `entry_points`, carried as the export states it.",
+        "type": [
+          "array"
+        ]
+      },
+      "exit_points": {
+        "description": "Map Creator's `exit_points`, carried as the export states it.",
+        "type": [
+          "array"
+        ]
+      },
+      "steps": {
+        "description": "Map Creator's `conveyor_steps`, carried as the export states it.",
+        "type": [
+          "array"
+        ]
+      }
+    },
+    "title": "conveyor",
+    "type": "object"
+  },
+  "status": "ratified"
+}

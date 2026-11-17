@@ -1,0 +1,31 @@
+[
+  {
+    "pptls": [
+      {
+        "pps_id": "1",
+        "pps_bin_id": "B1",
+        "peripheral_id": "L-1",
+        "peripheral_type": "pptl",
+        "barcode": "LB-1"
+      },
+      {
+        "pps_id": "1",
+        "pps_bin_id": "B2",
+        "peripheral_id": "L-2",
+        "peripheral_type": "pptl",
+        "barcode": "LB-2"
+      }
+    ]
+  },
+  {
+    "pptls": [
+      {
+        "pps_id": "1",
+        "pps_bin_id": "B1",
+        "peripheral_id": "L-3",
+        "peripheral_type": "pptl",
+        "barcode": "LB-3"
+      }
+    ]
+  }
+]

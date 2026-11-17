@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:values",
+  "title": "world protocol — values",
+  "description": "The scalar and addressing primitives every component is built out of: identities, references, derivation addresses, quantities with their units fixed by the field name, and the two annotation keys a document may carry. Mirrors the crate's ids.rs, derivation.rs and units.rs, which sit beside the component modules rather than inside them.",
+  "$defs": {
+    "uuid": {
+      "title": "UUID",
+      "description": "A UUID in the hyphenated form. SPEC §3 writes identities lowercase; a reader accepts either case, so this does too.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+      "format": "uuid"
+    },
+    "declared_entity_id": {
+      "title": "declared entity id",
+      "description": "The identity of an entity somebody wrote down: a freshly minted UUID meaning nothing but \"this one\" (SPEC §3). This is the one identity in the format that is a real UUID.",
+      "$ref": "#/$defs/uuid"
+    },
+    "derived_entity_id": {
+      "title": "derived entity id",
+      "description": "The identity of an entity a generator produced: the address it was produced at — the declared generator's UUID, then the `/`-joined key that walks down to it, `6f1c…/instance:2/relay:1,0`. The address IS the identity, with nothing computed underneath it; two implementations name the same entity because they walked the same chain (SPEC §3). This is the flat spelling, which is what an `id` field and a database key hold; `derivation_address` below is the same address written in the two parts a record addresses one by.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/[^/@]+(/[^/@]+)*$"
+    },
+    "entity_id": {
+      "title": "entity id",
+      "description": "The identity of one entity, either way it was minted: a UUID for a declared entity, a derivation address for a derived one. The two arms record HOW a name came about and never a kind of entity — derivation is a convenience and never a second class of existence (SPEC §1, §3) — so every field that names an entity takes either arm, and nothing may treat one differently once it has resolved it.",
+      "anyOf": [
+        {"$ref": "#/$defs/declared_entity_id"},
+        {"$ref": "#/$defs/derived_entity_id"}
+      ]
+    },
+    "doc_id": {
+      "title": "document id",
+      "description": "The identity of one document, which is what `doc.depends_on` names.",
+      "$ref": "#/$defs/uuid"
+    },
+    "local_handle": {
+      "title": "local handle",
+      "description": "A template-internal entity's name, standing in for an identity until a stamp mints one. `/` is forbidden inside it because `/` joins derivation key segments (SPEC §3).",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^/]+$"
+    },
+    "local_ref": {
+      "title": "local reference",
+      "description": "How one template internal names another before either has an identity; expansion rewrites it to the stamped identity (SPEC §2). The handle stands alone, a `$comment` aside, as a parameter does: every reader rewrites exactly this shape, reads a `local_ref` beside a `key` as a local derivation address, and refuses one in any other company.",
+      "type": "object",
+      "required": ["local_ref"],
+      "properties": {
+        "local_ref": {"$ref": "#/$defs/local_handle"},
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "entity_ref": {
+      "title": "entity reference",
+      "description": "A pointer at another entity: an identity out in the world — a declared entity's UUID or a derived entity's address, either is valid here — and, inside a template only, a local handle, or a parameter that the stamp replaces with the value it binds. A dangling one is a load error, never a best-effort match (SPEC §2, §6).",
+      "anyOf": [{"$ref": "#/$defs/entity_id"}, {"$ref": "#/$defs/local_ref"}, {"$ref": "#/$defs/param_ref"}]
+    },
+    "derivation_key": {
+      "title": "derivation key",
+      "description": "The `/`-joined chain of segments naming one derived entity beneath its generator. Every segment is a nonempty opaque application-defined string. Only `/` (ancestry) and `@` (version pins) are reserved; all other spelling is preserved exactly (SPEC §3). Inside a template only, a parameter may stand for the whole key (SPEC §6).",
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[^/@]+(/[^/@]+)*$"
+        },
+        {"$ref": "#/$defs/param_ref"}
+      ]
+    },
+    "derivation_segment": {
+      "title": "derivation segment",
+      "description": "One step of a derivation key: a nonempty opaque application-defined string. This is what a derived subtree keys its nodes by (SPEC §3, §8).",
+      "type": "string",
+      "pattern": "^[^/@]+$"
+    },
+    "derivation_address": {
+      "title": "derivation address",
+      "description": "The complete address of one derived entity, in the two parts a record writes it in: the declared generator the chain starts at, and the key that walks down from it. This is the same identity `derived_entity_id` spells flat, and a record addresses a derived entity by it (SPEC §3).",
+      "type": "object",
+      "required": ["generator", "key"],
+      "properties": {
+        "generator": {"$ref": "#/$defs/declared_entity_id"},
+        "key": {"$ref": "#/$defs/derivation_key"}
+      }
+    },
+    "local_derivation_address": {
+      "title": "local derivation address",
+      "description": "A derivation address written inside a template, where the generator is still a handle; expansion rewrites it into a plain derivation address (SPEC §3). The handle and the key stand alone, a `$comment` aside, as a bare `local_ref` does: every reader rewrites exactly this shape and refuses a `local_ref` in any other company.",
+      "type": "object",
+      "required": ["local_ref", "key"],
+      "properties": {
+        "local_ref": {"$ref": "#/$defs/local_handle"},
+        "key": {"$ref": "#/$defs/derivation_key"},
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "cell_address": {
+      "title": "cell address",
+      "description": "How anything names one cell: by its own identity — a declared cell's UUID or a derived cell's address, the two being equally valid here — by that derived address written in its two parts, or, inside a template only, by a local one: a handle alone for a cell the template declares, a handle and a key for a cell one of its internals derives. A parameter may stand for any of these, inside a template only, and the stamp replaces it with the value it binds. Never a bare key string, which would only mean something to whichever entity coined it (SPEC §3, §6).",
+      "anyOf": [
+        {"$ref": "#/$defs/entity_id"},
+        {"$ref": "#/$defs/derivation_address"},
+        {"$ref": "#/$defs/local_derivation_address"},
+        {"$ref": "#/$defs/local_ref"},
+        {"$ref": "#/$defs/param_ref"}
+      ]
+    },
+    "param_ref": {
+      "title": "parameter reference",
+      "description": "A template parameter standing where a value goes; substitution replaces the whole object with the bound value, preserving its JSON type (SPEC §6). Partial-string interpolation does not exist.",
+      "type": "object",
+      "required": ["$param"],
+      "properties": {
+        "$param": {"type": "string", "minLength": 1},
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "annotations": {
+      "title": "annotation keys",
+      "description": "The `$`-prefixed keys a document may carry. `$comment` is ignored by every consumer everywhere, including inside maps whose other keys are data (SPEC §2). Referenced wherever the authoring profile closes an object, so a comment is never mistaken for a stray field.",
+      "type": "object",
+      "properties": {
+        "$comment": {"type": "string"}
+      }
+    },
+    "steps": {
+      "title": "steps",
+      "description": "A length: an integer count of the steps of the frame it is stated in. Only the primary frame's `unit_mm` says what a step is worth, which is why no length field carries a unit in its name any more (SPEC §5).",
+      "anyOf": [{"type": "integer"}, {"$ref": "#/$defs/param_ref"}]
+    },
+    "steps_positive": {
+      "title": "positive steps",
+      "description": "A length that must be greater than zero: an extent, a pitch, a footprint side.",
+      "anyOf": [{"type": "integer", "exclusiveMinimum": 0}, {"$ref": "#/$defs/param_ref"}]
+    },
+    "unit_mm": {
+      "title": "step size in millimetres",
+      "description": "What one integer step is worth physically — the only fractional number a geometry document carries, declared by the primary frame and by no other (SPEC §4, §5). 0.1 is the expected site default, because source drawings carry tenths of a millimetre and a tenth is finer than anything a warehouse holds to.",
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "coord": {
+      "title": "coordinate",
+      "description": "One axis of a position, in the steps of the frame that states it (SPEC §5).",
+      "anyOf": [{"type": "integer"}, {"$ref": "#/$defs/param_ref"}]
+    },
+    "degrees": {
+      "title": "degrees",
+      "description": "An angle counter-clockwise from +x (SPEC §5).",
+      "anyOf": [{"type": "number"}, {"$ref": "#/$defs/param_ref"}]
+    },
+    "count": {
+      "title": "count",
+      "description": "How many of something, zero included.",
+      "anyOf": [{"type": "integer", "minimum": 0}, {"$ref": "#/$defs/param_ref"}]
+    },
+    "count_positive": {
+      "title": "positive count",
+      "description": "How many of something, where none of it would be meaningless.",
+      "anyOf": [{"type": "integer", "minimum": 1}, {"$ref": "#/$defs/param_ref"}]
+    },
+    "flag": {
+      "title": "flag",
+      "description": "A yes-or-no fact about an entity.",
+      "anyOf": [{"type": "boolean"}, {"$ref": "#/$defs/param_ref"}]
+    },
+    "steps_pair": {
+      "title": "step pair",
+      "description": "Two lengths, x then y, in the steps of the frame that states them.",
+      "anyOf": [
+        {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"$ref": "#/$defs/steps"}
+        },
+        {"$ref": "#/$defs/param_ref"}
+      ]
+    },
+    "steps_pair_positive": {
+      "title": "positive step pair",
+      "description": "Two lengths that must both exceed zero: a size, a pitch, a footprint.",
+      "anyOf": [
+        {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"$ref": "#/$defs/steps_positive"}
+        },
+        {"$ref": "#/$defs/param_ref"}
+      ]
+    },
+    "steps_list": {
+      "title": "step list",
+      "description": "Lengths in a stated order, as many as the thing has.",
+      "anyOf": [
+        {"type": "array", "items": {"$ref": "#/$defs/steps"}},
+        {"$ref": "#/$defs/param_ref"}
+      ]
+    },
+    "steps_pair_list": {
+      "title": "step pair list",
+      "description": "Offsets in a stated order, each a pair of lengths in the steps of the frame that states them.",
+      "anyOf": [
+        {"type": "array", "items": {"$ref": "#/$defs/steps_pair"}},
+        {"$ref": "#/$defs/param_ref"}
+      ]
+    },
+    "position": {
+      "title": "position",
+      "description": "A point in a frame: two entries in a 2-D frame, three in a 3-D one (SPEC §4).",
+      "anyOf": [
+        {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "items": {"$ref": "#/$defs/coord"}
+        },
+        {"$ref": "#/$defs/param_ref"}
+      ]
+    },
+    "coord_pair": {
+      "title": "coordinate pair",
+      "description": "Two coordinates in the frame of whatever states them, x then y.",
+      "anyOf": [
+        {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"$ref": "#/$defs/coord"}
+        },
+        {"$ref": "#/$defs/param_ref"}
+      ]
+    },
+    "axis_vector": {
+      "title": "axis vector",
+      "description": "One number per axis of a frame — two entries, or three where a 2-D frame embeds in a 3-D parent and the third entry is its elevation (SPEC §4).",
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": {"type": "number"}
+    }
+  }
+}

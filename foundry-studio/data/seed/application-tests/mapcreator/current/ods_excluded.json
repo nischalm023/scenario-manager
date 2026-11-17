@@ -1,0 +1,16 @@
+{
+  "ods_excluded_list": [
+    {
+      "ods_tuple": "613.317--2",
+      "excluded": true
+    },
+    {
+      "ods_tuple": "000.042--1",
+      "excluded": true
+    },
+    {
+      "ods_tuple": "unsplit-tuple",
+      "excluded": false
+    }
+  ]
+}

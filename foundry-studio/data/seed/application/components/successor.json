@@ -1,0 +1,67 @@
+{
+  "asserts": "has",
+  "component": "successor",
+  "meaning": "the entity has the catalog item it succeeds, named at a version: a reader takes that item's components at that version, each replaced whole by the entity's own component of the same name",
+  "owner": "agent-studio",
+  "refs": [
+    {
+      "path": "/of",
+      "expects": "robot_class"
+    }
+  ],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "successor",
+    "description": "the entity has the catalog item it succeeds, named at a version: a reader takes that item's components at that version, each replaced whole by the entity's own component of the same name",
+    "$comment": "Written for world-proto's registry from Agent Studio's 07-scenario.md section 3.7 (notes/agent-studio-2026-10-17/design/specs/07-scenario.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "of"
+    ],
+    "properties": {
+      "of": {
+        "description": "The catalog item succeeded, pinned at a changeset (a tag once tags land, stored as written); never `@head` or a branch, which the pin rule refuses across units.",
+        "$ref": "#/$defs/reference"
+      }
+    },
+    "$defs": {
+      "reference": {
+        "title": "reference",
+        "description": "Another entity, by identity: a declared UUID or a derivation address, bare or with a pin. Which pin a field takes is the pin rule's to enforce: within the referrer's unit bare or `@head`, across units a changeset (a tag once tags land).",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/entity_id"
+          },
+          {
+            "$ref": "urn:world-graph-server:defs#/$defs/version_pin"
+          }
+        ]
+      },
+      "entity_id": {
+        "title": "entity id",
+        "description": "A declared entity's UUID or a derived entity's address, either arm (SPEC section 3).",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/uuid"
+          },
+          {
+            "$ref": "#/$defs/derived_entity_id"
+          }
+        ]
+      },
+      "uuid": {
+        "title": "UUID",
+        "description": "Copied from proto/schema/values.json at c384e59.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "derived_entity_id": {
+        "title": "derived entity id",
+        "description": "Copied from proto/schema/values.json at c384e59.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+(/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+)*$"
+      }
+    }
+  },
+  "status": "experimental"
+}

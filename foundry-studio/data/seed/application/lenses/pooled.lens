@@ -1,0 +1,6 @@
+
+// Every carrier pool, whatever type it names. A carrier copies the reference to
+// its type and reads nothing of the type, so binding the type as well would be
+// asking for what no carrier depends on.
+pattern pooled { p: carrier_pool; }
+lens pooled { anchor p: pooled; }

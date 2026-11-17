@@ -1,0 +1,85 @@
+{
+  "cases": [
+    {
+      "comparison": {
+        "differences": [],
+        "normalized": [
+          "export:/doc/assembled_from"
+        ],
+        "omitted_comments": []
+      },
+      "export_sha256": "9c6ac57cce14e9f0c75b80eef2d951735e4ed49045d287d6f961ffb9fd8c9af9",
+      "kind": "world",
+      "mode": "assembled",
+      "name": "l-shape-6-aisles",
+      "output": "../../snapshots/worlds/flowgraph/l_shape_6_aisles.json",
+      "provenance": {
+        "assembled_by": {
+          "by": "client",
+          "hops": 0
+        },
+        "assembled_from": {
+          "catalog/fixtures/simulator-world-source-l-shape-6-aisles": 1
+        },
+        "cut": {
+          "branch": "main",
+          "exact": true,
+          "exact_reason": null,
+          "requested": "main",
+          "seqs": {
+            "catalog/fixtures/simulator-world-source-l-shape-6-aisles": 1
+          },
+          "unit": "catalog/fixtures/simulator-world-source-l-shape-6-aisles"
+        },
+        "exact": true,
+        "parts": [
+          {
+            "exact": true,
+            "scope": "catalog/fixtures/simulator-world-source-l-shape-6-aisles",
+            "seq": 1,
+            "sha256": "bbe8883f601f2e24e4f66ee874a21aed13e59a265ff1bd0503a9e5c739f1d693"
+          }
+        ],
+        "walked": {
+          "list": "372f2d344df21290015f3838ef527f209623789c3998654057e315894a5ff278",
+          "walk": "annotations-and-list"
+        }
+      },
+      "scope": "catalog/fixtures/simulator-world-source-l-shape-6-aisles",
+      "source": "../worlds/flowgraph/l_shape_6_aisles.json",
+      "source_sha256": "651d09f2bae436b9ab26c777009e8fc28adb59addb01a22be160116c2b1d0b67",
+      "status": "passed"
+    }
+  ],
+  "commit": "92f4f281e56a27df2275860b9728997ba1e6b782",
+  "comparison_policy": "authored-world-v2",
+  "manifest_sha256": "8689a0c1255afa78410c898a865607787e6ed12bec32e165c9b5f1bf47a14e62",
+  "passed": true,
+  "seed": {
+    "inputs": {
+      "documents": [
+        {
+          "scope": "catalog/fixtures/simulator-world-source-l-shape-6-aisles",
+          "sha256": "651d09f2bae436b9ab26c777009e8fc28adb59addb01a22be160116c2b1d0b67",
+          "source": "../worlds/flowgraph/l_shape_6_aisles.json"
+        }
+      ],
+      "manifest_sha256": "3cb98f78525c4fc50460ec3d10e5217e566acada3c93cac594b329277165c6df"
+    },
+    "requested": true,
+    "skipped": [],
+    "status": "passed",
+    "warnings": [],
+    "written": [
+      [
+        "catalog/fixtures/simulator-world-source-l-shape-6-aisles",
+        1
+      ]
+    ]
+  },
+  "server": {
+    "protocol": "0.7.0",
+    "version": "0.1.0"
+  },
+  "v": 1
+}

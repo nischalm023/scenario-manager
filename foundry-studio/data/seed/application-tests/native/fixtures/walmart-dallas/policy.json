@@ -1,0 +1,60 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "a3d938c5-6393-46d2-9696-d8fa5b4e92d7",
+    "name": "walmart-dallas policy overlay",
+    "kind": "policy",
+    "depends_on": [
+      "3cbd200e-580a-40d8-b5ee-edf406aa1c88",
+      "5a9f3a20-1849-44aa-a6cd-a77b2e1a29e8"
+    ]
+  },
+  "required_components": [
+    "flow",
+    "queue"
+  ],
+  "$comment": "Operating choices layered over the world without editing it. The flow record is a PATCH of a declared entity — it merges before expansion (SPEC §8 step 2), so the generator compiles the new direction. The queue record is an OVERRIDE of a derived entity — it applies after expansion (step 4).",
+  "entities": [
+    {
+      "id": "cdda8cce-008d-4c20-b5b7-4d5a816e05c8",
+      "patch": true,
+      "components": {
+        "flow": {
+          "rule": "one_way",
+          "direction": "+x"
+        }
+      },
+      "$comment": "Aisle 1 runs eastbound this scenario. 'patch' means: this record must hit an entity an earlier layer declared — a mistyped UUID is a load error, not a silent half-formed entity. Only the named component is replaced; region and tiling are untouched. A contraflow experiment is this file with '-x'."
+    },
+    {
+      "derivation": {
+        "generator": "b83f97cc-9ff1-49ec-b547-5c1a1ff88411",
+        "key": "instance:0/local:order_queue"
+      },
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "b83f97cc-9ff1-49ec-b547-5c1a1ff88411",
+              "key": "instance:0/local:order_queue/cell:2,0"
+            },
+            {
+              "generator": "b83f97cc-9ff1-49ec-b547-5c1a1ff88411",
+              "key": "instance:0/local:order_queue/cell:2,1"
+            },
+            {
+              "generator": "b83f97cc-9ff1-49ec-b547-5c1a1ff88411",
+              "key": "instance:0/local:order_queue/cell:1,1"
+            },
+            {
+              "generator": "b83f97cc-9ff1-49ec-b547-5c1a1ff88411",
+              "key": "instance:0/local:order_queue/cell:0,1"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      },
+      "$comment": "Hold EasyLoop 1's queue to the last four cells of its horseshoe this run: the path IS the admission, so a scenario that admits fewer states a shorter path, and the two the run gives up are the two the entry leg starts on. The cells themselves are still floor — the queue simply does not name them. Replacement is wholesale, so path and discipline are restated — the price of predictable merges. Post-expansion, path entries are full chained derivation addresses; the template's local_ref form is meaningless out here."
+    }
+  ]
+}

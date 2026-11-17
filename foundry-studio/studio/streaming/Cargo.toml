@@ -1,0 +1,57 @@
+[package]
+name = "studio-streaming"
+version = "0.1.0"
+edition = "2024"
+description = "The streaming server (ruling D174): a run's messages received live from its runner on an internal websocket port and served to viewers holding a watch ticket on an external one, replayed within a bound and then live; registered and heartbeating in the API's database so the dispatcher can pick a live one per attempt; each run's top-level figures written as it goes"
+
+[[bin]]
+name = "studio-streaming"
+path = "src/main.rs"
+
+[features]
+default = []
+# The run-object store's cloud backend, as the API's: off by default, so a development build links no cloud SDK and
+# dev.sh needs no credential; the image turns it on.
+gcs = ["runstore/gcs"]
+
+[dependencies]
+studio-protocol = { path = "../protocol" }
+# The metric streams: the catalogue and the follower that computes every metric from a recording's frames
+# (`metric_streams`).
+studio-metrics = { path = "../metrics" }
+# `Token`: a presented token hashed as the API keeps it.
+run-invocation = { path = "../run-invocation" }
+desunits = { path = "../../sim/desunits" }
+# The run-object store the locked segments are uploaded to and a cold replay is fetched from, opened from
+# `CRUCIBLE_STORAGE_DIR` or `CRUCIBLE_STORAGE_BUCKET` as the API opens it.
+runstore = { path = "../../runstore" }
+# The container's frame reader: a frame's tag and instant off the wire, and the disk copy read back by scanning.
+worldview = { path = "../../worldview/worldview" }
+# The map compiler a browser lacks: a run's world document, which a recording's scenario block carries, compiled into
+# the floor and census the viewer draws on (`floor`), as `studio/runs` compiles it.
+dessim = { path = "../../sim/dessim" }
+worldview-floor = { path = "../../worldview/worldview-floor" }
+axum = { version = "0.8", features = ["ws"] }
+# `Bytes`, the form the store takes an object's body in.
+bytes = "1"
+# `split` on a websocket, so one branch reads a socket while another writes it.
+futures = "0.3"
+rustc-hash = "2"
+# The viewer's attach protocol, spelled by hand as `studio/viewer/js/src/protocol.ts` spells it.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "postgres", "chrono", "json"] }
+thiserror = "2"
+# `fs` for the disk copies of the frames.
+tokio = { version = "1", features = ["fs", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
+ulid = "1"
+
+[dev-dependencies]
+# The tests' fake runner and viewer speak the socket from outside, as a runner and a viewer do.
+tokio-tungstenite = "0.29"
+# A scratch cache folder and store folder per test.
+tempfile = "3"
+# The tests wrap the run-object store in one that holds its puts, to prove the sweeper spares a copy not yet uploaded.
+async-trait = "0.1"
+# `migrate!` for the tests' scratch schema needs the macros too.
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "postgres", "chrono", "json", "migrate", "macros"] }

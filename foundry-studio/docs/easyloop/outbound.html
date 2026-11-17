@@ -1,0 +1,100 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Walmart — post-pick handoffs</title><style>
+:root {
+  --paper:#f5f5f5;
+  --paper-2:#ececec;
+  --ink:#2d3142;
+  --muted:#4f5d75;
+  --rule:#bfc0c0;
+  --accent:#eb6c36;
+  --accent-tint:rgba(235,108,54,.08);
+  --link:#2e5aa8;
+  --sans:'Geist',Arial,sans-serif;
+  --mono:'Geist Mono',Menlo,Consolas,monospace;
+  --serif:'Instrument Serif',Georgia,serif;
+}
+* { box-sizing:border-box }
+body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.6 var(--sans) }
+main { max-width:1120px; margin:0 auto; padding:48px 40px 64px }
+a { color:var(--link); text-underline-offset:4px }
+a:focus-visible { outline:3px solid var(--link); outline-offset:4px }
+header { margin-bottom:32px }
+.status { display:inline-block; margin:0 0 16px; padding:4px 12px; border:1px solid var(--rule); border-radius:4px; font-size:12px; font-weight:600 }
+h1 { margin:0 0 20px; font:400 48px/1.12 var(--serif); letter-spacing:-.02em }
+h2 { margin:0 0 16px; font-size:28px; line-height:1.25; font-weight:600 }
+h3 { margin:0 0 12px; font-size:20px; line-height:1.35 }
+p { max-width:82ch; margin:0 0 16px }
+.lead { font-size:20px; line-height:1.5; max-width:68ch }
+.meta { color:var(--muted); font-size:14px }
+nav { display:flex; flex-wrap:wrap; gap:12px 28px; padding:20px 0; margin-bottom:40px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule) }
+section { margin:0 0 48px; scroll-margin-top:24px }
+.note { padding:18px 24px; margin:24px 0; border-left:4px solid var(--accent); background:var(--accent-tint) }
+.note p:last-child { margin-bottom:0 }
+.questions { list-style:none; padding:0; margin:24px 0; counter-reset:question }
+.questions>li { counter-increment:question; padding:24px 0 24px 60px; border-top:1px solid var(--rule); position:relative; break-inside:avoid }
+.questions>li::before { content:counter(question,decimal-leading-zero); position:absolute; left:0; top:22px; color:var(--accent); font:400 28px/1.3 var(--serif) }
+.questions p:last-child { margin-bottom:0 }
+.purpose { color:var(--muted); font-size:14px }
+code { font:.9em var(--mono); overflow-wrap:anywhere }
+table { width:100%; border-collapse:collapse; margin:24px 0; font-size:15px }
+caption { text-align:left; margin-bottom:12px; color:var(--muted); font-size:14px }
+th,td { padding:14px 16px; vertical-align:top; border-bottom:1px solid var(--rule); text-align:left }
+th { background:var(--paper-2); font-weight:600 }
+tbody th { background:transparent; width:24% }
+.sources tbody th { width:26% }
+footer { padding-top:24px; border-top:1px solid var(--rule); color:var(--muted); font-size:13px }
+@media(max-width:700px) {
+  main { padding:32px 20px 48px }
+  h1 { font-size:38px }
+  h2 { font-size:24px }
+  .lead { font-size:18px }
+  .questions>li { padding-left:44px }
+  th,td { padding:12px 8px }
+}
+@media print {
+  @page { margin:16mm }
+  body { background:#fff; font-size:10pt; line-height:1.45; print-color-adjust:exact; -webkit-print-color-adjust:exact }
+  main { max-width:none; padding:0 }
+  h1 { font-size:30pt }
+  h2 { font-size:18pt; break-after:avoid }
+  h3 { font-size:13pt; break-after:avoid }
+  .lead { font-size:12pt }
+  .meta,.purpose,caption,footer { font-size:9pt }
+  nav { display:none }
+  section { margin-bottom:24pt }
+  .questions>li { padding-top:14pt; padding-bottom:14pt }
+  .questions>li::before { top:12pt }
+  table { font-size:9pt }
+  tr { break-inside:avoid }
+  thead { display:table-header-group }
+  th,td { padding:9pt }
+  a { color:inherit }
+}
+
+pre {padding:20px;background:var(--paper-2);overflow:auto;line-height:1.5}
+pre code {overflow-wrap:normal}
+.table-scroll {overflow-x:auto}
+</style></head><body><main>
+<header><p class="status">13 September 2026 · provisional geometry</p><h1>Post-pick handoffs</h1><p class="lead">Five extraction stations, three sealer drop-offs, and one sealed-box pickup. Their processes determine which orders can use them.</p></header>
+<nav><a href="tasks.html">Task structure</a><a href="questions.html">Site questions</a><a href="isolation.html">Workflow isolation</a></nav>
+<section><h2>Source and placement</h2><p>DoO Draft 2.0 §4.3 gives the working equipment quantities. Figure 5.2 establishes the relative arrangement below. These are draft quantities, not a released procurement baseline. The figure is a raster image embedded in an EMF; its pixels were recovered directly after the PDF conversion omitted it.</p>
+<figure><img src="assets/doo-post-pick-layout.png" alt="Client drawing: from left to right, packed-box re-induction, three box-sealer induction points, auto-bag, Flex, and three DTS/DTC dispense stations above the buffer racks" style="width:100%;max-width:930px;height:auto"><figcaption>DoO Draft 2.0, Figure 5.2 — client source image, with no placement annotations added.</figcaption></figure>
+<p>The existing three eastern endpoints retain their coordinates and become DTS/DTC dispense stations. Six decant approaches are grouped into the western 26 metres to make room for the new handoffs. Racks, EasyLoops, floors and fleet declarations are unchanged. New approaches start one row inside the forecourt, leaving an unrestricted entrance row across its grid seam.</p>
+<div class="note"><p><strong>Approximate locations:</strong> the table gives presentation-cell positions in the current map. Western positions follow the drawing's relative order and available floor columns; they are not surveyed CAD coordinates. Each endpoint has its own presentation and approach cells. Shared downstream equipment capacity remains unmodelled.</p></div>
+<table><thead><tr><th>West to east</th><th>Count</th><th>Approximate X</th><th>Current use</th></tr></thead><tbody>
+<tr><th>Sealed-box pickup</th><td>1</td><td>31.1 m</td><td>Declared pickup and approach; reserved for future re-induction work. Never supplies a new empty box.</td></tr>
+<tr><th>Sealer drop-off</th><td>3</td><td>35.4, 38.8, 42.2 m</td><td>Completed boxes from EasyLoop.</td></tr>
+<tr><th>3P/CR bagging</th><td>1</td><td>47.3 m</td><td>Reusable order totes on the temporary direct/sorter routes.</td></tr>
+<tr><th>Flex</th><td>1</td><td>52.4 m</td><td>Completed SIOC trays under the current approximation.</td></tr>
+<tr><th>DTS/DTC dispense</th><td>3</td><td>Existing eastern positions</td><td>Reusable order totes on the source buffer route, including when the throughput setting skips buffer storage.</td></tr>
+</tbody></table></section>
+<section><h2>What this pass simulates</h2><p>The existing order container still goes through EasyLoop. Outbound selection now filters by container and exit-path traits before planning travel. A completed box goes to a sealer drop-off, a tray to Flex, and a tote to the appropriate bagging/dispense group. The normal handoff remains the existing configurable nine-second dwell. Empty reusable totes and trays return to storage; boxes leave the model at the sealer handoff.</p><p>The throughput preset still releases all orders at T0 and bypasses buffer storage. The canonical scenario retains its existing timing and buffer settings. Both workflow-isolation switches retain their previous meaning. Legacy maps without declared outbound roles retain their common extraction pool; a partially classified map cannot silently fall back to an unclassified port.</p></section>
+<section><h2>Initial validation</h2><p>A 20-minute full-map run completed 369 picks (1,107 picks/hour) with normal extraction and box induction. This is an initial flow check, not a sustained-throughput result. The map and routing gates pass; the relocated decant approaches are reachable, but putaway operation remains unvalidated. See the <a href="review-2026-09-12/post-pick-validation.md">validation record and run provenance</a>.</p></section>
+<section><h2>Buffer-enabled validation</h2><p>The eight-hour headless baseline now enables order buffering while keeping normal extraction and box induction. See the <a href="review-2026-09-12/buffer-review.md">buffer review</a> for the causal hypotheses, current release policy, incorrect buffered-box sequence, capacity discrepancy and measurement method. The earlier throughput preset continues to bypass the buffer for controlled comparisons.</p></section>
+<section><h2>Still to implement or confirm</h2><ul>
+<li><strong>Deferred until later this week by Daniel on September 13; not today's work:</strong> sealing, labelling, shared equipment capacity, and returning sealed DTS/DTC boxes through re-induction to buffer or dispense. Deliberately retain the sealer handoff as the simulation boundary for boxes while the other flow and scheduling issues are resolved.</li>
+<li>The CSV's DS/SC/3P mapping to DTC/DTS/3P/Cross-Region. Existing DS→buffer and SC/3P→direct/sorter assumptions remain. SC totes temporarily use the bagging endpoint; that is not a confirmed channel mapping.</li>
+<li>SIOC source-tote-to-Flex work without EasyLoop. Adding Flex does not implement that separate workflow.</li>
+<li>Surveyed cell positions, approach lengths, HTM pickup/drop dwell, and operator/equipment service times. Three sealer inputs do not establish three independent sealing machines.</li>
+</ul></section>
+<footer>Source: DFW6 Pilot Design of operations DoO Draft 2.0.docx, supplied 9 September. SHA-256: f121c2f2faadbee194169ade2a1617abf2f23a36f2b16f653d926089f003837f. Earlier <a href="review-2026-09-12/workflow-isolation.md">isolation rates</a> used the previous three-port map and are not measurements of this layout.</footer>
+</main></body></html>

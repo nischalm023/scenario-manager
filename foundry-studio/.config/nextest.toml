@@ -1,0 +1,15 @@
+# The test gate's runner: `cargo nextest run` at the root (cargo-nextest is
+# installed once with `cargo install cargo-nextest --locked`). Every test runs
+# as its own process and the binaries' tests run concurrently, so the gate's
+# wall time is bounded by its longest test, not by the sum of its binaries.
+[profile.default]
+# A test that is red on main must not hide the rest of the run: the gate's
+# result is the whole pass/fail set, read by name.
+fail-fast = false
+# Flag, never kill. A test past a minute belongs in the slow gate
+# (`scripts/test-slow-gate.sh`), unless its window can be cut to what its
+# assertion needs.
+slow-timeout = { period = "60s" }
+# Name every failure once more at the end, so a long run's reds are read in
+# one place.
+final-status-level = "fail"

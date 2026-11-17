@@ -1,0 +1,23 @@
+{
+  "name": "crucible-viewer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The TypeScript side of the Crucible viewer: the server's control protocol, and the wasm viewer that draws a run's frames on a canvas.",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build:wasm": "./build-wasm.sh release",
+    "build:ts": "rm -rf dist && tsc && mkdir -p dist/wasm && cp src/wasm/crucible_viewer.js src/wasm/crucible_viewer.d.ts src/wasm/crucible_viewer_bg.wasm dist/wasm/",
+    "build": "npm run build:wasm && npm run build:ts",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build:ts && node --test \"test/*.test.mjs\""
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3"
+  }
+}

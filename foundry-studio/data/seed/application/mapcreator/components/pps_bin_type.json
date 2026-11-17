@@ -1,0 +1,31 @@
+{
+  "asserts": "is",
+  "component": "pps_bin_type",
+  "meaning": "the entity is one Map Creator bin geometry type: the extents every bin of that type has, stated in centimetres where the rest of the export is millimetres",
+  "owner": "foundry-studio",
+  "refs": [],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {},
+    "$id": "urn:mapcreator-compat:0.1:components:pps_bin_type",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one Map Creator bin geometry type: the extents every bin of that type has, stated in centimetres where the rest of the export is millimetres",
+    "properties": {
+      "dimension": {
+        "description": "Map Creator's `dimension`, carried as the export states it.",
+        "type": [
+          "object"
+        ]
+      },
+      "tag": {
+        "description": "Map Creator's `tag`, carried as the export states it.",
+        "type": [
+          "array"
+        ]
+      }
+    },
+    "title": "pps_bin_type",
+    "type": "object"
+  },
+  "status": "ratified"
+}

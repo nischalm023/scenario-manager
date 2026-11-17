@@ -1,0 +1,852 @@
+{
+  "asserts": "has",
+  "component": "import_formatting",
+  "meaning": "the entity has how the file it was imported from wrote it, apart from the components that state what that file says about the site: for each record the entity carries facts from, keyed by the lens its kind is written back through, the record's place among its file's records, the order its objects state their keys in where the file's usual order is not it, the whole numbers it wrote with a decimal point, and what else its importer needs to write the record back byte for byte",
+  "owner": "foundry-studio",
+  "refs": [],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {
+      "record_index": {
+        "description": "An ordering key over the records of one Map Creator file. A whole number, never negative, and never above 2^53 − 1: a key travels as a JSON number and is read back by consumers whose numbers are IEEE doubles, where every integer up to 2^53 is exact and the next one is not — so a larger key can come back as a different key, and two records can come back with one key between them.",
+        "maximum": 9007199254740991,
+        "minimum": 0,
+        "title": "record_index",
+        "type": "integer"
+      }
+    },
+    "$id": "urn:mapcreator-compat:0.1:components:import_formatting",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity has how the file it was imported from wrote it, apart from the components that state what that file says about the site: for each record the entity carries facts from, keyed by the lens its kind is written back through, the record's place among its file's records, the order its objects state their keys in where the file's usual order is not it, the whole numbers it wrote with a decimal point, and what else its importer needs to write the record back byte for byte",
+    "properties": {
+      "mapcreator_aisle": {
+        "description": "How `vtm_zone.json` wrote the aisle record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "io_point_coordinates_as_pairs": {
+            "description": "The places in Map Creator's `io_point_coordinates`, counting from zero, of the entries that name a cell by a raw grid pair such as `[6, 1]` rather than by the coordinate string `\"[6,1]\"`, so the export writes each back as the file spelled it. Absent when every entry is a string.",
+            "items": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_block": {
+        "description": "How `block.json` wrote the block record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_cell": {
+        "description": "How `map.json` wrote the cell record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_charger": {
+        "description": "How `charger.json` wrote the charger record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_conveyor": {
+        "description": "How `conveyor.json` wrote the conveyor record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_conveyor_mapping": {
+        "description": "How `conveyor_mapping.json` wrote the conveyor mapping record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_dock_point": {
+        "description": "How `dock_point.json` wrote the dock point record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "absent": {
+            "description": "The Map Creator fields this record does not state and the export would otherwise write back — an empty list, or a value copied from another field — each by the name its file gives it. Absent when the record states them all.",
+            "items": {
+              "enum": [
+                "dock_barcode"
+              ],
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_location_profile": {
+        "description": "How `map.json` wrote the location profile record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_ods_exclusion": {
+        "description": "How `ods_excluded.json` wrote the ods exclusion record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_pps_bin": {
+        "description": "How `pps_bin.json` wrote the pps bin record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_pps_bin_type": {
+        "description": "How `pps_bintype.json` wrote the pps bin type record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_pps_seat": {
+        "description": "How `pps_seat.json` wrote the pps seat record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_pptl": {
+        "description": "How `pptl.json` wrote the pptl record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "group": {
+            "$ref": "#/$defs/record_index",
+            "description": "The module's group in `pptl.json`, counting from zero. A group is not one station's — one site lists ten stations in twenty groups, the same ten twice over with different peripheral ids — so the grouping is the module's place in the file, which no field of a record determines."
+          },
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "group",
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_presentation_point": {
+        "description": "How `pps.json` wrote the presentation point record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "absent": {
+            "description": "The Map Creator fields this record does not state and the export would otherwise write back — an empty list, or a value copied from another field — each by the name its file gives it. Absent when the record states them all.",
+            "items": {
+              "enum": [
+                "attributes.world_coordinates"
+              ],
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_rack_type": {
+        "description": "How `tote_type.json` wrote the rack type record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_sector": {
+        "description": "How the cells' `sector` field and the sector index write the sector this entity is: its place among the index's keys, and the JSON kind the cells spell its key in.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key": {
+            "description": "The sector's key in the JSON kind the cell list spells it — a number for a numbered sector, the string `undefined` for the cells assigned to none — while the sector index keys on the string form of both, which `external_ids.mapcreator_sector` holds. The export writes each back as its own file spells it.",
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "type": "object"
+      },
+      "mapcreator_sector_preference": {
+        "description": "How `sectorMxUPreferences.json` wrote the preference this entity is: its place among the file's carrier types, and how the file wrote its list of sectors — a preference's record is its list, so each pointer here runs from the list — so that the list is written so under whatever carrier type the preference has.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "mapcreator_station": {
+        "description": "How `pps.json` wrote the station record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "absent": {
+            "description": "The Map Creator fields this record does not state and the export would otherwise write back — an empty list, or a value copied from another field — each by the name its file gives it. Absent when the record states them all.",
+            "items": {
+              "enum": [
+                "entities.presentation_points",
+                "pps_points"
+              ],
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "dialect": {
+            "description": "Map Creator's `version`, carried as the export states it.",
+            "type": [
+              "number",
+              "string"
+            ]
+          },
+          "dialect_shape": {
+            "description": "Which of pps.json's two dialects this record was read by: `v3`, where `location` is a raw grid pair and the parts hang under `entities`, or `v2`, where `location` is a barcode and the points are `pps_points`. The export cannot write a station back without it, and it is a fact about the record's shape rather than about the site — `dialect` beside it is the `version` value the file states.",
+            "enum": [
+              "v2",
+              "v3"
+            ],
+            "type": "string"
+          },
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "pps_id": {
+            "description": "Map Creator's `pps_id`, carried as the export states it.",
+            "type": [
+              "number",
+              "string"
+            ]
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "dialect_shape",
+          "index",
+          "pps_id"
+        ],
+        "type": "object"
+      },
+      "mapcreator_station_point": {
+        "description": "How `pps.json` wrote the station point record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_tote_storage": {
+        "description": "How `tote_storage.json` wrote the tote storage record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      },
+      "mapcreator_zone": {
+        "description": "How `zone.json` wrote the zone record this entity is, beyond what the record says about the site.",
+        "properties": {
+          "index": {
+            "$ref": "#/$defs/record_index",
+            "description": "The record's ordering key in its Map Creator file: bigger means later. A lens list comes back in identity order and the identities are random, so the order a file states its records in is a fact this document carries. The values are gapped rather than consecutive so that inserting a record between two others takes a value between theirs and leaves every other record's key alone — a re-import is a diff, and renumbering a file would rewrite every entity of it."
+          },
+          "key_order": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+            "type": "object"
+          },
+          "written_negative_zero": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "written_with_point": {
+            "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "type": "object"
+      }
+    },
+    "title": "import_formatting",
+    "type": "object"
+  },
+  "status": "candidate"
+}

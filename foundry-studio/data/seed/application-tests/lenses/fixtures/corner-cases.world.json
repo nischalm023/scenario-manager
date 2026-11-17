@@ -1,0 +1,98 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "3a4c0d1e-6b7f-4a2c-9d15-0e8b7c6a5d43",
+    "name": "worldlens: the corner cases no surveyed document happens to contain",
+    "kind": "world",
+    "depends_on": []
+  },
+  "primary_frame": "11111111-1111-4111-8111-111111111111",
+  "required_components": ["frame", "region", "tiling"],
+  "$comment": "Seven rules of the language need a document that decides them, and no surveyed site happens to. A TIE: the station stands at [0, 0] and the two presentation points sit 900 steps away on either side, so only the tie-break can choose, and `a0000000-…` sorts below `b0000000-…`. A CLOSED INTERVAL: the east-half region's edges fall exactly on two cell centres, which a half-open rule would drop. AN EMPTY LIST: one sector names nobody and one names the west point, so `exists` has to say whether an empty list is a statement. THE REFERENCE FORMS: one entity spells out every way the format names another entity — a bare identity, a {generator, key} derivation address, a flat list of both — beside the three spellings that name nothing: a template-local handle, which is a form of the reader's that expansion rewrites, and an [x, y] position and an array inside an array, which are no address form of the reader's at all and reach nothing rather than raising. A DOTTED COMPONENT NAME: the last entity carries both `go.marker` and `go`, and each spells out a `station` field at the same dotted path, so `ref(x, y, \"go.marker.station\")` has to say which name it read. ONE THING REACHED TWICE: one hub, three routes and two stops, where the first and the last route reach the same stop and the middle one reaches a stop of a lower identity — so a lens field over those rows has to say whether it drops the repeat and which order it keeps. A DERIVED FRAME: the stamp at the end puts a `frame` on a template internal, so expansion mints a frame nobody declared — and a world's own frame graph never holds one, because the pipeline builds that graph out of the declarations before any generator runs. Two frames deep on purpose, so a walk over `pose.frame` and `frame.parent` has a chain to climb.",
+  "entities": [
+    { "id": "11111111-1111-4111-8111-111111111111", "name": "site",
+      "components": { "frame": { "dims": 2, "units": "mm", "unit_mm": 1 } } },
+    { "id": "22222222-2222-4222-8222-222222222222", "name": "floor",
+      "components": { "frame": { "parent": "11111111-1111-4111-8111-111111111111", "dims": 2, "units": "mm",
+                                 "transform_to_parent": { "translation": [0, 0], "scale": [1, 1] } } } },
+    { "id": "33333333-3333-4333-8333-333333333333", "name": "open floor",
+      "components": {
+        "region": { "frame": "22222222-2222-4222-8222-222222222222", "origin": [-1350, -450], "size": [2700, 900] },
+        "tiling": { "pitch": [900, 900] }
+      } },
+    { "id": "55555555-5555-4555-8555-555555555555", "name": "east half, edged on two cell centres",
+      "components": {
+        "region": { "frame": "22222222-2222-4222-8222-222222222222", "origin": [0, -450], "size": [900, 900] }
+      } },
+    { "id": "44444444-4444-4444-8444-444444444444", "name": "the station",
+      "components": {
+        "pose": { "frame": "22222222-2222-4222-8222-222222222222", "position": [0, 0] },
+        "station": { "kind": "pick", "role": "tie" }
+      } },
+    { "id": "a0000000-0000-4000-8000-000000000001", "name": "west point",
+      "components": {
+        "pose": { "frame": "22222222-2222-4222-8222-222222222222", "position": [-900, 0] },
+        "presentation_point": { "for": "inventory_tote" }
+      } },
+    { "id": "b0000000-0000-4000-8000-000000000002", "name": "east point",
+      "components": {
+        "pose": { "frame": "22222222-2222-4222-8222-222222222222", "position": [900, 0] },
+        "presentation_point": { "for": "inventory_tote" }
+      } },
+    { "id": "c0000000-0000-4000-8000-000000000003", "name": "the sector that names nobody",
+      "components": { "sector": { "members": [] } } },
+    { "id": "c0000000-0000-4000-8000-000000000004", "name": "the sector that names the west point",
+      "components": { "sector": { "members": ["a0000000-0000-4000-8000-000000000001"] } } },
+    { "id": "e0000000-0000-4000-8000-000000000006", "name": "the entity that names things every way the format allows, and two ways it does not",
+      "components": {
+        "reference_forms": {
+          "bare": "44444444-4444-4444-8444-444444444444",
+          "derived": { "generator": "33333333-3333-4333-8333-333333333333", "key": "cell:1,0" },
+          "several": [
+            "a0000000-0000-4000-8000-000000000001",
+            { "generator": "33333333-3333-4333-8333-333333333333", "key": "cell:2,0" }
+          ],
+          "nested": [["44444444-4444-4444-8444-444444444444"]],
+          "local": { "local_ref": "floor", "key": "cell:0,0" },
+          "position": [900, 0]
+        }
+      } },
+    { "id": "d0000000-0000-4000-8000-000000000005", "name": "the entity that spells the same path two ways",
+      "components": {
+        "go.marker": { "part": "envelope", "station": "44444444-4444-4444-8444-444444444444" },
+        "go": { "marker": { "station": "a0000000-0000-4000-8000-000000000001" } }
+      } },
+    { "id": "a1000000-0000-4000-8000-000000000001", "name": "the stop only the middle route reaches",
+      "components": { "stop": {} } },
+    { "id": "a2000000-0000-4000-8000-000000000002", "name": "the stop the outer two routes both reach",
+      "components": { "stop": {} } },
+    { "id": "b1000000-0000-4000-8000-000000000010", "name": "the hub the three routes leave",
+      "components": { "hub": {} } },
+    { "id": "c1000000-0000-4000-8000-000000000021", "name": "the first route",
+      "components": { "route": { "hub": "b1000000-0000-4000-8000-000000000010",
+                                 "to": "a2000000-0000-4000-8000-000000000002" } } },
+    { "id": "c1000000-0000-4000-8000-000000000022", "name": "the middle route",
+      "components": { "route": { "hub": "b1000000-0000-4000-8000-000000000010",
+                                 "to": "a1000000-0000-4000-8000-000000000001" } } },
+    { "id": "c1000000-0000-4000-8000-000000000023", "name": "the third route",
+      "components": { "route": { "hub": "b1000000-0000-4000-8000-000000000010",
+                                 "to": "a2000000-0000-4000-8000-000000000002" } } },
+    { "id": "f0000000-0000-4000-8000-000000000007", "name": "a template whose internal is a frame",
+      "components": {
+        "template": {
+          "entities": [
+            { "local": "grid", "name": "the stamped frame",
+              "components": { "frame": { "parent": "22222222-2222-4222-8222-222222222222", "dims": 2,
+                                         "units": "mm",
+                                         "transform_to_parent": { "translation": [10000, 0],
+                                                                  "scale": [-1, 1] } } } }
+          ]
+        }
+      } },
+    { "id": "f0000000-0000-4000-8000-000000000008", "name": "the one stamp of that template",
+      "components": {
+        "pose": { "frame": "22222222-2222-4222-8222-222222222222", "position": [10000, 10000] },
+        "stamp": { "template": "f0000000-0000-4000-8000-000000000007" }
+      } }
+  ]
+}

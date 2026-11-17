@@ -1,0 +1,85 @@
+{
+  "asserts": "is",
+  "component": "rack_type",
+  "meaning": "the entity is one Map Creator rack and carrier geometry template: the outer and inter-leg extents, the mass and centre of mass, and the shelf tree down to each slot's label. Nothing in the export places one anywhere",
+  "owner": "foundry-studio",
+  "refs": [],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {},
+    "$id": "urn:mapcreator-compat:0.1:components:rack_type",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one Map Creator rack and carrier geometry template: the outer and inter-leg extents, the mass and centre of mass, and the shelf tree down to each slot's label. Nothing in the export places one anywhere",
+    "properties": {
+      "density_profile": {
+        "description": "Map Creator's `density_profile`, carried as the export states it.",
+        "type": [
+          "array"
+        ]
+      },
+      "floor_structure": {
+        "description": "Map Creator's `floor_structure`, carried as the export states it.",
+        "type": [
+          "array"
+        ]
+      },
+      "initial_cm_of_the_rack": {
+        "description": "Map Creator's `initial_cm_of_the_rack`, carried as the export states it.",
+        "type": [
+          "array"
+        ]
+      },
+      "initial_mass_of_the_rack": {
+        "description": "Map Creator's `initial_mass_of_the_rack`, carried as the export states it.",
+        "type": [
+          "number"
+        ]
+      },
+      "inter_leg_depth": {
+        "description": "Map Creator's `inter_leg_depth`, carried as the export states it.",
+        "type": [
+          "number"
+        ]
+      },
+      "inter_leg_width": {
+        "description": "Map Creator's `inter_leg_width`, carried as the export states it.",
+        "type": [
+          "number"
+        ]
+      },
+      "rack_depth": {
+        "description": "Map Creator's `rack_depth`, carried as the export states it.",
+        "type": [
+          "number"
+        ]
+      },
+      "rack_outer_depth": {
+        "description": "Map Creator's `rack_outer_depth`, carried as the export states it.",
+        "type": [
+          "number"
+        ]
+      },
+      "rack_outer_width": {
+        "description": "Map Creator's `rack_outer_width`, carried as the export states it.",
+        "type": [
+          "number"
+        ]
+      },
+      "rack_width": {
+        "description": "Map Creator's `rack_width`, carried as the export states it.",
+        "type": [
+          "number"
+        ]
+      },
+      "replenishable": {
+        "description": "Map Creator's `replenishable`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      }
+    },
+    "title": "rack_type",
+    "type": "object"
+  },
+  "status": "ratified"
+}

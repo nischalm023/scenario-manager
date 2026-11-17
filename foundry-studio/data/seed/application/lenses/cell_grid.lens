@@ -1,0 +1,4 @@
+
+// Census 41, floor piece: a region that tiles itself into cells.
+pattern cell_grid { g: region, tiling; }
+lens cell_grid { anchor g: cell_grid; }

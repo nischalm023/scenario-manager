@@ -1,0 +1,384 @@
+{
+  "frame": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a coordinate system: dims, units, and a declared transform to a parent frame, chaining to the primary frame that alone says what one integer step is worth",
+    "refs": [
+      {
+        "path": "/parent",
+        "expects": "frame"
+      }
+    ]
+  },
+  "pose": {
+    "status": "ratified",
+    "asserts": "has",
+    "generator": null,
+    "meaning": "the entity has a position, and optionally a heading counter-clockwise from +x, stated in the frame it names",
+    "refs": [
+      {
+        "path": "/frame",
+        "expects": "frame"
+      }
+    ]
+  },
+  "region": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a bounded area in a frame — a rectangle in v0, anchored at its minimum corner",
+    "refs": [
+      {
+        "path": "/frame",
+        "expects": "frame"
+      }
+    ]
+  },
+  "cell": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a node an agent can occupy: a footprint and the classes physically able to traverse it; not a tile of any global lattice",
+    "refs": [
+      {
+        "path": "/location_profile",
+        "expects": "location_profile"
+      },
+      {
+        "path": "/zone",
+        "expects": "zone"
+      }
+    ]
+  },
+  "tiling": {
+    "status": "ratified",
+    "asserts": "has",
+    "generator": "tiling",
+    "meaning": "the entity has generator behaviour over its region: derive cells at a pitch, each carrying the component map in `derives`",
+    "refs": []
+  },
+  "flow": {
+    "status": "ratified",
+    "asserts": "has",
+    "generator": null,
+    "meaning": "the entity has direction policy over its cell_grid's cells, compiled into edges; absence means unrestricted, so flow restricts and never permits",
+    "refs": []
+  },
+  "stitch": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a declared linking rule between two expansions' cells, by contact within a tolerance or by explicit pairs; nothing links without one",
+    "refs": [
+      {
+        "path": "/a"
+      },
+      {
+        "path": "/b"
+      }
+    ]
+  },
+  "highway": {
+    "status": "ratified",
+    "asserts": "has",
+    "generator": null,
+    "meaning": "the cell is on a through-lane: a marker the Walmart maps' tilings stamp beside cell, carrying no fields; not a protocol component",
+    "refs": []
+  },
+  "pick": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a pick place: an operator takes goods out of an inventory carrier presented beside them and puts those goods into the carrier an HTM is holding out here; no fields, the presentation_point on the same cell says which carrier is held out",
+    "refs": []
+  },
+  "induct": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is an induct place: an operator puts goods into a carrier presented beside them here — the opposite direction from pick, the same shape, and no fields for the same reason",
+    "refs": []
+  },
+  "external_ids": {
+    "status": "ratified",
+    "asserts": "has",
+    "generator": null,
+    "meaning": "the entity has the identifiers other systems and sources use for it — a legacy system's, or a site template's key for what made it — carried as data: joinable, never identity, never a reference target",
+    "refs": []
+  },
+  "rack": {
+    "status": "candidate",
+    "asserts": "is",
+    "generator": "rack",
+    "meaning": "the entity is one bay of racking, pure steel: a footprint, the slot array, and one enumerated list of level heights bottom-up; it derives its relays and slots",
+    "refs": []
+  },
+  "relay": {
+    "status": "candidate",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is one handoff shelf where carriers change hands between the rack system and the floor, carrying the offset on the bay that placed it",
+    "refs": [
+      {
+        "path": "/rack",
+        "expects": "rack"
+      }
+    ]
+  },
+  "access": {
+    "status": "candidate",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is the junction between a run and the region it is worked from: the rack, the region along it, the face storage is reached from, and the classes it serves",
+    "refs": [
+      {
+        "path": "/rack"
+      },
+      {
+        "path": "/along",
+        "expects": "region"
+      },
+      {
+        "path": "/serves/*",
+        "expects": "robot_class"
+      }
+    ]
+  },
+  "access_cell": {
+    "status": "candidate",
+    "asserts": "has",
+    "generator": null,
+    "meaning": "the relay has a bound cell — the one an HTM occupies to exchange with it, found as the nearest cell centre within the relay level's reach, or stated by an override",
+    "refs": [
+      {
+        "path": "/cell",
+        "expects": "cell"
+      }
+    ]
+  },
+  "slot": {
+    "status": "candidate",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is one storage position in a rack: a level index into the rack's levels, a column and a depth",
+    "refs": [
+      {
+        "path": "/rack",
+        "expects": "rack"
+      }
+    ]
+  },
+  "storage": {
+    "status": "ratified",
+    "asserts": "has",
+    "generator": null,
+    "meaning": "the entity has capacity to hold: what it holds, inventory or order, and optionally which carrier type",
+    "refs": [
+      {
+        "path": "/carrier_type",
+        "expects": "carrier_type"
+      }
+    ]
+  },
+  "station": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a workstation: a kind — pick, put, induct or extract — and the role that names the product it is",
+    "refs": []
+  },
+  "queue": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a queue: an ordered path of cell addresses with a discipline; the path is the admission, so what the queue holds is the cells it declares",
+    "refs": [
+      {
+        "path": "/path/*",
+        "expects": "cell"
+      }
+    ]
+  },
+  "port": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a boundary point where things enter or leave the world: a direction, what crosses, and the timing",
+    "refs": [
+      {
+        "path": "/from"
+      },
+      {
+        "path": "/into"
+      }
+    ]
+  },
+  "template": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a packaged, parameterised sub-world of local-handle entities, instantiated by stamps",
+    "refs": []
+  },
+  "stamp": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": "stamp",
+    "meaning": "the entity is one placed instance of a template, optionally repeated; it always expands through instance:{i}",
+    "refs": [
+      {
+        "path": "/template",
+        "expects": "template"
+      }
+    ]
+  },
+  "robot_class": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a unit of fleet capability: model and configuration, locomotion, footprint, height and speeds — who made it and who rebranded it ride in lineage",
+    "refs": [
+      {
+        "path": "/native_frame",
+        "expects": "frame"
+      }
+    ]
+  },
+  "cohort": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": "cohort",
+    "meaning": "the entity is N robots of one class plus an assignment policy; it derives robot:{i}",
+    "refs": [
+      {
+        "path": "/robot_class"
+      },
+      {
+        "path": "/assignment/to/*"
+      }
+    ]
+  },
+  "robot": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is one robot: the class it is an instance of, and its assignment",
+    "refs": [
+      {
+        "path": "/robot_class"
+      },
+      {
+        "path": "/cohort",
+        "expects": "cohort"
+      },
+      {
+        "path": "/assignment/to/*"
+      }
+    ]
+  },
+  "carrier": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is one carrier: its type, its permanent designation, and its placement",
+    "refs": [
+      {
+        "path": "/carrier_type",
+        "expects": "carrier_type"
+      },
+      {
+        "path": "/pool",
+        "expects": "carrier_pool"
+      },
+      {
+        "path": "/placement/sector",
+        "expects": "sector"
+      }
+    ]
+  },
+  "carrier_type": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a kind of thing that rides an agent and holds merchandise — tote, tray or box — with its geometry and behaviour",
+    "refs": []
+  },
+  "carrier_pool": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": "carrier_pool",
+    "meaning": "the entity is a population of carriers of one type and designation with a placement rule; it derives carrier:{i}",
+    "refs": [
+      {
+        "path": "/carrier_type",
+        "expects": "carrier_type"
+      },
+      {
+        "path": "/placement/sector",
+        "expects": "sector"
+      }
+    ]
+  },
+  "charging": {
+    "status": "ratified",
+    "asserts": "has",
+    "generator": null,
+    "meaning": "the cell is a robot charging point: a marker with no fields, declared individually or through a tiling's derives; it denotes charging equipment, not a generic idle destination",
+    "refs": []
+  },
+  "lineage": {
+    "status": "ratified",
+    "asserts": "has",
+    "generator": null,
+    "meaning": "the entity has a provenance: an ordered list, origin first, of who made this product, who rebranded it, and what was fitted to it",
+    "refs": []
+  },
+  "waiting": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a holding pool whose capacity is its cell count — in-task holding at a station, a different fact from parking",
+    "refs": []
+  },
+  "presentation_point": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is where a carrier is presented to an operator",
+    "refs": [
+      {
+        "path": "/attributes/cell",
+        "expects": "cell"
+      },
+      {
+        "path": "/station"
+      }
+    ]
+  },
+  "sector": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a shapeless named grouping — explicit member refs, a region, or both — used as a selector for behaviours",
+    "refs": [
+      {
+        "path": "/members/*"
+      }
+    ]
+  },
+  "demand": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a workload source bound into a scenario: external data with column semantics, or synthetic parameters",
+    "refs": []
+  },
+  "easyloop": {
+    "status": "ratified",
+    "asserts": "is",
+    "generator": null,
+    "meaning": "the entity is a GreyOrange EasyLoop pick station, carrying the loop transit and per-pick timings that run it",
+    "refs": []
+  }
+}

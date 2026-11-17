@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>crucible-viewer — attach and draw</title>
+<!--
+  The headless proof: a page with no shell around it that attaches to a
+  finished run on a Crucible server, pushes every frame the server sends into
+  the wasm viewer, and draws the instant a query parameter asks for.
+
+  It exists so that "the browser draws the run" is something a command can be
+  run to check rather than something a person says after looking at a tab. A
+  screenshot of this page, taken by headless Chrome, is the round's evidence;
+  the line of text under the canvas is what makes the screenshot readable —
+  which backend the tab gave wgpu, how many frames arrived, and how many
+  robots, containers and cells were SUBMITTED by the last frame.
+
+  It says it is done only once a frame has actually drawn something: an
+  attachment that answered with a scenario and an end and no keyframe, or a
+  surface that refuses every acquisition, leaves a blank canvas, and a page
+  that called that success would make the gate say nothing.
+
+  It is a test page and not the product: `studio` is the shell, and it
+  arrives in the round after this one.
+
+    ?server=ws://127.0.0.1:21664/ws&run=<run id>&at=<ms>&overlay=visits|wait|speed
+-->
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; background: #f3f5f8; color: #16202c; }
+  canvas { display: block; width: 100vw; height: calc(100vh - 2.5rem); }
+  #said { height: 2.5rem; display: flex; align-items: center; padding: 0 1rem; white-space: pre; overflow: hidden; }
+  #said.failed { background: #b3261e; color: #fff; }
+</style>
+</head>
+<body>
+<canvas id="floor"></canvas>
+<div id="said">opening…</div>
+<script type="module">
+import { openViewer } from "../../../studio/viewer/js/dist/index.js";
+
+const asked = new URLSearchParams(location.search);
+const said = document.getElementById("said");
+const canvas = document.getElementById("floor");
+
+/** What the page has managed so far, shown under the canvas either way. */
+const state = { frames: 0, bytes: 0, backend: "-", window: [], drawn: [0, 0, 0], cursor: 0 };
+const report = (note) => {
+  said.textContent =
+    `${note} · ${state.backend} · ${state.frames} frames, ${state.bytes} bytes` +
+    ` · window ${state.window.join("–")} ms · cursor ${state.cursor} ms` +
+    ` · drew ${state.drawn[0]} robots, ${state.drawn[1]} containers, ${state.drawn[2]} cells`;
+};
+const failed = (why) => {
+  said.className = "failed";
+  report(`FAILED: ${why}`);
+};
+
+// The canvas is sized in device pixels; the camera is told the CSS size, which
+// is the space a pointer position arrives in.
+const ratio = window.devicePixelRatio || 1;
+const fit = (viewer) => {
+  const width = Math.max(1, Math.round(canvas.clientWidth * ratio));
+  const height = Math.max(1, Math.round(canvas.clientHeight * ratio));
+  canvas.width = width;
+  canvas.height = height;
+  viewer.resize(width, height, ratio);
+};
+
+try {
+  canvas.width = Math.max(1, Math.round(canvas.clientWidth * ratio));
+  canvas.height = Math.max(1, Math.round(canvas.clientHeight * ratio));
+  const viewer = await openViewer(canvas);
+  state.backend = viewer.backend();
+  window.viewer = viewer;
+  report("attaching");
+
+  if (asked.get("view")) viewer.set_view_mode(asked.get("view"));
+  if (asked.get("overlay")) viewer.set_overlay(asked.get("overlay"));
+
+  canvas.addEventListener("pointerdown", (e) => viewer.pointer_down(e.offsetX, e.offsetY, e.button === 1));
+  canvas.addEventListener("pointermove", (e) => viewer.pointer_move(e.offsetX, e.offsetY, e.shiftKey));
+  canvas.addEventListener("pointerup", () => viewer.pointer_up());
+  canvas.addEventListener("pointerleave", () => viewer.pointer_left());
+  canvas.addEventListener("wheel", (e) => viewer.wheel(e.deltaX, e.deltaY, e.shiftKey), { passive: true });
+  canvas.addEventListener("dblclick", (e) => viewer.fly_to(e.offsetX, e.offsetY, e.shiftKey));
+  window.addEventListener("resize", () => fit(viewer));
+
+  // The loop stops itself once the run has ended AND a frame has submitted
+  // something, so a headless browser has a settled picture to photograph
+  // rather than an animation that never stops — or a blank canvas it would
+  // have called a success.
+  let last = performance.now();
+  let settling = 8;
+  const draw = (now) => {
+    try {
+      viewer.frame((now - last) / 1000);
+    } catch (failure) {
+      failed(String(failure));
+      return;
+    }
+    last = now;
+    state.drawn = Array.from(viewer.drawn_counts());
+    state.window = Array.from(viewer.held_window());
+    state.cursor = viewer.cursor_ms();
+    const painted = state.drawn[2] > 0;
+    if (viewer.ended() && !viewer.playing() && painted) settling -= 1;
+    if (settling > 0) {
+      requestAnimationFrame(draw);
+      return;
+    }
+    report("drawn");
+    document.title = `drawn ${state.frames} frames`;
+    // What the driver checks, and the one thing it waits for.
+    window.viewerReport = { ...state };
+  };
+  requestAnimationFrame(draw);
+
+  const server = asked.get("server") ?? "ws://127.0.0.1:3001/ws";
+  const socket = new WebSocket(server);
+  socket.binaryType = "arraybuffer";
+  socket.addEventListener("open", () => {
+    socket.send(JSON.stringify({
+      type: "attach",
+      id: "1",
+      run: asked.get("run"),
+      from: Number(asked.get("from") ?? 0),
+      sections: asked.get("overlay") ? ["playback", "scalars", "heat", "motion"] : [],
+    }));
+  });
+  socket.addEventListener("message", (event) => {
+    if (typeof event.data === "string") {
+      const reply = JSON.parse(event.data);
+      if (reply.type === "error") failed(reply.message);
+      if (reply.type === "ended") {
+        // Every frame is in; put the cursor where the run is to be looked at,
+        // and let the socket go so nothing keeps the page busy.
+        viewer.set_cursor(Number(asked.get("at") ?? 0));
+        socket.close();
+      }
+      return;
+    }
+    const frame = new Uint8Array(event.data);
+    viewer.push_frame(frame);
+    state.frames += 1;
+    state.bytes += frame.length;
+    viewer.set_cursor(Number(asked.get("at") ?? 0));
+    report("reading");
+  });
+  socket.addEventListener("error", () => failed(`the socket to ${server} failed`));
+} catch (failure) {
+  failed(String(failure));
+}
+</script>
+</body>
+</html>

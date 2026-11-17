@@ -1,0 +1,38 @@
+{
+ "world": "cencora_v3_da50_sens6.json",
+ "scenario": {
+  "bulk_csv": "../../../../sim/desmap/tests/fixtures/cencora_data/bulk/peak_day_12_16.csv",
+  "items_csv": "../../../../sim/desmap/tests/fixtures/cencora_data/items.csv",
+  "max_pallet_units": 50,
+  "min_pallet_units": 35,
+  "units_per_tote": 1
+ },
+ "settings": {
+  "fidelity": "CollisionDes",
+  "htm": {
+   "empty_constant_speed": 4.5,
+   "loaded_constant_speed": 4.5
+  },
+  "motion_model": "htm_kinematic",
+  "operator": {
+   "time_per_pick_secs": 6.77
+  },
+  "pick": {
+   "embargo_secs": 7200.0
+  },
+  "putaway": {
+   "dwell_secs": 4.5,
+   "enabled": true,
+   "max_presentations_per_hour": 250.0,
+   "queue_depth": 4
+  },
+  "queue_factor": 4.0,
+  "sim_duration": {
+   "nanos": 0,
+   "secs": 36000
+  },
+  "vtm": {
+   "isolation": "off"
+  }
+ }
+}

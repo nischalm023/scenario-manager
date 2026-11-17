@@ -1,0 +1,56 @@
+{
+  "asserts": "is",
+  "component": "ods_exclusion",
+  "meaning": "the entity is one Map Creator obstacle-detection exclusion: a cell and a heading at which a robot's obstacle sensor is suppressed, because a fixture there would otherwise read as an obstacle",
+  "owner": "foundry-studio",
+  "refs": [
+    {
+      "expects": "cell",
+      "path": "/cell"
+    }
+  ],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {
+      "entity_id": {
+        "description": "One entity of this document, by identity. A declared identity is a UUID; a derived one is its root UUID and the generator's key path, which nothing in a converted document produces.",
+        "title": "entity_id",
+        "type": "string"
+      },
+      "legacy_value": {
+        "description": "A legacy value the dump wrote, kept verbatim in whatever JSON kind it wrote it. It states no type on purpose: the round trip writes back what the dump said, and correcting a kind here would be the converter deciding what the site meant.",
+        "title": "legacy_value"
+      }
+    },
+    "$id": "urn:mapcreator-compat:0.1:components:ods_exclusion",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one Map Creator obstacle-detection exclusion: a cell and a heading at which a robot's obstacle sensor is suppressed, because a fixture there would otherwise read as an obstacle",
+    "properties": {
+      "cell": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The cell the exclusion's tuple names, by entity identity. The tuple itself is `external_ids.mapcreator_ods_tuple`, and the export rebuilds it from this cell's barcode and the heading."
+      },
+      "cell_barcode_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `ods_tuple` verbatim, present only when the barcode half names no cell of this dump — 24 of one site's 180 do not. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "excluded": {
+        "description": "Map Creator's `excluded`, carried as the export states it.",
+        "type": [
+          "boolean"
+        ]
+      },
+      "heading": {
+        "description": "The heading half of Map Creator's `ods_tuple`, as the export spells it.",
+        "type": "string"
+      },
+      "tuple_unparsed": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `ods_tuple` verbatim, present only when it does not split into a barcode and a heading at all. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      }
+    },
+    "title": "ods_exclusion",
+    "type": "object"
+  },
+  "status": "ratified"
+}

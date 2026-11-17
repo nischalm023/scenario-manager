@@ -1,0 +1,15 @@
+[package]
+name = "seed-generator-cohort"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+description = "The cohort generator: a cohort becomes the robots it counts"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+worldgen-sdk = { workspace = true }
+seed-identity = { path = "../identity" }
+serde = { workspace = true }
+serde_json = { workspace = true }

@@ -1,0 +1,11 @@
+{
+  "lens": "cell_grid",
+  "owner": "agent-studio",
+  "status": "candidate",
+  "meaning": "the authored input projection used by Foundry’s tiling generator",
+  "version": "0.1.0",
+  "text": {
+    "path": "lenses/cell_grid.lens",
+    "sha256": "ec1f23e361695b7cd36ceb88de5b405fad59597f96c3771c6c53b35d17ef63fb"
+  }
+}

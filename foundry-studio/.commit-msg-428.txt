@@ -1,0 +1,14 @@
+test(dessim): delete the three zero-assertion probes (salience bucket 4, #426)
+
+minimal_putaway_event_audit asserted nothing and overwrote the checked-in
+minimal_putaway_trace.txt on every run, dirtying every contributor's tree;
+putaway2_pathfind_trace and cencora_station_trace were investigation
+probes for long-fixed bugs (a PathNotFound repro and an A*-exhaustion
+trace) that cannot fail. Zero assertions means zero validating power; git
+history preserves the harness shapes if a future investigation wants
+them. The orphaned trace fixture goes with its writer.
+
+putaway_audit keeps its two real tests — the physical-motion audit and
+the 1k completion test, red by ruling until issue #124's fixes land.
+common.rs's format_event_trace stays: fulfillment_orchestration still
+prints with it, and it is the diagnostic formatter investigations use.

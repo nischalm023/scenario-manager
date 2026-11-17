@@ -1,0 +1,13 @@
+[package]
+name = "seed-identity"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+description = "An entity identity as the reference reader reads one, for the seed generators that copy one"
+
+[dependencies]
+serde = { workspace = true }
+# The reader's own UUID parser, so that a generator copying an identity accepts
+# every spelling the reader accepts and writes back the one the reader writes.
+# Parsing only: no feature that would mint one.
+uuid = { version = "1", default-features = false }

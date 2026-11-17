@@ -1,0 +1,78 @@
+{
+  "version": 3,
+  "grid": {
+    "width": 10,
+    "depth": 10,
+    "cell_size_mm": 1000.0
+  },
+  "highways": [
+    {
+      "origin": [
+        0,
+        1
+      ],
+      "width": 10,
+      "height": 1,
+      "direction": "Bidirectional"
+    }
+  ],
+  "zones": [
+    {
+      "type": "relay",
+      "id": 1,
+      "origin": [
+        1,
+        2
+      ],
+      "length": 3,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 2,
+      "origin": [
+        4,
+        2
+      ],
+      "length": 3,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 3,
+      "origin": [
+        1,
+        6
+      ],
+      "length": 3,
+      "vertical_tote_capacity": 8
+    },
+    {
+      "type": "relay",
+      "id": 4,
+      "origin": [
+        4,
+        6
+      ],
+      "length": 3,
+      "vertical_tote_capacity": 8
+    }
+  ],
+  "stations": [
+    {
+      "id": 1,
+      "position": [
+        5,
+        0
+      ],
+      "presentation_cell": [
+        5,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    }
+  ]
+}

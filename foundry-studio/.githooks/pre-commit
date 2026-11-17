@@ -1,0 +1,22 @@
+#!/bin/sh
+# Blocks commits that introduce inline qualified type paths in Rust sources
+# (e.g. `crate::model::SimTime` written out instead of imported). The checker
+# prints the offending file:line:col list plus the fix rules; resolve them and
+# commit again. Deliberate keeps use `// keep-qualified: <reason>`; macro_rules!
+# bodies are exempt automatically.
+#
+# Enable per clone with:  git config core.hooksPath .githooks
+#
+# Note: the checker reads working-tree contents, so with partially staged .rs
+# files it judges the file as it sits on disk, not the staged version.
+
+staged_rs=$(git diff --cached --name-only --diff-filter=ACMR -- '*.rs')
+[ -z "$staged_rs" ] && exit 0
+
+if ! command -v python3 >/dev/null 2>&1; then
+    echo "pre-commit: python3 not found; skipping qualified-paths check" >&2
+    exit 0
+fi
+
+# shellcheck disable=SC2086 — filenames in this repo contain no spaces
+exec python3 "$(git rev-parse --show-toplevel)/scripts/find-qualified-paths.py" --check $staged_rs

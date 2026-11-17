@@ -1,0 +1,182 @@
+[
+  {
+    "pps_id": 31,
+    "type": "manual",
+    "version": "3.1",
+    "location": [
+      2,
+      1
+    ],
+    "allowed_modes": [
+      "pick"
+    ],
+    "orchestrator": "fleet-c",
+    "system": [
+      "sys-a"
+    ],
+    "blocks": [
+      "7"
+    ],
+    "entities": {
+      "blocks": [
+        "7",
+        "8"
+      ],
+      "presentation_points": [
+        {
+          "point_id": "P1",
+          "presented_for": "pick",
+          "light_curtain": true,
+          "presented_entity_allowed_types": [
+            "tote"
+          ],
+          "presenting_agent_type": "htm",
+          "presenting_agent_id": "agent-P1",
+          "attributes": {
+            "barcode": "621.127",
+            "world_coordinates": [
+              2,
+              1
+            ],
+            "display_attributes": {
+              "direction": 1,
+              "display_id": "screen-P1"
+            },
+            "pick_direction": 0,
+            "presentation_height": 820,
+            "bot_type": "HTM_QT_X1",
+            "bot_orientation": 2,
+            "is_workbench": false
+          }
+        }
+      ]
+    },
+    "associations": [
+      {
+        "id": 1,
+        "type": "transport",
+        "entities": [
+          "P1",
+          "Q7"
+        ],
+        "connections": [
+          {
+            "from": "Q7",
+            "to": "P1"
+          }
+        ]
+      }
+    ],
+    "status": "ready",
+    "pps_url": "http://station-31.example.invalid/api"
+  },
+  {
+    "pps_id": 32,
+    "type": "manual",
+    "version": "3.1",
+    "location": [
+      3,
+      1
+    ],
+    "allowed_modes": [
+      "pick",
+      "put",
+      "audit"
+    ],
+    "orchestrator": "fleet-a",
+    "system": [
+      "sys-a"
+    ],
+    "blocks": [
+      "8",
+      "7"
+    ],
+    "entities": {
+      "blocks": [
+        "8",
+        "11"
+      ],
+      "presentation_points": [
+        {
+          "point_id": "P2",
+          "presented_for": "put",
+          "light_curtain": true,
+          "presented_entity_allowed_types": [
+            "tote"
+          ],
+          "presenting_agent_type": "htm",
+          "presenting_agent_id": "agent-P2",
+          "attributes": {
+            "barcode": "633.337",
+            "world_coordinates": [
+              3,
+              3
+            ],
+            "display_attributes": {
+              "direction": 1,
+              "display_id": "screen-P2"
+            },
+            "pick_direction": 0,
+            "presentation_height": 760,
+            "bot_type": "HTM_QT_X1",
+            "bot_orientation": 2,
+            "is_workbench": false
+          }
+        },
+        {
+          "point_id": "P1",
+          "presented_for": "pick",
+          "light_curtain": true,
+          "presented_entity_allowed_types": [
+            "tote"
+          ],
+          "presenting_agent_type": "htm",
+          "presenting_agent_id": "agent-P1",
+          "attributes": {
+            "barcode": "631.137",
+            "world_coordinates": [
+              3,
+              1
+            ],
+            "display_attributes": {
+              "direction": 1,
+              "display_id": "screen-P1"
+            },
+            "pick_direction": 0,
+            "presentation_height": 790,
+            "bot_type": "HTM_QT_X1",
+            "bot_orientation": 2,
+            "is_workbench": false
+          }
+        }
+      ]
+    },
+    "associations": [],
+    "status": "closed",
+    "pps_url": "http://station-32.example.invalid/api"
+  },
+  {
+    "pps_id": 33,
+    "type": "tote_induction",
+    "version": "3.1",
+    "location": [
+      4,
+      3
+    ],
+    "allowed_modes": [
+      "put"
+    ],
+    "orchestrator": "fleet-b",
+    "system": [
+      "sys-b"
+    ],
+    "blocks": [],
+    "entities": {
+      "blocks": [],
+      "presentation_points": []
+    },
+    "associations": [],
+    "status": "ready",
+    "pps_url": "http://station-33.example.invalid/api"
+  }
+]

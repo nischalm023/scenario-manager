@@ -1,0 +1,12 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "Cencora NDC2's top scope (customer/cencora/site/ndc2): the site's name, and the primary frame its map scope declares, which a site's top scope names so that every position in the site's export resolves.",
+  "doc": {
+    "id": "a72f473e-513d-443f-bd61-90cdbc1f6ec3",
+    "name": "Cencora NDC2",
+    "kind": "world",
+    "depends_on": []
+  },
+  "primary_frame": "3d9bc39d-f6ed-5ea7-8ef9-f73fe4109eda",
+  "entities": []
+}

@@ -1,0 +1,3 @@
+# What ./dev.sh writes in studio/: its logs and its state
+.dev-log/
+.dev-state/

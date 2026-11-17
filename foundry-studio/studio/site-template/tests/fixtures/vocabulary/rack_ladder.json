@@ -1,0 +1,33 @@
+{
+  "component": "rack_ladder",
+  "owner": "agent-studio",
+  "status": "experimental",
+  "meaning": "the robot has a drive riding its racking, with a trapezoidal speed profile",
+  "asserts": "has",
+  "schema": {
+    "$comment": "Shared vocabulary proposal from the incumbent Foundry dessim robot aspects. Open to fields a newer writer adds. Numbers name their units; they are robot figures, not positions in a frame.",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "A symmetric trapezoidal speed profile. An omitted deceleration equals acceleration; consumers may refuse unequal acceleration and deceleration until supported.",
+    "properties": {
+      "accel_mm_s2": {
+        "exclusiveMinimum": 0,
+        "type": "number"
+      },
+      "decel_mm_s2": {
+        "exclusiveMinimum": 0,
+        "type": "number"
+      },
+      "max_speed_mm_s": {
+        "exclusiveMinimum": 0,
+        "type": "number"
+      }
+    },
+    "required": [
+      "max_speed_mm_s",
+      "accel_mm_s2"
+    ],
+    "title": "rack_ladder",
+    "type": "object"
+  },
+  "refs": []
+}

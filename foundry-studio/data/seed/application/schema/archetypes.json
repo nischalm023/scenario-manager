@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:archetypes",
+  "title": "world protocol — archetypes",
+  "description": "The familiar things a warehouse is made of — a cell_grid, a rack, a station, a placed stamp — read off the components an entity carries rather than declared by a type tag. There is no type field in this format and these lenses do not add one: each is an `if the entity carries this, then it must also carry that` rule, so the archetype is a way of looking at an entity, never a thing the data says about itself (SPEC §2).",
+  "$comment": "A lens is a statement about a whole entity, and a record is not always a whole entity: a later layer may patch or re-declare one component of something an earlier layer introduced. So the authoring profile applies these to the records that introduce an entity and to template internals, and never to patches, overrides or suppressions. See README.md, 'What the lenses cannot see'.",
+  "$defs": {
+    "lenses": {
+      "title": "archetype lenses",
+      "description": "Every lens, applied together to one entity's component map.",
+      "allOf": [
+        {"$ref": "#/$defs/cell_grid"},
+        {"$ref": "#/$defs/flowed_cell_grid"},
+        {"$ref": "#/$defs/holding_pool"},
+        {"$ref": "#/$defs/placed_rack"},
+        {"$ref": "#/$defs/placed_stamp"},
+        {"$ref": "#/$defs/placed_cell"},
+        {"$ref": "#/$defs/placed_station"},
+        {"$ref": "#/$defs/queue_on_its_own_entity"}
+      ]
+    },
+    "cell_grid": {
+      "title": "cell_grid",
+      "description": "A region carrying a tiling is a cell_grid — the grid of cells that tiling makes inside it. A tiling derives its cells at a pitch across an area, so the area has to be there: a tiling without a region has nothing to tile (SPEC §5).",
+      "if": {
+        "required": ["tiling"]
+      },
+      "then": {
+        "required": ["region"]
+      }
+    },
+    "flowed_cell_grid": {
+      "title": "flowed cell_grid",
+      "description": "Flow is policy over the cells of one region's expansion, so it is stated on the region whose cells it governs (SPEC §5, §7).",
+      "if": {
+        "required": ["flow"]
+      },
+      "then": {
+        "required": ["region"]
+      }
+    },
+    "holding_pool": {
+      "title": "holding pool",
+      "description": "A waiting area's capacity is its cell count, so it must be an area that has cells: a region, and a tiling to derive them (SPEC §10).",
+      "if": {
+        "required": ["waiting"]
+      },
+      "then": {
+        "required": ["region", "tiling"]
+      }
+    },
+    "placed_rack": {
+      "title": "placed rack",
+      "description": "A rack is anchored by its pose — the footprint's minimum corner at heading zero — and every slot and relay it derives, and every cell a relay reaches for, is measured from there (SPEC §5).",
+      "if": {
+        "required": ["rack"]
+      },
+      "then": {
+        "required": ["pose"]
+      }
+    },
+    "placed_stamp": {
+      "title": "placed stamp",
+      "description": "A stamp places a template's local origin somewhere, and a repeat marches from that somewhere; without a pose there is nowhere for the instance to be (SPEC §6).",
+      "if": {
+        "required": ["stamp"]
+      },
+      "then": {
+        "required": ["pose"]
+      }
+    },
+    "placed_cell": {
+      "title": "placed cell",
+      "description": "A cell is a place an agent can stand, so a hand-declared one has to say where it is. A derived cell gets its pose from the tiling, which is why an override that decorates one carries neither (SPEC §5).",
+      "if": {
+        "required": ["cell"]
+      },
+      "then": {
+        "required": ["pose"]
+      }
+    },
+    "placed_station": {
+      "title": "placed station",
+      "description": "A workstation is somewhere: operators stand at it and robots queue to it (SPEC §5's anchoring rules, §10's station row).",
+      "if": {
+        "required": ["station"]
+      },
+      "then": {
+        "required": ["pose"]
+      }
+    },
+    "queue_on_its_own_entity": {
+      "title": "queue on its own entity",
+      "description": "A station states where it presents, at the cells carrying its `presentation_point`; the cells a robot queues on to reach one of them are a lane, an entity of its own carrying `queue` whose path ends at the cell it feeds. That is the one way a document states them, so an entity carrying `queue` is never also a station, a presentation point, a cell, a port or a relay, and a presentation cell no lane ends at has no queue at all. A `tiling` carrying `queue`, the Walmart Dallas catalog's order queue, is an older form this rule leaves alone.",
+      "if": {
+        "required": ["queue"]
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {"required": ["station"]},
+            {"required": ["presentation_point"]},
+            {"required": ["cell"]},
+            {"required": ["port"]},
+            {"required": ["relay"]}
+          ]
+        }
+      }
+    }
+  }
+}

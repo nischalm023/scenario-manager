@@ -1,0 +1,24 @@
+name: Read access to world-proto
+description: Load the read-only deploy key for the private world-proto repository into an SSH agent, for cargo and for image builds.
+inputs:
+  key:
+    description: The deploy key's private half (the WORLD_PROTO_DEPLOY_KEY secret).
+    required: true
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        KEY: ${{ inputs.key }}
+      run: |
+        if [ -z "$KEY" ]; then
+          echo "the WORLD_PROTO_DEPLOY_KEY secret is not set: cargo cannot fetch the private world-proto repository" >&2
+          exit 1
+        fi
+        # The agent outlives this step; later steps of the job find it through SSH_AUTH_SOCK.
+        eval "$(ssh-agent -s)" >/dev/null
+        ssh-add - <<<"$KEY"
+        echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> "$GITHUB_ENV"
+        # Cargo fetches through the git command line, so the URL rewrite and the agent apply as they do for git.
+        echo "CARGO_NET_GIT_FETCH_WITH_CLI=true" >> "$GITHUB_ENV"
+        ./scripts/use-world-proto-over-ssh.sh

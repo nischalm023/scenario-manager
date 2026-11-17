@@ -1,0 +1,25 @@
+[package]
+name = "site-template"
+version = "0.1.0"
+edition = "2024"
+description = "Agent Studio's template evaluation engine: a site template and its knob values in, the entities a made site declares out, with no I/O"
+
+[dependencies]
+studio-protocol = { path = "../protocol" }
+# The reader's own stamp instantiation (`instantiate_stamp`), so a placement and a stamp share one implementation of
+# stamping (spec 05 section 3.6).
+site-model = { path = "../../sim/site-model" }
+# The registry's JSON Schemas, validated as world-proto-server validates them (its server pins 0.26).
+jsonschema = { version = "0.26", default-features = false }
+rustc-hash = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[dev-dependencies]
+# The tasks, which the named compositions `tests/flowgraph.rs` resolves find by name.
+native-modules = { path = "../../native-modules" }
+desgraph = { path = "../../sim/desgraph" }
+# The map half of spec 05 section 5.5's first acceptance: an evaluation's document loads in the simulator's reader.
+# And spec 06's flow compiler with its fixtures, which `tests/flowgraph.rs` holds the engine and the registry to.
+dessim = { path = "../../sim/dessim" }

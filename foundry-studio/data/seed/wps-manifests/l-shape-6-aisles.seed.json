@@ -1,0 +1,10 @@
+{
+  "v": 1,
+  "vocabulary": [],
+  "entries": [
+    {
+      "scope": "catalog/fixtures/simulator-world-source-l-shape-6-aisles",
+      "document": "../worlds/flowgraph/l_shape_6_aisles.json"
+    }
+  ]
+}

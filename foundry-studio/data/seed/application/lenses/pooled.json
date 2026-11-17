@@ -1,0 +1,11 @@
+{
+  "lens": "pooled",
+  "owner": "agent-studio",
+  "status": "candidate",
+  "meaning": "the authored input projection used by Foundry’s carrier_pool generator",
+  "version": "0.1.0",
+  "text": {
+    "path": "lenses/pooled.lens",
+    "sha256": "850ba82e0bf816973f4b212744781c20a749a66f4309d756e6646750f0a0cb96"
+  }
+}

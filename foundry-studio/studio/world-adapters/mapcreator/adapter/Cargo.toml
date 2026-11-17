@@ -1,0 +1,31 @@
+[package]
+name = "mapcreator-adapter"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+description = "The Map Creator adapter: a Map Creator site export into a site's entities and back out, round-trippable"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+worldadapt-sdk = { workspace = true }
+# The read direction: every Map Creator record kind is a lens over the site's
+# entities, and the serializers turn the objects it projects into records. The
+# lens engine brings the reader with it, of which this module uses what building
+# a graph needs and nothing else.
+worldlens = { workspace = true }
+worldprotocol-core = { workspace = true }
+# The canonical spelling a host writes a component map in, which an ingest
+# compares a component with the site's by: the crate the SDK and the reader
+# both spell it with.
+worldcanonical = { workspace = true }
+# Lookup indexes only: an external id to the entity that carries it, a barcode
+# to its cell. Nothing whose iteration order reaches a change or a file.
+rustc-hash = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = { workspace = true }
+# Parsing and holding identities, never drawing or computing one: neither the
+# `v4` nor the `v5` feature is enabled here. A new identity comes from the
+# host, through `worldadapt_sdk::fresh_id`.
+uuid = { version = "1", features = ["serde"] }

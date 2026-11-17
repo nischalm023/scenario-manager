@@ -1,0 +1,9 @@
+{
+  "tasks": [
+    {"type": "InitializeFleet"},
+    {"type": "FillInventory", "after": ["InitializeFleet"]},
+    {"type": "LoadOrders", "after": ["FillInventory"]},
+    {"type": "FleetConservation", "after": ["FillInventory"]},
+    {"type": "FulfillOrders", "after": ["LoadOrders"]}
+  ]
+}

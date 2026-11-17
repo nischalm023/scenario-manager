@@ -1,0 +1,42 @@
+{
+ "$comment": "Scenario 5 for Dematic (Jared LeBaron, 2026-10-12/13): Scenario 3 rerun with perfect sequencing and 44-case pallets. Inputs in Dematic's terms: DA50 fixed cycle 15.8 s (the world copy: fork pick 7.1 s, drop 5.3 s, alignment 1.7 s); pick floor 9.0 s per station = 6.77 s operator + 2.23 s HTM swap (400 per hour); induction 225 cartons per hour per station all-in = a 13.77 s fill (3600 / 261.4) + the 2.23 s swap; 44 cartons per pallet, every pallet exactly 44 (a customer's tail short of 44 never forms a pallet); 12 cartons per layer is the default of pick.layer_size, read only by layer sequencing; picks start after a 2 h putaway-only embargo; 8 h of simtime, so hours 2 to 7 compare with Scenarios 1 to 4. The settings that every baseline run of this lineage passed on the command line are stated here instead (ignore_hour_gate, random_slots, forbid_rack_after_secs, htm_wip_factor), so one command reproduces the run; putaway.queue_depth is omitted because htm_wip_factor replaces it. Sequencing: run with --settings pick.sequencing=strict (perfect sequence: every pallet presented in exact case order, one tote per case), or with --settings pick.sequencing=layer (every layer of 12 presented before the next, in any order within it); the mode is not written here so that the same file also serves the comparison run without it.",
+ "world": "cencora_v3_da50_baseline.json",
+ "scenario": {
+  "bulk_csv": "../../../../sim/desmap/tests/fixtures/cencora_data/bulk/peak_day_12_16.csv",
+  "items_csv": "../../../../sim/desmap/tests/fixtures/cencora_data/items.csv",
+  "max_pallet_units": 44,
+  "min_pallet_units": 44,
+  "units_per_tote": 1
+ },
+ "settings": {
+  "fidelity": "CollisionDes",
+  "htm": {
+   "empty_constant_speed": 4.5,
+   "loaded_constant_speed": 4.5
+  },
+  "motion_model": "htm_kinematic",
+  "operator": {
+   "time_per_pick_secs": 6.77
+  },
+  "pick": {
+   "embargo_secs": 7200.0
+  },
+  "putaway": {
+   "htm_wip_factor": 1.5,
+   "dwell_secs": 4.5,
+   "enabled": true,
+   "forbid_rack_after_secs": 7150.0,
+   "ignore_hour_gate": true,
+   "max_presentations_per_hour": 261.4,
+   "random_slots": true
+  },
+  "queue_factor": 4.0,
+  "sim_duration": {
+   "nanos": 0,
+   "secs": 28800
+  },
+  "vtm": {
+   "isolation": "off"
+  }
+ }
+}

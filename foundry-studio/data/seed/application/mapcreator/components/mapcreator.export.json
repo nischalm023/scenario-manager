@@ -1,0 +1,123 @@
+{
+  "asserts": "is",
+  "component": "mapcreator.export",
+  "meaning": "the entity is one Map Creator export's own table of contents: which of the nineteen files the site shipped, which of them were empty and in which form, the per-file headers that are envelopes rather than model data, and how each file's text was written beyond its values",
+  "owner": "foundry-studio",
+  "refs": [],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {},
+    "$id": "urn:mapcreator-compat:0.1:components:mapcreator.export",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one Map Creator export's own table of contents: which of the nineteen files the site shipped, which of them were empty and in which form, the per-file headers that are envelopes rather than model data, and how each file's text was written beyond its values",
+    "properties": {
+      "conveyor_header": {
+        "description": "`conveyor.json`'s own dialect version and its vendor port classification, which sit beside the conveyor list rather than in it.",
+        "type": "object"
+      },
+      "files": {
+        "additionalProperties": {
+          "enum": [
+            "array",
+            "object",
+            "empty_array",
+            "empty_object",
+            "other"
+          ],
+          "type": "string"
+        },
+        "description": "Each file the site shipped, and the form it arrived in: `array`, `object`, `empty_array` or `empty_object`. A file the site never shipped is absent from this map. All four are different facts — five of the nineteen files are empty on every site seen, three of them as `{}` and the rest as `[]` — and the export reproduces whichever it found rather than guessing.",
+        "type": "object"
+      },
+      "key_order": {
+        "additionalProperties": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "description": "The order the file wrote the keys of an object of this record in, for each object whose order is not the one the export entity's `key_orders` gives an object with the same keys at the same place, by its JSON pointer from the record's own object (`\"\"` for that object; on the export entity, which holds what lies outside every record, the file's name and its pointer in the file). JSON gives key order no meaning; the export writes each file back byte for byte, so the order is a fact this document carries.",
+        "type": "object"
+      },
+      "key_orders": {
+        "additionalProperties": {
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "type": "array"
+        },
+        "description": "How the export's files usually order an object's keys: for each place an object stands at in a file, with list positions left out (`map.json[].map_values[]` is every cell), and for each set of keys an object there states, the order most objects with that set state it in when the set first appears, which a later import keeps while any object there still states the set; the orders kept first, then the sets most objects state. A record whose object departs records its own order (`key_order`); for an object no file stated, the place's first order serves.",
+        "type": "object"
+      },
+      "location_profiles_empty": {
+        "description": "`true` when `map.json` states `location_profiles` as an empty list, which no profile entity can say: a floor object stating no list and one stating an empty list are two texts. Absent otherwise.",
+        "type": "boolean"
+      },
+      "pps_bin_envelope": {
+        "description": "The captured HTTP request `pps_bin.json` is stored as — url, method and headers. Not model data, and carried because the export has to write the file back as it found it.",
+        "type": "object"
+      },
+      "pps_bin_type_envelope": {
+        "description": "As `pps_bin_envelope`, for `pps_bintype.json`.",
+        "type": "object"
+      },
+      "pptl_empty_groups": {
+        "description": "The places in `pptl.json`, counting from zero, of the groups that hold no device. A group is rebuilt from its devices, so one with none has nothing else to say it stood there.",
+        "items": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "type": "array"
+      },
+      "spacing": {
+        "additionalProperties": {
+          "properties": {
+            "after": {
+              "type": "string"
+            },
+            "before": {
+              "type": "string"
+            },
+            "indent": {
+              "type": "string"
+            },
+            "separators": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "description": "How each file's text lays its value out, where it is not one compact line with nothing around it: `separators`, the one between two items and the one between a key and its value; `indent`, the unit each line is indented by per level, where every item stands on a line of its own; `before` and `after`, the whitespace around the value. A file whose text no such spacing writes is refused at ingest, naming what in it cannot be written back.",
+        "type": "object"
+      },
+      "written_negative_zero": {
+        "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the zeros the file wrote with a minus sign (`-0.0`), which a reader holds as the zero without one, so that the export writes them back with one.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "written_with_point": {
+        "description": "The JSON pointers, from the record's own object (on the export entity, the file's name and the pointer in the file), of the whole numbers the file wrote with a decimal point (`40.0`), which a reader spells as integers, so that the export writes them back with one.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "files"
+    ],
+    "title": "mapcreator.export",
+    "type": "object"
+  },
+  "status": "experimental"
+}

@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "grid": {
+    "width": 5,
+    "depth": 5,
+    "cell_size_mm": 1000.0
+  },
+  "highways": [
+    {
+      "origin": [
+        0,
+        1
+      ],
+      "width": 5,
+      "height": 1,
+      "direction": "Bidirectional"
+    }
+  ],
+  "zones": [],
+  "stations": [
+    {
+      "id": 1,
+      "position": [
+        2,
+        0
+      ],
+      "presentation_cell": [
+        2,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    }
+  ]
+}

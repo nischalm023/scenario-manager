@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:components:structure",
+  "title": "world protocol — structure components",
+  "description": "The built structure of a site and the connectivity rules over it: racks and what they project, the storage they hold, the junction a run is worked from, the cell a relay is bound to, the flow policy inside one expansion, and the stitches that join two expansions. These are the components that turn declared geometry into a graph. Mirrors the crate module of the same name.",
+  "$defs": {
+    "side": {
+      "title": "side",
+      "description": "Which face of a bay is meant, stated in the run template's own frame; the stamp's heading turns it like all stamped geometry. Only an access states one.",
+      "type": "string",
+      "enum": ["+x", "-x", "+y", "-y"]
+    },
+    "direction": {
+      "title": "direction",
+      "description": "Which way along an axis traffic runs.",
+      "type": "string",
+      "enum": ["+x", "-x", "+y", "-y"]
+    },
+    "rack": {
+      "title": "rack",
+      "description": "One bay of racking: pure steel, and nothing about who serves it. Its vertical truth is one enumerated list of levels, bottom-up, because real bays are not uniformly spaced and a nominal pitch would be a second number that could disagree with the survey. It derives one relay per position of every relay level and one slot per storage position. A rack reachable from both sides is one rack with two accesses, not two logical racks (SPEC §5).",
+      "type": "object",
+      "required": ["slots_wide", "slots_deep", "footprint", "levels"],
+      "properties": {
+        "slots_wide": {
+          "description": "Storage columns across the face.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/count_positive"
+        },
+        "slots_deep": {
+          "description": "How deep storage goes from the access face — 2 is double-deep, where the rear position is reachable only after the front carrier moves.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/count_positive"
+        },
+        "slot_pitch": {
+          "description": "Along-face and depth spacing of storage positions.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps_pair_positive"
+        },
+        "footprint": {
+          "description": "Extent at heading 0, anchored with its minimum corner at the rack's pose (SPEC §5).",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps_pair_positive"
+        },
+        "levels": {
+          "description": "Every shelf this bay has, enumerated bottom-up. Heights increase down the list, and a list that does not increase is a load error: `the lowest level` and `level 3` both have to mean one thing. There is no level pitch and no level count (SPEC §5).",
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {"$ref": "#/$defs/level"}
+            },
+            {"$ref": "urn:worldproto:0.7:values#/$defs/param_ref"}
+          ]
+        }
+      }
+    },
+    "level": {
+      "title": "level",
+      "description": "One entry of a rack's `levels`: a height, and either the relays that protrude from it or the storage it holds — never both. An entry carrying `positions` is a relay level; one without is a storage level; and both key forms index the full list, so inserting a relay level renumbers nothing (SPEC §5).",
+      "type": "object",
+      "required": ["height"],
+      "properties": {
+        "height": {
+          "description": "How far above the floor at the rack's pose this shelf sits.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps"
+        },
+        "positions": {
+          "description": "Where this level's shelves stand, each an `[along, out]` offset from the bay's origin corner in the bay's own frame. Which side of the steel a shelf protrudes on is the second number — at or below zero for the low-`y` face, at or beyond the footprint's depth for the high-`y` one — so the side is geometry and not an enum. Stating them is what makes this a relay level.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps_pair_list"
+        },
+        "reach": {
+          "description": "How far from a relay of this level a cell may sit and still be the one it binds. A radius around the shelf: the binding search asks proximity and nothing else.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps_positive"
+        }
+      },
+      "if": {
+        "properties": {
+          "positions": true
+        },
+        "required": ["positions"]
+      },
+      "then": {
+        "description": "The offsets place the shelves on their own, but nothing says how far one may reach for a cell, so a relay level states a reach.",
+        "required": ["reach"]
+      }
+    },
+    "access": {
+      "title": "access",
+      "description": "The junction between a run of racking and the region it is worked from: this run, that region, this face, these classes. Four fields are the whole of it and it derives nothing at all — it is a statement, and the SPEC §7 checks and the motion model are its consumers, which is what makes a world expand identically whether or not a fleet is layered over it (SPEC §5).",
+      "type": "object",
+      "required": ["rack", "along", "face"],
+      "properties": {
+        "rack": {
+          "description": "The run: a stamp whose instances are the bays.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        },
+        "along": {
+          "description": "The region this face is worked from — a cell_grid where the classes that work it drive, a plain untiled region where they climb.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        },
+        "face": {
+          "description": "The face storage is reached from — the one place in the format that states a side. Where a relay stands is geometry on its own level, because in a rack | aisle | rack zone the two are opposite.",
+          "$ref": "#/$defs/side"
+        },
+        "serves": {
+          "description": "The robot classes that work this face. Absent means unrestricted.",
+          "type": "array",
+          "items": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"}
+        }
+      }
+    },
+    "storage": {
+      "title": "storage",
+      "description": "What a rack or buffer may hold. Two racks of identical steel differ only in this: the order buffer is the inventory rack template with `holds` replaced (SPEC §10).",
+      "type": "object",
+      "required": ["holds"],
+      "properties": {
+        "holds": {
+          "description": "Which side of the operation this steel serves.",
+          "type": "string",
+          "enum": ["inventory", "order"]
+        },
+        "carrier_type": {
+          "description": "The carrier type this storage takes, where it takes only one.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        }
+      }
+    },
+    "slot": {
+      "title": "slot",
+      "description": "One storage position of a rack, individually addressable so a stored carrier, a damaged position, or a double-deep front/rear pair can be named. Depth counts from the access face, which is what makes front and rear mean anything (SPEC §5).",
+      "type": "object",
+      "required": ["rack", "level", "col", "depth"],
+      "properties": {
+        "rack": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "level": {
+          "description": "Which entry of the rack's `levels` this shelf is, zero-based.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/count"
+        },
+        "col": {
+          "description": "Storage column across the face, zero-based.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/count"
+        },
+        "depth": {
+          "description": "How far back from the access face, zero-based.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/count"
+        }
+      }
+    },
+    "relay": {
+      "title": "relay",
+      "description": "One handoff shelf, where carriers change hands between the rack system and the floor. It names the rack and the level it stands on, how high that is and where on the bay it sits — not the cell somebody stands on, which is the `access_cell` beside it (SPEC §5).",
+      "type": "object",
+      "required": ["rack", "level", "index", "height", "offset"],
+      "properties": {
+        "rack": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "level": {
+          "description": "Which entry of the rack's `levels` this shelf stands on, zero-based.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/count"
+        },
+        "index": {
+          "description": "Which of that level's positions this is, in the order they are written.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/count"
+        },
+        "height": {"$ref": "urn:worldproto:0.7:values#/$defs/steps"},
+        "offset": {
+          "description": "The entry of its level's `positions` that derived it: `[along, out]` from the bay's origin corner, in the bay's own frame. An offset, not a world position — the rack's pose carries it into a frame.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps_pair"
+        }
+      }
+    },
+    "access_cell": {
+      "title": "access cell",
+      "description": "The binding: the one cell an HTM occupies to exchange with this relay. Nothing is minted for it — it names an ordinary cell of the cell_grid the HTM travels, found by the binding search or stated by an override, which are the same component either way (SPEC §5).",
+      "type": "object",
+      "required": ["cell"],
+      "properties": {
+        "cell": {"$ref": "urn:worldproto:0.7:values#/$defs/cell_address"}
+      }
+    },
+    "flow": {
+      "title": "flow",
+      "description": "Which way traffic runs inside one generator's cells — a policy statement, not a physical one. A cell_grid with no flow compiles two-way: flow restricts, never permits (SPEC §5, §7).",
+      "type": "object",
+      "required": ["rule"],
+      "properties": {
+        "rule": {"$ref": "#/$defs/flow_rule"},
+        "direction": {"$ref": "#/$defs/direction"}
+      },
+      "if": {
+        "properties": {
+          "rule": {
+            "enum": ["one_way", "alternating_rows"]
+          }
+        },
+        "required": ["rule"]
+      },
+      "then": {
+        "description": "Both of these rules run traffic a stated way, so the direction is not optional for them.",
+        "required": ["direction"]
+      }
+    },
+    "flow_rule": {
+      "title": "flow rule",
+      "description": "How a direction turns into arcs: `one_way` emits along-axis arcs the stated way only, with crossings to the next row still two-way; `two_way` emits every orthogonal-neighbour arc both ways; `alternating_rows` alternates each row, even rows running the stated way (SPEC §5).",
+      "type": "string",
+      "enum": ["one_way", "two_way", "alternating_rows"]
+    },
+    "stitch": {
+      "title": "stitch",
+      "description": "A declared linking rule between two expansions' cells. Nothing links without one — two cell_grids that touch are two cell_grids that touch, never an implicit merge (SPEC §5).",
+      "type": "object",
+      "required": ["a", "b", "rule"],
+      "properties": {
+        "a": {
+          "description": "One endpoint. Any entity whose expansion contributes cells will do — a region, a stamp.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        },
+        "b": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "rule": {"$ref": "#/$defs/stitch_rule"},
+        "tolerance": {
+          "description": "How far apart two cells may be and still be linked by a contact rule; overlap counts as zero.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/steps"
+        },
+        "bidirectional": {"type": "boolean", "default": true},
+        "curve": {"$ref": "#/$defs/circular_arc"},
+        "pairs": {
+          "$comment": "Not `required` when the rule is explicit, because the reader does not require it either: an explicit stitch with no pairs silently links nothing there. Raised as an open question in README.md rather than settled here.",
+          "description": "The cells an explicit rule links, two per pair, in the one address vocabulary a queue path also uses.",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {"$ref": "urn:worldproto:0.7:values#/$defs/cell_address"}
+          }
+        }
+      }
+    },
+    "circular_arc": {
+      "type": "object",
+      "required": ["frame", "center", "clockwise"],
+      "properties": {
+        "frame": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "center": {"$ref": "urn:worldproto:0.7:values#/$defs/steps_pair"},
+        "clockwise": {"type": "boolean"},
+        "start": {"$ref": "urn:worldproto:0.7:values#/$defs/steps_pair"},
+        "end": {"$ref": "urn:worldproto:0.7:values#/$defs/steps_pair"}
+      }
+    },
+    "stitch_rule": {
+      "title": "stitch rule",
+      "description": "How the two endpoints' cells are matched: `contact` links each cell of the smaller expansion to its nearest partner within tolerance, many-to-one by design; `explicit` links exactly the stated pairs, used where contact would be wrong — a station's only legal entry, a threshold, a directional gate (SPEC §5).",
+      "type": "string",
+      "enum": ["contact", "explicit"]
+    }
+  }
+}

@@ -1,0 +1,27 @@
+[package]
+name = "worldview-render"
+version = "0.1.0"
+edition = "2024"
+description = "The wgpu renderer desvis and the browser viewer both draw a warehouse floor with: the camera, the cell layer, robots, containers, arrows and rack steel"
+
+[dependencies]
+desgraph = { path = "../../sim/desgraph" }
+desunits = { path = "../../sim/desunits" }
+worldview = { path = "../worldview" }
+
+bytemuck = { version = "1", features = ["derive"] }
+rustc-hash = "2"
+serde = { version = "1", features = ["derive"] }
+# Only WGSL, which is what the shaders here are written in. A backend is the
+# viewer's choice — desvis takes eframe's, the browser viewer takes WebGPU or
+# WebGL — and enabling one here would enable it for both, since cargo unions
+# the features of a shared dependency.
+wgpu = { version = "23", default-features = false, features = ["wgsl"] }
+
+[dev-dependencies]
+# The tests write a scene down and read it back; the encoding itself belongs
+# to whoever sends one.
+rmp-serde = "1"
+# The same WGSL front end wgpu uses; `cargo check` never sees the shaders, so
+# the tests parse and validate them.
+naga = { version = "23", features = ["wgsl-in"] }

@@ -1,0 +1,31 @@
+{
+  "asserts": "is",
+  "component": "location_profile",
+  "meaning": "the entity is one named bundle of Map Creator bot permissions: per bot version and per heading, which lift heights are legal loaded and unloaded and how much ground clearance there is. Every cell that names it carries cell.traversable_by read off this, which is the flat and lossy form",
+  "owner": "foundry-studio",
+  "refs": [],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {},
+    "$id": "urn:mapcreator-compat:0.1:components:location_profile",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the entity is one named bundle of Map Creator bot permissions: per bot version and per heading, which lift heights are legal loaded and unloaded and how much ground clearance there is. Every cell that names it carries cell.traversable_by read off this, which is the flat and lossy form",
+    "properties": {
+      "bot_orientation_details": {
+        "description": "Map Creator's `bot_orientation_details`, carried as the export states it.",
+        "type": [
+          "object"
+        ]
+      },
+      "edge_height_clearance": {
+        "description": "Map Creator's `edge_height_clearance`, carried as the export states it.",
+        "type": [
+          "object"
+        ]
+      }
+    },
+    "title": "location_profile",
+    "type": "object"
+  },
+  "status": "ratified"
+}

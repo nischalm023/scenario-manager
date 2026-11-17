@@ -1,0 +1,31 @@
+[
+  {
+    "charger_id": 5,
+    "charger_location": "613.317",
+    "entry_point_location": "612.217",
+    "reinit_point_location": "690.009",
+    "charger_direction": 2,
+    "entry_point_direction": 0,
+    "reinit_point_direction": 1,
+    "charger_type": "contact",
+    "mode": "auto",
+    "status": "charging",
+    "charge": 64.5,
+    "attached_butler_id": "bot-4",
+    "error_reason": "",
+    "blocked_by_butler_ids": [],
+    "power_status": "on"
+  },
+  {
+    "charger_id": 6,
+    "charger_location": "643.347",
+    "entry_point_location": "000.042",
+    "reinit_point_location": "690.009",
+    "charger_direction": 0,
+    "entry_point_direction": 2,
+    "reinit_point_direction": 3,
+    "charger_type": "contact",
+    "mode": "manual",
+    "status": "idle"
+  }
+]

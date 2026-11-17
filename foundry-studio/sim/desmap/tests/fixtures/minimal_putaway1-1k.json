@@ -1,0 +1,84 @@
+{
+    "version": 3,
+    "grid": {
+        "width": 8,
+        "depth": 8,
+        "cell_size_mm": 1000.0
+    },
+    "highways": [],
+    "zones": [
+        {
+            "type": "relay",
+            "id": 1,
+            "origin": [
+                6,
+                2
+            ],
+            "length": 4,
+            "sides": "LeftOnly",
+            "vertical_tote_capacity": 10,
+            "vtm_count": 1
+        }
+    ],
+    "stations": [
+        {
+            "id": 1,
+            "station_type": "Pick",
+            "position": [
+                4,
+                0
+            ],
+            "presentation_cell": [
+                3,
+                0
+            ],
+            "edge": "Bottom",
+            "bins": 1,
+            "queue_path": [
+                [
+                    2,
+                    0
+                ]
+            ],
+            "exit_direction": "South"
+        },
+        {
+            "id": 2,
+            "station_type": "Putaway",
+            "position": [
+                4,
+                7
+            ],
+            "presentation_cell": [
+                3,
+                7
+            ],
+            "bins": 1,
+            "queue_path": [
+                [
+                    2,
+                    7
+                ]
+            ],
+            "exit_direction": "North"
+        }
+    ],
+    "settings": {
+        "num_htms": 4,
+        "fidelity": "CollisionDes",
+        "putaway": {
+            "enabled": true
+        },
+        "queue_factor": 3.0
+    },
+    "scenario": {
+        "num_skus": 10,
+        "total_inventory_units": 2000,
+        "num_orders": 500,
+        "total_order_picks": 1000,
+        "units_per_tote": 1,
+        "popular_skus_pct": 0.0,
+        "inventory_popular_share": 0.0,
+        "order_popular_share": 0.0
+    }
+}

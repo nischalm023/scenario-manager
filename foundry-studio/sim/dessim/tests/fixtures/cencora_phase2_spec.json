@@ -1,0 +1,25 @@
+{
+ "world": "cencora_phase2.json",
+ "scenario": {
+  "items_csv": "../../../../sim/desmap/tests/fixtures/cencora_data/items.csv",
+  "bulk_csv": "../../../../sim/desmap/tests/fixtures/cencora_data/bulk/peak_day_12_16.csv",
+  "units_per_tote": 1,
+  "min_pallet_units": 35,
+  "max_pallet_units": 50
+ },
+ "settings": {
+  "fidelity": "CollisionDes",
+  "queue_factor": 3.0,
+  "sim_duration": {
+   "secs": 36000,
+   "nanos": 0
+  },
+  "pick": {
+   "embargo_secs": 7200.0
+  },
+  "putaway": {
+   "enabled": true,
+   "dwell_secs": 4.5
+  }
+ }
+}

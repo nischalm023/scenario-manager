@@ -1,0 +1,157 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "4c7e1a90-3b25-4d68-9f0e-8a21c6d5b3f7",
+    "name": "cohort and carrier-pool shapes neither site has",
+    "kind": "world"
+  },
+  "primary_frame": "6a2f8c41-0d93-4e57-b1c8-2f7e9a3d5c06",
+  "required_components": ["frame", "robot_class", "cohort", "carrier_type", "carrier_pool", "sector"],
+  "$comment": "Hand-made, because both shipped sites spell every identity a cohort or a pool copies in the one spelling the reader writes, and state each optional field one way. Every cohort and pool below turns on what the reader does to a field before it writes it onto a robot or a carrier: an identity in another spelling, written back hyphenated and lowercase; an assignment's `to` absent, empty or stated; a placement's sector absent, null or stated; a field the reader's view does not name; a count of zero.",
+  "entities": [
+    {
+      "id": "6a2f8c41-0d93-4e57-b1c8-2f7e9a3d5c06",
+      "name": "site",
+      "components": { "frame": { "dims": 3, "units": "mm", "unit_mm": 1 } }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-0000000000a1",
+      "name": "a floor class",
+      "components": { "robot_class": { "role": "htm", "footprint": [850, 650], "height": 300 } }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-0000000000a2",
+      "name": "a climbing class",
+      "components": { "robot_class": { "role": "vtm", "locomotion": "ladder", "height": 3600 } }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-0000000000c1",
+      "name": "a tote",
+      "components": { "carrier_type": { "kind": "tote", "size": [650, 450, 300] } }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-0000000000e1",
+      "name": "a sector naming nobody",
+      "components": { "sector": { "members": [] } }
+    },
+    {
+      "id": "c0000000-0000-4000-8000-000000000001",
+      "name": "a cohort with no assignment",
+      "components": { "cohort": { "robot_class": "b1000000-0000-4000-8000-0000000000a1", "count": 2 } }
+    },
+    {
+      "id": "c0000000-0000-4000-8000-000000000002",
+      "name": "a cohort naming its class in capitals, free to go anywhere",
+      "components": {
+        "cohort": { "robot_class": "B1000000-0000-4000-8000-0000000000A1", "count": 1, "assignment": { "kind": "free" } }
+      }
+    },
+    {
+      "id": "c0000000-0000-4000-8000-000000000003",
+      "name": "a cohort naming its class braced, held to a sector named in capitals",
+      "components": {
+        "cohort": {
+          "robot_class": "{b1000000-0000-4000-8000-0000000000a2}",
+          "count": 2,
+          "assignment": { "kind": "hard", "to": ["B1000000-0000-4000-8000-0000000000E1"] }
+        }
+      }
+    },
+    {
+      "id": "c0000000-0000-4000-8000-000000000004",
+      "name": "a cohort naming its class without hyphens, its assignment null",
+      "components": {
+        "cohort": { "robot_class": "b10000000000400080000000000000a1", "count": 1, "assignment": null }
+      }
+    },
+    {
+      "id": "c0000000-0000-4000-8000-000000000005",
+      "name": "a cohort naming its class as a URN, held to an empty list",
+      "components": {
+        "cohort": {
+          "robot_class": "urn:uuid:b1000000-0000-4000-8000-0000000000a1",
+          "count": 1,
+          "assignment": { "kind": "hard", "to": [] }
+        }
+      }
+    },
+    {
+      "id": "c0000000-0000-4000-8000-000000000006",
+      "name": "a cohort of none",
+      "components": { "cohort": { "robot_class": "b1000000-0000-4000-8000-0000000000a1", "count": 0 } }
+    },
+    {
+      "id": "c0000000-0000-4000-8000-000000000007",
+      "name": "a cohort and an assignment each carrying a field the reader's view does not name",
+      "components": {
+        "cohort": {
+          "robot_class": "b1000000-0000-4000-8000-0000000000a1",
+          "count": 1,
+          "shift": "night",
+          "$comment": "a note on the cohort",
+          "assignment": { "kind": "free", "priority": 3, "$comment": "a note on the assignment" }
+        }
+      }
+    },
+    {
+      "id": "d0000000-0000-4000-8000-000000000001",
+      "name": "a pool with no placement",
+      "components": {
+        "carrier_pool": { "carrier_type": "b1000000-0000-4000-8000-0000000000c1", "designation": "inventory", "count": 2 }
+      }
+    },
+    {
+      "id": "d0000000-0000-4000-8000-000000000002",
+      "name": "a pool naming its type in capitals, placed in a sector named in capitals",
+      "components": {
+        "carrier_pool": {
+          "carrier_type": "B1000000-0000-4000-8000-0000000000C1",
+          "designation": "order",
+          "count": 1,
+          "placement": { "kind": "sector", "sector": "B1000000-0000-4000-8000-0000000000E1" }
+        }
+      }
+    },
+    {
+      "id": "d0000000-0000-4000-8000-000000000003",
+      "name": "a pool whose placement carries fields of its own, and a note",
+      "components": {
+        "carrier_pool": {
+          "carrier_type": "b1000000-0000-4000-8000-0000000000c1",
+          "designation": "inventory",
+          "count": 2,
+          "placement": {
+            "kind": "distributed_storage",
+            "fill_fraction": 0.5,
+            "spread": { "levels": [0, 3], "weight": 1.25 },
+            "$comment": "a note on the placement"
+          }
+        }
+      }
+    },
+    {
+      "id": "d0000000-0000-4000-8000-000000000004",
+      "name": "a pool whose placement names its sector as null",
+      "components": {
+        "carrier_pool": {
+          "carrier_type": "b1000000-0000-4000-8000-0000000000c1",
+          "designation": "order",
+          "count": 1,
+          "placement": { "kind": "sector", "sector": null }
+        }
+      }
+    },
+    {
+      "id": "d0000000-0000-4000-8000-000000000005",
+      "name": "a pool of none, its placement null",
+      "components": {
+        "carrier_pool": {
+          "carrier_type": "b1000000-0000-4000-8000-0000000000c1",
+          "designation": "inventory",
+          "count": 0,
+          "placement": null
+        }
+      }
+    }
+  ]
+}

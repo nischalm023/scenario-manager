@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:components:identity",
+  "title": "world protocol — identity components",
+  "description": "What other systems and sources call an entity. This file exists because SPEC §2 gives the identifiers other systems and sources use a component of their own, and the reference crate has no module for them — a gap the sync test reports rather than papers over.",
+  "$defs": {
+    "external_ids": {
+      "title": "external ids",
+      "description": "The identifiers other systems and sources know this entity by — a legacy system's, or a site template's key for what made it — carried as data: joinable, indexable, convertible, never identity, and never a reference target. This is how a conversion keeps a visible 1:1 with its source without reopening the string-identity door (SPEC §2).",
+      "type": "object",
+      "additionalProperties": {
+        "$comment": "Property names are unconstrained: a naming system is whatever the other system is called, and a legacy name is not ours to spell. The values are constrained, because a value you cannot join on is not an external id.",
+        "description": "Whatever that system stores under that name — a number, a string, a flag. Never an object: an external id is a value to join on.",
+        "type": ["string", "number", "boolean"]
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+[package]
+name = "scenario-spec"
+version = "0.1.0"
+edition = "2024"
+description = "Spec 07's one crate for the check and the runner: a scenario version's checks, the seeded workload generator, the map to dessim's run spec, the site facts and a variant's application, with no I/O"
+
+[dependencies]
+studio-protocol = { path = "../protocol" }
+desunits = { path = "../../sim/desunits" }
+# The site facts are read from dessim's own loaded world, and the closed values are those dessim enumerates.
+dessim = { path = "../../sim/dessim" }
+# `log` and `exp` written in Rust: one generator body gives one workload from every build on any platform.
+libm = "0.2"
+rustc-hash = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# RFC 8785 canonical JSON for the stream's lines: the bytes the check digests and the runner receives.
+serde_jcs = "0.1"
+sha2 = "0.10"
+thiserror = "2"
+
+[dev-dependencies]
+# The tasks, which these tests find by name when they compile a flow or prepare a run.
+native-modules = { path = "../../native-modules" }
+# The generated files written beside a world and loaded through dessim's own reader.
+tempfile = "3"

@@ -1,0 +1,40 @@
+[package]
+name = "worldview"
+version = "0.1.0"
+edition = "2024"
+description = "The `.worldview` a simulation run is recorded into: the container's frames and index, the typed records inside them, and the state a reader rebuilds from one keyframe and the deltas after it"
+
+[features]
+default = []
+# The `worldview` inspection binary. Off by default so a wasm build of the
+# library never pulls in clap.
+cli = ["dep:clap"]
+
+[dependencies]
+desgraph = { path = "../../sim/desgraph" }
+desunits = { path = "../../sim/desunits" }
+
+crc32c = "0.6"
+rmp-serde = "1"
+# The rebuilt state keys robots, totes, stations and grid counters by id.
+rustc-hash = "2"
+serde = { version = "1", features = ["derive"] }
+serde_bytes = "0.11"
+thiserror = "2"
+
+clap = { version = "4", features = ["derive"], optional = true }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+zstd = "0.13"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+ruzstd = "0.8"
+
+[dev-dependencies]
+proptest = "1"
+tempfile = "3"
+
+[[bin]]
+name = "worldview"
+path = "src/bin/worldview.rs"
+required-features = ["cli"]

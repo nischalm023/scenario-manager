@@ -1,0 +1,36 @@
+{
+  "asserts": "is",
+  "component": "template.description",
+  "meaning": "the entity is a site template's card: its title, its one-line description, and what it was built from",
+  "owner": "agent-studio",
+  "refs": [],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "template.description",
+    "description": "the entity is a site template's card: its title, its one-line description, and what it was built from",
+    "$comment": "Written for world-proto's registry from Agent Studio's 05-template-workflow.md section 3.2 (notes/agent-studio-2026-10-17/design/specs/05-template-workflow.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "title",
+      "text"
+    ],
+    "properties": {
+      "title": {
+        "description": "The card's title.",
+        "type": "string",
+        "maxLength": 80
+      },
+      "text": {
+        "description": "What the template lays out, in a line.",
+        "type": "string",
+        "maxLength": 600
+      },
+      "built_from": {
+        "description": "Where the template came from.",
+        "type": "string",
+        "maxLength": 200
+      }
+    }
+  },
+  "status": "experimental"
+}

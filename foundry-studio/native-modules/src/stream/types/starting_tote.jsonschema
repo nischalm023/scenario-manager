@@ -1,0 +1,49 @@
+{
+  "$defs": {
+    "SkuQuantity": {
+      "additionalProperties": false,
+      "description": "Units of one SKU: what an order wants of it, or what a tote holds of it.",
+      "properties": {
+        "quantity": {
+          "description": "How many units, at least 1.",
+          "format": "uint32",
+          "maximum": 4294967295,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sku": {
+          "description": "The SKU's id.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sku",
+        "quantity"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One tote standing in the racks at world time 0.",
+  "properties": {
+    "contents": {
+      "description": "What the tote holds, at least one SKU; several make a mixed tote.",
+      "items": {
+        "$ref": "#/$defs/SkuQuantity"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "id": {
+      "description": "The tote's id.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "contents"
+  ],
+  "title": "StartingTote",
+  "type": "object"
+}

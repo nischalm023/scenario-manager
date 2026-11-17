@@ -1,0 +1,8 @@
+data: {"candidates":[{"content":{"parts":[{"text":"The person wants both lists, so I will call both tools together.","thought":true}],"role":"model"},"index":0}],"usageMetadata":{"promptTokenCount":812,"totalTokenCount":812},"modelVersion":"gemini-2.5-flash","responseId":"hand-written-1"}
+
+data: {"candidates":[{"content":{"parts":[{"text":"Looking at the sites "}],"role":"model"},"index":0}],"usageMetadata":{"promptTokenCount":812,"totalTokenCount":812},"modelVersion":"gemini-2.5-flash","responseId":"hand-written-1"}
+
+data: {"candidates":[{"content":{"parts":[{"text":"and the templates now."}],"role":"model"},"index":0}],"usageMetadata":{"promptTokenCount":812,"totalTokenCount":812},"modelVersion":"gemini-2.5-flash","responseId":"hand-written-1"}
+
+data: {"candidates":[{"content":{"parts":[{"functionCall":{"name":"site_list","args":{}},"thoughtSignature":"c2lnbmF0dXJlLW9uZQ=="},{"functionCall":{"name":"template_list","args":{"filter":"L"}}}],"role":"model"},"finishReason":"STOP","index":0}],"usageMetadata":{"promptTokenCount":812,"candidatesTokenCount":31,"thoughtsTokenCount":19,"totalTokenCount":862},"modelVersion":"gemini-2.5-flash","responseId":"hand-written-1"}
+

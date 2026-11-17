@@ -1,0 +1,39 @@
+server {
+    listen ${PORT};
+    server_name _;
+
+    # Docker's embedded DNS, which is what names the other containers.
+    resolver ${DNS_RESOLVER} valid=10s;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    gzip on;
+    gzip_types application/javascript application/json application/wasm text/css image/svg+xml;
+
+    location /ws {
+        # The server's name is resolved per request, not once at startup:
+        # nginx refuses to start on a name it cannot resolve, which made this
+        # container depend on the server already being up, and it would hold
+        # the first address it got across a restart of that server. A variable
+        # in `proxy_pass` is what defers the lookup to the resolver above.
+        set $upstream ${CRUCIBLE_SERVER};
+        proxy_pass $upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        # A simulation can be quiet for a long while between frames.
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+    }
+
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}

@@ -1,0 +1,4 @@
+
+// Census 46, product piece: a placed template, with the template beside it.
+pattern stamped { s: stamp; t?: any; ref(s, t, "stamp.template"); }
+lens stamped { anchor s: stamped; template: stamped by s -> t; }

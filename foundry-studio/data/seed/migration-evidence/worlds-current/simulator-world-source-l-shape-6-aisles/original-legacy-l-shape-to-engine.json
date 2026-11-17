@@ -1,0 +1,176 @@
+[
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/end_effector",
+    "added": {
+      "$comment": "The sheet's single pick or drop action, with pre-jacking complete. The matrix calls the configuration a latent fork.",
+      "drop_secs": 2.0,
+      "kind": "forks",
+      "pick_secs": 2.0
+    }
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/floor_drive",
+    "added": {
+      "$comment": "The sheet states no 180\u00b0 turn, so a reversal is two quarter turns. The matrix gives a 2.8 s 180\u00b0 turn, and indexes speed on fork position rather than load: 4.5 m/s forks down, 2.0 m/s forks up.",
+      "empty": {
+        "accel_mm_s2": 2000,
+        "constant_speed_mm_s": 4500.0,
+        "max_speed_mm_s": 4500,
+        "quarter_turn_secs": 2.1
+      },
+      "kind": "trapezoidal",
+      "loaded": {
+        "accel_mm_s2": 2000,
+        "constant_speed_mm_s": 4500.0,
+        "max_speed_mm_s": 4500,
+        "quarter_turn_secs": 2.1
+      }
+    }
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/lift",
+    "added": {
+      "$comment": "The sheet's 'fork raise time (pre-jacking action)'. It names no heights, so min and max are our reading. No handoff adds it: the sheet's pick and drop are timed with pre-jacking complete.",
+      "strokes": [
+        {
+          "from": "min",
+          "secs": 3.2,
+          "to": "max"
+        }
+      ]
+    }
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/lineage",
+    "added": [
+      {
+        "designation": "M5F",
+        "party": "Quicktron",
+        "role": "manufacturer"
+      },
+      {
+        "designation": "D30",
+        "party": "Dematic",
+        "role": "distributor"
+      }
+    ]
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/robot_class/$comment",
+    "added": "Bootstrap source: sim/dessim/tests/fixtures/robots/quicktron_m5f.world.json. An HTM. Figures from Quicktron's M5F efficiency calculation sheet (04 M5F\u5355\u673a\u6548\u7387\u8ba1\u7b97\u8868V1.3-20251128), with the loaded figures field-calibrated to the empty ones (Vinay, 2026-06: the sheet's loaded 1.5 m/s, 1.0 m/s\u00b2 and 2.6 s quarter turn over-penalised throughput). Cencora's HTM runs these figures. The M5F(XH) column of the Ranger Relay Profile Matrix as transcribed on equipment/world-protocol-0.8, its lengths read as tenths of a millimetre; the matrix lists only the XH variant. Constant-mode execution cruise: sim/dessim/tests/fixtures/cencora_v3_spec.json, settings.htm."
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/robot_class/carry_exclusive",
+    "removed": true
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/robot_class/configuration",
+    "before": "standard",
+    "after": "forks"
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/robot_class/footprint/0",
+    "before": 850,
+    "after": 695
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/robot_class/footprint/1",
+    "before": 650,
+    "after": 460
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/robot_class/height",
+    "before": 300,
+    "after": 900
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/robot_class/locomotion",
+    "added": "floor"
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/components/robot_class/max_speed",
+    "removed": 1800
+  },
+  {
+    "path": "/entities/75fb2fbe-5260-4290-80ba-d8acf7974312/name",
+    "before": "D30 HTM",
+    "after": "Quicktron M5F (Dematic D30)"
+  },
+  {
+    "path": "/entities/c4918604-8b05-4117-8e32-aaa47b0aca86/components/end_effector",
+    "added": {
+      "$comment": "The A5 tool gives the fork type as 'hooked boxes, 3-deep and within'; its depth table times a 2-deep pick at 23.59 s and a 3-deep one at 39.94 s, relocation included. Pick, drop and alignment are the DA50 spec sheet's rows 1, 2 and 8: 6.2 s is the single-deep 'Pick Single/Multi Container SD', and row 8 is the 'Level Alignment Scan'. The simulator scans before every fork insertion, as issue #262 decided; whether the scan belongs to the approach alone is still unconfirmed.",
+      "align_before_drop_secs": 3.0,
+      "align_before_pick_secs": 3.0,
+      "drop_secs": 5.0,
+      "kind": "forks",
+      "pick_secs": 6.2,
+      "reach_slots_deep": 3
+    }
+  },
+  {
+    "path": "/entities/c4918604-8b05-4117-8e32-aaa47b0aca86/components/lift",
+    "added": {
+      "profile": {
+        "accel_mm_s2": 2000,
+        "max_speed_mm_s": 3000
+      }
+    }
+  },
+  {
+    "path": "/entities/c4918604-8b05-4117-8e32-aaa47b0aca86/components/lineage",
+    "added": [
+      {
+        "designation": "A5",
+        "party": "Quicktron",
+        "role": "manufacturer"
+      },
+      {
+        "designation": "DA50",
+        "party": "Dematic",
+        "role": "distributor"
+      }
+    ]
+  },
+  {
+    "path": "/entities/c4918604-8b05-4117-8e32-aaa47b0aca86/components/rack_ladder",
+    "added": {
+      "accel_mm_s2": 2000,
+      "max_speed_mm_s": 3000
+    }
+  },
+  {
+    "path": "/entities/c4918604-8b05-4117-8e32-aaa47b0aca86/components/robot_class/$comment",
+    "added": "Bootstrap source: sim/dessim/tests/fixtures/robots/quicktron_a5.world.json. A VTM that rides the racking. Handling and alignment from the DA50 spec sheet (rows 1, 2 and 8), the figures Cencora runs; travel and lift from Quicktron's A5 efficiency calculation tool (04 A5\u6548\u7387\u8ba1\u7b97\u5de5\u5177 V1.0-20251127). The tool disagrees on handling: a shallow pick or place 4.0 s, a deep one 5.0 s, a relay (buffer) place or pick 4.0 s, and a distance-dependent walk to the buffer rack of about 1.93 s on its default layout. The project decided on 2026-09-04 to model the cycle's fixed part as 15.8 s (notes/457-findings-2026-09-04.md) without splitting it among these figures; this file keeps the 17.2 s they give, which Cencora's results depend on. No source gives the A5's dimensions."
+  },
+  {
+    "path": "/entities/c4918604-8b05-4117-8e32-aaa47b0aca86/components/robot_class/configuration",
+    "before": "vacuum_effector",
+    "after": "forks"
+  },
+  {
+    "path": "/entities/c4918604-8b05-4117-8e32-aaa47b0aca86/components/robot_class/footprint",
+    "removed": [
+      1100,
+      900
+    ]
+  },
+  {
+    "path": "/entities/c4918604-8b05-4117-8e32-aaa47b0aca86/components/robot_class/height",
+    "removed": 3600
+  },
+  {
+    "path": "/entities/c4918604-8b05-4117-8e32-aaa47b0aca86/components/robot_class/locomotion",
+    "before": "floor",
+    "after": "ladder"
+  },
+  {
+    "path": "/entities/c4918604-8b05-4117-8e32-aaa47b0aca86/components/robot_class/max_climb",
+    "removed": 900
+  },
+  {
+    "path": "/entities/c4918604-8b05-4117-8e32-aaa47b0aca86/name",
+    "before": "DA50 VTM (vacuum effector)",
+    "after": "Quicktron A5 (Dematic DA50)"
+  }
+]

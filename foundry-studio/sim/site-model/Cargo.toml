@@ -1,0 +1,40 @@
+[workspace]
+# Foundry's warehouse site model: typed components, frames and the world graph the simulator reads. Generic
+# identities and lens evaluation come from the WPS crates.
+members = []
+
+[package]
+name = "site-model"
+version = "0.7.0"
+edition = "2021"
+rust-version = "1.85"
+description = "Foundry warehouse site model: application loading, native expansion, checks and canonical output"
+publish = false
+
+[dependencies]
+worldprotocol-core = { git = "https://github.com/greyorange/world-proto.git", rev = "cd4923516827d79fbac742179a4193627dafa43b" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+uuid = { version = "1", features = ["v5", "serde"] }
+
+[[bin]]
+name = "site-model-check"
+path = "src/bin/check.rs"
+
+[features]
+# For tests that stand in for WPS: `flagged_export::written_out`, a world written out as WPS writes a site. Only
+# test builds turn it on, this crate's own and native-modules'.
+test-support = []
+
+[dev-dependencies]
+# This crate's own tests, with `test-support` on.
+site-model = { path = ".", features = ["test-support"] }
+worldprotocol-core = { git = "https://github.com/greyorange/world-proto.git", rev = "cd4923516827d79fbac742179a4193627dafa43b", features = ["schema"] }
+# Only the schema sync test uses this: it derives a machine-readable field
+# census from the component structs so the JSON Schemas can be compared against
+# them without a hand-written table that would rot exactly like the drift it is
+# meant to catch.
+schemars = { version = "1", features = ["uuid1"] }
+
+jsonschema = { version = "0.26", default-features = false }

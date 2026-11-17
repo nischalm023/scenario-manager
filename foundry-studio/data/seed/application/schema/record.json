@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:record",
+  "title": "world protocol — records",
+  "description": "The four things an entry in a document's `entities` array can be: a declaration introducing an entity, a patch modifying one an earlier layer declared, an override replacing components of a derived one, or a suppression deleting either. A record's shape is its kind — an `id` declares, a `derivation` reaches a derived entity, `suppress` deletes — so a record that could be read two ways is refused rather than guessed at (SPEC §2).",
+  "$defs": {
+    "record": {
+      "title": "record",
+      "description": "One entry of a document's `entities` array, in exactly one of its four kinds.",
+      "type": "object",
+      "oneOf": [
+        {"$ref": "#/$defs/declaration"},
+        {"$ref": "#/$defs/patch"},
+        {"$ref": "#/$defs/override"},
+        {"$ref": "#/$defs/suppression"}
+      ]
+    },
+    "declaration": {
+      "title": "declaration",
+      "description": "Introduces an entity with a freshly minted UUID — or, in a later layer, replaces components of one an earlier layer introduced, per component and wholesale (SPEC §2, §8). Writing an entity down is what mints its identity, so the `id` here is a UUID; a derivation address in this position would claim a generator produced the entity, and is refused rather than read as a UUID with an unusual spelling (SPEC §3).",
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {"$ref": "urn:worldproto:0.7:values#/$defs/declared_entity_id"},
+        "name": {"$ref": "urn:worldproto:0.7:entity#/$defs/name"},
+        "components": {"$ref": "urn:worldproto:0.7:entity#/$defs/components"},
+        "derived": {"$ref": "urn:worldproto:0.7:entity#/$defs/derived_map"},
+        "edges": {"$ref": "urn:worldproto:0.7:entity#/$defs/edges"},
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "patch": {
+      "title": "patch",
+      "description": "Modifies an entity some earlier layer declared, and fails the load if no such entity exists — which is why an overlay document uses patches: a mistyped UUID cannot silently mint a half-formed entity (SPEC §2). Its `id` is a declared entity's UUID, for the same reason a declaration's is; a derived entity is reached by `derivation`.",
+      "type": "object",
+      "required": ["id", "patch"],
+      "properties": {
+        "id": {"$ref": "urn:worldproto:0.7:values#/$defs/declared_entity_id"},
+        "patch": {"const": true},
+        "name": {"$ref": "urn:worldproto:0.7:entity#/$defs/name"},
+        "components": {"$ref": "urn:worldproto:0.7:entity#/$defs/components"},
+        "derived": {"$ref": "urn:worldproto:0.7:entity#/$defs/derived_map"},
+        "edges": {"$ref": "urn:worldproto:0.7:entity#/$defs/edges"},
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "override": {
+      "title": "override",
+      "description": "Replaces components of one derived entity, addressed by the generator and key that produced it. Each listed component replaces the derived one of the same name wholesale — no deep merge, so the result is predictable and diffable. An address no generator produces is a load error: a pinned cell never quietly evaporates (SPEC §3).",
+      "type": "object",
+      "required": ["derivation"],
+      "properties": {
+        "derivation": {"$ref": "urn:worldproto:0.7:values#/$defs/derivation_address"},
+        "id": {
+          "description": "The identity this record addresses, spelled flat. A record may state both it and `derivation`; they are two spellings of one address, and the loader rejects a disagreement.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/derived_entity_id"
+        },
+        "expect": {"$ref": "#/$defs/expect"},
+        "components": {"$ref": "urn:worldproto:0.7:entity#/$defs/components"},
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "suppression": {
+      "title": "suppression",
+      "description": "Deletes the addressed entity — the graph then routes around a hole, not a flag. It carries no components, and a dangling address fails the load exactly as an override's does (SPEC §2, §3). It reaches either kind: `id` names a declared entity by its UUID or a derived one by its address, and `derivation` names a derived one in the two parts a record usually writes it in.",
+      "type": "object",
+      "required": ["suppress"],
+      "anyOf": [{"required": ["id"]}, {"required": ["derivation"]}],
+      "properties": {
+        "suppress": {"const": true},
+        "id": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_id"},
+        "derivation": {"$ref": "urn:worldproto:0.7:values#/$defs/derivation_address"},
+        "expect": {"$ref": "#/$defs/expect"},
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "expect": {
+      "title": "expect",
+      "description": "A geometric pin on a record that addresses an ordinal key: fail loudly if the target no longer sits where the author believed. Tiling keys are ordinal, so a pitch change can silently re-aim an address at a different patch of floor — which is why this is legal on suppressions too (SPEC §3).",
+      "type": "object",
+      "required": ["position", "tolerance"],
+      "properties": {
+        "position": {
+          "description": "Where the author believes it sits, in the steps of the frame the generator's region or pose is stated in.",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"type": "integer"}
+        },
+        "tolerance": {
+          "description": "How far off it may be before the load fails.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

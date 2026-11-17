@@ -1,0 +1,36 @@
+{
+  "component": "template.target_scope",
+  "status": "experimental",
+  "owner": "agent-studio",
+  "asserts": "has",
+  "meaning": "the entity has a scope of the made site to land in other than the one its placement lands in, named relative to the site's root",
+  "_notes": [
+    "`owner` is `agent-studio`, who answers for this shape today; the registry moves ownership freely (world-proto server/DESIGN.md section 7). Lead decided, say if not.",
+    "The schema is open to fields it does not name, as every registry schema is (world-proto SPEC section 9's lenient reading), so a misspelt optional field passes WPS and is carried unread. Lead decided, say if not.",
+    "The schema describes the value as bound: inside a piece the template evaluation engine replaces `$param` and `local_ref` before it validates this component (the instantiation step, 05-template-workflow.md section 3.6), so no field accepts either placeholder, and a top-level template entity holds none (section 3.4, rule 1). Lead decided, say if not.",
+    "`scope` is one of the four scopes every site and template has (05-template-workflow.md names `fleet`, `map` and `.`; `flow` is added as the fourth). Lead decided, say if not.",
+    "Not in the schema: the component stands only on a piece's internal."
+  ],
+  "refs": [],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "template.target_scope",
+    "description": "the entity has a scope of the made site to land in other than the one its placement lands in, named relative to the site's root",
+    "$comment": "Written for world-proto's registry from Agent Studio's 05-template-workflow.md section 3.2 (notes/agent-studio-2026-10-17/design/specs/05-template-workflow.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "scope"
+    ],
+    "properties": {
+      "scope": {
+        "description": "`.` for the site's root, or its `map`, `flow` or `fleet` scope.",
+        "enum": [
+          ".",
+          "map",
+          "flow",
+          "fleet"
+        ]
+      }
+    }
+  }
+}

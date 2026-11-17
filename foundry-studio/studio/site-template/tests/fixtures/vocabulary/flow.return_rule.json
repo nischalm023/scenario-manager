@@ -1,0 +1,36 @@
+{
+  "component": "flow.return_rule",
+  "status": "experimental",
+  "owner": "agent-studio",
+  "asserts": "is",
+  "meaning": "the entity is the batching and placement rule for totes returning to storage from stations, shared by every return edge one root task serves",
+  "_notes": [
+    "`owner` is `agent-studio`, who answers for this shape today; the registry moves ownership freely (world-proto server/DESIGN.md section 7). Lead decided, say if not.",
+    "The schema is open to fields it does not name, as every registry schema is (world-proto SPEC section 9's lenient reading), so a misspelt optional field passes WPS and is carried unread. Lead decided, say if not."
+  ],
+  "refs": [],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "flow.return_rule",
+    "description": "the entity is the batching and placement rule for totes returning to storage from stations, shared by every return edge one root task serves",
+    "$comment": "Written for world-proto's registry from Agent Studio's 06-flow-panel-and-compiler.md section 3.1 (notes/agent-studio-2026-10-17/design/specs/06-flow-panel-and-compiler.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "min_backlog"
+    ],
+    "properties": {
+      "min_backlog": {
+        "description": "Still required, as dessim's return rule requires it; no run reads it: each finished presentation's clearance sends the HTM's tote back to storage and batches nothing.",
+        "type": "integer",
+        "minimum": 1
+      },
+      "destination": {
+        "description": "Which aisle a returning tote goes to.",
+        "enum": [
+          "nearest_eligible"
+        ],
+        "default": "nearest_eligible"
+      }
+    }
+  }
+}

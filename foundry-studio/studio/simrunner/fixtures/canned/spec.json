@@ -1,0 +1,24 @@
+{
+ "composition": "walmart",
+ "world": "../../../../sim/dessim/tests/fixtures/minimal_easyloop.json",
+ "scenario": {
+  "num_skus": 5,
+  "total_inventory_units": 1200,
+  "num_orders": 200,
+  "total_order_picks": 600,
+  "units_per_tote": 40,
+  "popular_skus_pct": 0.0,
+  "inventory_popular_share": 0.0,
+  "order_popular_share": 0.0
+ },
+ "settings": {
+  "num_htms": 10,
+  "queue_factor": 3.0,
+  "fidelity": "CollisionDes",
+  "motion_model": "htm_kinematic",
+  "sim_duration": {
+   "secs": 10800,
+   "nanos": 0
+  }
+ }
+}

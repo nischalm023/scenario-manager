@@ -1,0 +1,11 @@
+{
+  "lens": "cohorted",
+  "owner": "agent-studio",
+  "status": "candidate",
+  "meaning": "the authored input projection used by Foundry’s cohort generator",
+  "version": "0.1.0",
+  "text": {
+    "path": "lenses/cohorted.lens",
+    "sha256": "df22f95b887db0d6530c96ea69dbfbec4ba902a602af4e29c6414df5704195e1"
+  }
+}

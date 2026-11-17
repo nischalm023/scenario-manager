@@ -1,0 +1,99 @@
+{
+  "component": "floor_drive",
+  "owner": "agent-studio",
+  "status": "experimental",
+  "meaning": "the robot has a floor drive: its physical model and its figures with and without a carrier",
+  "asserts": "has",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "floor_drive",
+    "description": "the robot has a floor drive: its physical model and its figures with and without a carrier",
+    "$comment": "Foundry application vocabulary for the incumbent dessim robot aspects. Open to fields a newer writer adds. Numbers name their units; they are robot figures, not positions in a frame.",
+    "type": "object",
+    "required": [
+      "loaded",
+      "empty"
+    ],
+    "properties": {
+      "kind": {
+        "type": "string",
+        "enum": [
+          "constant",
+          "trapezoidal"
+        ],
+        "description": "constant executes at constant_speed_mm_s; trapezoidal uses max_speed_mm_s with acceleration and deceleration. HTM spatial searches use max_speed_mm_s in either mode. These are catalog data, never run settings. Optional when storing historical or incomplete catalog statements; Studio run readiness requires an explicit model for each deployed floor-driving class."
+      },
+      "loaded": {
+        "type": "object",
+        "required": [
+          "max_speed_mm_s",
+          "accel_mm_s2"
+        ],
+        "properties": {
+          "max_speed_mm_s": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "accel_mm_s2": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "decel_mm_s2": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "quarter_turn_secs": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "reversal_secs": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "constant_speed_mm_s": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "HTM constant-mode execution speed, independent of the kinematic maximum used for spatial searches. Required by the HTM reader; not used by a floor-driving VTM."
+          }
+        },
+        "description": "Motion figures in one load state. A floor-driving HTM states constant_speed_mm_s and quarter_turn_secs; absent reversal_secs means two quarter turns."
+      },
+      "empty": {
+        "type": "object",
+        "required": [
+          "max_speed_mm_s",
+          "accel_mm_s2"
+        ],
+        "properties": {
+          "max_speed_mm_s": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "accel_mm_s2": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "decel_mm_s2": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "quarter_turn_secs": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "reversal_secs": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "constant_speed_mm_s": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "HTM constant-mode execution speed, independent of the kinematic maximum used for spatial searches. Required by the HTM reader; not used by a floor-driving VTM."
+          }
+        },
+        "description": "Motion figures in one load state. A floor-driving HTM states constant_speed_mm_s and quarter_turn_secs; absent reversal_secs means two quarter turns."
+      }
+    }
+  },
+  "refs": []
+}

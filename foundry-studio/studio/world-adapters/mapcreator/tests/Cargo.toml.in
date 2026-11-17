@@ -1,0 +1,36 @@
+[package]
+name = "mapcreator-adapter-tests"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.95"
+publish = false
+description = "What the Map Creator adapter must keep being true of, through the component it builds to"
+# Standalone host workspace rendered by check.py with explicit dependency paths.
+# These tests reach the adapter only as the component built from its source.
+
+[workspace]
+
+# The explicit dependency checkout must also supply the native reader's shared
+# identity types, so the reader and local lens host use one crate instance.
+[patch."https://github.com/greyorange/world-proto.git"]
+worldprotocol-core = { path = "@WPS@/proto/core" }
+
+[dependencies]
+worldadapt-host = { path = "@WPS@/adapter/host" }
+worldadapt-testkit = { path = "@WPS@/adapter/testkit" }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+# The production edits read a file keeping each object's key order, which
+# `serde_json`'s sorted map forgets, so they are written as Map Creator writes
+# an edit.
+serde = { version = "1", features = ["derive"] }
+# The reference reader, which a site an ingest leaves has to load in, written
+# out as a world document; and the lens engine, which the tests run the adapter's
+# own lens text over to count what a plain scan counts. Neither is the converter:
+# the tests reach that only as the component it builds to.
+site-model = { path = "@FOUNDRY@/sim/site-model" }
+worldlens = { path = "@WPS@/lens/rust" }
+# The validator the server puts at its door, at the server's version, so a
+# component is held to its schema here as it would be there.
+jsonschema = { version = "0.26", default-features = false }
+# The reader and the seed's schema script both read from a path.
+tempfile = "3"

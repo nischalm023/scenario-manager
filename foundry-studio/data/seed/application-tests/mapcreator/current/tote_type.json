@@ -1,0 +1,72 @@
+[
+  {
+    "racktype_id": "rack-A",
+    "rack_width": 120.5,
+    "rack_depth": 80.25,
+    "rack_outer_width": 125.0,
+    "rack_outer_depth": 85.5,
+    "inter_leg_width": 110,
+    "inter_leg_depth": 70,
+    "initial_mass_of_the_rack": 30,
+    "initial_cm_of_the_rack": [
+      0,
+      0,
+      40
+    ],
+    "density_profile": [
+      [
+        [
+          0,
+          1.5
+        ],
+        "light"
+      ],
+      [
+        [
+          1.5,
+          3
+        ],
+        "heavy"
+      ]
+    ],
+    "replenishable": "yes",
+    "floor_structure": [
+      {
+        "floor_id": "F1",
+        "base_height": 10.5,
+        "same_base_structure": [
+          {
+            "weight_limit_of_the_floor": 50,
+            "rack_face_structure": [
+              {
+                "rack_face": 0,
+                "slot_structure": [
+                  {
+                    "barcodes": [
+                      "S-1",
+                      "S-2"
+                    ],
+                    "depth": 40,
+                    "height": 35,
+                    "length": 60.5,
+                    "slot_center": 30.25,
+                    "slot_tags": [
+                      "small"
+                    ],
+                    "slot_type": "tote",
+                    "x": 0,
+                    "y": 10
+                  }
+                ]
+              },
+              {
+                "rack_face": 2,
+                "slot_structure": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

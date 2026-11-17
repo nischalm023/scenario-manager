@@ -1,0 +1,63 @@
+name: PR
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+concurrency:
+  group: pr-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 } # git describe needs full history
+      - uses: ./.github/actions/world-proto-access
+        with:
+          key: ${{ secrets.WORLD_PROTO_DEPLOY_KEY }}
+      - uses: ./.github/actions/build-and-push
+        with:
+          push: "false"
+
+  # The bucket backend, over an emulator: the runner has no metadata server and
+  # no credential, so this is the only way a pull request can prove the code a
+  # deployment stores its recordings through.
+  runstore-bucket:
+    runs-on: ubuntu-latest
+    env:
+      RUNSTORE_GCS_EMULATOR: http://localhost:4443
+      RUNSTORE_GCS_BUCKET: runstore-test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/world-proto-access
+        with:
+          key: ${{ secrets.WORLD_PROTO_DEPLOY_KEY }}
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.97"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: runstore-gcs
+      # The fork object_store's own suite runs against: the original emulator
+      # refuses the XML API `PUT` the client writes with (fsouza/fake-gcs-server#1164).
+      # Pinned by digest (the `latest` tag as of 2026-10-12), so an upstream
+      # push cannot turn pull requests red on its own.
+      - name: Start a Google Cloud Storage emulator with the test bucket in it
+        run: |
+          docker run -d --name fake-gcs -p 4443:4443 \
+            tustvold/fake-gcs-server@sha256:dcd3aeacc07c731f1336e90c2889be2af8626ae993ee1fe2c0ba042ebbeb5a04 \
+            -scheme http -backend memory -public-host localhost:4443
+          up=false
+          for _ in $(seq 1 30); do
+            curl -fs "$RUNSTORE_GCS_EMULATOR/storage/v1/b" >/dev/null && { up=true; break; }
+            sleep 1
+          done
+          if [ "$up" != true ]; then
+            echo "the emulator did not answer within 30 seconds" >&2
+            docker logs fake-gcs >&2
+            exit 1
+          fi
+          curl -fs -X POST -H 'Content-Type: application/json' \
+            --data "{\"name\":\"$RUNSTORE_GCS_BUCKET\"}" "$RUNSTORE_GCS_EMULATOR/storage/v1/b"
+      - run: cargo test -p runstore --features gcs

@@ -1,0 +1,3 @@
+# The adapter builds for wasm32-wasip2 into its own workspace target directory,
+# which the root .gitignore does not reach.
+/target

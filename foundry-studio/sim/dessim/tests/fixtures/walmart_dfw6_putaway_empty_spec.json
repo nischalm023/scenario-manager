@@ -1,0 +1,85 @@
+{
+  "composition": {
+    "tasks": [
+      {
+        "type": "InitializeFleet"
+      },
+      {
+        "type": "FillInventory",
+        "after": [
+          "InitializeFleet"
+        ],
+        "config": {
+          "order_trays": 24,
+          "preload_fraction": 0
+        }
+      },
+      {
+        "type": "LoadOrders",
+        "after": [
+          "FillInventory"
+        ]
+      },
+      {
+        "type": "FleetConservation",
+        "after": [
+          "FillInventory"
+        ]
+      },
+      {
+        "type": "FulfillOrders",
+        "after": [
+          "LoadOrders"
+        ],
+        "config": {
+          "bypass_extraction": false,
+          "bypass_box_induction": false
+        }
+      },
+      {
+        "type": "PutawaySupplyDemand",
+        "after": [
+          "LoadOrders"
+        ]
+      },
+      {
+        "type": "PutawayInduction",
+        "after": [
+          "LoadOrders"
+        ],
+        "config": {
+          "max_presentations_per_hour": 60,
+          "units_per_tote": 6
+        }
+      }
+    ]
+  },
+  "world": "walmart_dfw6.json",
+  "scenario": {
+    "outbound_csv": "walmart-data/outbound.csv",
+    "onhand_csv": "walmart-data/onhand.csv",
+    "unknown_container": "as_tray",
+    "stock": "as_extracted",
+    "inventory_distribution": "even",
+    "units_per_tote": 100,
+    "stock_top_up_csv": "walmart_demo_stock_top_up.csv"
+  },
+  "settings": {
+    "queue_factor": 3.0,
+    "fidelity": "CollisionDes",
+    "motion_model": "htm_kinematic",
+    "sim_duration": {
+      "secs": 604800,
+      "nanos": 0
+    },
+    "order": {
+      "extraction_secs": 9.0,
+      "release_all_at_start": true,
+      "direct_extraction": false,
+      "buffer_dwell_secs": 3600.0
+    },
+    "operator": {
+      "time_per_pick_secs": 10.0
+    }
+  }
+}

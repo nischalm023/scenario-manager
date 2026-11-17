@@ -1,0 +1,361 @@
+// Foundry application patterns evaluated by the shared, generic lens engine.
+// The simulator consumes machine and its cell/member patterns in
+// sim/dessim/src/worldmap/machine.rs. Relationships follow recorded entity IDs.
+//
+// The runtime library uses Foundry's go.easyloop component. The historical WPS
+// corpus has its own byte-preserved library in
+// data/seed/application-tests/lenses/legacy-wps/world.lens; its four-site census
+// and seven projected lenses remain tested in studio/world-lenses. The runtime
+// consumer's pattern names, bindings and entity sets are tested independently
+// against native frame ancestry in tests/legacy_foundry.rs.
+//
+// Numbered row comments retain their original census references.
+
+// ---------------------------------------------------------------------------
+// The frame — the one scale every length is read through.
+// ---------------------------------------------------------------------------
+
+// Census 1, step scale: the primary frame states the millimetres a step is
+// worth. Primary means parent-less, which is why the clause is a negated field
+// test rather than a component.
+pattern primary_frame_scale { f: frame(unit_mm exists, !(parent exists)); }
+
+// ---------------------------------------------------------------------------
+// Cells — what a robot can stand on, and what each cell is for.
+// ---------------------------------------------------------------------------
+
+// Census 2, document cell: the pipeline's own cell test — a `cell` component and
+// a pose in a frame. Census 3, way cell, is the same predicate read again.
+pattern document_cell { c: cell, pose(frame exists); }
+
+// Charging cell: the cell has physical charging equipment, authored individually
+// or area-wide through `tiling.derives`. Ordinary idle destinations are relays.
+pattern charging_cell { c: cell, charging; }
+
+// Census 5, presentation cell painted from the cell itself: the cell IS the
+// presentation point — cencora's override on a derived floor cell, and the
+// EasyLoop template's two heads.
+pattern presentation_marked_cell { c: cell, presentation_point; }
+
+// Census 6, exchange cell: a handover cell, where a carrier changes hands with
+// fixed conveyance.
+pattern exchange_cell { c: cell, port; }
+
+// Census 7, highway cell from the marker. `highway` is not a protocol component;
+// it rides as an open extension, which is exactly why a pattern can name it.
+pattern highway_cell { c: cell, highway; }
+
+// Census 8, highway cell inferred from the generator's flow: a derived cell whose
+// declared generator states a `flow`. `same_root` is what "the entity at the root
+// of its address" means.
+pattern flow_highway_cell { c: cell, derived; g: flow, declared; same_root(c, g); }
+
+// Census 9, open cell: floor with nothing else said about it.
+pattern open_cell { c: cell, !charging, !presentation_point, !port, !highway; }
+
+// ---------------------------------------------------------------------------
+// Grids, stitches and stamps — where derived entities come from.
+// ---------------------------------------------------------------------------
+
+// Census 41, floor piece: a region that tiles itself into cells.
+pattern cell_grid { g: region, tiling; }
+
+pattern derived_cell_of { c: cell, derived; g: tiling; derived_from(c, g); }
+
+// Census 12, arc: the two expansions a stitch joins. The arcs themselves are not
+// entities, so no pattern can bind one; this binds what the stitch names. Either
+// end may be anything whose expansion contributes cells — a region, a stamp —
+// and saying that as one clause needs a disjunction v0 does not have, so the
+// ends are asked only to be entities of this world.
+pattern stitch_pair { s: stitch; a: any; b: any; ref(s, a, "stitch.a"); ref(s, b, "stitch.b"); }
+
+// A holding pool: SPEC §10's `waiting`, which no consumer reads yet.
+pattern waiting_pool { w: waiting, region, tiling; }
+
+// One placement of a template.
+pattern stamp_instance { i: derived; s: stamp; derived_from(i, s); }
+
+// Census 30, machine identity: a machine is a stamp with EasyLoop parts under it.
+// The outer pattern nests the inner one so the answer is one row per machine
+// rather than one per part: nesting binds only the inner pattern's anchor.
+pattern easyloop_internal_of { m: stamp, pose; i: go.easyloop; descends_from(i, m); }
+pattern easyloop_machine { m: pattern easyloop_internal_of; }
+
+// The machine authored cell by cell -- the minimal EasyLoop map, the fourth of
+// the documents above, is the one that states one. There is no stamp and no
+// `station` component: ONE entity carries the machine's own frame,
+// its `go.easyloop` envelope and the belt timing both halves share, and
+// membership is the frame -- every cell posed in it is that machine's.
+//
+// FOUR of these six are the loader's own reading: greymatter-foundry's
+// `libs/dessim/src/worldmap/machine.rs` evaluates `machine`, `machine_cell`,
+// `machine_pick_place` and `machine_port` at load time. `machine_waiting_cell`
+// is pinned here and read by nobody -- a machine's waiting spots reach the
+// loader as ordinary members through `machine_cell`, and this pattern says how
+// many of them a document marks. `machine_port_posed` is the sixth, and the
+// paragraph below it says why the ports are asked for twice.
+//
+// The walk climbs the WHOLE frame chain -- `pose.frame` once and then
+// `frame.parent` as far as it goes -- so these are a candidate set and not
+// the final answer: a machine frame parented under another machine's would
+// match every one of the inner machine's cells against both. v0 has no way to
+// say "the nearest enclosing frame", so the loader refuses the nesting instead
+// (`WorldMapError::NestedMachines`) and one cell has one machine again.
+pattern machine { m: frame, go.easyloop(loop_transit_secs exists), region; }
+pattern machine_cell {
+  c: cell, pose;
+  m: frame, go.easyloop(loop_transit_secs exists);
+  ref_walk(c, m, "pose.frame", "frame.parent");
+}
+pattern machine_pick_place {
+  c: cell, pick, presentation_point;
+  m: frame, go.easyloop(loop_transit_secs exists);
+  ref_walk(c, m, "pose.frame", "frame.parent");
+}
+pattern machine_port {
+  c: cell, port;
+  m: frame, go.easyloop(loop_transit_secs exists);
+  ref_walk(c, m, "pose.frame", "frame.parent");
+}
+pattern machine_waiting_cell {
+  c: cell, waiting;
+  m: frame, go.easyloop(loop_transit_secs exists);
+  ref_walk(c, m, "pose.frame", "frame.parent");
+}
+
+// The machine's ports again, recognised by the POSE that puts them in its frame
+// rather than by the `cell` that makes them stand-on-able.
+//
+// A port IS a cell -- it is where an HTM stops and hands a carrier over -- so a
+// document that poses one in a machine's frame and gives it no `cell` has
+// written a machine nobody can work at. `machine_port` cannot say so: it drops
+// that entity, the machine reads as if the port were never written, and the
+// belt comes back with one end missing or with the wrong cell on it. This
+// pattern keeps the port, and `libs/sim-model` (greymatter-foundry, on the
+// unmerged branch of draft PR #469) refuses every one it cannot put on the
+// floor, naming the port and its machine.
+//
+// Both stay. `machine_port` is what the count tables count, and what it counts
+// is how many of a document's machine ports really are cells; a number that
+// grew every time somebody posed a port wrong would stop being that number.
+pattern machine_port_posed {
+  p: port, pose;
+  m: frame, go.easyloop(loop_transit_secs exists);
+  ref_walk(p, m, "pose.frame", "frame.parent");
+}
+
+// A lane: a queue on an entity of its own, neither a `station` nor a
+// `presentation_point`, so the place it serves is the last cell of its own
+// path. This is what replaced `queue.into` -- the terminus says what the lane
+// feeds (the 2026-09-02 framing ruling) -- and it is the one way a document
+// states the cells a robot queues on to reach a station's presentation cell:
+// neither a station nor a presentation point carries `queue` (2026-11-09).
+//
+// Pinned, not evaluated by the loader: a pattern cannot say "the LAST step of
+// the path", which is the whole binding rule, so `worldmap/stations.rs` reads
+// the rule directly and refuses what it cannot resolve -- a lane across two
+// machines, a lane ending where nothing is served, two lanes ending at one
+// cell. What these two count is how many lanes a document declares and how many
+// cells they name.
+pattern lane { q: queue, !station, !presentation_point, !tiling; }
+pattern lane_cell { q: queue, !station, !presentation_point, !tiling; c: cell; ref(q, c, "queue.path"); }
+
+// Census 42, equipment rectangle: a part of a machine that states an area and
+// derives no cells of its own.
+pattern easyloop_part { e: go.easyloop(part exists), region, !tiling; }
+
+// Census 43, building envelope. The loader takes the first in identity order;
+// a pattern returns them all, which is the honest answer to "which entities say
+// they are the building".
+pattern building_envelope { b: building, region; }
+
+// ---------------------------------------------------------------------------
+// Stations — the operator endpoints and what serves them.
+// ---------------------------------------------------------------------------
+
+// Census 24, station: a workstation is somewhere.
+pattern placed_station { s: station, pose; }
+
+pattern pick_station { s: station(kind == "pick"), pose; }
+
+pattern machine_station { s: station, pose, go.easyloop(loop_transit_secs exists); }
+
+// Census 34, exit direction, and census 35, bins: two fields the loader reads off
+// a station that the schema does not document.
+pattern station_exit { s: station(exit_direction exists); }
+pattern station_bins { s: station(bins exists); }
+
+// Census 25, presentation cell, branch 2: the point names its station outright.
+pattern presentation_cell { c: presentation_point; s: station; ref(c, s, "presentation_point.station"); }
+
+// Census 25, branch 2 again, anchored at the station: one row per station a
+// point names, where `presentation_cell` anchors at the point. The anchor is
+// the whole difference and it is a real one -- it decides which end the join
+// starts from and what an explanation is about -- so both readings are kept and
+// both come to the same number wherever a point names a station.
+//
+// Branch 3 is unsayable here and stays the loader's: when no point names a
+// station it takes the nearest one, and that guess is the consumer's own
+// projection -- a document that records no station answers nothing, which is
+// the rule working. cencora records the station on all twenty-six of its
+// points; walmart-dallas records none.
+pattern station_presentation_cell { s: station; c: presentation_point; ref(c, s, "presentation_point.station"); }
+
+// Census 26, order presentation cell: the order carrier's head, read off the
+// same recorded reference.
+pattern order_presentation {
+  s: station;
+  c: presentation_point(for == "order_carrier");
+  ref(c, s, "presentation_point.station");
+}
+
+// Census 33, station area cell, is NOT a pattern here. The floor cell a station
+// stands on is written in no document: the loader finds it by unbounded
+// proximity (`worldmap/stations.rs:450-460`), and a binding nothing records is
+// the consumer's projection rather than a fact this engine can read. The
+// simulator keeps doing it for itself.
+
+// Census 27 and 28: the two ends of a belt, each naming the station it serves.
+pattern dropoff_cell { p: cell, port(direction == "sink"); s: station; ref(p, s, "port.into"); }
+pattern collection_cell { p: cell, port(direction == "source"); s: station; ref(p, s, "port.from"); }
+
+// Census 27's actual binding: the loader matches a port to a station by shared
+// declared root, not by the reference the port writes.
+pattern port_of_machine { p: port; s: station; same_root(p, s); }
+
+// Census 29, what the belt accepts: the designation on the first entry of a sink
+// port's `of`. The pattern can read the entry; that the rest are ignored is a
+// policy of the loader's, not a predicate.
+pattern belt_designation { p: port(direction == "sink", of.0.designation exists); s: station; same_root(p, s); }
+
+// Census 32, handoff queue: a queue that names what it feeds. The field left the
+// format in favour of the path's own terminus, and no document ever wrote one,
+// so this is the pattern that says so -- zero on every document, still asked.
+// `Queue::into` is gone from the typed view as well, so what this reads is the
+// raw component and nothing else could answer it.
+pattern queue_into_station { q: queue; s: station; ref(q, s, "queue.into"); }
+
+// ---------------------------------------------------------------------------
+// Steel — runs, bays, storage and the shelves an operator works.
+// ---------------------------------------------------------------------------
+
+// Census 15, run-to-aisle junction: the junction between a run of racking and the
+// region it is worked from. The region is only asked to be a region: cencora
+// works its runs from aisle rectangles that derive no cells of their own, and
+// requiring a tiling here would have said those runs are reached from nowhere.
+pattern run_access { a: access; g: region; ref(a, g, "access.along"); r: stamp, pose; ref(a, r, "access.rack"); }
+
+// Census 17, bay: a rack under a run's stamp.
+pattern rack_bay { b: rack, pose; r: stamp; descends_from(b, r); }
+
+// Census 18, storage position: a shelf position names its bay.
+pattern storage_position { s: slot; b: rack; ref(s, b, "slot.rack"); }
+
+// Census 18's note: an order bay, which an aisle's `holds` is the all-bays-agree
+// summary of.
+pattern order_bay { b: rack, storage(holds == "order"); }
+
+// Census 19, exchange point: a handoff shelf, its bay, and the floor cell
+// somebody stands on to work it. `access_cell` is written by the pipeline's
+// binding search or by an override; either way it is the same component naming
+// the same cell.
+pattern rack_bay_with_relays { r: relay; b: rack; ref(r, b, "relay.rack"); a: cell; ref(r, a, "access_cell.cell"); }
+
+// The negative of census 19: steel nobody reaches.
+pattern unbound_relay { r: relay, !access_cell; }
+
+// ---------------------------------------------------------------------------
+// The fleet — who works where.
+// ---------------------------------------------------------------------------
+
+// Census 21, floor fleet: a cohort of robots that drive on cells.
+pattern floor_cohort { c: cohort; k: robot_class(role in ["htm", "rtp"]); ref(c, k, "cohort.robot_class"); }
+
+// Census 22, climbing cohort: a ladder cohort confined to a sector, the runs that
+// sector names, and the aisle each run is worked from. Five references in one
+// pattern, which is what the loader walks by hand across three passes.
+pattern vtm_cohort {
+  c: cohort(assignment.kind == "hard");
+  k: robot_class(role == "vtm");
+  t: sector;
+  r: stamp, pose;
+  a: access;
+  g: region;
+  ref(c, k, "cohort.robot_class");
+  ref(c, t, "cohort.assignment.to");
+  ref(t, r, "sector.members");
+  ref(a, r, "access.rack");
+  ref(a, g, "access.along");
+}
+
+// Census 23, sector: a named group of runs. `members exists` is non-empty, so a
+// sector that names nobody does not answer.
+pattern sector_group { t: sector(members exists); }
+pattern sector_member { s: sector; m: stamp; ref(s, m, "sector.members"); }
+
+// Census 22's other half: a cohort assigned to a sector.
+pattern cohort_assignment { c: cohort; s: sector; ref(c, s, "cohort.assignment.to"); }
+
+// Census 46, carrier census: one entity per carrier the population minted.
+pattern carrier_instance { c: carrier(designation in ["inventory", "order"]); }
+
+// ---------------------------------------------------------------------------
+// Lenses — the objects a consumer asks for by name.
+//
+// A pattern answers in rows and a row repeats its anchor once per part: the
+// twenty-eight rows of `machine_cell` name one machine twenty-eight times. A
+// lens is that fold written down once, so a consumer asks for `easyloop_station`
+// and reads one machine with its cells rather than reassembling them.
+//
+// A lens is called after the thing it hands out, and most of those things
+// already name the pattern that finds them: `lens lane` and `pattern lane` sit
+// in one file, told apart by the keyword that declares them and reached by two
+// different lookups. Every object count these come to on the four documents is
+// asserted twice, the same way the pattern counts are: by the engine in
+// `tests/patterns.rs`, and by a plain scan in `tests/census.rs`.
+// ---------------------------------------------------------------------------
+
+// The machine authored cell by cell, with everything posed in its frame. This
+// is the shape greymatter-foundry's `libs/dessim/src/worldmap/machine.rs` builds
+// by hand today: one machine, its cells, and the three narrower readings of
+// those cells.
+//
+// `ports` runs `machine_port_posed` and not `machine_port`, so a port the
+// document poses in this machine's frame reaches the consumer even when it
+// carries no `cell`. The consumer is the one that can tell -- it resolves the
+// port's place on the floor for itself -- and it refuses such a port by name
+// rather than handing back a belt one end short.
+lens easyloop_station {
+  anchor m: machine;
+  cells: machine_cell by m -> c;
+  ports: machine_port_posed by m -> p;
+  pick_places: machine_pick_place by m -> c;
+  waiting: machine_waiting_cell by m -> c;
+}
+
+// A lane with the set of cells its path names, in identity order. `lane_cell`'s
+// rows come back in the reader's identity order and this list keeps that order,
+// so it says which cells the lane names and not the order it walks them in --
+// whoever needs the walking order reads it off the `queue.path` component the
+// anchor already carries.
+lens lane {
+  anchor q: lane;
+  cells: lane_cell by q -> c;
+}
+
+// A bay with what it holds and what reaches it: the shelf positions that name
+// it, and the handoff relays bound to it.
+lens rack_bay {
+  anchor b: rack_bay;
+  positions: storage_position by b -> s;
+  relays: rack_bay_with_relays by b -> r;
+}
+
+// Four object lists with no parts hung off them. A lens with no fields is still
+// worth registering: it is the entities of one pattern's anchor, with their
+// components, under a name a consumer asks for -- which is what a server
+// publishes when the answer is "these are the stations" or "this is the fleet".
+lens placed_station { anchor s: placed_station; }
+lens pick_station { anchor s: pick_station; }
+lens floor_cohort { anchor c: floor_cohort; }
+lens vtm_cohort { anchor c: vtm_cohort; }

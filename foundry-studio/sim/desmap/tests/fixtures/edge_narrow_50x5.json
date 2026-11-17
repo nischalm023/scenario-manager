@@ -1,0 +1,52 @@
+{
+  "version": 3,
+  "grid": {
+    "width": 50,
+    "depth": 5,
+    "cell_size_mm": 1000.0
+  },
+  "highways": [
+    {
+      "origin": [
+        0,
+        1
+      ],
+      "width": 50,
+      "height": 1,
+      "direction": "Bidirectional"
+    }
+  ],
+  "zones": [],
+  "stations": [
+    {
+      "id": 1,
+      "position": [
+        22,
+        0
+      ],
+      "presentation_cell": [
+        22,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 2,
+      "position": [
+        27,
+        0
+      ],
+      "presentation_cell": [
+        27,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    }
+  ]
+}

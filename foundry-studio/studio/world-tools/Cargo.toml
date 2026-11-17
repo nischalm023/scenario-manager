@@ -1,0 +1,24 @@
+[package]
+name = "foundry-world-tools"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "foundry-world"
+path = "src/main.rs"
+
+[dependencies]
+site-model = { path = "../../sim/site-model" }
+worldadapt-cli = { git = "https://github.com/greyorange/world-proto.git", rev = "cd4923516827d79fbac742179a4193627dafa43b" }
+worldadapt-host = { git = "https://github.com/greyorange/world-proto.git", rev = "cd4923516827d79fbac742179a4193627dafa43b" }
+anyhow = "1"
+serde_json = "1"
+clap = { version = "4", features = ["derive"] }
+
+[dev-dependencies]
+tempfile = "3"
+worldadapt-testkit = { git = "https://github.com/greyorange/world-proto.git", rev = "cd4923516827d79fbac742179a4193627dafa43b" }
+world-graph-cli = { git = "https://github.com/greyorange/world-proto.git", rev = "cd4923516827d79fbac742179a4193627dafa43b" }
+world-graph-server = { git = "https://github.com/greyorange/world-proto.git", rev = "cd4923516827d79fbac742179a4193627dafa43b" }
+worldlens = { git = "https://github.com/greyorange/world-proto.git", rev = "cd4923516827d79fbac742179a4193627dafa43b" }

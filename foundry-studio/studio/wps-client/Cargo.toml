@@ -1,0 +1,39 @@
+[package]
+name = "wps-client"
+version = "0.1.0"
+edition = "2024"
+description = "Agent Studio's one door to world-proto-server: reads at a pin, one atomic changeset per draft, a site's flagged export read from WPS and checked, and the in-memory mock every consumer's tests use"
+
+[[bin]]
+name = "studio-seed"
+path = "src/bin/studio-seed.rs"
+
+[dependencies]
+studio-protocol = { path = "../protocol" }
+
+bytes = "1"
+chrono = "0.4"
+futures-util = "0.3"
+hex = "0.4"
+# WPS validates a write against the registry's schemas with this crate at this version and the same options, so a
+# payload `check` accepts passes WPS's own gate (spec 04 section 3.10).
+jsonschema = { version = "0.26", default-features = false }
+# No TLS: the proof of concept reaches WPS over plain HTTP on the loopback or inside the cluster.
+reqwest = { version = "0.13", default-features = false, features = ["stream"] }
+rustc-hash = "2"
+semver = { version = "1", features = ["serde"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+thiserror = "2"
+tokio = { version = "1", features = ["macros", "rt", "rt-multi-thread", "sync", "time"] }
+url = "2"
+
+[dev-dependencies]
+# `io-util` and `net` for the scripted server the retry tests talk to.
+tokio = { version = "1", features = ["io-util", "net"] }
+# `preserve_order`, which rig-core turns on in the API: the tests read and write maps in the order they were built in,
+# as the API does, so the export's sorted writing is tested where it matters.
+serde_json = { version = "1", features = ["preserve_order"] }
+# Foundry's own reader, so the integration tests hold a made site's export to what the simulator loads.
+site-model = { path = "../../sim/site-model" }

@@ -1,0 +1,424 @@
+/* The report's whole appearance. Inlined into every file it writes, so it
+   carries no font, image or stylesheet the browser would have to fetch: system
+   fonts only, and colours that follow whatever the reader's machine is set to. */
+
+:root {
+  --ink: #16181d;
+  --ink-soft: #5b6270;
+  --paper: #fbfbfc;
+  --card: #ffffff;
+  --rule: #dfe2e8;
+  --accent: #1c5fb4;
+  --derived: #6a4bb8;
+  --warn-bg: #fff6e0;
+  --warn-rule: #e0b45c;
+  --error-bg: #ffeeed;
+  --error-rule: #d4726a;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e6e8ee;
+    --ink-soft: #99a1b3;
+    --paper: #14161b;
+    --card: #1b1e25;
+    --rule: #2c313b;
+    --accent: #74a9f0;
+    --derived: #b39ded;
+    --warn-bg: #35301d;
+    --warn-rule: #8a7434;
+    --error-bg: #3a2422;
+    --error-rule: #a15b55;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 0 6rem;
+  background: var(--paper);
+  color: var(--ink);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+header,
+main {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+header {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+.masthead {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin: 0 0 0.25rem;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin: 2.5rem 0 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+h2 .count {
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+
+.lede {
+  color: var(--ink-soft);
+  max-width: 46rem;
+  margin: 0.75rem 0 0;
+}
+
+.note {
+  color: var(--ink-soft);
+  max-width: 46rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.path,
+.uuid {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  word-break: break-all;
+  margin: 0;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+/* Summary tiles ---------------------------------------------------------- */
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 0.75rem;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+}
+
+.tile-value {
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.tile-label {
+  font-weight: 600;
+}
+
+.tile-note {
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+/* Tables ----------------------------------------------------------------- */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+th {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+td.num,
+th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.census {
+  max-width: 26rem;
+}
+
+.doc-name {
+  font-weight: 600;
+}
+
+/* Findings --------------------------------------------------------------- */
+
+.findings {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.findings li {
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--warn-rule);
+  background: var(--warn-bg);
+  font-size: 0.9rem;
+}
+
+.findings.errors li {
+  border-left-color: var(--error-rule);
+  background: var(--error-bg);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+/* The entity tree -------------------------------------------------------- */
+
+.tree-controls {
+  margin-bottom: 0.5rem;
+}
+
+button {
+  font: inherit;
+  font-size: 0.82rem;
+  color: var(--accent);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: var(--accent);
+}
+
+details.entity,
+details.node,
+details.group {
+  border-left: 2px solid var(--rule);
+  padding-left: 0.7rem;
+  margin: 0.15rem 0;
+}
+
+details.entity {
+  border-left-color: var(--accent);
+}
+
+details.node {
+  border-left-color: var(--derived);
+}
+
+summary {
+  cursor: pointer;
+  padding: 0.15rem 0;
+  list-style-position: outside;
+}
+
+summary::marker {
+  color: var(--ink-soft);
+}
+
+.segment,
+.uuid-short {
+  font-family: var(--mono);
+  font-size: 0.85em;
+}
+
+.segment {
+  color: var(--derived);
+}
+
+.ename {
+  font-weight: 600;
+}
+
+.tag {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0 0.4rem;
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
+.body {
+  padding: 0.25rem 0 0.5rem;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.15rem 0.8rem;
+  font-size: 0.86rem;
+  margin: 0 0 0.5rem;
+}
+
+.facts dt {
+  color: var(--ink-soft);
+}
+
+.facts dd {
+  margin: 0;
+}
+
+.labelled {
+  margin: 0.35rem 0;
+}
+
+.labelled > .field {
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.refs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.86rem;
+}
+
+.refs li {
+  padding: 0.05rem 0;
+}
+
+.refs .field {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  color: var(--ink-soft);
+}
+
+details.payload > summary,
+details.group > summary {
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+}
+
+pre {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  overflow-x: auto;
+  margin: 0.3rem 0;
+}
+
+.more-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.target {
+  animation: flash 1.6s ease-out;
+}
+
+@keyframes flash {
+  from {
+    background: var(--warn-bg);
+  }
+  to {
+    background: transparent;
+  }
+}
+
+/* Find ------------------------------------------------------------------- */
+
+.find {
+  position: relative;
+  min-width: 20rem;
+  flex: 1 1 20rem;
+}
+
+#find {
+  font: inherit;
+  font-size: 0.9rem;
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--ink);
+}
+
+#find-results {
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+  max-height: 22rem;
+  overflow-y: auto;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  display: none;
+}
+
+#find-results.open {
+  display: block;
+}
+
+#find-results .hit,
+#find-results .hit-note {
+  display: block;
+  padding: 0.3rem 0.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+#find-results .hit-note {
+  color: var(--ink-soft);
+}
+
+#find-results .hit:last-child {
+  border-bottom: none;
+}

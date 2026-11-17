@@ -1,0 +1,26 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "The inventory tote the relay bay stores, shaped as the GO catalog's tote (world-proto examples/walmart-dallas/fleet.world.json).",
+  "doc": {
+    "id": "c00f991f-4b60-4ec5-8b3e-d261c4f9768f",
+    "name": "Tote 650 x 450 (high wall)",
+    "kind": "catalog",
+    "depends_on": []
+  },
+  "entities": [
+    {
+      "id": "589fed88-5b4c-40bc-b11a-1b5e96670d8e",
+      "name": "tote 650x450 (high wall)",
+      "components": {
+        "carrier_type": {
+          "kind": "tote",
+          "size": [
+            650,
+            450,
+            300
+          ]
+        }
+      }
+    }
+  ]
+}

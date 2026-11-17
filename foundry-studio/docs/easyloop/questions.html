@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Open Walmart EasyLoop site questions and the provisional simulation choices approved for the current implementation.">
+<title>Walmart EasyLoop — site questions</title>
+<style>
+:root {
+  --paper:#f5f5f5;
+  --paper-2:#ececec;
+  --ink:#2d3142;
+  --muted:#4f5d75;
+  --rule:#bfc0c0;
+  --accent:#eb6c36;
+  --accent-tint:rgba(235,108,54,.08);
+  --link:#2e5aa8;
+  --sans:'Geist',Arial,sans-serif;
+  --mono:'Geist Mono',Menlo,Consolas,monospace;
+  --serif:'Instrument Serif',Georgia,serif;
+}
+* { box-sizing:border-box }
+body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.6 var(--sans) }
+main { max-width:1120px; margin:0 auto; padding:48px 40px 64px }
+a { color:var(--link); text-underline-offset:4px }
+a:focus-visible { outline:3px solid var(--link); outline-offset:4px }
+header { margin-bottom:32px }
+.status { display:inline-block; margin:0 0 16px; padding:4px 12px; border:1px solid var(--rule); border-radius:4px; font-size:12px; font-weight:600 }
+h1 { margin:0 0 20px; font:400 48px/1.12 var(--serif); letter-spacing:-.02em }
+h2 { margin:0 0 16px; font-size:28px; line-height:1.25; font-weight:600 }
+h3 { margin:0 0 12px; font-size:20px; line-height:1.35 }
+p { max-width:82ch; margin:0 0 16px }
+.lead { font-size:20px; line-height:1.5; max-width:68ch }
+.meta { color:var(--muted); font-size:14px }
+nav { display:flex; flex-wrap:wrap; gap:12px 28px; padding:20px 0; margin-bottom:40px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule) }
+section { margin:0 0 48px; scroll-margin-top:24px }
+.note { padding:18px 24px; margin:24px 0; border-left:4px solid var(--accent); background:var(--accent-tint) }
+.note p:last-child { margin-bottom:0 }
+.questions { list-style:none; padding:0; margin:24px 0; counter-reset:question }
+.questions>li { counter-increment:question; padding:24px 0 24px 60px; border-top:1px solid var(--rule); position:relative; break-inside:avoid }
+.questions>li::before { content:counter(question,decimal-leading-zero); position:absolute; left:0; top:22px; color:var(--accent); font:400 28px/1.3 var(--serif) }
+.questions p:last-child { margin-bottom:0 }
+.purpose { color:var(--muted); font-size:14px }
+code { font:.9em var(--mono); overflow-wrap:anywhere }
+table { width:100%; border-collapse:collapse; margin:24px 0; font-size:15px }
+caption { text-align:left; margin-bottom:12px; color:var(--muted); font-size:14px }
+th,td { padding:14px 16px; vertical-align:top; border-bottom:1px solid var(--rule); text-align:left }
+th { background:var(--paper-2); font-weight:600 }
+tbody th { background:transparent; width:24% }
+.sources tbody th { width:26% }
+footer { padding-top:24px; border-top:1px solid var(--rule); color:var(--muted); font-size:13px }
+@media(max-width:700px) {
+  main { padding:32px 20px 48px }
+  h1 { font-size:38px }
+  h2 { font-size:24px }
+  .lead { font-size:18px }
+  .questions>li { padding-left:44px }
+  th,td { padding:12px 8px }
+}
+@media print {
+  @page { margin:16mm }
+  body { background:#fff; font-size:10pt; line-height:1.45; print-color-adjust:exact; -webkit-print-color-adjust:exact }
+  main { max-width:none; padding:0 }
+  h1 { font-size:30pt }
+  h2 { font-size:18pt; break-after:avoid }
+  h3 { font-size:13pt; break-after:avoid }
+  .lead { font-size:12pt }
+  .meta,.purpose,caption,footer { font-size:9pt }
+  nav { display:none }
+  section { margin-bottom:24pt }
+  .questions>li { padding-top:14pt; padding-bottom:14pt }
+  .questions>li::before { top:12pt }
+  table { font-size:9pt }
+  tr { break-inside:avoid }
+  thead { display:table-header-group }
+  th,td { padding:9pt }
+  a { color:inherit }
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <p class="status">Open site questions · updated 13 September 2026</p>
+  <h1>Walmart EasyLoop<br>Questions for the site team</h1>
+  <p class="lead">Confirm the physical handling, routing and timing needed to finish the Walmart simulation. The questions below reflect DoO 2.0 (draft dated August 31, supplied September 9); the final section records the provisional choices still used by the current build. See the <a href="doo-2-workflow-assessment-2026-09-09.md">implementation gap assessment</a>.</p>
+  <p class="meta">Companion to the <a href="tasks.html">EasyLoop task diagram</a>. Bring sample orders, a field dictionary and measured timings where available.</p>
+</header>
+
+<nav aria-label="Page sections">
+  <a href="#questions">Site questions</a>
+  <a href="#september-specs">September 8 documents</a>
+  <a href="#source-fields">Source fields</a>
+  <a href="#approved">Approved provisional choices</a>
+  <a href="tasks.html">Task diagram</a>
+</nav>
+
+<section id="questions" aria-labelledby="questions-heading">
+  <h2 id="questions-heading">Questions to resolve</h2>
+  <ol class="questions">
+    <li>
+      <h3>Do the supplied inventory and order extracts describe the same operating period?</h3>
+      <p>The full file contains 22,160 orders, 24,789 lines and 25,625 units over 47 hours 16 minutes 42 seconds of arrivals. Its on-hand snapshot is short by 43 units across 40 requested SKUs. Daniel authorized an explicit 43-unit top-up for the temporary demo on September 9; the raw CSV is unchanged. Should replenishment cover these deficits in the calibrated model, or is a corrected snapshot available? How does this arrival span relate to the objectives document’s 20-hour evaluation window?</p>
+      <p class="purpose">Avoids silently omitting orders or treating synthetic extra stock as site inventory. The temporary 43-unit demo top-up is approved; the source discrepancy still needs site reconciliation.</p>
+    </li>
+    <li>
+      <h3>How do the order CSV channel codes map to the DoO channels?</h3>
+      <p>DoO 2.0 §8.1 defines DTC, DTS and 3P/Cross-Region paths. The supplied CSV instead uses <code>DS</code>, <code>SC</code> and <code>3P</code>. Confirm the mapping and whether <code>program_type</code>, <code>subnode</code>, <code>sort_id</code> or <code>delivery_method</code> contributes. The existing DS→buffer and SC/3P→extraction rules remain provisional; their names are not evidence of the mapping.</p>
+      <p class="purpose">Settles buffer eligibility and whether SC and 3P need different physical workflows.</p>
+    </li>
+    <li>
+      <h3>What milestone does <code>cutoff_time</code> describe?</h3>
+      <p>Is it the latest time to finish picking, retrieve an order from the buffer, finish packing or extraction, or ship it? Does it instead describe the scheduled truck arrival or departure? What date and timezone apply? How should a time such as <code>HH:MM</code> be related to the order’s arrival date, especially when that clock time is earlier than <code>order_drop_time</code>?</p>
+      <p class="purpose">Distinguishes a completion deadline from a time at which retrieval may begin. No next-day interpretation is confirmed.</p>
+    </li>
+    <li>
+      <h3>What releases a buffered order, and what does <code>wave</code> control?</h3>
+      <p>DoO 2.0 §8.4 specifies route/store release by cutoff or dispense availability, with JIT bypass when route conditions and station capacity allow. Please supply the dated truck or route schedule, the order field that joins to it (<code>sort_id</code>, <code>subnode</code>, <code>wave</code>, or another key), and the required retrieval lead time. Daniel’s example is a 2 p.m. truck with retrieval starting at 1:45 p.m.; those times illustrate the intended rule and are not calibrated values. Specify batch size, prioritisation and the downstream capacity required before release. Pending that source, the next buffered throughput preset uses a synthetic one-hour minimum hold after physical storage; the September 13 baseline retains zero added dwell.</p>
+      <p class="purpose">Defines the trigger for retrieval and how much buffer occupancy a representative run should produce.</p>
+    </li>
+    <li>
+      <h3>Which physical Flex station, queue and downstream handoffs serve SIOC?</h3>
+      <p>DoO 2.0 §§7.1.4 and 7.3 now specify source-tote retrieval directly to Flex, with no EasyLoop target. Identify the Flex approach, waiting, presentation and return cells; source-tote dropoff/HTM release versus retained HTM handling; queue capacity; and measured service time. After item removal and labeling, how is the SIOC parcel picked up and conveyed to its channel destination? The stated 100 UPH is a target, not a measured dwell.</p>
+      <p class="purpose">Replaces the current provisional EasyLoop/tray flow with the DoO’s direct-source Flex flow once its physical endpoints are defined.</p>
+    </li>
+    <li id="reusable-tray-supply">
+      <h3>What reusable supports and quantities serve SIOC and Flex?</h3>
+      <p>Confirm the physical supports, their initial quantity and storage distribution, and when they become reusable. The current provisional EasyLoop/SIOC flow initializes only 24 trays; this is a simulator setting, not a confirmed site count. In the September 13 one-hour-hold run, all 24 were stored by 30 minutes 23.670 seconds and none could yet return. At the first 1,000 orders’ mix and a 1,440 orders/hour ceiling, DS/SIOC work would hold about 78 trays in the buffer alone. A throughput experiment can provision 128 while this simplified flow remains, but that must not be reported as site equipment.</p>
+      <p class="purpose">Separates a shortage of reusable containers from transport or operator capacity, and replaces the temporary tray assumption when the Flex workflow is defined.</p>
+    </li>
+    <li>
+      <h3>Which orders can share a target tote, and what closes a batch?</h3>
+      <p>DoO 2.0 §§7.1.3 and 7.2 describe route-compatible baggable singles sharing a target tote. Which CSV fields define a route/store-compatible group? Specify maximum units/orders, volume/weight and Chem constraints, minimum batch size, release timeout, and whether a tote can receive further orders after reaching EasyLoop. Confirm how individual orders are identified and completed at bagging.</p>
+      <p class="purpose">The current implementation uses one target per order. Correct batching changes target-tote demand, HTM work, buffer occupancy and bagging workload; it cannot be represented merely by increasing units per inventory tote.</p>
+    </li>
+    <li>
+      <h3>Are the new handoff positions and equipment groupings correct?</h3>
+      <p>The <a href="outbound.html">provisional post-pick map</a> now declares three DTS/DTC dispense points, one 3P/CR bagging point, one Flex, three sealer drop-offs and one sealed-box pickup, using DoO 2.0 §4.3 and Figure 5.2. Confirm the surveyed cells, queues, shared equipment, handoff capacities, HTM release points and processing times. Confirm whether empty target totes return to Relay Storage or the target-storage area described at the buffer rack.</p>
+      <p class="purpose">Models the right physical destination for each completed load and when its HTM becomes available, instead of using a common extraction dwell for different equipment.</p>
+    </li>
+    <li>
+      <h3>How does EasyLoop operator time scale with the quantity transferred?</h3>
+      <p>The simulation currently charges nine seconds per source-to-target SKU transfer regardless of quantity. DoO 2.0 §10 distinguishes units/hour and tote presentations/hour but supplies no per-unit versus per-presentation service breakdown. Provide that breakdown, including scan/confirmation and repeated units.</p>
+      <p class="purpose">Prevents batching or multi-unit totes from appearing faster merely because several units receive the same single-unit service time.</p>
+    </li>
+    <li>
+      <h3>Does a cardboard box ride directly on the HTM or on a reusable tray?</h3>
+      <p>The older walkthrough describes a box assembled onto a tray. Confirm the support used at induction, during EasyLoop presentation, in storage, and at extraction. If a tray is present, is it removed with the box or returned separately? Can a filled box use the same relay, VTM and buffer racks as reusable containers?</p>
+      <p class="purpose">Determines the physical objects to retain after whole-box extraction and the storage routes cartons can use.</p>
+    </li>
+    <li>
+      <h3>What capacities and dwell times apply at induction and extraction?</h3>
+      <p>How many boxes can be ready at each induction point, and how many HTMs can be served at once? Which operators or equipment are shared between endpoints? Separate box assembly or supply time, robot fork time, packing or bagging time, sealing time, and the final handoff. Provide typical values and variation, plus any differences between bag, box and SIOC orders.</p>
+      <p class="purpose">Replaces immediate box supply and provisional endpoint dwell with measured capacity constraints. Packing and bagging take place downstream of EasyLoop.</p>
+    </li>
+    <li id="extraction-approach">
+      <h3>Where do HTMs wait when extraction is busy?</h3>
+      <p>Mark the approach, waiting and departure cells for each extraction endpoint. Can the next HTM approach while another container is being processed, and when is the presentation cell physically clear? Which endpoints share downstream equipment? In particular, three sealer drop-offs do not necessarily mean three independent sealing machines.</p>
+      <p class="purpose">The current dispatcher excludes a port once an inbound route is committed, even before that HTM arrives. Other HTMs can consequently wait at an EasyLoop berth or a buffer relay. Declared approach queues and a safe departure path would let us model overlapping travel and service without inventing floor capacity or ending a robot's reservation while it still occupies the cell.</p>
+    </li>
+    <li id="mock-put">
+      <h3>Vinay: can you provide the starting inventory by tote and rack position?</h3>
+      <p>The pending mock-put file should identify each tote, its rack position, and every SKU and quantity inside it. Please include the identifier mapping to the current map and the snapshot timestamp. Automatic preload currently preserves all supplied on-hand quantities and balances total units per inventory tote; it does not claim to reproduce the site's SKU placement.</p>
+      <p class="purpose">Replaces automatic placement with the real starting state. Please also reconcile the existing 43-unit shortage across 40 SKUs between the on-hand and full outbound extracts.</p>
+    </li>
+    <li>
+      <h3>What inbound workload should putaway model?</h3>
+      <p>September 13 experiment: compare a partial preload with an empty start. Is the slow early <code>order_drop_time</code> pattern intended to allow initial inventory induction? Confirm the required starting stock and whether the DoO target is 60 totes/hour per decant station (with six units/case), or 250 units/hour; these are different workloads. The test currently uses 60 presentations/hour and batches of up to six units, preserving the supplied stock total across preload and inbound.</p>
+      <p>Provide arrival times, SKU quantities, and units per inventory tote. Daniel confirmed on September 9 that inventory totes may contain multiple SKUs and multiple units of each SKU. What processing time and operator capacity apply when filling a tote at putaway? How should initial on-hand stock, empty tote supply and subsequent replenishment be represented for the intended run?</p>
+      <p>For an empty start, are orders released to EasyLoop only after their stock is available, and does decant prioritize those orders? The synthetic inbound sequence currently prioritizes total SKU demand, while orders are assigned in order-ID sequence. This can keep the operator waiting despite other SKUs arriving. Please provide the actual inbound sequence or confirm the intended stock-availability rule.</p>
+      <p class="purpose">Calibrates the concurrent empty-tote → fill → HTM/relay/VTM → rack sequence and separates inventory startup from transport-capacity limits.</p>
+    </li>
+    <li>
+      <h3>What do the conveyor’s 45 seconds cover?</h3>
+      <p>Is <code>loop_transit_secs = 45</code> a full dropoff-to-collection circuit or one leg? What are the separate times from dropoff to presentation and from clearance to collection? Which pauses, lateral transfers and returns are included? How does presenting or returning a tote on one side affect motion on the shared main belt?</p>
+      <p class="purpose">Calibrates the current full-circuit, equal-leg approximation. The approved capacity remains eight inventory totes across the whole conveyor system, including both presentation positions and returns.</p>
+    </li>
+    <li>
+      <h3>What are the Walmart floor-VTM motion and handling specifications?</h3>
+      <p>Confirm empty and loaded speeds, acceleration and braking, footprint and clearance, turning or alignment behavior, lift speed, and rack/relay transfer times for the actual floor-running VTMs. Can the two VTMs in an aisle pass each other? Can they drive while raising a tote, and what extra work does reaching the rear of a double-deep bay require? Which floor locations are shared with HTMs?</p>
+      <p class="purpose">The design document allows an aisle-confined first version, but the current VTM model does not reserve floor space. These answers define VTM–VTM and VTM–HTM interference as well as timing. Cross-aisle relocation can follow separately.</p>
+    </li>
+  </ol>
+</section>
+
+<section id="september-specs" aria-labelledby="september-heading">
+  <h2 id="september-heading">Clarifications from the September 8 documents</h2>
+  <p>The supplied copies of <em>Walmart Dallas — Simulation Design Specs</em> and <em>Simulation Objectives</em> provide fleet and throughput figures, but Vinay has not yet confirmed whether they include his latest revisions. Their statements do not replace Daniel’s later physical-workflow rulings automatically.</p>
+  <ol class="questions">
+    <li id="buffer-capacity">
+      <h3>Vinay: which buffer capacity applies to the pilot?</h3>
+      <p>The current map declares 15 buffer bays with 230 positions each: <strong>3,450 slots</strong>. DoO 2.0 §6.1 lists <strong>27,600 buffer locations</strong>. Is the latter for the pilot or a larger deployment? Confirm bay count, levels, positions per level and usable capacity by container size before we alter the map.</p>
+      <p class="purpose">Settles the denominator for buffer utilisation and the capacity used for admission.</p>
+    </li>
+    <li id="fleet-confirmation">
+      <h3>Vinay: are the eight buffer VTMs additional to the inventory fleet?</h3>
+      <p>The design spec lists 49 VTMs, assumes 40 active inventory VTMs (two per each of 20 aisles), and treats the other nine as charging. The simulation also has eight dedicated VTMs serving the order-container storage/buffer aisles. Are these eight additional machines, with separate hardware and charging allowance, or should those areas share the stated inventory fleet?</p>
+      <p><strong>Provisional choice approved by Daniel on September 8:</strong> retain 40 inventory VTMs plus eight buffer VTMs, for 48 active simulated VTMs, pending Vinay’s confirmation. The nine charging robots are not added as productive capacity. Daniel increased the HTM fleet to 230 on September 12 using the DoO draft count; the earlier 144/80 figures are not the current throughput fleet.</p>
+      <p class="purpose">Confirms fleet capacity by function and prevents either silently adding machines or leaving buffer storage unserved.</p>
+    </li>
+    <li id="htm-fleet-confirmation">
+      <h3>Should the active HTM fleet be 144 or 230?</h3>
+      <p>The Simulation Design Specs prescribe 144 HTMs for Putaway + Pick and for Putaway + Pick + Order Extraction; their separate pick-only variant prescribes 80. DoO Draft 2.0 §4.3 instead lists 230 HTMs and 72 VTMs, but labels that bill of materials WIP and explicitly says it is not a released procurement baseline. Which counts govern the current pilot, and do they include charging, spare or unavailable robots?</p>
+      <p class="purpose">Daniel approved 230 active HTMs as the simulation default on September 12. The separate 144-versus-230 comparison measures the effect of fleet size; Vinay should still confirm the installed/active/charging split.</p>
+    </li>
+    <li>
+      <h3>Which document and layout revision should govern the next map changes?</h3>
+      <p>Confirm the current drawings and the design text’s 19 bays, 23 levels, three single-sided aisles (1, 7 and 20), 161,690 inventory locations, and 2,072 relays. Do those counts include tunnel exclusions? The tunnel note places its start at 18.17 metres despite a stated total storage height of 32 feet; please correct the height or unit. The objectives also mention five rather than three superhighways without a complete layout instruction.</p>
+      <p class="purpose">Separates a new map revision from stale notes. Please provide the corresponding marked-up layout before geometry or capacity is changed.</p>
+    </li>
+    <li>
+      <h3>What constitutes a passing 20-hour throughput run?</h3>
+      <p>The objectives specify 320 units/hour and 290 tote presentations/hour per EasyLoop, or 1,280 units and 1,160 presentations/hour across four stations. Does “presentation” here mean an inventory-source visit, an order-target visit, or both separately? What warmup, arrival profile, order mix, initial stock/empty space, breaks and replenishment apply? Are the rates sustained throughout the 20 hours or averaged over a defined window?</p>
+      <p class="purpose">The approximate 1.1 units per presentation must come from actual workload and batching. A target rate is not an operator dwell or an arrival distribution.</p>
+    </li>
+    <li>
+      <h3>How does pick dwell vary when several units come from one inventory tote?</h3>
+      <p>Automatic preload now spreads the actual on-hand units evenly across inventory totes, with 100 retained only as a configured unit cap. Confirm the fixed presentation/handling time and the additional time per unit transferred. The throughput presets charge ten seconds for one paired transfer regardless of its quantity; should a two-unit pick take two unit-pick times, or a shared handling time plus incremental unit work? Can a nonempty inventory tote remain on the conveyor to serve another waiting order before collection?</p>
+      <p class="purpose">Distinguishes units per hour from tote presentations per hour and avoids treating larger inventory batches as free picking work. The initial stock quantity policy is tracked in <a href="automatic-preload-2026-09-09.md">the automatic-preload note</a>.</p>
+    </li>
+    <li>
+      <h3>What does “four totes batch picking for one order” mean, and is the put wall current?</h3>
+      <p>Identify source versus target totes and whether this means four inventory visits, four simultaneous order containers, or a batching rule. Confirm whether the brief put-wall reference belongs to the current EasyLoop workflow or to an older design.</p>
+      <p class="purpose">The simulation currently keeps one order container on its HTM and pairs it with inventory presentations; ambiguous older wording should not change that behavior.</p>
+    </li>
+  </ol>
+</section>
+
+<section id="source-fields" aria-labelledby="source-heading">
+  <h2 id="source-heading">Source fields to bring to the discussion</h2>
+  <p>These labels and values have been observed in the supplied order data. Their operational meanings still need confirmation. Presence in a source file does not establish how the simulator should use a field.</p>
+  <table class="sources">
+    <caption>Use a few real orders to trace each field through the intended physical route.</caption>
+    <thead><tr><th scope="col">Field</th><th scope="col">Observed values or role</th><th scope="col">Clarification needed</th></tr></thead>
+    <tbody>
+      <tr><th scope="row"><code>shipping_protection</code></th><td><code>bag</code>, <code>box</code>, <code>SIOC</code></td><td>Physical container, packing operation and reusable support.</td></tr>
+      <tr><th scope="row"><code>destination_type</code></th><td><code>DS</code>, <code>SC</code>, <code>3P</code></td><td>Definitions, routing and buffer eligibility.</td></tr>
+      <tr><th scope="row"><code>wave</code></th><td>Source field</td><td>Grouping, admission, buffer release or dispatch semantics.</td></tr>
+      <tr><th scope="row"><code>cutoff_time</code></th><td>Source time field</td><td>Milestone, date, timezone and relationship to release.</td></tr>
+      <tr><th scope="row"><code>delivery_method</code></th><td>Source field</td><td>Whether it changes route, packaging, grouping or priority.</td></tr>
+      <tr><th scope="row"><code>order_drop_time</code></th><td>Order timestamp</td><td>Arrival/release meaning and the time basis shared with cutoffs.</td></tr>
+    </tbody>
+  </table>
+  <p class="meta">The <a href="../../sim/dessim/src/scenario_gen/walmart.rs">Walmart source adapter</a> documents its current interpretations. Fields listed here are discussion inputs; this list does not claim they are all consumed by that adapter.</p>
+</section>
+
+<section id="approved" aria-labelledby="approved-heading">
+  <h2 id="approved-heading">Approved provisional choices</h2>
+  <div class="note"><p>Daniel approved these modeling choices for the current pass. They let implementation proceed while the site questions remain open. This table records authorization; implementation progress is tracked separately in <a href="remaining-flows.md">remaining flows</a>.</p></div>
+  <table>
+    <thead><tr><th scope="col">Area</th><th scope="col">Choice for this pass</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Active fleet</th><td>230 HTMs for the full workflow, approved by Daniel on September 12 using the DoO draft count. Provisionally retain 40 inventory VTMs plus eight buffer VTMs; Vinay must confirm the additional buffer fleet. Do not deploy the nine stated charging robots as productive capacity.</td></tr>
+      <tr><th scope="row">HTM resting locations</th><td>September 12, confirmed by Daniel after speaking with Vinay: no parking-cell type in any scenario. Seed HTMs randomly, without overlap, on relay presentation or explicit charging cells. Usable distinct relay cells must outnumber HTMs; chargers do not relax that preflight. Later idle moves choose an available relay. Charging destinations require future charge-state modeling.</td></tr>
+      <tr><th scope="row">Bag orders</th><td>Pick into a reusable order tote carried by its HTM. At extraction, remove the contents to stand in for downstream packing or bagging; return the empty tote to container storage.</td></tr>
+      <tr><th scope="row">Box induction</th><td>A cardboard box appears immediately at an induction presentation cell, then an HTM performs the pickup/fork action. The box is that order’s exclusive cargo and rides on the HTM through EasyLoop.</td></tr>
+      <tr><th scope="row">Box extraction</th><td>September 13, reconfirmed by Daniel: deliberately remove the whole box at the sealer handoff and release an empty HTM while the other flow and scheduling issues are resolved. Queue sealing, re-induction and subsequent buffer/dispense handling for later this week, not today. Any separate reusable support remains an open site question.</td></tr>
+      <tr><th scope="row">SIOC orders</th><td>Current build only: use a reusable order tray through EasyLoop, then return it after extraction. DoO 2.0 specifies direct source-tote handling at Flex instead; Flex is now declared, but the direct source-tote workflow and its handling remain to be implemented.</td></tr>
+      <tr><th scope="row">Destination routing</th><td>DS orders use the buffer. SC and 3P orders go directly to extraction for now.</td></tr>
+      <tr><th scope="row">Cutoffs and release</th><td>September 13: keep cutoff semantics unresolved and use a synthetic one-hour minimum hold after physical storage in the next buffered throughput preset (<code>buffer_dwell_secs: 3600</code>). The already-running zero-hold baseline is preserved. A per-order hold does not reproduce route-wide releases; Daniel is requesting the schedule source from Solutions.</td></tr>
+      <tr><th scope="row">Initial stock and putaway</th><td>September 9: preload all 1,397,589 supplied units evenly across 162,060 inventory totes (8 or 9 units each), preserving each SKU quantity. Multiple SKUs and multiple units per SKU are allowed. The approved demo overlay adds exactly 43 missing units across 40 SKUs, for 1,397,632 total; source CSV quantities remain unchanged. Order samples keep the same warehouse stock. Vinay will supply the mock-put file with actual starting contents and positions; automatic placement is the interim mode. Inbound putaway remains separate.</td></tr>
+      <tr><th scope="row">EasyLoop packing</th><td>No auto-bagger at EasyLoop. Item transfer at EasyLoop and downstream extraction/packing are separate operations.</td></tr>
+      <tr><th scope="row">Conveyor timing</th><td>Preserve the existing interpretation of 45 seconds as one full circuit, split equally before and after presentation. Keep actual operator/queue delay additional. The timing value and split await site confirmation.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  <p>Prepared from Daniel’s September 7–9 rulings, the source-data review and the supplied September 8 document copies. Historical notes inform the questions; later rulings govern implementation. Related: <a href="tasks.html">task diagram</a>, <a href="remaining-flows.md">remaining flows</a>, <a href="workload-checks.md">workload checks</a>, <a href="spec-review-2026-09-08.md">document assessment</a>.</p>
+</footer>
+</main>
+</body>
+</html>

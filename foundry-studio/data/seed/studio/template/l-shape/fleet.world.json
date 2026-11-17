@@ -1,0 +1,30 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "L-Shape's fleet scope (template/site/l-shape/fleet): the HTM cohort; each aisle's VTM cohort lands here when a site is made.",
+  "doc": {
+    "id": "40b22578-d456-4354-9be3-c678f79e9d03",
+    "name": "L-Shape: fleet",
+    "kind": "template",
+    "depends_on": [
+      "fda5287c-b2e0-4d3e-a000-e46fa35ba40c"
+    ]
+  },
+  "entities": [
+    {
+      "id": "94d1a261-1b51-4a60-b156-5934bd6e5103",
+      "name": "HTM fleet",
+      "components": {
+        "cohort": {
+          "robot_class": "75fb2fbe-5260-4290-80ba-d8acf7974312@1",
+          "count": 24,
+          "assignment": {
+            "kind": "free"
+          }
+        },
+        "template.knob_binding": {
+          "/cohort/count": "htms"
+        }
+      }
+    }
+  ]
+}

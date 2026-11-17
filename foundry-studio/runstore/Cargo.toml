@@ -1,0 +1,27 @@
+[package]
+name = "runstore"
+version = "0.1.0"
+edition = "2024"
+description = "Run-output storage: one object interface over a local folder (development) or a Google Cloud Storage bucket (production)"
+
+[features]
+default = []
+# The production backend. Off by default, so a development build links no cloud
+# SDK and a developer needs no cloud credential to run the server.
+gcs = ["object_store/gcp", "dep:serde_json"]
+
+[dependencies]
+async-trait = "0.1"
+bytes = "1"
+futures = "0.3"
+object_store = { version = "0.14", default-features = false, features = ["fs"] }
+# Only to spell the emulator's service-account key; off with the bucket.
+serde_json = { version = "1", optional = true }
+thiserror = "2"
+# `fs` and `io-util` to stream a file up in parts; the runtime itself is the
+# caller's, as it already was for `object_store`'s folder backend.
+tokio = { version = "1", features = ["fs", "io-util"] }
+
+[dev-dependencies]
+tempfile = "3"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }

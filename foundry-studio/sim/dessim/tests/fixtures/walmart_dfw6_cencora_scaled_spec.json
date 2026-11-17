@@ -1,0 +1,22 @@
+{
+ "composition": "walmart",
+ "world": "walmart_dfw6.json",
+ "scenario": {
+  "num_skus": 4600,
+  "total_inventory_units": 147000,
+  "num_orders": 148,
+  "total_order_picks": 1476,
+  "units_per_tote": 1,
+  "popular_skus_pct": 0.0,
+  "inventory_popular_share": 0.0,
+  "order_popular_share": 0.0
+ },
+ "settings": {
+  "queue_factor": 3.0,
+  "fidelity": "Ghost",
+  "sim_duration": {
+   "secs": 10800,
+   "nanos": 0
+  }
+ }
+}

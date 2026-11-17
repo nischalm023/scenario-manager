@@ -1,0 +1,290 @@
+/* Source: agent-studio-2026-10-17/design/mockups/tokens.css in the Agent Studio design notes, copied unchanged on 2026-10-18;
+   the map palette's comment reworded on 2026-10-19 for ruling D121. */
+/* Agent Studio design tokens.
+ *
+ * What this file is for: every colour, type size, space and radius the Agent Studio pages use, in one place,
+ * so the React port (`studio`, today `crucible-ui`; ruling D83) imports this file unchanged and components never
+ * carry a literal value. Names follow Foundry's semantic layer (gsb-ng apps/web/tailwind.config.ts and
+ * apps/web/styles/theme.css: Untitled UI grays, the GreyOrange orange ramp, Inter), so moving these into a
+ * Tailwind v4 @theme block later is a copy, not a rename.
+ *
+ * Theme pattern: light values on bare :root; dark values redefined twice, once for an OS dark setting unless
+ * the viewer chose light, once for an explicit dark choice. Components read tokens only. The Settings popover's
+ * Theme choice writes data-theme on <html>, or removes it to follow the system (design/specs/02-shell-and-chat.md,
+ * section 3.7, which owns this file; other specs request tokens through their own spec). The reconciliation of today
+ * (2026-10-18) added the selection pair at spec 03's request (design/specs/RECONCILIATION.md section 7). The second
+ * fold-in of the same day added --color-border-control and moved the values design/specs/reviews/accessibility.md
+ * measured (findings 3 and 17): focus, selection and agent differ in lightness as well as hue (luminance ratios
+ * of 1.4 or more between each pair, in each theme), and control edges, map racks and chart series 2 reach 3:1.
+ * Round 4 of the same day added the note colours (ruling D82: a note for the reader is a yellow marker, never
+ * inline). Ratios are WCAG 2's (L1 + 0.05) / (L2 + 0.05) over relative luminance L.
+ *
+ * Layout concept: a chat column beside a tabbed workspace; dense engineering tables; a simtime value carries its
+ * clock's tag, and wall clock, the default, none.
+ */
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --color-bg-page: #fafafa;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f5f5f5;
+  --color-bg-tertiary: #e9eaeb;
+  --color-bg-sunken: #f1f2f4;
+  --color-bg-overlay: #ffffff;
+
+  /* Ink */
+  --color-text-primary: #181d27;
+  --color-text-secondary: #414651;
+  --color-text-tertiary: #535862;
+  --color-text-quaternary: #626773;
+  --color-text-on-action: #ffffff;
+
+  /* Lines */
+  --color-border-primary: #d5d7da;
+  --color-border-secondary: #e9eaeb;
+  --color-border-control: #7f848e;  /* the edge that identifies a control (input, select, composer, segmented):
+                                       3.75:1 on white, 3.12:1 on --color-bg-tertiary (WCAG 1.4.11 asks 3:1) */
+  --color-grid: #e9eaeb;
+
+  /* GreyOrange brand ramp (Foundry tailwind.config.ts); 700 carries white text at 4.8:1 */
+  --color-brand-25: #fff7f4;
+  --color-brand-100: #ffefe9;
+  --color-brand-200: #fdd7cb;
+  --color-brand-400: #fe6f43;
+  --color-brand-600: #e85b31;
+  --color-brand-700: #c74724;
+  --color-brand-800: #a33a1d;
+
+  /* Roles */
+  --color-action: #c74724;          /* primary buttons */
+  --color-action-hover: #a33a1d;
+  --color-link: #b9421f;
+  --color-focus: #1570ef;           /* focus ring, the only solid outline offset 2 px; 3.79:1 at its lowest */
+  --color-select: #1553c4;          /* a checked choice in a form control (radio, segmented control); 1.50 from focus */
+  --color-select-bg: #eff8ff;
+  --color-selection: #0a4a5e;       /* the one selected thing on a panel (map outline, explorer item, canvas node, row),
+                                       drawn as a leading bar or a 2 px border; never the focus ring's colour (spec 03).
+                                       8.5:1 on --color-map-floor, 9.8:1 on white; 2.13 from focus, 1.47 from agent */
+  --color-selection-bg: #ecfdff;
+  --color-agent: #6941c6;           /* what the agent highlighted, dashed; always paired with the word "agent"; 1.45 from focus */
+  --color-agent-bg: #f4ebff;
+  /* A note for the reader (ruling D82): the marker and its text, never product content. Untitled UI yellow 100, 900, 700:
+     text 8.26:1 (L 0.0668 on 0.9153); the border 4.31:1 at its lowest (on --color-bg-tertiary) and 4.77:1 on the note */
+  --color-note-bg: #fef7c3;
+  --color-note-fg: #713b12;
+  --color-note-border: #a15c07;
+
+  /* Status: never colour alone; every use carries a word and a glyph */
+  --color-good: #067647;
+  --color-good-bg: #ecfdf3;
+  --color-good-border: #abefc6;
+  --color-warn: #b54708;
+  --color-warn-bg: #fffaeb;
+  --color-warn-border: #fedf89;
+  --color-bad: #b42318;
+  --color-bad-bg: #fef3f2;
+  --color-bad-border: #fecdca;
+  --color-info: #175cd3;
+  --color-info-bg: #eff8ff;
+  --color-info-border: #b2ddff;
+
+  /* Chart series, fixed order (dataviz reference palette, validated light and dark); series 2 takes the dark
+     theme's value, 3.22:1 where a line crosses the shaded band (--color-bg-tertiary) */
+  --color-series-1: #2a78d6;
+  --color-series-2: #d95926;
+  --color-series-3: #1baf7a;
+  --color-series-4: #eda100;
+  --color-series-5: #e87ba4;
+  --color-series-6: #008300;
+  --color-series-7: #6250d6;
+  --color-series-8: #e34948;
+
+  /* Map palette: the floor every floor view is drawn on, which the worldview viewer reads with the line, agent and
+     selection tokens (spec 03 section 5); rack and station, the retired SVG drawing's (D121), are read by nothing */
+  --color-map-floor: #eef0f3;
+  --color-map-rack: #848b96;        /* 3.01:1 on --color-map-floor */
+  --color-map-station: #414651;
+
+  --shadow-card: 0 1px 2px rgb(10 13 18 / 0.06), 0 1px 3px rgb(10 13 18 / 0.08);
+  --shadow-pop: 0 12px 16px -4px rgb(10 13 18 / 0.08), 0 4px 6px -2px rgb(10 13 18 / 0.03);
+
+  /* Type: Inter for text, Roboto Mono for references and figures (Foundry's --font-mono stack) */
+  --font-body: "Inter", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --text-xs: 0.75rem;   --lh-xs: 1.125rem;   /* 12 / 18 */
+  --text-sm: 0.875rem;  --lh-sm: 1.25rem;    /* 14 / 20 */
+  --text-md: 1rem;      --lh-md: 1.5rem;     /* 16 / 24 */
+  --text-lg: 1.125rem;  --lh-lg: 1.75rem;    /* 18 / 28 */
+  --text-xl: 1.25rem;   --lh-xl: 1.875rem;   /* 20 / 30 */
+  --text-2xl: 1.5rem;   --lh-2xl: 2rem;      /* 24 / 32 */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --tracking-label: 0.04em;
+
+  /* Space (4 px base, as Tailwind's --spacing) */
+  --space-0-5: 0.125rem;
+  --space-1: 0.25rem;
+  --space-1-5: 0.375rem;
+  --space-2: 0.5rem;
+  --space-2-5: 0.625rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Layout */
+  --page-gutter: 16px;
+  --app-bar-height: 3rem;
+  --rail-width: 4.5rem;
+  --side-width: 16rem;
+  --chat-width: 22rem;
+  --detail-width: 20rem;
+  --explorer-width: 17rem;
+  --measure: 68ch;
+
+  --duration-fast: 120ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-bg-page: #0c0e12;
+    --color-bg-primary: #13161b;
+    --color-bg-secondary: #1b1f26;
+    --color-bg-tertiary: #252b37;
+    --color-bg-sunken: #0f1216;
+    --color-bg-overlay: #1b1f26;
+    --color-text-primary: #f5f5f6;
+    --color-text-secondary: #cecfd2;
+    --color-text-tertiary: #a4a7ae;
+    --color-text-quaternary: #94979c;
+    --color-text-on-action: #ffffff;
+    --color-border-primary: #373a41;
+    --color-border-secondary: #252b37;
+    --color-border-control: #73777f;
+    --color-grid: #252b37;
+    --color-brand-25: #2a1209;
+    --color-brand-100: #3d1a0d;
+    --color-brand-200: #5c2612;
+    --color-brand-400: #fe8a63;
+    --color-brand-600: #f0744c;
+    --color-brand-700: #c74724;
+    --color-brand-800: #a33a1d;
+    --color-action: #c74724;
+    --color-action-hover: #b03e1f;
+    --color-link: #fe8a63;
+    /* Luminance ratios: focus 1.56 from agent and 2.25 from selection, agent 1.44 from selection, select 1.72 from
+       focus; the agent is 4.81:1 or more as text, the selection 3.34:1 or more on every surface */
+    --color-focus: #7cc4fd;
+    --color-select: #2e90fa;
+    --color-select-bg: #102a56;
+    --color-selection: #0e86a5;
+    --color-selection-bg: #0d2d3a;
+    --color-agent: #a185f2;
+    --color-agent-bg: #2c1c5f;
+    /* Note: text 11.18:1 (L 0.9153 on 0.0364); the border 6.81:1 at its lowest (on --color-bad-bg), 5.94:1 on the note */
+    --color-note-bg: #42340a;
+    --color-note-fg: #fef7c3;
+    --color-note-border: #eaaa08;
+    --color-good: #47cd89;
+    --color-good-bg: #053321;
+    --color-good-border: #085d3a;
+    --color-warn: #fdb022;
+    --color-warn-bg: #4e1d09;
+    --color-warn-border: #93370d;
+    --color-bad: #f97066;
+    --color-bad-bg: #55160c;
+    --color-bad-border: #912018;
+    --color-info: #84caff;
+    --color-info-bg: #102a56;
+    --color-info-border: #1849a9;
+    --color-series-1: #3987e5;
+    --color-series-2: #d95926;
+    --color-series-3: #199e70;
+    --color-series-4: #c98500;
+    --color-series-5: #d55181;
+    --color-series-6: #008300;
+    --color-series-7: #9085e9;
+    --color-series-8: #e66767;
+    --color-map-floor: #1b1f26;
+    --color-map-rack: #6f737b;
+    --color-map-station: #cecfd2;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-pop: 0 12px 16px -4px rgb(0 0 0 / 0.5);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg-page: #0c0e12;
+  --color-bg-primary: #13161b;
+  --color-bg-secondary: #1b1f26;
+  --color-bg-tertiary: #252b37;
+  --color-bg-sunken: #0f1216;
+  --color-bg-overlay: #1b1f26;
+  --color-text-primary: #f5f5f6;
+  --color-text-secondary: #cecfd2;
+  --color-text-tertiary: #a4a7ae;
+  --color-text-quaternary: #94979c;
+  --color-text-on-action: #ffffff;
+  --color-border-primary: #373a41;
+  --color-border-secondary: #252b37;
+  --color-border-control: #73777f;
+  --color-grid: #252b37;
+  --color-brand-25: #2a1209;
+  --color-brand-100: #3d1a0d;
+  --color-brand-200: #5c2612;
+  --color-brand-400: #fe8a63;
+  --color-brand-600: #f0744c;
+  --color-brand-700: #c74724;
+  --color-brand-800: #a33a1d;
+  --color-action: #c74724;
+  --color-action-hover: #b03e1f;
+  --color-link: #fe8a63;
+  --color-focus: #7cc4fd;
+  --color-select: #2e90fa;
+  --color-select-bg: #102a56;
+  --color-selection: #0e86a5;
+  --color-selection-bg: #0d2d3a;
+  --color-agent: #a185f2;
+  --color-agent-bg: #2c1c5f;
+  --color-note-bg: #42340a;
+  --color-note-fg: #fef7c3;
+  --color-note-border: #eaaa08;
+  --color-good: #47cd89;
+  --color-good-bg: #053321;
+  --color-good-border: #085d3a;
+  --color-warn: #fdb022;
+  --color-warn-bg: #4e1d09;
+  --color-warn-border: #93370d;
+  --color-bad: #f97066;
+  --color-bad-bg: #55160c;
+  --color-bad-border: #912018;
+  --color-info: #84caff;
+  --color-info-bg: #102a56;
+  --color-info-border: #1849a9;
+  --color-series-1: #3987e5;
+  --color-series-2: #d95926;
+  --color-series-3: #199e70;
+  --color-series-4: #c98500;
+  --color-series-5: #d55181;
+  --color-series-6: #008300;
+  --color-series-7: #9085e9;
+  --color-series-8: #e66767;
+  --color-map-floor: #1b1f26;
+  --color-map-rack: #6f737b;
+  --color-map-station: #cecfd2;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-pop: 0 12px 16px -4px rgb(0 0 0 / 0.5);
+}

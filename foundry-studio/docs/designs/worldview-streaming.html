@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worldview: the recording of a warehouse run</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-paper:       #f5f5f5;
+      --color-paper-2:     #ececec;
+      --color-ink:         #2d3142;
+      --color-muted:       #4f5d75;
+      --color-soft:        #7a8399;
+      --color-rule:        rgba(45,49,66,0.12);
+      --color-rule-solid:  rgba(79,93,117,0.25);
+      --color-accent:      #eb6c36;
+      --color-accent-tint: rgba(235,108,54,0.08);
+      --color-link:        #2e5aa8;
+      --font-sans:   'Geist', system-ui, sans-serif;
+      --font-serif:  'Instrument Serif', 'Times New Roman', serif;
+      --font-mono:   'Geist Mono', ui-monospace, Menlo, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      min-height: 100vh;
+      padding: 3rem 2rem;
+      color: var(--color-ink);
+    }
+
+    .container { max-width: 1120px; margin: 0 auto; }
+
+    .header { margin-bottom: 2.5rem; }
+    .header-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.75rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--color-ink);
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--color-muted);
+      max-width: 60ch;
+    }
+    .status {
+      margin-top: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--color-soft);
+    }
+
+    section { margin-top: 3rem; }
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-soft);
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-family: var(--font-sans);
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.5rem;
+    }
+    p, li { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink); }
+    p { max-width: 72ch; margin-bottom: 0.875rem; }
+    ul, ol { max-width: 72ch; margin: 0 0 1rem 1.25rem; }
+    li { margin-bottom: 0.375rem; }
+    li::marker { color: rgba(45,49,66,0.35); }
+    strong { font-weight: 600; }
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.8125em;
+      background: rgba(45,49,66,0.05);
+      padding: 0 0.3em;
+      border-radius: 3px;
+    }
+    .aside {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.0625rem;
+      line-height: 1.5;
+      color: var(--color-ink);
+      max-width: 60ch;
+      margin: 1rem 0 1.25rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--color-accent);
+    }
+
+    .diagram-container { overflow-x: auto; margin: 1.25rem 0 0.5rem; }
+    .diagram-container svg { width: 100%; min-width: 880px; display: block; }
+    figcaption {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--color-soft);
+      margin-bottom: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.75rem 0 1.5rem;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+    }
+    th {
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      text-align: left;
+      padding: 0.5rem 0.75rem 0.5rem 0;
+      border-bottom: 1px solid var(--color-rule-solid);
+      vertical-align: bottom;
+    }
+    td {
+      padding: 0.5rem 0.75rem 0.5rem 0;
+      border-bottom: 1px solid var(--color-rule);
+      vertical-align: top;
+      color: var(--color-ink);
+    }
+    td:first-child { font-weight: 600; }
+    td.wrap { white-space: normal; }
+    .table-scroll { overflow-x: auto; }
+
+    .tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.1rem 0.4rem;
+      border-radius: 2px;
+      border: 1px solid rgba(45,49,66,0.40);
+      color: var(--color-ink);
+      white-space: nowrap;
+    }
+    .tag.open { border-color: var(--color-accent); color: var(--color-accent); }
+    .tag.done { border-color: rgba(79,93,117,0.50); color: var(--color-muted); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 0.9fr;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+    @media (max-width: 800px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      background: #ffffff;
+      border-radius: 6px;
+      border: 1px solid var(--color-rule);
+      padding: 1.25rem;
+    }
+    .card .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-soft);
+      margin-bottom: 0.5rem;
+    }
+    .card-header {
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-bottom: 0.75rem; padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(45,49,66,0.08);
+    }
+    .card-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .card-dot.ink { background: var(--color-ink); }
+    .card-dot.muted { background: var(--color-muted); }
+    .card-dot.coral { background: var(--color-accent); }
+    .card h3 { margin: 0; font-size: 0.875rem; }
+    .card ul { list-style: none; margin: 0; }
+    .card li { font-size: 0.8125rem; color: var(--color-muted); padding-left: 0.875rem; position: relative; }
+    .card li::before { content: '—'; position: absolute; left: 0; color: rgba(45,49,66,0.25); font-size: 0.75rem; }
+
+    .footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(45,49,66,0.10);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--color-soft);
+      line-height: 1.7;
+    }
+    .footer ul { list-style: none; margin: 0.5rem 0 0; }
+    .footer li { font-size: 0.72rem; color: var(--color-soft); font-family: var(--font-mono); }
+
+    @media print {
+      body { padding: 1rem; }
+      .diagram-container svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <p class="header-eyebrow">Design document · branch <code>agent/worldview</code> · 2026-09-18</p>
+    <h1>Worldview: the recording of a warehouse run, and how it streams</h1>
+    <p class="subtitle">One file per run attempt: everything the run was built from, everything it did, and everything it ended with, seekable by simulated time. This document describes the file, how the simulator writes it, and how the Crucible server stores it and serves it to viewers.</p>
+    <p class="status">Status: built on this branch, with an exact-parity check against the current master — cell-identical workbooks and byte-identical render arrays on four fixtures. The Crucible server and the browser viewer are built here too (<code>docs/designs/crucible-server-ui.html</code>). The simulator writes a recording at the END of a run; <strong>writing one while a run executes, and watching it, is not here</strong> — section 04 says what it waits on. The fleet of runner processes is a later initiative.</p>
+  </header>
+
+  <section id="what">
+    <p class="section-eyebrow">00 · what a worldview is</p>
+    <h2>A run is a sequence of frames, written as it happens, read from any instant</h2>
+    <p>A <code>.worldview</code> file holds everything one attempt of a run produced: the world it ran in, the scenario it ran, and the run itself as a time-indexed sequence of frames. It replaces the whole-run document that was written only when a run finished. Three properties drive the shape:</p>
+    <ul>
+      <li><strong>Appended, never rewritten.</strong> Frames are added in the order the run settles them, and nothing goes back over one. A file cut short is read to its last whole frame, and a reader can follow a file that is still growing — which is what a producer writing during a run would need, and no producer does that yet.</li>
+      <li><strong>Seekable by simulated time.</strong> Keyframes restate the whole state at regular instants; deltas carry the changes between them. Any instant is one keyframe plus a bounded number of deltas away.</li>
+      <li><strong>Self-contained.</strong> The scenario block at the front carries the world document, the scenario and its data, the configuration, and the tables that tie the run's compact identifiers to the world. Nothing outside the file is needed to replay it or to inspect it.</li>
+    </ul>
+    <p>The same frames that go into the file go over the wire, in the same vocabulary: a browser attached to a run receives that file's own frames, each one possibly re-encoded with the sections it did not ask for removed. One format to write, one to read, one to test.</p>
+  </section>
+
+  <section id="file">
+    <p class="section-eyebrow">01 · the file</p>
+    <h2>Scenario, then keyframes and deltas, then the index and the end</h2>
+    <h3>The file: what is written to disk and uploaded to storage</h3>
+    <p>This is the durable form of a run: the file headless desvis writes, the object the Crucible server uploads when a run ends, and what desvis, the browser and the workbook all open afterwards. Every block below is a frame.</p>
+    <figure>
+      <div class="diagram-container">
+<svg viewBox="0 0 940 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="wv-file-title wv-file-desc">
+  <title id="wv-file-title">The layout of a .worldview file</title>
+  <desc id="wv-file-desc">A worldview file is a chain of frames: the scenario block first, then a keyframe holding the whole state followed by one delta per slice for thirty slices, repeated, then the keyframe index block and the end block; the writer keeps the index in memory as it writes and puts it into the file as the index block at the end.</desc>
+  <defs>
+    <marker id="wv-file-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+    <marker id="wv-file-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+    <marker id="wv-file-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#f5f5f5"/>
+  <rect x="24" y="56" width="120" height="104" rx="6" fill="#f5f5f5"/>
+  <rect x="24" y="56" width="120" height="104" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+  <rect x="32" y="62" width="56" height="12" rx="2" fill="transparent" stroke="#4f5d75" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="60" y="71" fill="#4f5d75" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">CONTROL</text>
+  <text x="84" y="98" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">scenario</text>
+  <text x="84" y="114" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">documents · tables</text>
+  <text x="84" y="126" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">descriptors</text>
+  <text x="84" y="138" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">sections declared</text>
+  <rect x="156" y="56" width="152" height="104" rx="6" fill="#f5f5f5"/>
+  <rect x="156" y="56" width="152" height="104" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+  <rect x="164" y="62" width="44" height="12" rx="2" fill="transparent" stroke="#eb6c36" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="186" y="71" fill="#eb6c36" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">T = 0</text>
+  <text x="232" y="98" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">keyframe</text>
+  <text x="232" y="114" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">the whole state at T</text>
+  <text x="232" y="126" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">sections: playback ·</text>
+  <text x="232" y="138" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">scalars · heat</text>
+  <rect x="320" y="56" width="152" height="104" rx="6" fill="#f5f5f5"/>
+  <rect x="320" y="56" width="152" height="104" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <rect x="328" y="62" width="48" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="352" y="71" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">SLICES</text>
+  <text x="396" y="98" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">deltas</text>
+  <text x="396" y="114" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">× 30, one per 10 s slice</text>
+  <text x="396" y="126" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">sections: playback ·</text>
+  <text x="396" y="138" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">scalars · heat · tables</text>
+  <text x="492" y="114" fill="#7a8399" font-size="20" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">⋯</text>
+  <rect x="524" y="56" width="152" height="104" rx="6" fill="#f5f5f5"/>
+  <rect x="524" y="56" width="152" height="104" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <rect x="532" y="62" width="120" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="592" y="71" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">T = 5, 10, 15 MIN…</text>
+  <text x="600" y="98" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">keyframe</text>
+  <text x="600" y="114" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">the whole state at T</text>
+  <text x="600" y="126" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">sections: playback ·</text>
+  <text x="600" y="138" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">scalars · heat</text>
+  <rect x="688" y="56" width="104" height="104" rx="6" fill="#f5f5f5"/>
+  <rect x="688" y="56" width="104" height="104" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+  <rect x="696" y="62" width="56" height="12" rx="2" fill="transparent" stroke="#4f5d75" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="724" y="71" fill="#4f5d75" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">CONTROL</text>
+  <text x="740" y="106" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">index</text>
+  <text x="740" y="122" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">1 record / frame</text>
+  <text x="740" y="134" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">offset · t_ms · tag</text>
+  <rect x="804" y="56" width="92" height="104" rx="6" fill="#f5f5f5"/>
+  <rect x="804" y="56" width="92" height="104" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+  <rect x="812" y="62" width="56" height="12" rx="2" fill="transparent" stroke="#4f5d75" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="840" y="71" fill="#4f5d75" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">CONTROL</text>
+  <text x="850" y="106" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">end</text>
+  <text x="850" y="122" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">stop reason</text>
+  <text x="850" y="134" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">summary</text>
+  <line x1="24" y1="176" x2="896" y2="176" stroke="rgba(79,93,117,0.25)" stroke-width="1" marker-end="url(#wv-file-arrow)"/>
+  <rect x="278" y="187" width="364" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="460" y="196" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">BYTE ORDER = SIMULATED TIME ORDER, ONE APPEND PER FRAME</text>
+  <rect x="320" y="224" width="356" height="56" rx="6" fill="#f5f5f5"/>
+  <rect x="320" y="224" width="356" height="56" rx="6" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.20)" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="328" y="230" width="68" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.20)" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="362" y="239" fill="rgba(45,49,66,0.20)" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">IN MEMORY</text>
+  <text x="498" y="250" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">the index being built</text>
+  <text x="498" y="266" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">in the writer's memory as it writes · never written beside the file</text>
+  <path d="M 740,160 V 244 Q 740,252 732,252 H 684" fill="none" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#wv-file-arrow)"/>
+  <rect x="772" y="235" width="80" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="812" y="244" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">SAME RECORDS</text>
+  <line x1="20" y1="296" x2="920" y2="296" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+  <text x="20" y="312" fill="#4f5d75" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start" letter-spacing="0.14em">LEGEND</text>
+  <rect x="96" y="304" width="12" height="10" rx="2" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="0.8"/>
+  <text x="116" y="312" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">control frame, about the run or the file</text>
+  <rect x="400" y="304" width="12" height="10" rx="2" fill="#ffffff" stroke="#2d3142" stroke-width="0.8"/>
+  <text x="420" y="312" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">content frame: a keyframe or a delta</text>
+  <rect x="612" y="304" width="12" height="10" rx="2" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="0.8"/>
+  <text x="632" y="312" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">where a reader can start</text>
+</svg>
+      </div>
+      <figcaption>A finished file. Every block is a frame; a keyframe and a delta list the sections they carry. The writer keeps the index in memory while the file grows and writes it once as the index block at the end; a reader without that block rebuilds it by scanning the headers.</figcaption>
+    </figure>
+<h3>The stream: what a viewer receives when it attaches at an instant</h3>
+    <p>This is the wire form: the same frames, sent over a websocket to a viewer opening a recorded run at a chosen instant. The server chooses where to start and what to leave out; the viewer decodes what it is sent and carries the state forward itself.</p>
+        <figure>
+      <div class="diagram-container">
+<svg viewBox="0 0 940 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="wv-wire-title wv-wire-desc">
+  <title id="wv-wire-title">The stream a viewer receives when it attaches at instant N</title>
+  <desc id="wv-wire-desc">The wire sends a filtered scenario block, the index records up to N, the one keyframe at or before N, then every delta after it as it is written, and the end block; later keyframes do not travel because the viewer carries its own state forward.</desc>
+  <defs>
+    <marker id="wv-wire-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+    <marker id="wv-wire-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+    <marker id="wv-wire-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#f5f5f5"/>
+  <rect x="24" y="48" width="152" height="88" rx="6" fill="#f5f5f5"/>
+  <rect x="24" y="48" width="152" height="88" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+  <rect x="32" y="54" width="56" height="12" rx="2" fill="transparent" stroke="#4f5d75" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="60" y="63" fill="#4f5d75" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">CONTROL</text>
+  <text x="100" y="90" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">scenario</text>
+  <text x="100" y="106" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">filtered for the viewer</text>
+  <text x="100" y="118" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">world doc, no data files</text>
+  <rect x="184" y="48" width="160" height="88" rx="6" fill="#f5f5f5"/>
+  <rect x="184" y="48" width="160" height="88" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+  <rect x="192" y="54" width="32" height="12" rx="2" fill="transparent" stroke="#eb6c36" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="208" y="63" fill="#eb6c36" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">≤ N</text>
+  <text x="264" y="90" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">partial index</text>
+  <text x="264" y="106" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">records up to N</text>
+  <text x="264" y="118" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">attached says the extent</text>
+  <rect x="352" y="48" width="136" height="88" rx="6" fill="#f5f5f5"/>
+  <rect x="352" y="48" width="136" height="88" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <rect x="360" y="54" width="84" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="402" y="63" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">THE ONLY ONE</text>
+  <text x="420" y="90" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">keyframe</text>
+  <text x="420" y="106" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">at or before N</text>
+  <text x="420" y="118" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">asked sections only</text>
+  <rect x="496" y="48" width="144" height="88" rx="6" fill="#f5f5f5"/>
+  <rect x="496" y="48" width="144" height="88" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <rect x="504" y="54" width="36" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="522" y="63" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">ONE EACH</text>
+  <text x="568" y="90" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">deltas</text>
+  <text x="568" y="106" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">every slice after it</text>
+  <text x="568" y="118" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">no later keyframe</text>
+  <text x="664" y="98" fill="#7a8399" font-size="20" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">⋯</text>
+  <rect x="688" y="48" width="152" height="88" rx="6" fill="#f5f5f5"/>
+  <rect x="688" y="48" width="152" height="88" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+  <rect x="696" y="54" width="56" height="12" rx="2" fill="transparent" stroke="#4f5d75" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="724" y="63" fill="#4f5d75" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">CONTROL</text>
+  <text x="764" y="90" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">end</text>
+  <text x="764" y="106" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">when the run finishes</text>
+  <line x1="24" y1="152" x2="840" y2="152" stroke="rgba(79,93,117,0.25)" stroke-width="1" marker-end="url(#wv-wire-arrow)"/>
+  <rect x="244" y="163" width="424" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="456" y="172" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">ONE WEBSOCKET MESSAGE PER FRAME; THE VIEWER CARRIES ITS STATE FORWARD</text>
+</svg>
+      </div>
+      <figcaption>The wire for a viewer attaching at simulated time N: a filtered scenario block, the index records up to N (the attached message states the live edge), the one keyframe at or before N, then deltas only, each re-encoded with the sections the viewer asked for.</figcaption>
+    </figure>
+    <p>Every block is a <strong>frame</strong>: a fixed 20-byte header followed by a compressed payload. The header says what kind of frame it is, the simulated instant it starts at, how long the payload is, and a checksum over both. A reader walks a file or a stream twenty bytes at a time and decodes only the frames it needs.</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Bytes</th><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td>tag (u8)</td><td>the kind of frame: scenario, declare, keyframe, delta, index, end</td></tr>
+        <tr><td>1</td><td>flags (u8)</td><td>bit 0: the payload is zstd-compressed; the rest reserved</td></tr>
+        <tr><td>2–3</td><td>reserved (u16)</td><td>zero</td></tr>
+        <tr><td>4–11</td><td>t_ms (u64)</td><td>the simulated instant the frame's contents begin at, in milliseconds</td></tr>
+        <tr><td>12–15</td><td>payload_len (u32)</td><td>compressed payload length</td></tr>
+        <tr><td>16–19</td><td>crc32c (u32)</td><td>over the header's first sixteen bytes and the payload</td></tr>
+      </tbody>
+    </table></div>
+        <figure>
+      <div class="diagram-container">
+<svg viewBox="0 0 940 252" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="wv-frame-title wv-frame-desc">
+  <title id="wv-frame-title">The anatomy of one frame</title>
+  <desc id="wv-frame-desc">Every frame is a twenty-byte header, with the tag, flags, the simulated instant in milliseconds, the payload length and a CRC32C checksum, followed by a MessagePack payload compressed with zstd; a keyframe or delta payload opens with its section table.</desc>
+  <defs>
+    <marker id="wv-frame-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+    <marker id="wv-frame-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+    <marker id="wv-frame-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#f5f5f5"/>
+  <rect x="36" y="56" width="24" height="64" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="48" y="94" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">tag</text>
+  <text x="36" y="136" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">0</text>
+  <rect x="60" y="56" width="24" height="64" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="72" y="94" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">fla</text>
+  <text x="60" y="136" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">1</text>
+  <rect x="84" y="56" width="48" height="64" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="108" y="84" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">reserved</text>
+  <text x="108" y="100" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">u16</text>
+  <text x="84" y="136" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">2</text>
+  <rect x="132" y="56" width="192" height="64" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+  <text x="228" y="84" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">t_ms</text>
+  <text x="228" y="100" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">u64 simulated ms</text>
+  <text x="132" y="136" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">4</text>
+  <rect x="324" y="56" width="96" height="64" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="372" y="84" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">payload_len</text>
+  <text x="372" y="100" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">u32</text>
+  <text x="324" y="136" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">12</text>
+  <rect x="420" y="56" width="96" height="64" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="468" y="84" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">crc32c</text>
+  <text x="468" y="100" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">u32 hdr + payload</text>
+  <text x="420" y="136" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">16</text>
+  <rect x="532" y="56" width="372" height="64" rx="0" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="718" y="84" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">payload</text>
+  <text x="718" y="100" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">MessagePack, positional · zstd per frame · ≤ 64 MiB decompressed</text>
+  <text x="532" y="136" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">20 + payload_len</text>
+  <text x="36" y="168" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start" letter-spacing="0.08em">tag</text>
+  <text x="80" y="168" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">1 scenario · 2 declare · 3 keyframe · 4 delta · 5 index · 6 end</text>
+  <text x="36" y="188" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start" letter-spacing="0.08em">flags</text>
+  <text x="80" y="188" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">bit 0: payload is zstd-compressed; the rest reserved</text>
+  <text x="36" y="208" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start" letter-spacing="0.08em">sections</text>
+  <text x="96" y="208" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">a keyframe or delta payload opens with [(section, offset, len)]: playback · scalars · heat · tables, as declared in the scenario block</text>
+  <text x="36" y="232" fill="#4f5d75" font-size="11" font-family="'Instrument Serif', 'Times New Roman', serif" text-anchor="start" font-style="italic">A reader walks a file twenty bytes at a time and decodes only the frames it needs; t_ms is the key the index and every seek are built on.</text>
+</svg>
+      </div>
+      <figcaption>One frame. The header is fixed and uncompressed, so a reader can walk a file or a stream frame by frame without decoding a payload; the checksum covers both.</figcaption>
+    </figure>
+    <p>Payloads are MessagePack, positional, compressed with zstd frame by frame, so a single frame can be read without touching its neighbours and the file can be tailed while it is written. A keyframe or delta payload opens with a <strong>section table</strong>, one entry per section it carries with its byte range, so a consumer decompresses once and keeps only the sections it wants.</p>
+  </section>
+
+  <section id="sections">
+    <p class="section-eyebrow">02 · sections and what a frame says</p>
+    <h2>One keyframe is the whole state, one delta is a slice's changes, and both are made of sections</h2>
+    <p>A <strong>keyframe</strong> restates everything at an instant: where every robot and tote is, every metric's value, the visit grid. A <strong>delta</strong> states what one ten-second slice changed. Both are divided into <strong>sections</strong>, one per kind of state, declared by name in the scenario block; the section table at the front of the payload says where each lies, so a viewer that draws only the floor keeps the playback section and drops the rest without decoding it.</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Section</th><th>In a keyframe</th><th>In a delta</th></tr></thead>
+      <tbody>
+        <tr><td><strong>playback</strong></td><td>every robot (id, class, its x/y/z millimetres, heading, what it carries, the cell it is in and the one it is heading to), every tote (id, container type, designation, location, contents), the conveyor journeys under way</td><td>per closed slice: each mover's step list (where the step left it, how long it took, what kind of motion, the cell it arrived in) and the cell the slice leaves it in; tote births, moves, journeys and contents; relay reservations; station depths</td></tr>
+        <tr><td><strong>scalars</strong></td><td>each declared metric's reading (a gauge) or running sum (a counter), one position per descriptor</td><td>the slice's values, positional</td></tr>
+        <tr><td><strong>heat</strong></td><td>the cumulative visit grid per robot class</td><td>the slice's increments</td></tr>
+        <tr><td><strong>tables</strong></td><td>—</td><td>per declared table (robot legs, lift cycles, picks, …): the rows whose instants fall in the closed slice</td></tr>
+      </tbody>
+    </table></div>
+    <p>The other frame kinds carry facts about the run or the file rather than state, and have no sections: the scenario block, a declaration of a table or metric that appears mid-run, the index, and the end block with the stop reason and the summary.</p>
+        <p><strong>Identifiers.</strong> Frames name cells, robots, totes and stations by the compact integer ids the run uses (u32 values, which MessagePack writes in one to five bytes), because a step list of small ids is what keeps a delta at about two kilobytes. The <strong>scenario block</strong> carries the tables that tie those ids to the world: the world-protocol entity id of every cell and station, and each robot's name and class. Totes are created during a run, so a tote's identity is declared in the delta of the slice that creates it. Robots and totes are not entities of the world graph; they are the actors that move through it, and the world graph stays the static description of the site.</p>
+    <p><strong>Places.</strong> A robot's place is its coordinates: whole millimetres along x, y and z in the world document's root 3-D frame, which the scenario block names once. Cells ride beside them and place nothing — they say which cell a consumer reporting per cell should count the robot against. Movement inside a slice is the straight line between two stated positions; the file's own numbers are whole millimetres, and what a viewer draws between two of them is the viewer's business. A tote's place stays symbolic: where a tote is drawn follows from what holds it, so a tote names a rack slot, a relay, a conveyor landmark or the robot carrying it.</p>
+      <figure>
+      <div class="diagram-container">
+<svg viewBox="0 0 940 496" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="wv-contents-title wv-contents-desc">
+  <title id="wv-contents-title">What each kind of frame carries</title>
+  <desc id="wv-contents-desc">Eight cards: the scenario block with the documents, id tables and descriptors; the section table that opens every keyframe and delta; the playback, scalars, heat and tables sections; the index record; and the end block.</desc>
+  <defs>
+    <marker id="wv-contents-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+    <marker id="wv-contents-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+    <marker id="wv-contents-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#f5f5f5"/>
+  <rect x="36" y="40" width="208" height="204" rx="6" fill="#f5f5f5"/>
+  <rect x="36" y="40" width="208" height="204" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+  <line x1="36" y1="84" x2="244" y2="84" stroke="#eb6c36" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="48" y="58" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="start" font-weight="600">scenario block</text>
+  <rect x="48" y="66" width="104" height="12" rx="2" fill="transparent" stroke="#eb6c36" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="100" y="75" fill="#eb6c36" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">CONTROL · FIRST</text>
+  <text x="48" y="104" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">run id · attempt · commit · when</text>
+  <text x="48" y="120" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">slice_width_ms · keyframe_cadence</text>
+  <text x="48" y="136" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">families: [(u8, name)]</text>
+  <text x="48" y="152" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">world: the world document</text>
+  <text x="48" y="168" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">scenario + its data files</text>
+  <text x="48" y="184" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">sim config</text>
+  <text x="48" y="200" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">cells: [(CellId, EntityId)]</text>
+  <text x="48" y="216" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">stations · robots (id, name, class)</text>
+  <text x="48" y="232" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">descriptors known at start</text>
+  <rect x="268" y="40" width="208" height="172" rx="6" fill="#f5f5f5"/>
+  <rect x="268" y="40" width="208" height="172" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <line x1="268" y1="84" x2="476" y2="84" stroke="#2d3142" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="280" y="58" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="start" font-weight="600">section table</text>
+  <rect x="280" y="66" width="108" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="334" y="75" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">KEYFRAME · DELTA</text>
+  <text x="280" y="104" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">opens every keyframe and delta:</text>
+  <text x="280" y="120" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">[(section, offset, len), …]</text>
+  <text x="280" y="136" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">sections declared in the</text>
+  <text x="280" y="152" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  scenario block:</text>
+  <text x="280" y="168" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  playback · scalars · heat · tables</text>
+  <text x="280" y="184" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">a consumer keeps the sections</text>
+  <text x="280" y="200" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  it wants and drops the rest</text>
+  <rect x="500" y="40" width="208" height="188" rx="6" fill="#f5f5f5"/>
+  <rect x="500" y="40" width="208" height="188" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <line x1="500" y1="84" x2="708" y2="84" stroke="#2d3142" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="512" y="58" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="start" font-weight="600">playback section</text>
+  <rect x="512" y="66" width="144" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="584" y="75" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">IN KEYFRAME · IN DELTA</text>
+  <text x="512" y="104" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">keyframe: robots [id, class, cell,</text>
+  <text x="512" y="120" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  heading_mrad | nil, carrying];</text>
+  <text x="512" y="136" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  totes [id, type, designation,</text>
+  <text x="512" y="152" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  location, contents]; transits</text>
+  <text x="512" y="168" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">delta: movers [id, heading0,</text>
+  <text x="512" y="184" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  [[cell, dt_ms, kind], …]]; tote</text>
+  <text x="512" y="200" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  births · transitions · transits</text>
+  <text x="512" y="216" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  · contents; relay · station changes</text>
+  <rect x="732" y="40" width="208" height="140" rx="6" fill="#f5f5f5"/>
+  <rect x="732" y="40" width="208" height="140" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <line x1="732" y1="84" x2="940" y2="84" stroke="#2d3142" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="744" y="58" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="start" font-weight="600">scalars section</text>
+  <rect x="744" y="66" width="144" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="816" y="75" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">IN KEYFRAME · IN DELTA</text>
+  <text x="744" y="104" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">keyframe:</text>
+  <text x="744" y="120" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  reading | running sum,</text>
+  <text x="744" y="136" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  one slot per descriptor</text>
+  <text x="744" y="152" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">delta:</text>
+  <text x="744" y="168" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  the slice's values, positional</text>
+  <rect x="36" y="276" width="208" height="140" rx="6" fill="#f5f5f5"/>
+  <rect x="36" y="276" width="208" height="140" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <line x1="36" y1="320" x2="244" y2="320" stroke="#2d3142" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="48" y="294" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="start" font-weight="600">heat section</text>
+  <rect x="48" y="302" width="144" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="120" y="311" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">IN KEYFRAME · IN DELTA</text>
+  <text x="48" y="340" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">keyframe:</text>
+  <text x="48" y="356" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  cumulative visits per cell,</text>
+  <text x="48" y="372" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  per robot class</text>
+  <text x="48" y="388" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">delta:</text>
+  <text x="48" y="404" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  the slice's increments</text>
+  <rect x="268" y="276" width="208" height="140" rx="6" fill="#f5f5f5"/>
+  <rect x="268" y="276" width="208" height="140" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <line x1="268" y1="320" x2="476" y2="320" stroke="#2d3142" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="280" y="294" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="start" font-weight="600">tables section</text>
+  <rect x="280" y="302" width="92" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="326" y="311" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">IN DELTA ONLY</text>
+  <text x="280" y="340" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">per declared table:</text>
+  <text x="280" y="356" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  rows in the positional</text>
+  <text x="280" y="372" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  row encoding, whose instants</text>
+  <text x="280" y="388" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  lie in the closed slice</text>
+  <text x="280" y="404" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">(legs, cycles, picks, …)</text>
+  <rect x="500" y="276" width="208" height="156" rx="6" fill="#f5f5f5"/>
+  <rect x="500" y="276" width="208" height="156" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <line x1="500" y1="320" x2="708" y2="320" stroke="#2d3142" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="512" y="294" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="start" font-weight="600">index record</text>
+  <rect x="512" y="302" width="96" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="560" y="311" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">CONTROL · 24 B</text>
+  <text x="512" y="340" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">offset: u64</text>
+  <text x="512" y="356" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">t_ms: u64</text>
+  <text x="512" y="372" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">tag: u8</text>
+  <text x="512" y="388" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">len: u32</text>
+  <text x="512" y="404" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">one per frame; what the writer held</text>
+  <text x="512" y="420" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  and the index block hold the same</text>
+  <rect x="732" y="276" width="208" height="124" rx="6" fill="#f5f5f5"/>
+  <rect x="732" y="276" width="208" height="124" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <line x1="732" y1="320" x2="940" y2="320" stroke="#2d3142" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="744" y="294" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="start" font-weight="600">end block</text>
+  <rect x="744" y="302" width="96" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="792" y="311" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">CONTROL · LAST</text>
+  <text x="744" y="340" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">stop reason + detail</text>
+  <text x="744" y="356" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">summary statistics</text>
+  <text x="744" y="372" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">  (what the workbook needs)</text>
+  <text x="744" y="388" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">frame counts</text>
+  <text x="36" y="468" fill="#4f5d75" font-size="11" font-family="'Instrument Serif', 'Times New Roman', serif" text-anchor="start" font-style="italic">Identifiers inside frames are the run's compact u32 ids; the scenario block's tables tie cells and stations to world entities, and a tote's identity is declared where it is born.</text>
+</svg>
+      </div>
+      <figcaption>What each kind of frame carries. Fields are positional MessagePack arrays in the order shown; a section's card says whether it appears in a keyframe, in a delta, or both.</figcaption>
+    </figure>
+  </section>
+
+  <section id="seek">
+    <p class="section-eyebrow">03 · seeking and scrubbing</p>
+    <h2>Nearest preceding keyframe, then the deltas forward</h2>
+    <p>Slices are ten simulated seconds. A keyframe is written for slice zero and then every thirty slices, five simulated minutes. To show instant <em>t</em>, a reader finds the last keyframe at or before <em>t</em>, restates the state from it, and applies the deltas up to <em>t</em>: at most twenty-nine of them. Scrubbing backward inside the frames a viewer already holds is free; scrubbing to an instant it does not hold means asking for the preceding keyframe and playing forward.</p>
+    <p>Where the keyframes are is the <strong>index</strong>: one fixed-size record per frame (offset, instant, tag, length). The writer builds it in memory as it writes and puts it into the recording itself as the <em>keyframe index</em> block (one record per frame, keyframes and deltas alike, so a seek can find both), followed by the <em>end</em> block and a fixed-size trailer that says where the index block starts. Nothing of the index is written beside the recording. A reader that opens a file with no index block — one still being written, or one cut short — rebuilds it by scanning the headers, twenty bytes per frame, because every frame states its own length and checksum.</p>
+      <figure>
+      <div class="diagram-container">
+<svg viewBox="0 0 940 252" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="wv-seek-title wv-seek-desc">
+  <title id="wv-seek-title">Seeking to an instant: the preceding keyframe, then the deltas forward</title>
+  <desc id="wv-seek-desc">A timeline of one run segment with keyframes every five simulated minutes and a delta every ten seconds; showing instant t means restating from the last keyframe at or before t and applying the deltas up to t.</desc>
+  <defs>
+    <marker id="wv-seek-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+    <marker id="wv-seek-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+    <marker id="wv-seek-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#f5f5f5"/>
+  <line x1="60" y1="132" x2="900" y2="132" stroke="#2d3142" stroke-width="1"/>
+  <line x1="60" y1="132" x2="60" y2="144" stroke="#4f5d75" stroke-width="1"/>
+  <text x="60" y="160" fill="#4f5d75" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">0 min</text>
+  <line x1="116" y1="132" x2="116" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="172" y1="132" x2="172" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="228" y1="132" x2="228" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="284" y1="132" x2="284" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="340" y1="132" x2="340" y2="144" stroke="#4f5d75" stroke-width="1"/>
+  <text x="340" y="160" fill="#4f5d75" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">5 min</text>
+  <line x1="396" y1="132" x2="396" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="452" y1="132" x2="452" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="508" y1="132" x2="508" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="564" y1="132" x2="564" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="620" y1="132" x2="620" y2="144" stroke="#4f5d75" stroke-width="1"/>
+  <text x="620" y="160" fill="#4f5d75" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">10 min</text>
+  <line x1="676" y1="132" x2="676" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="732" y1="132" x2="732" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="788" y1="132" x2="788" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="844" y1="132" x2="844" y2="138" stroke="#4f5d75" stroke-width="0.8"/>
+  <line x1="900" y1="132" x2="900" y2="144" stroke="#4f5d75" stroke-width="1"/>
+  <text x="900" y="160" fill="#4f5d75" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">15 min</text>
+  <line x1="69.3" y1="129" x2="69.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="78.7" y1="129" x2="78.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="88.0" y1="129" x2="88.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="97.3" y1="129" x2="97.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="106.7" y1="129" x2="106.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="116.0" y1="129" x2="116.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="125.3" y1="129" x2="125.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="134.7" y1="129" x2="134.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="144.0" y1="129" x2="144.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="153.3" y1="129" x2="153.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="162.7" y1="129" x2="162.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="172.0" y1="129" x2="172.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="181.3" y1="129" x2="181.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="190.7" y1="129" x2="190.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="200.0" y1="129" x2="200.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="209.3" y1="129" x2="209.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="218.7" y1="129" x2="218.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="228.0" y1="129" x2="228.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="237.3" y1="129" x2="237.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="246.7" y1="129" x2="246.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="256.0" y1="129" x2="256.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="265.3" y1="129" x2="265.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="274.7" y1="129" x2="274.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="284.0" y1="129" x2="284.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="293.3" y1="129" x2="293.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="302.7" y1="129" x2="302.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="312.0" y1="129" x2="312.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="321.3" y1="129" x2="321.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="330.7" y1="129" x2="330.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="349.3" y1="129" x2="349.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="358.7" y1="129" x2="358.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="368.0" y1="129" x2="368.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="377.3" y1="129" x2="377.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="386.7" y1="129" x2="386.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="396.0" y1="129" x2="396.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="405.3" y1="129" x2="405.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="414.7" y1="129" x2="414.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="424.0" y1="129" x2="424.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="433.3" y1="129" x2="433.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="442.7" y1="129" x2="442.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="452.0" y1="129" x2="452.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="461.3" y1="129" x2="461.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="470.7" y1="129" x2="470.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="480.0" y1="129" x2="480.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="489.3" y1="129" x2="489.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="498.7" y1="129" x2="498.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="508.0" y1="129" x2="508.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="517.3" y1="129" x2="517.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="526.7" y1="129" x2="526.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="536.0" y1="129" x2="536.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="545.3" y1="129" x2="545.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="554.7" y1="129" x2="554.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="564.0" y1="129" x2="564.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="573.3" y1="129" x2="573.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="582.7" y1="129" x2="582.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="592.0" y1="129" x2="592.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="601.3" y1="129" x2="601.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="610.7" y1="129" x2="610.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="629.3" y1="129" x2="629.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="638.7" y1="129" x2="638.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="648.0" y1="129" x2="648.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="657.3" y1="129" x2="657.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="666.7" y1="129" x2="666.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="676.0" y1="129" x2="676.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="685.3" y1="129" x2="685.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="694.7" y1="129" x2="694.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="704.0" y1="129" x2="704.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="713.3" y1="129" x2="713.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="722.7" y1="129" x2="722.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="732.0" y1="129" x2="732.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="741.3" y1="129" x2="741.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="750.7" y1="129" x2="750.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="760.0" y1="129" x2="760.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="769.3" y1="129" x2="769.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="778.7" y1="129" x2="778.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="788.0" y1="129" x2="788.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="797.3" y1="129" x2="797.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="806.7" y1="129" x2="806.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="816.0" y1="129" x2="816.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="825.3" y1="129" x2="825.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="834.7" y1="129" x2="834.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="844.0" y1="129" x2="844.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="853.3" y1="129" x2="853.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="862.7" y1="129" x2="862.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="872.0" y1="129" x2="872.0" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="881.3" y1="129" x2="881.3" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <line x1="890.7" y1="129" x2="890.7" y2="132" stroke="#7a8399" stroke-width="0.6"/>
+  <circle cx="60" cy="132" r="4" fill="#2d3142"/>
+  <text x="60" y="104" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">keyframe</text>
+  <line x1="60" y1="112" x2="60" y2="124" stroke="rgba(45,49,66,0.12)" stroke-width="1"/>
+  <circle cx="340" cy="132" r="4" fill="#2d3142"/>
+  <text x="340" y="104" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">keyframe</text>
+  <line x1="340" y1="112" x2="340" y2="124" stroke="rgba(45,49,66,0.12)" stroke-width="1"/>
+  <circle cx="620" cy="132" r="6" fill="#eb6c36"/>
+  <text x="620" y="104" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">keyframe ≤ t</text>
+  <line x1="620" y1="112" x2="620" y2="124" stroke="rgba(45,49,66,0.12)" stroke-width="1"/>
+  <circle cx="900" cy="132" r="4" fill="#2d3142"/>
+  <text x="900" y="104" fill="#2d3142" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">keyframe</text>
+  <line x1="900" y1="112" x2="900" y2="124" stroke="rgba(45,49,66,0.12)" stroke-width="1"/>
+  <line x1="824" y1="80" x2="824" y2="144" stroke="#eb6c36" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="824" y="72" fill="#eb6c36" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">t = 13 min 40 s</text>
+  <path d="M 816,80 V 56 Q 816,48 808,48 H 628 Q 620,48 620,56 V 92" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#wv-seek-arrow)"/>
+  <rect x="594" y="31" width="256" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="722" y="40" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">1 · FIND THE LAST KEYFRAME AT OR BEFORE t</text>
+  <path d="M 620,148 V 176 Q 620,184 628,184 H 816 Q 824,184 824,176 V 152" fill="none" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#wv-seek-arrow-accent)"/>
+  <rect x="586" y="195" width="272" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="722" y="204" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">2 · APPLY THE 22 DELTAS UP TO t (AT MOST 29)</text>
+  <text x="36" y="236" fill="#4f5d75" font-size="11" font-family="'Instrument Serif', 'Times New Roman', serif" text-anchor="start" font-style="italic">Slices are 10 s; a keyframe every 30 slices. Inside frames a viewer already holds, scrubbing is free; outside them, it asks for the preceding keyframe and plays forward.</text>
+</svg>
+      </div>
+      <figcaption>Showing instant t: the reader binary-searches the index for the last keyframe at or before t, restates the state from it, and applies the deltas up to t.</figcaption>
+    </figure>
+  </section>
+
+  <section id="producer">
+    <p class="section-eyebrow">04 · how the simulator writes it</p>
+    <h2>The observer's closed slices become frames</h2>
+    <p>The simulator's <code>SimObserver</code> collects what a run does: where every robot and tote is at each slice, the metric values, the visit grid, and the per-run tables. Today it hands all of that over at the end of the run as one document. With worldview it becomes a frame producer.</p>
+    <p><strong>What this branch does.</strong> At the end of the run, the observer's collected state is written as frames: the scenario block, then a keyframe at every boundary and a delta for every slice carrying that slice's table rows, the index and the end. The content is exactly what the whole-run document held, which is what makes an exact comparison against the current master possible (section 07). Headless desvis and the Crucible server both write this way, through the same function, so one spec run by either yields the same run — everything but the wall clock the run took, which the end block states and which no two runs share.</p>
+    <p><strong>Planned: writing while the run executes.</strong> The simulator's only present is the scheduler's trailing global barrier — the instant behind which nothing more will be scheduled. Frames would be emitted only for the time buckets the barrier has already passed, out of an accumulator kept ahead of it, and what is emitted would be final: nothing revisits a bucket. That rests on a rule the simulator does not keep today, that no event may be emitted with a timestamp behind the barrier, and on the observer no longer filling closed slices in afterwards, which it does today from six places. The work is on its own branch, <code>agent/worldview-emit</code>, and none of it is in this one: no live writer, no provisional values, nothing a viewer would have to re-read. The format is ready for it — frames are appended and a reader can follow a growing file — and the server and the browser already speak of a live edge.</p>
+    <p>Either way the producer writes through one writer that refuses out-of-order frames, keeps the index it is building, and completes the recording with the index and end blocks.</p>
+  </section>
+
+  <section id="server">
+    <p class="section-eyebrow">05 · how the Crucible server tees it</p>
+    <h2>One storage object per attempt, and the same frames to every viewer</h2>
+    <p>A run executes inside the Crucible server process, on a worker thread. Dispatching runs across a fleet of separate runner processes is deferred to its own initiative. When the run ends the server writes its recording, uploads it to storage as one object — the attempt's only artifact — and drops the local copy.</p>
+    <ul>
+      <li><strong>One object per attempt</strong>, under <code>runs/&lt;run&gt;/attempts/&lt;n&gt;/recording.worldview</code>, in a local folder in development or a bucket in deployment, behind one interface.</li>
+      <li><strong>Fetched back to be read.</strong> The first attachment to a run brings the object onto the server's machine, into a temporary folder bounded by a configured size; every later reader of that run finds the copy already there, with the compiled floor beside it.</li>
+      <li><strong>One reader per attachment.</strong> Each browser gets its own reader over that copy, so a slow browser slows only itself; one that stops accepting frames for longer than the reader waits is dropped and told where to resume.</li>
+    </ul>
+    <p>The wire from simulated time <em>N</em> is the file's own blocks in a viewer's order: the scenario block, filtered to what a browser needs (the world document, yes; the scenario's data files, no); the index up to that instant, so the viewer knows the run's extent at once; the one keyframe at or before <em>N</em>; every delta after it; and the end. No later keyframe travels: the viewer holds the state and carries it forward, and a viewer that falls behind is re-attached from a fresh keyframe. The server also filters sections, so a viewer drawing only the floor need not receive the tables.</p>
+  </section>
+
+  <section id="series">
+    <p class="section-eyebrow">06 · time series for the charts</p>
+    <h2>Assembled by the server up to the attach instant, extended live by the client</h2>
+    <p>The scalars section is small: a keyframe is tens of bytes and a delta about a hundred, so ten simulated hours are a few hundred kilobytes. When a viewer attaches at <em>N</em> and asks for charts, the server reads the scalars family from the recording's start to <em>N</em> using the index, extracts the requested metrics, and sends one consolidated reply, one point per slice, bucketed by averaging when the slice count exceeds what a chart can show. From then on the client appends each scalars delta as it arrives. The client never has to hold or replay the playback section to draw a chart.</p>
+  </section>
+
+  <section id="consumers">
+    <p class="section-eyebrow">07 · consumers, and the parity check</p>
+    <h2>desvis, the workbook, and later the browser, all read the one recording</h2>
+    <ul>
+      <li><strong>desvis</strong> plays a recording back, draws the floor from the world document in the scenario block, and reads the tables and metrics for its panels; its headless mode writes recordings.</li>
+      <li><strong>workbook</strong> is the xlsx export, moved out of desvis into its own crate with a command of its own, so a spreadsheet can be produced from a recording anywhere.</li>
+      <li><strong>The browser</strong> decodes the same frames with the same code compiled to WebAssembly, and draws them through the renderer desvis draws through.</li>
+    </ul>
+    <p><strong>Parity.</strong> The first cut is gated on exactness against the current master, measured on the same fixture and seed run by both binaries. Two checks: the workbooks must agree cell for cell; and desvis's per-tick render arrays, what it hands to the GPU at a fixed list of instants, must agree byte for byte. A twin run of one binary first proves the simulation deterministic, so a difference between binaries is a real difference. On the prototype branch, the workbook check was run by hand on cencora and DFW6 ten-minute runs and every cell agreed.</p>
+  </section>
+
+  <section id="numbers">
+    <p class="section-eyebrow">08 · measured on the prototype</p>
+    <h2>What a recording costs: cencora measured, Walmart estimated</h2>
+    <p>One hour of simulated cencora (the largest site in the fixtures, about nine thousand cells, a fleet of hundreds) on the prototype branch: 2.8 MB on disk, 2,604 frames. Thirteen playback keyframes of about 21 KB each; 362 playback deltas of about 2 KB each, one per ten-second slice; the same count of scalars and heat deltas; 1,442 table chunks; one scenario block of 44 KB carrying the world document and scenario. The prototype wrote one frame per family and one per table per slice; with sections, the same run is about 380 frames of the same total size. With release builds the simulator produced that hour in about sixty seconds of wall clock.</p>
+    <p><strong>Walmart, estimated.</strong> The DFW6 site has about 170,000 storage slots and about 1.3 million units of inventory. A keyframe restates every container: id, type, designation, location and a unit count, about twelve to fourteen bytes each as positional MessagePack, so a Walmart keyframe is about 2.2 MB before compression. Every payload is zstd-compressed, and a sorted list of near-identical records compresses well; a three- to five-fold ratio would put a keyframe at 0.5 to 0.8 MB. Over a ten-hour run at the five-minute cadence that is 120 keyframes, 60 to 100 MB, with deltas small beside them; a browser attaching receives one keyframe, not 120, which is the case for sending only the starting keyframe on the wire. A per-tote unit count costs nothing extra for 1.3 million units; SKU-level contents per tote, if the entity inspector later wants them, would add on the order of a million entries per keyframe and belong in a table or behind a server query rather than in every keyframe. These are estimates with the assumptions stated. <strong>Measured in the format round</strong> (release build, ten simulated minutes, one thread): the DFW6 smoke fixture writes 418 KB in 27 frames; its one keyframe is 2,430,117 bytes decompressed and 174,976 bytes stored, a fourteen-fold ratio, because the census is dominated by near-identical container records; the scenario block is 143 KB (the world document and spec verbatim) and the median delta 3.3 KB. cencora writes 1.16 MB in 68 frames: keyframes 166,571 bytes decompressed and 40,905 stored, the median delta 15 KB, and the motion section (per-move speed profiles for the traffic overlay) is the largest part of a delta. Writing either file takes 0.03 s. A Walmart keyframe with 1.3 million units spread over real contents will compress less well than DFW6's empty census; the three- to five-fold figure stands as the planning number until a loaded fixture is measured. Two levers exist if the numbers bite: the keyframe cadence is a per-run value in the scenario block, and the container list can be written column-wise (all ids, then all locations, then all counts) so that zstd sees long runs of small differences.</p>
+  </section>
+
+  <section id="cuts">
+    <p class="section-eyebrow">09 · the cuts</p>
+    <h2>Format and desvis first, then the server and the browser; the fleet later</h2>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Cut</th><th>Lands</th><th>Gate</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 · <code>agent/worldview</code></strong></td><td>the container crate, the frame vocabulary crate, the observer's end-of-run writer and the reader, desvis on <code>.worldview</code> in every mode, the <code>workbook</code> crate, the format specification</td><td>cell-identical workbooks and byte-identical render arrays against master, on four fixtures</td></tr>
+        <tr><td><strong>2 · same branch and PR</strong></td><td>the Crucible server running simulations in-process, recording each and uploading it to storage, the websocket stream with its index and section filtering, the time series assembled server-side, the WebGPU browser viewer on worldview frames through a renderer shared with desvis, and <code>dev.sh</code> giving a working UI (design: <code>docs/designs/crucible-server-ui.html</code>)</td><td>submit, attach, play, scrub, seek, re-attach, cancel and workbook, end to end from a fresh clone</td></tr>
+        <tr><td><strong>3 · <code>agent/worldview-emit</code></strong></td><td>the simulator emitting frames for the time buckets its trailing barrier has passed, and refusing to emit behind it; the server writing while a run executes, and a browser watching one</td><td>a recording written during the run equals the end-of-run one exactly</td></tr>
+        <tr><td><strong>later, a separate initiative</strong></td><td>the split of the server into a broker and a fleet of runner processes, with dispatch and redispatch; container images for them</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="glossary">
+    <p class="section-eyebrow">10 · glossary</p>
+    <h2>Five words this document leans on</h2>
+    <ul>
+      <li><strong>Slice.</strong> Ten simulated seconds, the half-open interval from a start instant to the next; every delta describes one slice and is stamped with its start.</li>
+      <li><strong>Section.</strong> A named part of a keyframe or delta (playback, scalars, heat, tables); a keyframe or delta opens with a table saying where each section lies.</li>
+      <li><strong>Settled frontier</strong> (the barrier). The simulated instant behind which the simulator will change nothing; a slice closes, and can be written, only once the frontier has passed its end.</li>
+      <li><strong>Live edge.</strong> The instant of the newest frame a recording holds; for a running simulation it advances as slices close.</li>
+      <li><strong>Held window.</strong> The span of frames a viewer currently holds, from the keyframe it started at to the newest delta it has received; scrubbing inside it costs nothing, scrubbing outside it means a new attachment.</li>
+    </ul>
+  </section>
+
+  <footer class="footer">
+    <p>Branch <code>agent/worldview</code>, off master, draft PR #492 · 2026-09-18. Specification: <code>docs/designs/worldview-format.md</code>, written in the first phase's second round. Companion: <code>docs/designs/crucible-server-ui.html</code> (the server and the browser UI).</p>
+  </footer>
+</div>
+</body>
+</html>

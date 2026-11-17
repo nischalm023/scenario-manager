@@ -1,0 +1,304 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "U-Shape's top scope (template/site/u-shape): its knobs and its card.",
+  "doc": {
+    "id": "1734822a-ab90-42dc-8b81-63a8f71829b7",
+    "name": "U-Shape",
+    "kind": "template",
+    "depends_on": [
+      "c00f991f-4b60-4ec5-8b3e-d261c4f9768f",
+      "9667f012-a447-46e6-a75f-beafb020e9eb",
+      "f2914490-29bf-49ff-99fe-027416167ee5",
+      "d44ca445-0338-49a2-85ad-2e6fe2bc7005",
+      "fda5287c-b2e0-4d3e-a000-e46fa35ba40c"
+    ]
+  },
+  "primary_frame": "3e18f489-c17f-4020-a546-6b66dba86577",
+  "entities": [
+    {
+      "id": "52866912-b4f7-41b9-b4e8-0acae5b24a29",
+      "name": "Width",
+      "components": {
+        "template.knob": {
+          "key": "width",
+          "label": "Width",
+          "unit": "mm",
+          "min": 4250,
+          "max": 255000,
+          "step": 850,
+          "default": "max(aisles * 7650 + 8500, court_width + max(13600, 2 * pick_stations * station_pitch, 2 * putaway_stations * station_pitch))",
+          "description": "The U's extent along x. Fits {aisles} aisles and the station rows at the arms' open ends.",
+          "group": "Outline",
+          "order": 1,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "aisles * 7650 + 8500 - width",
+              "problem": "The aisle row needs {value} mm more floor than the shell's width gives."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "pick_stations * station_pitch - (width - court_width) / 2",
+              "problem": "The pick row needs {value} mm more of the +x arm's open end."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "putaway_stations * station_pitch - (width - court_width) / 2",
+              "problem": "The putaway row needs {value} mm more of the −x arm's open end."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3d27f9ca-03ca-446e-99a5-73865aa4f0ba",
+      "name": "Depth",
+      "components": {
+        "template.knob": {
+          "key": "depth",
+          "label": "Depth",
+          "unit": "mm",
+          "min": 4250,
+          "max": 255000,
+          "step": 850,
+          "default": "court_depth + bays * 2750 + 9350",
+          "description": "The U's extent along y, its arms included. Fits rack rows of {bays} bays in the base.",
+          "group": "Outline",
+          "order": 2,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(bays * 2750 + 2549) / 850 * 850 + 5950 - (depth - court_depth)",
+              "problem": "The aisles need {value} mm more depth than the base gives them."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "76feb276-b41b-41ff-b8f9-85b9a8bf3aca",
+      "name": "Courtyard width",
+      "components": {
+        "template.knob": {
+          "key": "court_width",
+          "label": "Courtyard width",
+          "unit": "mm",
+          "min": 4250,
+          "max": 255000,
+          "step": 850,
+          "default": 13600,
+          "description": "The open courtyard's width, centred on the open side.",
+          "group": "Outline",
+          "order": 3,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "6800 - (width - court_width) / 2",
+              "problem": "Each arm needs {value} mm more width."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "9e4afc6f-6d1c-45c3-bbb8-dd0b61d0b28d",
+      "name": "Courtyard depth",
+      "components": {
+        "template.knob": {
+          "key": "court_depth",
+          "label": "Courtyard depth",
+          "unit": "mm",
+          "min": 4250,
+          "max": 255000,
+          "step": 850,
+          "default": 13600,
+          "description": "How far the courtyard reaches in from the open side.",
+          "group": "Outline",
+          "order": 4
+        }
+      }
+    },
+    {
+      "id": "6636f707-8b6f-45e8-b609-d66f0acb2921",
+      "name": "Open side",
+      "components": {
+        "template.knob": {
+          "key": "orientation",
+          "label": "Open side",
+          "unit": "count",
+          "options": [
+            {
+              "value": 0,
+              "label": "+y"
+            },
+            {
+              "value": 1,
+              "label": "−y"
+            }
+          ],
+          "default": 0,
+          "description": "The side the U opens on, drawn north-up.",
+          "group": "Outline",
+          "order": 5
+        }
+      }
+    },
+    {
+      "id": "bc7a30f3-15eb-4ce7-82e8-d28746623c85",
+      "name": "Aisles",
+      "components": {
+        "template.knob": {
+          "key": "aisles",
+          "label": "Aisles",
+          "unit": "count",
+          "min": 1,
+          "max": 30,
+          "step": 1,
+          "default": 4,
+          "description": "Aisles of two rack rows each, laid side by side along +x.",
+          "group": "Storage",
+          "order": 1
+        }
+      }
+    },
+    {
+      "id": "11bfd070-c405-4ff3-a3cc-d897656010d4",
+      "name": "Bays per rack row",
+      "components": {
+        "template.knob": {
+          "key": "bays",
+          "label": "Bays per rack row",
+          "unit": "count",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "default": 4,
+          "description": "Bays of relay racking in each rack row, along each aisle.",
+          "group": "Storage",
+          "order": 2
+        }
+      }
+    },
+    {
+      "id": "eb2db73b-3aec-4453-86e8-d04adabc217c",
+      "name": "VTMs per aisle",
+      "components": {
+        "template.knob": {
+          "key": "vtms_per_aisle",
+          "label": "VTMs per aisle",
+          "unit": "count",
+          "options": [
+            {
+              "value": 1,
+              "label": "1 VTM"
+            },
+            {
+              "value": 2,
+              "label": "2 VTMs"
+            }
+          ],
+          "default": 2,
+          "description": "VTMs hard-assigned to each aisle.",
+          "group": "Storage",
+          "order": 3
+        }
+      }
+    },
+    {
+      "id": "4be3d7a1-9946-4fe6-800b-462adbcbdbff",
+      "name": "Station pitch",
+      "components": {
+        "template.knob": {
+          "key": "station_pitch",
+          "label": "Station pitch",
+          "unit": "mm",
+          "min": 2550,
+          "max": 12750,
+          "step": 850,
+          "default": 4250,
+          "description": "Distance from one station to the next along a wall.",
+          "group": "Stations",
+          "order": 10
+        }
+      }
+    },
+    {
+      "id": "23cdd521-1c9b-455e-a62e-5849b97b895b",
+      "name": "HTMs",
+      "components": {
+        "template.knob": {
+          "key": "htms",
+          "label": "HTMs",
+          "unit": "count",
+          "min": 1,
+          "max": 600,
+          "step": 1,
+          "default": 24,
+          "description": "HTMs working the floor.",
+          "group": "Fleet",
+          "order": 20,
+          "checks": [
+            {
+              "severity": "warning",
+              "value_unit": "count",
+              "fails_when": "pick_stations + putaway_stations - htms",
+              "problem": "Fewer HTMs than stations: {value} stations have no HTM of their own."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "23a39d6e-3bc7-411b-bb50-299fe4fc42a3",
+      "name": "Pick stations",
+      "components": {
+        "template.knob": {
+          "key": "pick_stations",
+          "label": "Pick stations",
+          "unit": "count",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "default": 4,
+          "description": "Pick stations on the +y wall at the +x arm's open end: drawn at the top right with the open side +y, at the bottom right with it −y.",
+          "group": "Stations",
+          "order": 30
+        }
+      }
+    },
+    {
+      "id": "72db3b6a-2e42-43b7-bde2-2ceca78bed2d",
+      "name": "Putaway stations",
+      "components": {
+        "template.knob": {
+          "key": "putaway_stations",
+          "label": "Putaway stations",
+          "unit": "count",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "default": 2,
+          "description": "Putaway stations on the +y wall at the −x arm's open end: drawn at the top left with the open side +y, at the bottom left with it −y.",
+          "group": "Stations",
+          "order": 31
+        }
+      }
+    },
+    {
+      "id": "252e5016-79dd-4e49-8b2e-30d6c687ef4c",
+      "name": "U-Shape",
+      "components": {
+        "template.description": {
+          "title": "U-Shape",
+          "text": "Docks on same side",
+          "built_from": "GOFoundry-POC's shell library, warehouseLayouts.js:7-19 at 4104823"
+        }
+      }
+    }
+  ]
+}

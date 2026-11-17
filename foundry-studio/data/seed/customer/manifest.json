@@ -1,0 +1,30 @@
+{
+  "v": 1,
+  "vocabulary": [
+    "floor_drive",
+    "rack_ladder",
+    "lift",
+    "end_effector",
+    "operator",
+    "fence",
+    "light_curtain",
+    "flow.node",
+    "flow.material_edge",
+    "flow.agent_segment",
+    "flow.return_rule"
+  ],
+  "entries": [
+    {
+      "scope": "customer/cencora/site/ndc2/map",
+      "document": "cencora/ndc2/map.world.json"
+    },
+    {
+      "scope": "customer/cencora/site/ndc2/flow",
+      "document": "cencora/ndc2/flow.world.json"
+    },
+    {
+      "scope": "customer/cencora/site/ndc2",
+      "document": "cencora/ndc2/root.world.json"
+    }
+  ]
+}

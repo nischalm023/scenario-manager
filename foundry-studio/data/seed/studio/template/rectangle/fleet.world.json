@@ -1,0 +1,30 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "Rectangle's fleet scope (template/site/rectangle/fleet): the HTM cohort; each aisle's VTM cohort lands here when a site is made.",
+  "doc": {
+    "id": "a5d109b0-311a-433b-a7f2-c4bd2e54bfe2",
+    "name": "Rectangle: fleet",
+    "kind": "template",
+    "depends_on": [
+      "fda5287c-b2e0-4d3e-a000-e46fa35ba40c"
+    ]
+  },
+  "entities": [
+    {
+      "id": "48e7623f-7965-4d14-bf36-ad8026c9d999",
+      "name": "HTM fleet",
+      "components": {
+        "cohort": {
+          "robot_class": "75fb2fbe-5260-4290-80ba-d8acf7974312@1",
+          "count": 24,
+          "assignment": {
+            "kind": "free"
+          }
+        },
+        "template.knob_binding": {
+          "/cohort/count": "htms"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,303 @@
+{
+  "version": 3,
+  "grid": {
+    "width": 30,
+    "depth": 30,
+    "cell_size_mm": 1000.0
+  },
+  "highways": [
+    {
+      "origin": [
+        0,
+        1
+      ],
+      "width": 30,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        2
+      ],
+      "width": 30,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        3
+      ],
+      "width": 30,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        28,
+        0
+      ],
+      "width": 1,
+      "height": 30,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        27,
+        0
+      ],
+      "width": 1,
+      "height": 30,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        26,
+        0
+      ],
+      "width": 1,
+      "height": 30,
+      "direction": "Bidirectional"
+    }
+  ],
+  "zones": [
+    {
+      "type": "rtp",
+      "id": 1,
+      "origin": [
+        1,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 2,
+      "origin": [
+        4,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 3,
+      "origin": [
+        7,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 4,
+      "origin": [
+        10,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 5,
+      "origin": [
+        13,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 6,
+      "origin": [
+        16,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 7,
+      "origin": [
+        19,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 8,
+      "origin": [
+        22,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 9,
+      "origin": [
+        1,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 10,
+      "origin": [
+        4,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 11,
+      "origin": [
+        7,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 12,
+      "origin": [
+        10,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 13,
+      "origin": [
+        13,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 14,
+      "origin": [
+        16,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 15,
+      "origin": [
+        19,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 16,
+      "origin": [
+        22,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    }
+  ],
+  "stations": [
+    {
+      "id": 1,
+      "position": [
+        9,
+        0
+      ],
+      "presentation_cell": [
+        9,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 2,
+      "position": [
+        14,
+        0
+      ],
+      "presentation_cell": [
+        14,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 3,
+      "position": [
+        19,
+        0
+      ],
+      "presentation_cell": [
+        19,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 4,
+      "position": [
+        29,
+        10
+      ],
+      "presentation_cell": [
+        28,
+        10
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 5,
+      "position": [
+        29,
+        18
+      ],
+      "presentation_cell": [
+        28,
+        18
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    }
+  ]
+}

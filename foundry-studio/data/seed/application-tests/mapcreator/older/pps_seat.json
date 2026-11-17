@@ -1,0 +1,20 @@
+{
+  "pps_seats": [
+    {
+      "pps_id": "1",
+      "seat_name": "front-1",
+      "seat_type": "front",
+      "seat_data": {
+        "key": "k-1"
+      }
+    },
+    {
+      "pps_id": "1",
+      "seat_name": "back-1",
+      "seat_type": "back",
+      "seat_data": {
+        "key": "k-2"
+      }
+    }
+  ]
+}

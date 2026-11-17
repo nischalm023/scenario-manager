@@ -1,0 +1,66 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "4f597318-91b7-4601-b19b-ca92cef2f6d5",
+    "name": "a cell three metres long, stamped at a quarter turn beside a lane",
+    "kind": "world"
+  },
+  "primary_frame": "21ea14f3-4696-4f3b-bfa3-361107a69457",
+  "required_components": ["frame", "region", "tiling", "template", "stamp", "stitch"],
+  "$comment": "Hand-made, because the one site whose stamped cells state a size links them by explicit pairs, which no footprint decides. The template states its cell 3000 along its own x and 1000 along its y; the stamp turns it 90°, so it stands 1000 wide and 3000 deep with its short edge on the lane's long one, and the contact seam links it to the middle tile. Unturned, it would lie a metre clear of the lane and the seam would link nothing.",
+  "entities": [
+    {
+      "id": "21ea14f3-4696-4f3b-bfa3-361107a69457",
+      "name": "site",
+      "components": {
+        "frame": { "dims": 3, "units": "mm", "unit_mm": 1 }
+      }
+    },
+    {
+      "id": "2b5cb4a0-d23a-448a-946f-3a4fdff8dae3",
+      "name": "lane",
+      "components": {
+        "region": { "frame": "21ea14f3-4696-4f3b-bfa3-361107a69457", "origin": [3000, 0], "size": [3000, 1000] },
+        "tiling": { "pitch": [1000, 1000], "derives": { "cell": { "traversable_by": ["htm"] } } }
+      }
+    },
+    {
+      "id": "58740971-a00f-464d-8f73-4dbc4cecb3e7",
+      "name": "a stand three metres long",
+      "components": {
+        "template": {
+          "params": {},
+          "entities": [
+            {
+              "local": "stand",
+              "components": {
+                "pose": { "position": [1500, 500] },
+                "cell": { "size": [3000, 1000], "traversable_by": ["htm"] }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "e045a46a-c9ae-4001-8b77-1c9cf52eb837",
+      "name": "the stand, turned",
+      "components": {
+        "pose": { "frame": "21ea14f3-4696-4f3b-bfa3-361107a69457", "position": [5000, 1000], "heading_deg": 90 },
+        "stamp": { "template": "58740971-a00f-464d-8f73-4dbc4cecb3e7", "params": {} }
+      }
+    },
+    {
+      "id": "effffaf8-daca-449e-acff-b317907cf062",
+      "name": "where the stand meets the lane",
+      "components": {
+        "stitch": {
+          "a": "e045a46a-c9ae-4001-8b77-1c9cf52eb837",
+          "b": "2b5cb4a0-d23a-448a-946f-3a4fdff8dae3",
+          "rule": "contact",
+          "tolerance": 0
+        }
+      }
+    }
+  ]
+}

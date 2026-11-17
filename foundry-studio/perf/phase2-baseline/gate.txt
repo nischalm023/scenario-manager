@@ -1,0 +1,3 @@
+[gate] result=complete stop=SimTimeLimit sim_ms=36000000 picks=12301 putaways=22321 orders=328 events=1169536
+[gate] digest events=1169536 fnv1a=89308db1dda4b043 CycleComplete=34622 DivingBoardSlotWait=54530 InitialPositions=1 InventoryDelta=34622 Nav=64145 OrderComplete=328 RelayPickupWait=27286 RelayStateChange=54573 Resource=54529 StateTransition=317236 ToteInitialStates=1 ToteMoved=136344 TripStart=64145 VtmCycle=54529 VtmIdleReason=54529 VtmNav=218116
+[gate] wall_secs=668.340 (informational; not identity)

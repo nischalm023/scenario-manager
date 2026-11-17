@@ -1,0 +1,119 @@
+{
+  "asserts": "is",
+  "component": "template.placement",
+  "meaning": "the entity places a piece, a `template` entity kept inside the site template, once or on a grid of instances at its own pose; the template evaluation engine lays the instances out as authored entities when it makes a site, and no generator expands it",
+  "owner": "agent-studio",
+  "refs": [
+    {
+      "path": "/piece",
+      "expects": "template"
+    }
+  ],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "template.placement",
+    "description": "the entity places a piece, a `template` entity kept inside the site template, once or on a grid of instances at its own pose; the template evaluation engine lays the instances out as authored entities when it makes a site, and no generator expands it",
+    "$comment": "Written for world-proto's registry from Agent Studio's 05-template-workflow.md section 3.2 (notes/agent-studio-2026-10-17/design/specs/05-template-workflow.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "piece"
+    ],
+    "properties": {
+      "piece": {
+        "description": "The piece placed: an entity carrying `template` in the site template's own scopes, named without a pin.",
+        "$ref": "#/$defs/reference"
+      },
+      "params": {
+        "description": "Values bound to the piece's parameters by name, each replacing a `$param` of that name whole, as a stamp's do. A reference passed here is carried as data and never indexed.",
+        "type": "object"
+      },
+      "repeat": {
+        "$ref": "#/$defs/repeat"
+      },
+      "stands_for": {
+        "description": "Where a list elsewhere names this placement, the made entities of these local handles take its place, instance by instance; absent, every top-level product does.",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "$ref": "#/$defs/local_handle"
+        }
+      }
+    },
+    "$defs": {
+      "repeat": {
+        "title": "repeat",
+        "description": "Instance (i, j), for i below count[0] and j below count[1], stands at the pose's position plus [i * pitch[0], j * pitch[1]], at the pose's heading. Without a repeat the placement makes one instance, (0, 0).",
+        "type": "object",
+        "required": [
+          "count",
+          "pitch"
+        ],
+        "properties": {
+          "count": {
+            "description": "Instances along x and along y; a zero in either makes none.",
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "pitch": {
+            "description": "The distance between neighbouring instances along the pose frame's x and y axes, in its steps; the heading does not turn it.",
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "local_handle": {
+        "title": "local handle",
+        "description": "A piece internal's handle, as proto/schema/values.json writes one.",
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[^/]+$"
+      },
+      "reference": {
+        "title": "reference",
+        "description": "Another entity, by identity: a declared UUID or a derivation address, bare or with a pin. Which pin a field takes is the pin rule's to enforce: within the referrer's unit bare or `@head`, across units a changeset (a tag once tags land).",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/entity_id"
+          },
+          {
+            "$ref": "urn:world-graph-server:defs#/$defs/version_pin"
+          }
+        ]
+      },
+      "entity_id": {
+        "title": "entity id",
+        "description": "A declared entity's UUID or a derived entity's address, either arm (SPEC section 3).",
+        "anyOf": [
+          {
+            "$ref": "#/$defs/uuid"
+          },
+          {
+            "$ref": "#/$defs/derived_entity_id"
+          }
+        ]
+      },
+      "uuid": {
+        "title": "UUID",
+        "description": "Copied from proto/schema/values.json at c384e59.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "derived_entity_id": {
+        "title": "derived entity id",
+        "description": "Copied from proto/schema/values.json at c384e59.",
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+(/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+)*$"
+      }
+    }
+  },
+  "status": "experimental"
+}

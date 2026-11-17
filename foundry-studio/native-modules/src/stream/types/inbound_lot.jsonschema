@@ -1,0 +1,106 @@
+{
+  "$defs": {
+    "InboundLotLine": {
+      "additionalProperties": false,
+      "dependentRequired": {
+        "compartment": [
+          "tote_index"
+        ]
+      },
+      "description": "Units of one SKU that a lot brings, loose or in one of its built totes.",
+      "properties": {
+        "compartment": {
+          "description": "The compartment of a quarter-partitioned tote that holds the units, stated only with that tote's index; not modelled. Absent: no compartment is named.",
+          "format": "uint8",
+          "maximum": 3,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "quantity": {
+          "description": "How many units, at least 1.",
+          "format": "uint32",
+          "maximum": 4294967295,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sku": {
+          "description": "The SKU's id.",
+          "type": "string"
+        },
+        "tote_index": {
+          "description": "The built tote that holds the units, by its index in the lot's `totes`. Absent: the units come loose, for a put station.",
+          "format": "uint32",
+          "maximum": 4294967295,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sku",
+        "quantity"
+      ],
+      "type": "object"
+    },
+    "TotePartition": {
+      "description": "How a built tote is divided: whole, or into four compartments numbered 0 to 3.",
+      "enum": [
+        "single",
+        "quarter-partitioned"
+      ],
+      "type": "string"
+    },
+    "WorldTime": {
+      "description": "An instant of world time, the simulated clock, in milliseconds from the run's start; at most 2^53 - 1, so that every JSON reader holds it exactly.",
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One lot of goods that comes to the site during the run: putaway's input, put away loose or inducted as built totes.",
+  "properties": {
+    "arrival_ms": {
+      "$ref": "#/$defs/WorldTime",
+      "description": "The world time at which the arrival is to happen: the lot's goods come to their station to be put or lifted, or the order arrives and may be worked. It is a no-earlier-than time: no task books work on the record at an earlier world time, and the arrival itself comes when the robots' timing allows, close to this time in a run that flows freely. It is independent of the world time from which the record is known and may be earlier than it; the record's work then waits until the record is known. Absent: the world time from which the record is known."
+    },
+    "due_ms": {
+      "$ref": "#/$defs/WorldTime",
+      "description": "The world time by which the record's work is due: a lenient deadline that gates nothing, and that a task may weigh as urgency. Absent: no deadline."
+    },
+    "id": {
+      "description": "The lot's id, unique in its stream.",
+      "type": "string"
+    },
+    "known_ms": {
+      "$ref": "#/$defs/WorldTime",
+      "description": "The instant of world time from which the record is known to the scheduler: in scheduler time, no decision may use the record before the barrier, the world time below which the scheduler books no new claim, has reached this instant, and a run without the barrier refuses a record known after 0. Absent: 0."
+    },
+    "lines": {
+      "description": "What the lot brings, at least one line.",
+      "items": {
+        "$ref": "#/$defs/InboundLotLine"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "station": {
+      "description": "The station the goods are pinned to, by the id its world document declares, optionally followed by `/` and a part of the station, which is not modelled. Absent: any station that takes them.",
+      "type": "string"
+    },
+    "totes": {
+      "description": "How each built tote the lot comes in is divided; a line names its tote by the tote's index in this list. Absent: the lot comes in no built totes.",
+      "items": {
+        "$ref": "#/$defs/TotePartition"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "lines"
+  ],
+  "title": "InboundLot",
+  "type": "object"
+}

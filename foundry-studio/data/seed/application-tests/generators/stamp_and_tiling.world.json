@@ -1,0 +1,46 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "0a5e1d64-3f2c-4a91-9d7e-2b6c8f4a1e30",
+    "name": "one entity that is a stamp and a tiling at once",
+    "kind": "world"
+  },
+  "primary_frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512",
+  "required_components": ["frame", "region", "tiling", "stamp", "template"],
+  "$comment": "Hand-made, because no site document does this and the reader's own dispatch allows it: `expand_entity` runs every generator an entity's components make it, so the aisle below is expanded twice — once into its cells and once into its instances. It is the one shape that tells a run attributing per anchor from a run attributing per (anchor, generator).",
+  "entities": [
+    {
+      "id": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512",
+      "name": "site",
+      "components": {
+        "frame": { "dims": 3, "units": "mm", "unit_mm": 1 }
+      }
+    },
+    {
+      "id": "2c8d0f13-6e52-4097-b3c4-7f1e0d8b5623",
+      "name": "marker post",
+      "components": {
+        "template": {
+          "params": {},
+          "entities": [
+            { "local": "mark", "components": { "pose": { "position": [0, 0], "heading_deg": 0 } } }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3d9e1024-7f63-41a8-84d5-801f1e9c6734",
+      "name": "aisle that is also a row of posts",
+      "components": {
+        "pose": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "position": [5000, 5000], "heading_deg": 0 },
+        "region": { "frame": "1b7c9e02-5d41-4f86-a2b3-6e0d9c7a4512", "origin": [0, 0], "size": [1800, 900] },
+        "tiling": { "pitch": [900, 900] },
+        "stamp": {
+          "template": "2c8d0f13-6e52-4097-b3c4-7f1e0d8b5623",
+          "params": {},
+          "repeat": { "count": 2, "step": [1000, 0] }
+        }
+      }
+    }
+  ]
+}

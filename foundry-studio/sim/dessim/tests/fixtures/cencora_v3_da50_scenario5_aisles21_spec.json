@@ -1,0 +1,42 @@
+{
+ "$comment": "Scenario 5 (see cencora_v3_da50_scenario5_spec.json for every input) on the world with Dematic's aisles 20 and 21 added and the floor taken out where the annex's other eight aisles (22 to 29) stand: 21 aisles, 42 DA50s, nothing else changed. Aisle 20 is the twentieth sandwich at the east end of the row; aisle 21 stands alone in the L portion below the corridor. For the aisles-alone comparison run it without --settings pick.sequencing=strict.",
+ "world": "cencora_v3_da50_aisles21.json",
+ "scenario": {
+  "bulk_csv": "../../../../sim/desmap/tests/fixtures/cencora_data/bulk/peak_day_12_16.csv",
+  "items_csv": "../../../../sim/desmap/tests/fixtures/cencora_data/items.csv",
+  "max_pallet_units": 44,
+  "min_pallet_units": 44,
+  "units_per_tote": 1
+ },
+ "settings": {
+  "fidelity": "CollisionDes",
+  "htm": {
+   "empty_constant_speed": 4.5,
+   "loaded_constant_speed": 4.5
+  },
+  "motion_model": "htm_kinematic",
+  "operator": {
+   "time_per_pick_secs": 6.77
+  },
+  "pick": {
+   "embargo_secs": 7200.0
+  },
+  "putaway": {
+   "htm_wip_factor": 1.5,
+   "dwell_secs": 4.5,
+   "enabled": true,
+   "forbid_rack_after_secs": 7150.0,
+   "ignore_hour_gate": true,
+   "max_presentations_per_hour": 261.4,
+   "random_slots": true
+  },
+  "queue_factor": 4.0,
+  "sim_duration": {
+   "nanos": 0,
+   "secs": 28800
+  },
+  "vtm": {
+   "isolation": "off"
+  }
+ }
+}

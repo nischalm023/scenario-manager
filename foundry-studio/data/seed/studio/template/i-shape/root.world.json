@@ -1,0 +1,272 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "I-Shape's top scope (template/site/i-shape): its knobs and its card.",
+  "doc": {
+    "id": "34895fe6-748d-45b5-955f-4a4ae0c00ac2",
+    "name": "I-Shape",
+    "kind": "template",
+    "depends_on": [
+      "c00f991f-4b60-4ec5-8b3e-d261c4f9768f",
+      "9667f012-a447-46e6-a75f-beafb020e9eb",
+      "f2914490-29bf-49ff-99fe-027416167ee5",
+      "d44ca445-0338-49a2-85ad-2e6fe2bc7005",
+      "fda5287c-b2e0-4d3e-a000-e46fa35ba40c"
+    ]
+  },
+  "primary_frame": "d14f54dd-899e-4b5d-b08c-e918d6c379b5",
+  "entities": [
+    {
+      "id": "e59fef6a-3f0b-4ac9-8ba4-54d97b98eb52",
+      "name": "Width",
+      "components": {
+        "template.knob": {
+          "key": "width",
+          "label": "Width",
+          "unit": "mm",
+          "min": 4250,
+          "max": 255000,
+          "step": 850,
+          "default": "max(aisles * 7650 + 10200, (pick_stations * station_pitch + 3400) * orientation, (putaway_stations * station_pitch + 3400) * orientation)",
+          "description": "The shell's extent along x. Fits {aisles} aisles, and the station rows with the flow along y.",
+          "group": "Outline",
+          "order": 1,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "aisles * 7650 + 10200 - width",
+              "problem": "The aisle row needs {value} mm more floor than the shell's width gives."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(pick_stations * station_pitch + 3400 - width) * orientation",
+              "problem": "The pick row needs {value} mm more wall than it has."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(putaway_stations * station_pitch + 3400 - width) * orientation",
+              "problem": "The putaway row needs {value} mm more wall than it has."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "7103a3d4-8d27-45d4-8dda-0c56a8eacaa6",
+      "name": "Depth",
+      "components": {
+        "template.knob": {
+          "key": "depth",
+          "label": "Depth",
+          "unit": "mm",
+          "min": 4250,
+          "max": 255000,
+          "step": 850,
+          "default": "max(bays * 2750 + 9350 + 6800, (pick_stations * station_pitch + 3400) * (1 - orientation), (putaway_stations * station_pitch + 3400) * (1 - orientation))",
+          "description": "The shell's extent along y. Fits rack rows of {bays} bays, and the station rows with the flow along x.",
+          "group": "Outline",
+          "order": 2,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(bays * 2750 + 2549) / 850 * 850 + 7650 - depth",
+              "problem": "The aisles need {value} mm more depth than the shell gives them."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(pick_stations * station_pitch + 3400 - depth) * (1 - orientation)",
+              "problem": "The pick row needs {value} mm more wall than it has."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(putaway_stations * station_pitch + 3400 - depth) * (1 - orientation)",
+              "problem": "The putaway row needs {value} mm more wall than it has."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2a7c8f23-31c9-4b3a-b315-990b1e726069",
+      "name": "Flow along",
+      "components": {
+        "template.knob": {
+          "key": "orientation",
+          "label": "Flow along",
+          "unit": "count",
+          "options": [
+            {
+              "value": 0,
+              "label": "+x: putaway on −x, pick on +x"
+            },
+            {
+              "value": 1,
+              "label": "+y: putaway on −y, pick on +y"
+            }
+          ],
+          "default": 0,
+          "description": "The axis the flow crosses the shell along: putaway on the wall it enters by, pick on the wall opposite.",
+          "group": "Outline",
+          "order": 3
+        }
+      }
+    },
+    {
+      "id": "11605cf8-39d0-4415-9ba0-0fde5e926f17",
+      "name": "Aisles",
+      "components": {
+        "template.knob": {
+          "key": "aisles",
+          "label": "Aisles",
+          "unit": "count",
+          "min": 1,
+          "max": 30,
+          "step": 1,
+          "default": 4,
+          "description": "Aisles of two rack rows each, laid side by side along +x.",
+          "group": "Storage",
+          "order": 1
+        }
+      }
+    },
+    {
+      "id": "c4a8863d-1da8-4a5a-8fe0-05c2a692a958",
+      "name": "Bays per rack row",
+      "components": {
+        "template.knob": {
+          "key": "bays",
+          "label": "Bays per rack row",
+          "unit": "count",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "default": 4,
+          "description": "Bays of relay racking in each rack row, along each aisle.",
+          "group": "Storage",
+          "order": 2
+        }
+      }
+    },
+    {
+      "id": "d23f94aa-f581-438f-881b-68c269d97afc",
+      "name": "VTMs per aisle",
+      "components": {
+        "template.knob": {
+          "key": "vtms_per_aisle",
+          "label": "VTMs per aisle",
+          "unit": "count",
+          "options": [
+            {
+              "value": 1,
+              "label": "1 VTM"
+            },
+            {
+              "value": 2,
+              "label": "2 VTMs"
+            }
+          ],
+          "default": 2,
+          "description": "VTMs hard-assigned to each aisle.",
+          "group": "Storage",
+          "order": 3
+        }
+      }
+    },
+    {
+      "id": "aa03e107-577b-4b32-93c3-0575736f1bfc",
+      "name": "Station pitch",
+      "components": {
+        "template.knob": {
+          "key": "station_pitch",
+          "label": "Station pitch",
+          "unit": "mm",
+          "min": 2550,
+          "max": 12750,
+          "step": 850,
+          "default": 4250,
+          "description": "Distance from one station to the next along a wall.",
+          "group": "Stations",
+          "order": 10
+        }
+      }
+    },
+    {
+      "id": "c57fb44c-f191-4584-b99f-7c7a7bcd3806",
+      "name": "HTMs",
+      "components": {
+        "template.knob": {
+          "key": "htms",
+          "label": "HTMs",
+          "unit": "count",
+          "min": 1,
+          "max": 600,
+          "step": 1,
+          "default": 24,
+          "description": "HTMs working the floor.",
+          "group": "Fleet",
+          "order": 20,
+          "checks": [
+            {
+              "severity": "warning",
+              "value_unit": "count",
+              "fails_when": "pick_stations + putaway_stations - htms",
+              "problem": "Fewer HTMs than stations: {value} stations have no HTM of their own."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f7abbae9-d5d7-417a-a1e7-1a2b408cd4bd",
+      "name": "Pick stations",
+      "components": {
+        "template.knob": {
+          "key": "pick_stations",
+          "label": "Pick stations",
+          "unit": "count",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "default": 4,
+          "description": "Pick stations on the wall the flow leaves by: +x, drawn up the right, with the flow along x; +y, drawn along the top, with it along y.",
+          "group": "Stations",
+          "order": 30
+        }
+      }
+    },
+    {
+      "id": "4428e5c6-b713-4d46-bfc8-74e6c1a13d52",
+      "name": "Putaway stations",
+      "components": {
+        "template.knob": {
+          "key": "putaway_stations",
+          "label": "Putaway stations",
+          "unit": "count",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "default": 2,
+          "description": "Putaway stations on the wall the flow enters by: −x, drawn up the left, with the flow along x; −y, drawn along the bottom, with it along y.",
+          "group": "Stations",
+          "order": 31
+        }
+      }
+    },
+    {
+      "id": "7f0f47a1-5c47-4ab5-bad9-bb058d9b63a2",
+      "name": "I-Shape",
+      "components": {
+        "template.description": {
+          "title": "I-Shape",
+          "text": "Flow-through, inbound → outbound",
+          "built_from": "GOFoundry-POC's shell library, warehouseLayouts.js:7-19 at 4104823"
+        }
+      }
+    }
+  ]
+}

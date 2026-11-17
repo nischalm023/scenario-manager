@@ -1,0 +1,32 @@
+# The Map Creator adapter, which is a WebAssembly component rather than an
+# ordinary crate: it builds for `wasm32-wasip2`, it links the guest SDK and the
+# lens engine, and a host loads it as bytes. That is why it is a workspace of its
+# own: a member of the root one would be
+# built for the host's architecture by `cargo build --workspace`, where a cdylib
+# exporting a WIT world means nothing. Its host-side tests, under `tests/`, are a
+# separate host workspace rendered by check.py.
+[workspace]
+resolver = "2"
+members = ["adapter"]
+exclude = ["tests"]
+
+[workspace.package]
+edition = "2021"
+publish = false
+
+[workspace.dependencies]
+worldadapt-sdk = { path = "@WPS@/adapter/sdk" }
+worldlens = { path = "@WPS@/lens/rust" }
+worldprotocol-core = { path = "@WPS@/proto/core" }
+worldcanonical = { path = "@WPS@/proto/canonical" }
+# Every float read as the double its spelling names, as the host reads it (the
+# root Cargo.toml says why).
+serde_json = { version = "1", features = ["float_roundtrip"] }
+
+# An adapter travels as bytes, so optimize its size and use abort-on-panic
+# behavior, as the adapter host probes do.
+[profile.release]
+opt-level = "s"
+lto = true
+strip = true
+panic = "abort"

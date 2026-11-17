@@ -1,0 +1,9 @@
+# Sim tasks must stay visible to the scheduler's drain detection: every
+# task goes through the one spawn_local in scheduler/mod.rs, every wait
+# goes through signals.rs, and nothing defers wakes behind tokio's back.
+disallowed-methods = [
+    { path = "tokio::spawn", reason = "sim tasks go through the scheduler's spawn_local; a bare spawn is invisible to drain detection" },
+    { path = "tokio::task::spawn_blocking", reason = "the sim has no blocking pool; blocking work hides from drain detection" },
+    { path = "tokio::task::block_in_place", reason = "current-thread runtime; blocking in place hides work from drain detection" },
+    { path = "tokio::task::yield_now", reason = "defers a wake behind tokio's back; waive per site (#[allow] + comment) only for a windowed pathfinder yielding between windows" },
+]

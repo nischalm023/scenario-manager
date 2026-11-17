@@ -1,0 +1,77 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "4d14bab4-856c-4c09-8716-ce8c3f48dc22",
+    "kind": "catalog",
+    "name": "HAI Robotics K50H (DFW6 HTM, RB-K50H in the map)"
+  },
+  "$comment": "The DFW6 HTM, 230 in the map. Figures are the bot specifications Vinay directed on 2026-09-21, from GreyOrange's hardware team (docs/walmart-facts.md section 6b): provisional, 'to be used for this week' while HAI vetting is in progress. The facts file records the model as K50 (MOM Day 1) and the map as RB-K50H; the draft catalog on equipment/world-protocol-0.8 names the maker HAI Robotics and the model K50H-E1. The matrix's K50-L-E1 column, as transcribed there, agrees on speed and acceleration but gives 2.0 s and 2.5 s turns. Whether DFW6's 230 are all the L (inventory tote) build or include the K50-X order carrier is open (facts file section 9.5).",
+  "entities": [
+    {
+      "id": "6d530cda-f6b9-41eb-9212-07ae1d18828b",
+      "name": "K50H",
+      "components": {
+        "lineage": [
+          {
+            "party": "HAI Robotics",
+            "role": "manufacturer",
+            "designation": "K50H-E1"
+          }
+        ],
+        "body": {
+          "footprint_mm": [
+            713,
+            520
+          ],
+          "height_mm": 459,
+          "$comment": "The K50-L-E1 (inventory tote carrier) column of the Ranger Relay Profile Matrix as transcribed on equipment/world-protocol-0.8, its lengths read as tenths of a millimetre."
+        },
+        "floor_drive": {
+          "loaded": {
+            "max_speed_mm_s": 4000,
+            "accel_mm_s2": 1800,
+            "quarter_turn_secs": 2.16,
+            "reversal_secs": 2.88
+          },
+          "empty": {
+            "max_speed_mm_s": 4000,
+            "accel_mm_s2": 1800,
+            "quarter_turn_secs": 2.16,
+            "reversal_secs": 2.88
+          },
+          "$comment": "The draft catalog records that 4.0 m/s and 1.8 m/s² hold only on a floor with a friction coefficient of at least 0.45 and flatness within ±3 mm per 2.25 m², and that HAI's manual derates the robot below that."
+        },
+        "lift": {
+          "strokes": [
+            {
+              "from": "min",
+              "to": "max",
+              "secs": 5.28
+            },
+            {
+              "from": "min",
+              "to": "cantilever_1",
+              "secs": 2.0
+            },
+            {
+              "from": "max",
+              "to": "min",
+              "secs": 5.28
+            },
+            {
+              "to": "cantilever_1",
+              "secs": 2.0
+            }
+          ],
+          "$comment": "The directive's four rows: 'lift, min to max', 'lift, min to cantilever height 1', 'lower, max to min' and 'lower, to cantilever height 1', which does not say from where. The height names are the rows' own; their heights, and which station handoff happens at which, are not stated (meaning unverified)."
+        },
+        "end_effector": {
+          "kind": "comb_platform",
+          "pick_secs": 2.0,
+          "drop_secs": 2.0,
+          "$comment": "The draft catalog describes the K50H as a comb-type platform."
+        }
+      }
+    }
+  ]
+}

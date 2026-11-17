@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 1312" width="840" height="1312" role="img" aria-labelledby="title desc">
+  <title id="title">What a running run's page downloads</title>
+  <desc id="desc">The browser gets the page and the viewer's wasm from the page's origin. Through the origin's /api it reads the run, again every 2 seconds of wall clock, the run's inputs and the list of metrics the streaming server computes, and asks for a watch ticket, which names the streaming server's three sockets, once for each socket it opens; only the picture socket's reattachment after lagged keeps the ticket it has. On the progress socket, opened while the run goes, it sends watch with format 2 and receives the runner's progress: the simtime reached and its counts, never the picture. On the picture socket, opened on a new ticket, it sends attach from 0, and the server answers attached with the instant it attaches from and the live edge, each in milliseconds of simtime, then sends the rewritten scenario block, the declarations, at most one keyframe, and the later deltas, declarations and end block the server holds, then each new frame as the runner sends it, keyframes left out, one binary message per frame, and ended once the run's last frame is out. On each metric panel's socket, three by default, it sends attach naming one metric; the server answers attached with the metric's descriptor, then sends rows, every bucket so far and then each bucket as it becomes final, and ended. Pressing Play sends nothing over the network: playback, pause and seek read the picture held in memory.</desc>
+  <style>
+    svg { font-family: "Inter", -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+    .bg { fill: #ffffff; stroke: #d5d7da; }
+    text { font-size: 14px; fill: #181d27; }
+    .ti { font-size: 16px; font-weight: 600; }
+    .b { font-weight: 600; }
+    .big { font-size: 16px; font-weight: 600; }
+    .mu { fill: #535862; }
+    .mo { font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; }
+    .cap { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; }
+    .on-ink { fill: #ffffff; }
+    .json-t { fill: #2f6f9f; }
+    .bytes-t { fill: #a95b0b; font-weight: 600; }
+    .box { fill: #ffffff; stroke: #181d27; stroke-width: 1.25; }
+    .wsbox { fill: none; stroke: #181d27; stroke-width: 2; }
+    .pill { fill: #181d27; }
+    .mask { fill: #ffffff; }
+    .life { stroke: #d5d7da; stroke-width: 1.5; }
+    .code { fill: none; stroke: #7f848e; stroke-width: 1.75; }
+    .json { fill: none; stroke: #2f6f9f; stroke-width: 1.75; }
+    .bytes { fill: none; stroke: #a95b0b; stroke-width: 2.5; }
+    .head-code { fill: #7f848e; }
+    .head-json, .dot { fill: #2f6f9f; }
+    .block { fill: #f7e7d1; stroke: #a95b0b; stroke-width: 2; }
+    .glyph { fill: #181d27; }
+    .sep { stroke: #d5d7da; stroke-width: 1.5; stroke-dasharray: 6 6; }
+    .halo { paint-order: stroke; stroke: #ffffff; stroke-width: 5px; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #13161b; stroke: #373a41; }
+      text { fill: #f5f5f6; }
+      .mu { fill: #a4a7ae; }
+      .on-ink { fill: #13161b; }
+      .json-t { fill: #7fb3dc; }
+      .bytes-t { fill: #f0a53a; }
+      .box { fill: #13161b; stroke: #f5f5f6; }
+      .wsbox { stroke: #f5f5f6; }
+      .pill, .glyph { fill: #f5f5f6; }
+      .mask { fill: #13161b; }
+      .life, .sep { stroke: #373a41; }
+      .code { stroke: #94979c; }
+      .json { stroke: #7fb3dc; }
+      .bytes { stroke: #f0a53a; }
+      .head-code { fill: #94979c; }
+      .head-json, .dot { fill: #7fb3dc; }
+      .block { fill: #3b2b15; stroke: #f0a53a; }
+      .halo { stroke: #13161b; }
+    }
+  </style>
+  <defs>
+    <marker id="code" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="head-code"/></marker>
+    <marker id="json" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="head-json"/></marker>
+  </defs>
+  <rect class="bg" x="0.5" y="0.5" width="839" height="1311" rx="10"/>
+
+  <!-- Lanes -->
+  <line class="life" x1="110" y1="70" x2="110" y2="1184"/>
+  <line class="life" x1="320" y1="70" x2="320" y2="484"/>
+  <line class="life" x1="530" y1="70" x2="530" y2="484"/>
+  <line class="life" x1="740" y1="70" x2="740" y2="1160"/>
+  <rect class="box" x="20" y="16" width="180" height="54" rx="6"/>
+  <text class="ti" x="110" y="40" text-anchor="middle">Browser</text>
+  <text class="mu" x="110" y="60" text-anchor="middle">run page and viewer</text>
+  <rect class="box" x="230" y="16" width="180" height="54" rx="6"/>
+  <text class="ti" x="320" y="40" text-anchor="middle">Page origin</text>
+  <text class="mu" x="320" y="60" text-anchor="middle">page and /api proxy</text>
+  <rect class="box" x="440" y="16" width="180" height="54" rx="6"/>
+  <text class="ti" x="530" y="40" text-anchor="middle">API</text>
+  <text class="mo mu" x="530" y="60" text-anchor="middle">studio/api</text>
+  <rect class="box" x="650" y="16" width="180" height="54" rx="6"/>
+  <text class="ti" x="740" y="40" text-anchor="middle">Streaming server</text>
+  <text class="mu" x="740" y="60" text-anchor="middle">external port</text>
+
+  <!-- The page and the viewer's code -->
+  <path class="code" d="M110,104 H316" marker-end="url(#code)"/>
+  <text class="halo" x="215" y="94" text-anchor="middle">GET the page</text>
+  <path class="code" d="M320,128 H114" marker-end="url(#code)"/>
+  <text class="halo" x="215" y="148" text-anchor="middle">page, scripts, wasm</text>
+
+  <!-- JSON from the API, through the origin's /api -->
+  <path class="json" d="M110,188 H526" marker-end="url(#json)"/>
+  <circle class="dot" cx="320" cy="188" r="4"/>
+  <text class="mo json-t halo" x="320" y="178" text-anchor="middle">GET /api/runs/{run}</text>
+  <path class="json" d="M530,212 H114" marker-end="url(#json)"/>
+  <circle class="dot" cx="320" cy="212" r="4"/>
+  <text class="halo" x="320" y="232" text-anchor="middle">the run, read again every 2 s of wall clock</text>
+
+  <path class="json" d="M110,272 H526" marker-end="url(#json)"/>
+  <circle class="dot" cx="320" cy="272" r="4"/>
+  <text class="mo json-t halo" x="320" y="262" text-anchor="middle">GET /api/runs/{run}/inputs</text>
+  <path class="json" d="M530,296 H114" marker-end="url(#json)"/>
+  <circle class="dot" cx="320" cy="296" r="4"/>
+  <text class="halo" x="320" y="316" text-anchor="middle">what the run read</text>
+
+  <path class="json" d="M110,356 H526" marker-end="url(#json)"/>
+  <circle class="dot" cx="320" cy="356" r="4"/>
+  <text class="mo json-t halo" x="320" y="346" text-anchor="middle">GET /api/metric-streams</text>
+  <path class="json" d="M530,380 H114" marker-end="url(#json)"/>
+  <circle class="dot" cx="320" cy="380" r="4"/>
+  <text class="halo" x="320" y="400" text-anchor="middle">the metrics the streaming server computes</text>
+
+  <path class="json" d="M110,440 H526" marker-end="url(#json)"/>
+  <circle class="dot" cx="320" cy="440" r="4"/>
+  <text class="mo json-t halo" x="320" y="430" text-anchor="middle">POST /api/runs/{run}/watch</text>
+  <path class="json" d="M530,464 H114" marker-end="url(#json)"/>
+  <circle class="dot" cx="320" cy="464" r="4"/>
+  <text class="halo" x="320" y="484" text-anchor="middle">a ticket naming the three sockets, one per socket opened</text>
+  <text class="halo" x="320" y="502" text-anchor="middle">but a reattachment after <tspan class="mo json-t">lagged</tspan></text>
+
+  <!-- The progress socket -->
+  <rect class="wsbox" x="56" y="524" width="728" height="116" rx="12"/>
+  <rect class="pill" x="72" y="510" width="176" height="28" rx="14"/>
+  <text class="cap on-ink" x="160" y="529" text-anchor="middle">PROGRESS SOCKET</text>
+  <rect class="mask" x="254" y="515" width="356" height="20"/>
+  <text x="260" y="529"><tspan class="mo">/streams/&lt;run&gt;/&lt;attempt&gt;</tspan><tspan class="mu">, while the run goes</tspan></text>
+  <path class="json" d="M110,574 H736" marker-end="url(#json)"/>
+  <text class="mo json-t halo" x="425" y="564" text-anchor="middle">watch {v: 2, token}</text>
+  <path class="json" d="M740,614 H114" marker-end="url(#json)"/>
+  <text class="halo" x="425" y="604" text-anchor="middle"><tspan class="mo json-t">progress</tspan><tspan class="mu"> the simtime reached and its counts, never the picture</tspan></text>
+
+  <!-- The picture socket -->
+  <rect class="wsbox" x="56" y="680" width="728" height="264" rx="12"/>
+  <rect class="pill" x="72" y="666" width="160" height="28" rx="14"/>
+  <text class="cap on-ink" x="152" y="685" text-anchor="middle">PICTURE SOCKET</text>
+  <rect class="mask" x="238" y="671" width="350" height="20"/>
+  <text x="244" y="685"><tspan class="mo">/frames/&lt;run&gt;/&lt;attempt&gt;</tspan><tspan class="mu">, opened on a new ticket</tspan></text>
+  <path class="json" d="M110,728 H736" marker-end="url(#json)"/>
+  <text class="halo" x="425" y="718" text-anchor="middle"><tspan class="mo json-t">attach {id, from: 0, sections, token}</tspan><tspan class="mu">, from in ms of simtime</tspan></text>
+  <path class="json" d="M740,768 H114" marker-end="url(#json)"/>
+  <text class="halo" x="425" y="758" text-anchor="middle"><tspan class="mo json-t">attached {id, run, attempt, from_ms, live_edge_ms}</tspan><tspan class="mu">, ms of simtime</tspan></text>
+
+  <polygon class="block" points="740,792 152,792 152,780 112,824 152,868 152,856 740,856"/>
+  <text x="446" y="818" text-anchor="middle">the rewritten scenario block, the declarations, at most one keyframe,</text>
+  <text class="big" x="446" y="842" text-anchor="middle">then the later deltas, declarations and end block the server holds</text>
+  <text class="bytes-t" x="425" y="888" text-anchor="middle">then each new frame as the runner sends it, keyframes left out, one message each</text>
+
+  <path class="json" d="M740,926 H114" marker-end="url(#json)"/>
+  <text class="halo" x="425" y="916" text-anchor="middle"><tspan class="mo json-t">ended {id, run, outcome}</tspan><tspan class="mu"> once the run's last frame is out</tspan></text>
+
+  <!-- The metric sockets -->
+  <rect class="wsbox" x="56" y="984" width="728" height="176" rx="12"/>
+  <rect class="pill" x="72" y="970" width="160" height="28" rx="14"/>
+  <text class="cap on-ink" x="152" y="989" text-anchor="middle">METRIC SOCKETS</text>
+  <rect class="mask" x="238" y="975" width="468" height="20"/>
+  <text x="244" y="989"><tspan class="mo">/metrics/&lt;run&gt;/&lt;attempt&gt;</tspan><tspan class="mu">, one per panel, three by default</tspan></text>
+  <path class="json" d="M110,1032 H736" marker-end="url(#json)"/>
+  <text class="mo json-t halo" x="425" y="1022" text-anchor="middle">attach {v: 1, metric, token}</text>
+  <path class="json" d="M740,1072 H114" marker-end="url(#json)"/>
+  <text class="mo json-t halo" x="425" y="1062" text-anchor="middle">attached {run, attempt, descriptor, reached_sim_ms, live}</text>
+  <path class="json" d="M740,1108 H114" marker-end="url(#json)"/>
+  <text class="halo" x="425" y="1098" text-anchor="middle"><tspan class="mo json-t">rows</tspan><tspan class="mu"> every bucket so far, then each bucket as it becomes final</tspan></text>
+  <path class="json" d="M740,1144 H114" marker-end="url(#json)"/>
+  <text class="halo" x="425" y="1134" text-anchor="middle"><tspan class="mo json-t">ended {outcome}</tspan><tspan class="mu"> once the metric's last bucket is out</tspan></text>
+
+  <!-- Play -->
+  <line class="sep" x1="20" y1="1184" x2="820" y2="1184"/>
+  <rect class="box" x="56" y="1204" width="108" height="34" rx="17"/>
+  <polygon class="glyph" points="82,1212 82,1230 97,1221"/>
+  <text class="ti" x="106" y="1227">Play</text>
+  <text class="b" x="190" y="1227">Play sends nothing over the network</text>
+  <text class="mu" x="190" y="1252">playback, pause and seek read the picture held in memory</text>
+
+  <!-- What each arrow carries -->
+  <path class="code" d="M56,1286 H92"/>
+  <text class="mu" x="100" y="1291">the page's code</text>
+  <path class="json" d="M236,1286 H272"/>
+  <text class="mu" x="280" y="1291">JSON</text>
+  <path class="bytes" d="M340,1286 H376"/>
+  <text class="mu" x="384" y="1291">the recording's bytes</text>
+  <circle class="dot" cx="560" cy="1286" r="4"/>
+  <text class="mu" x="572" y="1291">passes through the origin's /api</text>
+</svg>

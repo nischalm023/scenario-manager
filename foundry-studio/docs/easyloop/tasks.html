@@ -1,0 +1,1373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Implemented EasyLoop task hierarchy, physical contracts, and the proposed further decomposition.">
+<title>EasyLoop task composition</title>
+<style>
+:root {
+  --paper:#f5f5f5;
+  --paper-2:#ececec;
+  --ink:#2d3142;
+  --muted:#4f5d75;
+  --soft:#7a8399;
+  --rule:rgba(45,49,66,.12);
+  --rule-solid:#bfc0c0;
+  --accent:#eb6c36;
+  --accent-tint:rgba(235,108,54,.08);
+  --link:#2e5aa8;
+  --sans:'Geist',Arial,sans-serif;
+  --mono:'Geist Mono',Menlo,Consolas,monospace;
+  --serif:'Instrument Serif',Georgia,serif
+}
+* {
+  box-sizing:border-box
+}
+html {
+  scroll-behavior:auto;
+  scroll-padding-top:24px
+}
+body {
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font:16px/1.6 var(--sans)
+}
+main {
+  max-width:1360px;
+  margin:0 auto;
+  padding:48px 40px 64px
+}
+a {
+  color:var(--link);
+  text-underline-offset:4px
+}
+a:hover {
+  text-decoration-thickness:2px
+}
+a:focus-visible,.diagram-scroll:focus-visible,summary:focus-visible {
+  outline:3px solid var(--link);
+  outline-offset:4px
+}
+header {
+  max-width:1000px;
+  margin-bottom:40px
+}
+.status {
+  display:inline-block;
+  margin:0 0 16px;
+  padding:4px 12px;
+  border:1px solid var(--rule-solid);
+  border-radius:4px;
+  font-size:12px;
+  font-weight:600
+}
+h1 {
+  font:400 48px/1.12 var(--serif);
+  margin:0 0 24px;
+  letter-spacing:-.02em
+}
+h2 {
+  font-size:28px;
+  line-height:1.25;
+  margin:0 0 16px;
+  font-weight:600
+}
+h3 {
+  font-size:20px;
+  line-height:1.35;
+  margin:28px 0 12px
+}
+p {
+  max-width:80ch;
+  margin:0 0 16px
+}
+.lead {
+  font-size:20px;
+  line-height:1.5;
+  max-width:66ch
+}
+.meta,.caption {
+  color:var(--muted);
+  font-size:14px
+}
+.meta code {
+  font-size:12px
+}
+nav {
+  display:flex;
+  gap:12px 28px;
+  flex-wrap:wrap;
+  padding:20px 0;
+  border-top:1px solid var(--rule-solid);
+  border-bottom:1px solid var(--rule-solid);
+  margin-bottom:48px
+}
+nav a {
+  font-size:16px
+}
+section {
+  margin:0 0 64px;
+  scroll-margin-top:24px
+}
+figure {
+  margin:24px 0 32px
+}
+figcaption {
+  margin:12px 0 0;
+  max-width:88ch;
+  font-size:14px;
+  color:var(--muted)
+}
+.diagram-scroll {
+  overflow-x:auto;
+  width:100%;
+  border-radius:4px
+}
+.diagram-scroll svg {
+  display:block;
+  width:100%;
+  min-width:960px;
+  height:auto
+}
+.connector {
+  fill:none;
+  stroke:var(--muted);
+  stroke-width:1.2
+}
+.rule {
+  stroke:var(--rule-solid);
+  stroke-width:1
+}
+.node rect {
+  fill:#fff;
+  stroke:var(--ink);
+  stroke-width:1
+}
+.node.focal rect {
+  fill:#fbe9e0;
+  stroke:var(--accent);
+  stroke-width:1.6
+}
+.node.backend rect {
+  fill:#e9eaec;
+  stroke:var(--muted)
+}
+.node-name {
+  font:600 16px var(--sans);
+  fill:var(--ink)
+}
+.node-code {
+  font:12px var(--mono);
+  fill:var(--muted)
+}
+.node-note {
+  font:12px var(--sans);
+  fill:var(--muted)
+}
+.legend {
+  font:12px var(--sans);
+  fill:var(--muted)
+}
+.note {
+  padding:20px 24px;
+  border-left:4px solid var(--accent);
+  background:var(--accent-tint);
+  max-width:1000px;
+  margin:24px 0
+}
+.note p:last-child {
+  margin-bottom:0
+}
+.two-col {
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:40px
+}
+.two-col>div {
+  min-width:0
+}
+ul,ol {
+  padding-left:24px;
+  max-width:80ch
+}
+li {
+  margin:0 0 12px
+}
+code {
+  font: .9em var(--mono);
+  overflow-wrap:anywhere
+}
+pre {
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  background:var(--paper-2);
+  padding:20px 24px;
+  border-radius:4px;
+  font:14px/1.6 var(--mono);
+  max-width:100%;
+  margin:24px 0
+}
+table {
+  width:100%;
+  border-collapse:collapse;
+  margin:24px 0 32px;
+  font-size:15px
+}
+th {
+  text-align:left;
+  font-weight:600;
+  color:var(--ink);
+  background:var(--paper-2)
+}
+th,td {
+  padding:16px;
+  vertical-align:top;
+  border-bottom:1px solid var(--rule-solid)
+}
+th:first-child,td:first-child {
+  padding-left:12px
+}
+td:first-child {
+  width:24%;
+  font-weight:500
+}
+td p:last-child {
+  margin-bottom:0
+}
+.table-scroll {
+  overflow-x:auto
+}
+.table-scroll table {
+  min-width:640px
+}
+.table-scroll .catalog {
+  min-width:820px
+}
+.catalog td:nth-child(2) {
+  width:35%
+}
+.catalog td:nth-child(3) {
+  width:20%
+}
+details {
+  margin:24px 0;
+  padding:20px 24px;
+  border:1px solid var(--rule-solid);
+  border-radius:4px
+}
+summary {
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer
+}
+details[open] summary {
+  margin-bottom:16px
+}
+footer {
+  border-top:1px solid var(--rule-solid);
+  padding-top:24px;
+  color:var(--muted);
+  font-size:12px
+}
+footer p {
+  max-width:110ch
+}
+.sources {
+  columns:2;
+  column-gap:40px;
+  max-width:none
+}
+.sources li {
+  break-inside:avoid;
+  font-size:14px
+}
+.section-intro {
+  max-width:84ch
+}
+.recipe {
+  max-width:1100px
+}
+.mini {
+  font-size:14px;
+  color:var(--muted)
+}
+@media(max-width:760px) {
+  main {
+  padding:28px 20px 40px
+}
+h1 {
+  font-size:36px
+}
+h2 {
+  font-size:24px
+}
+.lead {
+  font-size:18px
+}
+.two-col {
+  grid-template-columns:1fr;
+  gap:8px
+}
+.sources {
+  columns:1
+}
+section {
+  margin-bottom:48px
+}
+th,td {
+  padding:12px
+}
+nav {
+  gap:12px 20px
+}
+ .note {
+  padding:16px
+}
+.diagram-scroll {
+  border:1px solid var(--rule-solid)
+}
+}
+@media print {
+  @page {
+  size:A4 landscape;
+  margin:12mm
+}
+body {
+  font-size:11px;
+  background:#fff
+}
+main {
+  padding:0;
+  max-width:none
+}
+header {
+  margin-bottom:16px
+}
+h1 {
+  font-size:32px
+}
+h2 {
+  font-size:24px
+}
+.lead {
+  font-size:16px
+}
+nav {
+  display:none
+}
+section {
+  margin-bottom:28px
+}
+figure {
+  break-inside:avoid;
+  margin:12px 0 24px
+}
+.diagram-scroll {
+  overflow:visible
+}
+.diagram-scroll svg {
+  min-width:0;
+  width:100%
+}
+table {
+  font-size:11px
+}
+th,td {
+  padding:8px
+}
+tr {
+  break-inside:avoid
+}
+thead {
+  display:table-header-group
+}
+.table-scroll {
+  overflow:visible
+}
+.table-scroll table,.table-scroll .catalog {
+  min-width:0
+}
+.sources {
+  columns:2
+}
+a {
+  color:inherit
+}
+footer {
+  font-size:10px
+}
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+<p class="status">Implementation and design · 9 September 2026</p>
+<h1>EasyLoop task composition</h1>
+<p class="lead">Build the machine’s behavior from reusable tasks. Use Butler’s tote-handling vocabulary, with explicit parentage and coordinated picking.</p>
+<p class="meta">Synchronous roots and state managers · Task-model v2 <code>3ec77ec677</code> · Geometry held at the reviewed checkpoint</p>
+<p class="meta">Terminology follows Butler’s tote transport and pick/PPS vocabulary. <a href="#terminology">Read the mapping and scope differences.</a>
+</p>
+</header>
+<nav aria-label="Document sections">
+<a href="isolation.html">Workflow isolation</a>
+<a href="outbound.html">Post-pick stations</a>
+<a href="#current-tree">Implemented hierarchy</a>
+<a href="#current-acquisition">Container acquisition</a>
+<a href="#current-dispatch">Outbound dispatch</a>
+<a href="#order-tree">Further decomposition</a>
+<a href="#exchange-tree">HTM task tree</a>
+<a href="#pick-tree">Pick children</a>
+<a href="#primitives">Reusable tasks</a>
+<a href="#terminology">Butler terminology</a>
+<a href="#coordination">Scheduling</a>
+<a href="#configuration">EasyLoop bindings</a>
+<a href="#compositions">JSON compositions</a>
+<a href="#implementation">Implementation</a>
+<a href="questions.html">Site questions</a>
+</nav>
+<section id="current-tree">
+<h2>The implemented parent hierarchy</h2>
+<p class="section-intro">The Walmart JSON selects <code>FulfillOrders</code> after fleet, inventory and order setup. It creates presentation-owned order streams from a shared pending queue. Each stream stays on one side, while an area-admission calendar assigns one of that side's six waiting places when the order may enter. The root waits for picking and every outbound dispatch to finish.</p>
+<figure>
+<div class="diagram-scroll" tabindex="0" role="region" aria-label="Implemented coordination parents">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 448" role="img" aria-labelledby="current-title current-desc">
+<title id="current-title">Implemented coordination parents</title>
+<desc id="current-desc">FulfillOrders creates fixed-presentation order streams, each stream creates successive FulfillOrder tasks, and each order creates an independently running DispatchOrder after picking.</desc>
+<path class="connector" d="M 360 88 V 128 M 360 192 V 232 M 360 296 V 336"/>
+<g class="node focal"><rect x="208" y="24" width="304" height="64" rx="6"/><text x="360" y="52" text-anchor="middle" class="node-name">FulfillOrders</text><text x="360" y="72" text-anchor="middle" class="node-code">JSON root</text></g>
+<g class="node"><rect x="208" y="128" width="304" height="64" rx="6"/><text x="360" y="156" text-anchor="middle" class="node-name">FulfillOrderStream</text><text x="360" y="176" text-anchor="middle" class="node-code">fixed presentation · repeated claims</text></g>
+<g class="node"><rect x="208" y="232" width="304" height="64" rx="6"/><text x="360" y="260" text-anchor="middle" class="node-name">FulfillOrder</text><text x="360" y="280" text-anchor="middle" class="node-code">one order HTM through all picks</text></g>
+<g class="node"><rect x="208" y="336" width="304" height="64" rx="6"/><text x="360" y="364" text-anchor="middle" class="node-name">DispatchOrder</text><text x="360" y="384" text-anchor="middle" class="node-code">buffer · extract · release</text></g>
+<text x="576" y="60" class="node-note">Waits for all workers and their outbound completions.</text>
+<text x="576" y="164" class="node-note">Inventory CONWIP sizes upstream streams; each side separately admits six resident order HTMs.</text>
+<text x="576" y="256" class="node-note">Creates the movement, custody and item-transfer children below.</text>
+<text x="576" y="280" class="node-note">The tote, tray or carton stays on its HTM while waiting and presenting.</text>
+<text x="576" y="360" class="node-note">Runs independently immediately after the final pick.</text>
+<text x="576" y="384" class="node-note">The machine worker can start its next order meanwhile.</text>
+</svg>
+</div>
+<figcaption>This tree shows coordination parents. The table lists their concrete children. Only the JSON root is registered; all children use ordinary typed constructors.</figcaption>
+</figure>
+<div class="table-scroll"><table>
+<thead><tr><th scope="col">Parent</th><th scope="col">Concrete children</th><th scope="col">Physical work</th></tr></thead>
+<tbody>
+<tr><td><code>FulfillOrderStream</code></td><td><code>ClaimNextOrder</code>, <code>FulfillOrder</code></td><td>Claim released work for one fixed presentation. The stream has no permanently owned waiting cell: <code>AreaAdmission</code> assigns a slot on acceptance, and the order retains that side's membership through its actual area exit. Competing claims cannot consume the same order.</td></tr>
+<tr><td><code>FulfillOrder</code></td><td><code>AdmitArea</code>; <code>SupplyAndCollect</code>; <code>RetrieveTote</code> or <code>InductContainer</code> for the order container; then <code>Navigate</code>, <code>PrepareOrderPresentation</code>, <code>TransferItems</code>, <code>DispatchOrder</code></td><td>Reserve stock and begin the next inventory visit, accept a future area-entry right, then acquire the physical order container. Container acquisition starts only after area acceptance so it cannot hold an induction or transport resource while waiting for membership. The currently implemented first route still visits the assigned waiting cell before presentation. Unfinished orders return on their own side; final picks leave toward dispatch and release membership only at committed area clearance.</td></tr>
+<tr><td><code>DispatchOrder</code></td><td><code>StoreTote</code>, <code>RetrieveTote</code>, <code>Navigate</code>, <code>ExtractOrder</code>, <code>ClearPresentation</code></td><td>DS orders visit the buffer; SC/3P orders go directly to extraction. Buffer retrieval is eligible immediately after storage by default. Navigate selects an available declared extraction port when the HTM is ready; extraction and return use the actual destination. Return empty reusable containers to storage; remove whole cartons and release their HTMs to productive work or, through their clearance, to parking.</td></tr>
+<tr><td><code>AdvanceQueue</code></td><td><code>Navigate</code></td><td>Retain the empty inventory HTM through the entire one-way queue while picking proceeds.</td></tr>
+<tr><td><code>PrepareOrderPresentation</code></td><td><code>SelectPresentation</code></td><td>Coordinate known inventory readiness with order HTM travel and target-cell availability. Earlier-ready known sources retain selection priority. Only acceptance claims an inventory side; the order approach can overlap conveyor travel, and picking still waits for both physical arrivals.</td></tr>
+<tr><td><code>Parking</code></td><td>One bounded retry, if an early accepted attempt has no available relay</td><td>Publish an empty-HTM last-resort claim that starts when the HTM becomes available, with a Vacate on the HTM's hold. Feasible published productive claims for that same HTM availability win, including later-start claims. An incoming journey blocked at all eligible ports can register a need-by on one existing Vacate; the physical departure time stays no earlier than that availability. Superseded parking ends before route planning; accepted parking selects and reserves an available relay presentation cell. Idle destinations are relays; <code>settings.htm.idle_selection</code> selects <code>nearest</code> (default) or <code>random</code>. Explicit charging cells participate only in randomized startup until charge state is modeled.</td></tr>
+<tr><td><code>CollectAndStoreTote</code></td><td><code>CollectTote</code>, <code>StoreTote</code></td><td>Wait for the retained HTM to finish its one-way queue, collect the next ready inventory tote, then return that tote to stock independently of later picks.</td></tr>
+<tr><td><code>CollectTote</code></td><td><code>ClaimReturnedTote</code>, <code>Navigate</code>, <code>LoadTote</code></td><td>The HTM at the queue head selects the earliest ready return. Selection remains revocable until accepted; the selected tote can differ from the one this HTM delivered. Loading completes before conveyor capacity is released.</td></tr>
+<tr><td><code>SupplyConveyor</code></td><td><code>AcquirePipeline</code>, <code>RetrieveTote</code>, <code>Navigate</code>, <code>UnloadTote</code>, <code>AdvanceQueue</code></td><td>Supply one required inventory visit independently of the order HTM. The shared per-EasyLoop pipeline token spans release through the matching pick completion; conveyor admission separately holds physical capacity from unload through collection. Unload completes before <code>AdvanceQueue</code> starts, and the running queue child returns without waiting for queue arrival.</td></tr>
+<tr><td><code>SupplyAndCollect</code></td><td><code>SupplyConveyor</code>, <code>CollectAndStoreTote</code></td><td>Start the retained HTM's collection task immediately after unloading and queue launch, even if its original inventory tote's order container is not ready. At the queue head it may collect another order's ready returning tote. Return supplied inventory and the independently running collector to the order parent, which awaits final cleanup.</td></tr>
+<tr><td><code>RetrieveAndDeliverTote</code></td><td><code>RetrieveTote</code>, <code>Navigate</code></td><td>Retrieve the requested tote and deliver it to the chosen destination, retaining its HTM and source identity. Inventory delivery can overlap order-container acquisition or return to Waiting. This child reserves no conveyor capacity and does not unload the tote.</td></tr>
+<tr><td><code>RetrieveTote</code></td><td><code>VtmForward</code>, <code>HtmPickup</code></td><td>Use the normal VTM/relay route and return a tote held by an assigned HTM.</td></tr>
+<tr><td><code>InductContainer</code></td><td><code>Navigate</code>, <code>CreateContainer</code>, <code>PickupContainer</code></td><td>Take an empty HTM to the declared induction cell, create the physical container there, and lift it during the configured fork dwell. The cell stays held through creation and pickup.</td></tr>
+<tr><td><code>StoreTote</code></td><td><code>HtmStore</code>, <code>VtmReturn</code></td><td>Return the held tote to its declared inventory, order-buffer or empty-order pool. Once its relay is reserved, an incoming extraction journey may request an earlier decision on this already-owned departure. The actual route still starts after the preceding dwell and closes the source hold through its normal reservation commit.</td></tr>
+</tbody></table></div>
+<div class="note"><p><strong>Current scope:</strong> each EasyLoop has two independent six-member order areas, each bound to one fixed order presentation. Logical assignment ends at final pick; physical membership ends at actual area exit. Inventory queue travel, picking and return work overlap. The conveyance service independently enforces eight-tote physical capacity, two inventory presentations and one shared exclusive operator. Detailed physical FIFO and belt transfer conflicts remain further work.</p></div>
+<p><strong>Pipeline sizing:</strong> inventory CONWIP is <code>ceil(queue_factor × F_max / pick_period) + 2</code>, using a static retrieval-time estimate. It counts visits from release through paired pick completion. The logical stream ceiling uses this cap; the old half-fleet worker limit is removed. Actual relay and robot acceptance protects the resources needed to finish admitted work. Current supply prepares one active inventory visit per logical order. These are admission limits, not evidence of sustained operator saturation.</p>
+<p><strong>Diagnostics:</strong> typed events record exact simulation times for order assignment and physical phases, paired order/inventory readiness by order and pick index, and inventory visit release, load, conveyor boarding and pick completion. Desvis plots logical orders, physical residents and the shared inventory CONWIP/upstream/loaded-transit counts. Profiles without these events show the measurements as unavailable rather than zero.</p>
+<p><strong>Validation scope:</strong> focused workflow tests cover admission and diagnostics across direct and buffered routes. Full-map batches of 100 and 500 orders completed; the 500-order run exercised all four derived CONWIP ceilings. The matched eight-hour comparison completed 4,981 picks (622.625/hour), up 11.48%; site-capacity validation remains pending. See <a href="review-2026-09-12/inventory-conwip.md">the implementation and validation record</a>. See <a href="scheduling-wave-2026-09-10.md">the earlier scheduling checks and controlled comparisons</a>, <a href="throughput.md">queue measurements</a> and <a href="workload-checks.md">earlier checks</a>. Finite batches include startup and drain and do not establish calibrated site capacity.</p>
+<p><a href="implementation.md">Implementation scope</a> · <a href="workload-checks.md">Minimal and full-map validation</a> · <a href="remaining-flows.md">Remaining flows and open requirements</a> · <a href="questions.html">Site questions and provisional choices</a> · <a href="../../native-modules/src/migration/flows/fulfillment/orders.rs">Current orchestration code</a></p>
+</section>
+<section id="current-acquisition">
+<h2>Acquire the physical order container</h2>
+<p class="section-intro">Bag orders use a reusable <code>Tote</code>; SIOC orders use a reusable <code>Tray</code>. Both are retrieved from the matching empty-container pool. Box orders use a newly inducted <code>Carton</code>, carried directly on the HTM. These are the current provisional physical mappings. After assignment and stock reservation, the first inventory <code>SupplyAndCollect</code> is launched before the area right is awaited; order-container acquisition starts only after <code>AdmitArea</code> has accepted a possibly future entry time. This preparation-ahead behavior currently applies to inventory only. Supply includes pipeline admission, retrieval, delivery, conveyor admission, unloading and queue launch. The same independent child supplies only the next required inventory visit while an unfinished order returns to Waiting. The order parent coordinates presentation after receiving both the supplied tote and its order HTM; arrival alone does not transfer custody or permit a pick.</p>
+<figure>
+<div class="diagram-scroll" tabindex="0" role="region" aria-label="Implemented container acquisition children">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 496" role="img" aria-labelledby="current-acquire-title current-acquire-desc">
+<title id="current-acquire-title">Implemented container acquisition</title>
+<desc id="current-acquire-desc">FulfillOrder chooses RetrieveTote for reusable totes and trays or InductContainer for cartons; the induction parent moves an empty HTM to the source, creates a container, and picks it up.</desc>
+<defs>
+<marker id="current-acquire-arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--muted)"/></marker>
+<marker id="current-acquire-arrow-accent" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--accent)"/></marker>
+<marker id="current-acquire-arrow-link" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--link)"/></marker>
+</defs>
+<path class="connector" data-parent="acquire-order" data-child="retrieve-container" d="M 580 104 V 128 Q 580 136 572 136 H 256 Q 248 136 248 144 V 180" marker-end="url(#current-acquire-arrow)"/>
+<path class="connector" data-parent="acquire-order" data-child="induct-container" d="M 700 104 V 128 Q 700 136 708 136 H 872 Q 880 136 880 144 V 180" marker-end="url(#current-acquire-arrow)"/>
+<path class="connector" data-parent="retrieve-container" data-child="acquire-vtm" d="M 208 260 V 292 Q 208 300 200 300 H 136 Q 128 300 128 308 V 340" marker-end="url(#current-acquire-arrow)"/>
+<path class="connector" data-parent="retrieve-container" data-child="acquire-htm" d="M 288 260 V 292 Q 288 300 296 300 H 360 Q 368 300 368 308 V 340" marker-end="url(#current-acquire-arrow)"/>
+<path class="connector" data-parent="induct-container" data-child="induct-navigate" d="M 820 260 V 292 Q 820 300 812 300 H 648 Q 640 300 640 308 V 340" marker-end="url(#current-acquire-arrow)"/>
+<path class="connector" data-parent="induct-container" data-child="induct-create" d="M 880 260 V 340" marker-end="url(#current-acquire-arrow)"/>
+<path class="connector" data-parent="induct-container" data-child="induct-pickup" d="M 940 260 V 292 Q 940 300 948 300 H 1112 Q 1120 300 1120 308 V 340" marker-end="url(#current-acquire-arrow)"/>
+<g class="node focal" data-node="acquire-order"><rect x="480" y="24" width="320" height="80" rx="6"/><text x="640" y="56" text-anchor="middle" class="node-name">FulfillOrder</text><text x="640" y="80" text-anchor="middle" class="node-code">choose by physical container type</text></g>
+<g class="node" data-node="retrieve-container"><rect x="88" y="180" width="320" height="80" rx="6"/><text x="248" y="212" text-anchor="middle" class="node-name">RetrieveTote</text><text x="248" y="236" text-anchor="middle" class="node-code">bag: Tote · SIOC: Tray</text></g>
+<g class="node" data-node="induct-container"><rect x="720" y="180" width="320" height="80" rx="6"/><text x="880" y="212" text-anchor="middle" class="node-name">InductContainer</text><text x="880" y="236" text-anchor="middle" class="node-code">box: Carton</text></g>
+<g class="node" data-node="acquire-vtm"><rect x="24" y="340" width="208" height="80" rx="6"/><text x="128" y="372" text-anchor="middle" class="node-name">VtmForward</text><text x="128" y="396" text-anchor="middle" class="node-note">storage to relay</text></g>
+<g class="node" data-node="acquire-htm"><rect x="264" y="340" width="208" height="80" rx="6"/><text x="368" y="372" text-anchor="middle" class="node-name">HtmPickup</text><text x="368" y="396" text-anchor="middle" class="node-note">relay to HTM</text></g>
+<g class="node" data-node="induct-navigate"><rect x="536" y="340" width="208" height="80" rx="6"/><text x="640" y="372" text-anchor="middle" class="node-name">Navigate</text><text x="640" y="396" text-anchor="middle" class="node-note">empty HTM to induction</text></g>
+<g class="node" data-node="induct-create"><rect x="776" y="340" width="208" height="80" rx="6"/><text x="880" y="372" text-anchor="middle" class="node-name">CreateContainer</text><text x="880" y="396" text-anchor="middle" class="node-note">immediate birth at source</text></g>
+<g class="node" data-node="induct-pickup"><rect x="1016" y="340" width="208" height="80" rx="6"/><text x="1120" y="372" text-anchor="middle" class="node-name">PickupContainer</text><text x="1120" y="396" text-anchor="middle" class="node-note">configured HTM fork dwell</text></g>
+<line class="rule" x1="24" y1="452" x2="1256" y2="452"/>
+<text x="24" y="476" class="legend">Links mean “spawns child.” Acquisition branches are alternatives; each branch’s children run left to right.</text>
+</svg>
+</div>
+<figcaption>Both branches return the same carrying handoff. All subsequent waiting, curved presentation and item-transfer work uses the common tasks. A carton occupies the HTM’s cargo position without an additional tote or tray underneath.</figcaption>
+</figure>
+<p>Creation occurs at the induction cell when the HTM is ready; pickup completes after the fork dwell. Dynamic creation metadata preserves the carton’s physical type in live and recorded playback. No packaging operation is added at EasyLoop.</p>
+</section>
+<section id="current-dispatch">
+<h2>Dispatch, extract, then release the physical resources</h2>
+<p class="section-intro"><code>DispatchOrder</code> owns the outbound container after the last pick. The current DS path stores and retrieves it through the order buffer; SC and 3P proceed directly to extraction. All paths retain the physical container type. Its <code>Navigate</code> child chooses among declared extraction ports at actual HTM readiness, reselecting after reservation changes when blocked. Normal collision planning still reserves the physical route.</p>
+<figure>
+<div class="diagram-scroll" tabindex="0" role="region" aria-label="Implemented outbound dispatch children">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 376" role="img" aria-labelledby="current-dispatch-title current-dispatch-desc">
+<title id="current-dispatch-title">Implemented outbound dispatch</title>
+<desc id="current-dispatch-desc">DispatchOrder optionally stores and retrieves the filled container, then navigates to extraction; reusable totes and trays return to storage after extraction, while cartons leave the system and their empty HTMs must clear the extraction cell.</desc>
+<defs>
+<marker id="current-dispatch-arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--muted)"/></marker>
+<marker id="current-dispatch-arrow-accent" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--accent)"/></marker>
+<marker id="current-dispatch-arrow-link" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--link)"/></marker>
+</defs>
+<path class="connector" data-parent="dispatch-parent" data-child="dispatch-buffer-store" d="M 520 104 V 128 Q 520 136 512 136 H 136 Q 128 136 128 144 V 208" marker-end="url(#current-dispatch-arrow)"/>
+<path class="connector" data-parent="dispatch-parent" data-child="dispatch-buffer-retrieve" d="M 560 104 V 160 Q 560 168 552 168 H 376 Q 368 168 368 176 V 208" marker-end="url(#current-dispatch-arrow)"/>
+<path class="connector" data-parent="dispatch-parent" data-child="dispatch-navigate" d="M 640 104 V 208" marker-end="url(#current-dispatch-arrow)"/>
+<path class="connector" data-parent="dispatch-parent" data-child="dispatch-extract" d="M 720 104 V 160 Q 720 168 728 168 H 872 Q 880 168 880 176 V 208" marker-end="url(#current-dispatch-arrow)"/>
+<path class="connector" data-parent="dispatch-parent" data-child="dispatch-empty-store" d="M 760 104 V 128 Q 760 136 768 136 H 1112 Q 1120 136 1120 144 V 208" marker-end="url(#current-dispatch-arrow)"/>
+<g class="node focal" data-node="dispatch-parent"><rect x="480" y="24" width="320" height="80" rx="6"/><text x="640" y="56" text-anchor="middle" class="node-name">DispatchOrder</text><text x="640" y="80" text-anchor="middle" class="node-code">filled container leaves EasyLoop</text></g>
+<g class="node" data-node="dispatch-buffer-store"><rect x="24" y="208" width="208" height="80" rx="6"/><text x="128" y="240" text-anchor="middle" class="node-name">StoreTote</text><text x="128" y="264" text-anchor="middle" class="node-code">DS: OrderBuffer</text></g>
+<g class="node" data-node="dispatch-buffer-retrieve"><rect x="264" y="208" width="208" height="80" rx="6"/><text x="368" y="240" text-anchor="middle" class="node-name">RetrieveTote</text><text x="368" y="264" text-anchor="middle" class="node-code">DS: same container ID</text></g>
+<g class="node" data-node="dispatch-navigate"><rect x="536" y="208" width="208" height="80" rx="6"/><text x="640" y="240" text-anchor="middle" class="node-name">Navigate</text><text x="640" y="264" text-anchor="middle" class="node-note">all: to extraction</text></g>
+<g class="node" data-node="dispatch-extract"><rect x="776" y="208" width="208" height="80" rx="6"/><text x="880" y="240" text-anchor="middle" class="node-name">ExtractOrder</text><text x="880" y="264" text-anchor="middle" class="node-note">all: extraction dwell</text></g>
+<g class="node" data-node="dispatch-empty-store"><rect x="1016" y="208" width="208" height="80" rx="6"/><text x="1120" y="240" text-anchor="middle" class="node-name">StoreTote</text><text x="1120" y="264" text-anchor="middle" class="node-code">Tote / Tray: OrderDepot</text></g>
+<line class="rule" x1="24" y1="332" x2="1256" y2="332"/>
+<text x="24" y="356" class="legend">Links mean “spawns child.” Run left to right, skipping children whose physical or route condition does not apply.</text>
+</svg>
+</div>
+<figcaption>The five children shown belong directly to <code>DispatchOrder</code>. The final <code>StoreTote</code> applies only to reusable containers; cartons use the deferred <code>Parking</code> child described below.</figcaption>
+</figure>
+<div class="two-col">
+<div><h3>Tote or tray: return the empty container</h3><p><code>ExtractOrder</code> removes the contents at the end of the extraction dwell. The reusable container remains on the HTM, and <code>StoreTote</code> returns it to <code>OrderDepot</code> for another order. After the relay reservation is committed, its <code>HtmStore</code> child can answer a blocked incoming journey's request to plan this known departure sooner. Extraction still receives its full dwell, and only the actual storage route bounds the source cell's hold. If the relay is occupied, that hold remains while other tasks can continue; the laden HTM never enters the idle pool for this decision.</p></div>
+<div><h3>Carton: remove the box and release the HTM</h3><p><code>ExtractOrder</code> removes the whole carton when the extraction ends. <code>DispatchOrder</code> registers the empty HTM and spawns its clearance, <code>ClearPresentation</code>: a last-resort claim on that availability, with a Vacate on the extraction cell's hold. A feasible published productive claim for that availability takes priority when it departs no later than the clearance, at the extraction's end; one that would depart later loses to the clearance. An incoming journey blocked at all eligible ports may register a need-by on that Vacate, so that its arrival can be planned before the extraction ends. This changes when the choice is made, not when the HTM can physically leave. Otherwise the accepted clearance parks the HTM: it finds and reserves an available relay presentation cell and route. An obsolete clearance dissolves before route planning. If an early accepted attempt has no available relay, it restores the availability and waits until the physical departure time before a fresh competition; productive work that departs then can take the HTM during that wait. If no relay is available at that retry either, the clearance competes again whenever a path commit may have freed one, until the barrier passes the extraction's end; then the run stops with an error naming the station, the HTM and that time. Other flows still use the existing pressure-relief mechanism.</p></div>
+</div>
+<div class="note"><p><strong>Buffer timing is provisional:</strong> retrieval eligibility is <code>stored_at + buffer_dwell</code>, with zero dwell by default. Storage and retrieval still perform their real transport work. Source cutoff times do not schedule release; their meaning, DS/SC/3P routing and wave behavior remain <a href="questions.html">site questions</a>.</p></div>
+</section>
+<div class="note"><p><strong>Further decomposition proposal:</strong> the next five trees retain the earlier design vocabulary. They describe potential extraction boundaries and are not a class inventory. Use the hierarchy above for implemented names and parentage.</p></div>
+<section id="order-tree">
+<h2>The order tote stays with one parent</h2>
+<p class="section-intro">
+<code>FulfillOrder</code> owns the order’s tote through acquisition, repeated picks, and dispatch. For EasyLoop, the tote remains on the same HTM while it waits, presents, and circulates. The chosen side can change between picks.</p>
+<figure>
+<div class="diagram-scroll" tabindex="0" role="region" aria-label="An order’s task tree">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="tasks-order-title tasks-order-desc">
+  <title id="tasks-order-title">An order’s task tree</title>
+  <desc id="tasks-order-desc">FulfillOrder creates AcquireTote, PickOrder, and DispatchTote; PickOrder repeats coordinated picks while preserving the order tote and its HTM.</desc>
+  <defs>
+    <marker id="tasks-order-arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--muted)"/>
+    </marker>
+    <marker id="tasks-order-arrow-accent" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--accent)"/>
+    </marker>
+    <marker id="tasks-order-arrow-link" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--link)"/>
+    </marker>
+  </defs>
+  <path class="connector" data-parent="order" data-child="acquire" d="M 580 120 L 580 152 Q 580 160 572 160 L 232 160 Q 224 160 224 168 L 224 216" marker-end="url(#tasks-order-arrow)"/>
+  <path class="connector" data-parent="order" data-child="fill" d="M 640 120 L 640 216" marker-end="url(#tasks-order-arrow)"/>
+  <path class="connector" data-parent="order" data-child="dispatch" d="M 700 120 L 700 152 Q 700 160 708 160 L 1048 160 Q 1056 160 1056 168 L 1056 216" marker-end="url(#tasks-order-arrow)"/>
+  <path class="connector" data-parent="fill" data-child="stage" d="M 600 296 L 600 328 Q 600 336 592 336 L 432 336 Q 424 336 424 344 L 424 384" marker-end="url(#tasks-order-arrow)"/>
+  <path class="connector" data-parent="fill" data-child="pick" d="M 680 296 L 680 328 Q 680 336 688 336 L 824 336 Q 832 336 832 344 L 832 384" marker-end="url(#tasks-order-arrow)"/>
+  <path class="connector" data-parent="pick" data-child="pair" d="M 772 464 L 772 504 Q 772 512 764 512 L 560 512 Q 552 512 552 520 L 552 560" marker-end="url(#tasks-order-arrow)"/>
+  <path class="connector" data-parent="pick" data-child="transfer" d="M 832 464 L 832 560" marker-end="url(#tasks-order-arrow)"/>
+  <path class="connector" data-parent="pick" data-child="clear" d="M 892 464 L 892 504 Q 892 512 900 512 L 1104 512 Q 1112 512 1112 520 L 1112 560" marker-end="url(#tasks-order-arrow)"/>
+  <g class="node" data-node="order">
+    <rect x="520" y="40" width="240" height="80" rx="8"/>
+    <text x="640" y="68" class="node-name" text-anchor="middle">Fulfill order</text>
+    <text x="640" y="88" class="node-code" text-anchor="middle">FulfillOrder</text>
+    <text x="640" y="108" class="node-note" text-anchor="middle">Own the order tote</text>
+  </g>
+  <g class="node" data-node="acquire">
+    <rect x="104" y="216" width="240" height="80" rx="8"/>
+    <text x="224" y="244" class="node-name" text-anchor="middle">Acquire tote</text>
+    <text x="224" y="264" class="node-code" text-anchor="middle">AcquireTote</text>
+    <text x="224" y="284" class="node-note" text-anchor="middle">Source capability</text>
+  </g>
+  <g class="node focal" data-node="fill">
+    <rect x="520" y="216" width="240" height="80" rx="8"/>
+    <text x="640" y="244" class="node-name" text-anchor="middle">Pick order</text>
+    <text x="640" y="264" class="node-code" text-anchor="middle">PickOrder</text>
+    <text x="640" y="284" class="node-note" text-anchor="middle">Same tote and HTM</text>
+  </g>
+  <g class="node" data-node="dispatch">
+    <rect x="936" y="216" width="240" height="80" rx="8"/>
+    <text x="1056" y="244" class="node-name" text-anchor="middle">Dispatch tote</text>
+    <text x="1056" y="264" class="node-code" text-anchor="middle">DispatchTote</text>
+    <text x="1056" y="284" class="node-note" text-anchor="middle">Buffer or extraction</text>
+  </g>
+  <g class="node" data-node="stage">
+    <rect x="304" y="384" width="240" height="80" rx="8"/>
+    <text x="424" y="412" class="node-name" text-anchor="middle">Move to waiting block</text>
+    <text x="424" y="432" class="node-code" text-anchor="middle">MoveToWaitingBlock</text>
+    <text x="424" y="452" class="node-note" text-anchor="middle">Enter the waiting block</text>
+  </g>
+  <g class="node" data-node="pick">
+    <rect x="712" y="384" width="240" height="80" rx="8"/>
+    <text x="832" y="412" class="node-name" text-anchor="middle">Perform a pick</text>
+    <text x="832" y="432" class="node-code" text-anchor="middle">PickItem</text>
+    <text x="832" y="452" class="node-note" text-anchor="middle">Repeat for remaining picks</text>
+  </g>
+  <g class="node" data-node="pair">
+    <rect x="432" y="560" width="240" height="80" rx="8"/>
+    <text x="552" y="588" class="node-name" text-anchor="middle">Present totes</text>
+    <text x="552" y="608" class="node-code" text-anchor="middle">PresentTotes</text>
+    <text x="552" y="628" class="node-note" text-anchor="middle">Positioning can overlap</text>
+  </g>
+  <g class="node" data-node="transfer">
+    <rect x="712" y="560" width="240" height="80" rx="8"/>
+    <text x="832" y="588" class="node-name" text-anchor="middle">Transfer items</text>
+    <text x="832" y="608" class="node-code" text-anchor="middle">TransferItems</text>
+    <text x="832" y="628" class="node-note" text-anchor="middle">One operator interval</text>
+  </g>
+  <g class="node" data-node="clear">
+    <rect x="992" y="560" width="240" height="80" rx="8"/>
+    <text x="1112" y="588" class="node-name" text-anchor="middle">Clear presentations</text>
+    <text x="1112" y="608" class="node-code" text-anchor="middle">ClearPresentations</text>
+    <text x="1112" y="628" class="node-note" text-anchor="middle">Order returns or exits</text>
+  </g>
+  <line x1="40" y1="660" x2="1240" y2="660" class="rule"/>
+  <path d="M 40 680 H 80" class="connector" marker-end="url(#tasks-order-arrow)"/>
+  <text x="96" y="684" class="legend">Parent creates child</text>
+  <text x="408" y="684" class="legend">Repeated labels are separate task instances</text>
+  <text x="936" y="684" class="legend">Proposed decomposition</text>
+</svg>
+</div>
+<figcaption>These arrows mean “creates a child task,” not “happens next.” Acquisition precedes picking; dispatch follows completion. Within PickOrder, movement to the waiting block happens first and <code>PickItem</code> repeats. The two transport children inside <code>PresentTotes</code> may overlap.</figcaption>
+</figure>
+<p>
+<strong>One parent per task instance.</strong> A shared conveyor tote is a resource used by a pick. Its delivery task does not become a second parent of that pick. Resource dependencies are described separately under <a href="#coordination">Scheduling</a>.</p>
+</section>
+<section id="exchange-tree">
+<h2>The delivery HTM continues after deposit</h2>
+<p class="section-intro">
+<code>SupplyAndCollectTotes</code> is a reusable drop-and-collect composition: supply one tote, retain the robot, then collect an eligible tote from a configured return endpoint. EasyLoop binds its continuation to the one-way route under the conveyor.</p>
+<figure>
+<div class="diagram-scroll" tabindex="0" role="region" aria-label="The delivery HTM’s task tree">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-labelledby="tasks-exchange-title tasks-exchange-desc">
+  <title id="tasks-exchange-title">The delivery HTM’s task tree</title>
+  <desc id="tasks-exchange-desc">SupplyAndCollectTotes supplies an inventory tote, retains the empty HTM through its queue, and collects a potentially different returning tote.</desc>
+  <defs>
+    <marker id="tasks-exchange-arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--muted)"/>
+    </marker>
+    <marker id="tasks-exchange-arrow-accent" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--accent)"/>
+    </marker>
+    <marker id="tasks-exchange-arrow-link" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--link)"/>
+    </marker>
+  </defs>
+  <path class="connector" data-parent="exchange" data-child="supply" d="M 600 120 L 600 160 Q 600 168 592 168 L 348 168 Q 340 168 340 176 L 340 240" marker-end="url(#tasks-exchange-arrow)"/>
+  <path class="connector" data-parent="exchange" data-child="collect" d="M 680 120 L 680 160 Q 680 168 688 168 L 932 168 Q 940 168 940 176 L 940 240" marker-end="url(#tasks-exchange-arrow)"/>
+  <path class="connector" data-parent="supply" data-child="retrieve" d="M 280 320 L 280 384 Q 280 392 272 392 L 148 392 Q 140 392 140 400 L 140 464" marker-end="url(#tasks-exchange-arrow)"/>
+  <path class="connector" data-parent="supply" data-child="deliver" d="M 340 320 L 340 464" marker-end="url(#tasks-exchange-arrow)"/>
+  <path class="connector" data-parent="supply" data-child="deposit" d="M 400 320 L 400 384 Q 400 392 408 392 L 532 392 Q 540 392 540 400 L 540 464" marker-end="url(#tasks-exchange-arrow)"/>
+  <path class="connector" data-parent="collect" data-child="queue" d="M 880 320 L 880 384 Q 880 392 872 392 L 748 392 Q 740 392 740 400 L 740 464" marker-end="url(#tasks-exchange-arrow)"/>
+  <path class="connector" data-parent="collect" data-child="pickup" d="M 940 320 L 940 464" marker-end="url(#tasks-exchange-arrow)"/>
+  <path class="connector" data-parent="collect" data-child="return" d="M 1000 320 L 1000 384 Q 1000 392 1008 392 L 1132 392 Q 1140 392 1140 400 L 1140 464" marker-end="url(#tasks-exchange-arrow)"/>
+  <g class="node focal" data-node="exchange">
+    <rect x="520" y="40" width="240" height="80" rx="8"/>
+    <text x="640" y="68" class="node-name" text-anchor="middle">Supply and collect totes</text>
+    <text x="640" y="88" class="node-code" text-anchor="middle">SupplyAndCollectTotes</text>
+    <text x="640" y="108" class="node-note" text-anchor="middle">Keep HTM custody after deposit</text>
+  </g>
+  <g class="node" data-node="supply">
+    <rect x="220" y="240" width="240" height="80" rx="8"/>
+    <text x="340" y="268" class="node-name" text-anchor="middle">Supply tote</text>
+    <text x="340" y="288" class="node-code" text-anchor="middle">SupplyTote</text>
+    <text x="340" y="308" class="node-note" text-anchor="middle">Deliver one inventory tote</text>
+  </g>
+  <g class="node" data-node="collect">
+    <rect x="820" y="240" width="240" height="80" rx="8"/>
+    <text x="940" y="268" class="node-name" text-anchor="middle">Collect tote</text>
+    <text x="940" y="288" class="node-code" text-anchor="middle">CollectTote</text>
+    <text x="940" y="308" class="node-note" text-anchor="middle">Return tote is chosen later</text>
+  </g>
+  <g class="node" data-node="retrieve">
+    <rect x="60" y="464" width="160" height="80" rx="8"/>
+    <text x="140" y="492" class="node-name" text-anchor="middle">Retrieve tote</text>
+    <text x="140" y="512" class="node-code" text-anchor="middle">RetrieveTote</text>
+    <text x="140" y="532" class="node-note" text-anchor="middle">Storage → held on HTM</text>
+  </g>
+  <g class="node" data-node="deliver">
+    <rect x="260" y="464" width="160" height="80" rx="8"/>
+    <text x="340" y="492" class="node-name" text-anchor="middle">Navigate</text>
+    <text x="340" y="512" class="node-code" text-anchor="middle">Navigate</text>
+    <text x="340" y="532" class="node-note" text-anchor="middle">Loaded → dropoff</text>
+  </g>
+  <g class="node" data-node="deposit">
+    <rect x="460" y="464" width="160" height="80" rx="8"/>
+    <text x="540" y="492" class="node-name" text-anchor="middle">Unload tote</text>
+    <text x="540" y="512" class="node-code" text-anchor="middle">UnloadTote</text>
+    <text x="540" y="532" class="node-note" text-anchor="middle">HTM → conveyor</text>
+  </g>
+  <g class="node" data-node="queue">
+    <rect x="660" y="464" width="160" height="80" rx="8"/>
+    <text x="740" y="492" class="node-name" text-anchor="middle">Advance queue</text>
+    <text x="740" y="512" class="node-code" text-anchor="middle">AdvanceQueue</text>
+    <text x="740" y="532" class="node-note" text-anchor="middle">Empty; no early exit</text>
+  </g>
+  <g class="node" data-node="pickup">
+    <rect x="860" y="464" width="160" height="80" rx="8"/>
+    <text x="940" y="492" class="node-name" text-anchor="middle">Pick up tote</text>
+    <text x="940" y="512" class="node-code" text-anchor="middle">PickupTote</text>
+    <text x="940" y="532" class="node-note" text-anchor="middle">Next eligible return</text>
+  </g>
+  <g class="node" data-node="return">
+    <rect x="1060" y="464" width="160" height="80" rx="8"/>
+    <text x="1140" y="492" class="node-name" text-anchor="middle">Return to storage</text>
+    <text x="1140" y="512" class="node-code" text-anchor="middle">ReturnToStorage</text>
+    <text x="1140" y="532" class="node-note" text-anchor="middle">HTM → relay → VTM</text>
+  </g>
+  <line x1="40" y1="580" x2="1240" y2="580" class="rule"/>
+  <path d="M 40 600 H 80" class="connector" marker-end="url(#tasks-exchange-arrow)"/>
+  <text x="96" y="604" class="legend">Parent creates child</text>
+  <text x="408" y="604" class="legend">Repeated labels are separate task instances</text>
+  <text x="936" y="604" class="legend">Proposed decomposition</text>
+</svg>
+</div>
+<figcaption>
+<code>SupplyTote</code> and <code>CollectTote</code> are children of the same HTM assignment. Collection binds the returning tote later; it does not require the delivered tote’s identity. The supplied tote can support several picks or orders while its delivery HTM advances in the queue.</figcaption>
+</figure>
+<div class="note">
+<p>
+<strong>Deposit splits custody.</strong> The conveyor resource takes the inventory tote. The task parent retains the empty HTM, its current hold, and its ready time. It never puts that robot back in the general availability pool while the configured continuation is unfinished.</p>
+</div>
+<p>
+<code>AdvanceQueue</code> owns a finite passage through a configured queue. A queue service chooses legal holding locations; actual movements use <code>Navigate</code> children. Waiting is a resource-signal wait with custody intact. A navigation cell does not automatically create a task.</p>
+</section>
+<section id="pick-tree">
+<h2>A pick presents the totes, transfers items, and clears the presentations</h2>
+<p class="section-intro">
+<code>PickItem</code> owns one compatible reservation covering both tote placements, an operator interval, and clearance to the next safe holds. Its children consume those accepted reservations; they do not compete again for the same resources.</p>
+<figure>
+<div class="diagram-scroll" tabindex="0" role="region" aria-label="Children of a coordinated pick">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 608" role="img" aria-labelledby="tasks-pick-title tasks-pick-desc">
+  <title id="tasks-pick-title">Children of a coordinated pick</title>
+  <desc id="tasks-pick-desc">PickItem owns positioning both totes, the item transfer, and clearance; equipment-specific placement is selected through capabilities.</desc>
+  <defs>
+    <marker id="tasks-pick-arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--muted)"/>
+    </marker>
+    <marker id="tasks-pick-arrow-accent" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--accent)"/>
+    </marker>
+    <marker id="tasks-pick-arrow-link" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--link)"/>
+    </marker>
+  </defs>
+  <path class="connector" data-parent="pick" data-child="position" d="M 580 120 L 580 144 Q 580 152 572 152 L 248 152 Q 240 152 240 160 L 240 224" marker-end="url(#tasks-pick-arrow)"/>
+  <path class="connector" data-parent="pick" data-child="transfer" d="M 640 120 L 640 224" marker-end="url(#tasks-pick-arrow)"/>
+  <path class="connector" data-parent="pick" data-child="clear" d="M 700 120 L 700 144 Q 700 152 708 152 L 1032 152 Q 1040 152 1040 160 L 1040 224" marker-end="url(#tasks-pick-arrow)"/>
+  <path class="connector" data-parent="position" data-child="inv-in" d="M 200 304 L 200 360 Q 200 368 192 368 L 148 368 Q 140 368 140 376 L 140 432" marker-end="url(#tasks-pick-arrow)"/>
+  <path class="connector" data-parent="position" data-child="order-in" d="M 280 304 L 280 360 Q 280 368 288 368 L 372 368 Q 380 368 380 376 L 380 432" marker-end="url(#tasks-pick-arrow)"/>
+  <path class="connector" data-parent="clear" data-child="inv-out" d="M 1000 304 L 1000 360 Q 1000 368 992 368 L 908 368 Q 900 368 900 376 L 900 432" marker-end="url(#tasks-pick-arrow)"/>
+  <path class="connector" data-parent="clear" data-child="order-out" d="M 1080 304 L 1080 360 Q 1080 368 1088 368 L 1132 368 Q 1140 368 1140 376 L 1140 432" marker-end="url(#tasks-pick-arrow)"/>
+  <g class="node" data-node="pick">
+    <rect x="520" y="40" width="240" height="80" rx="8"/>
+    <text x="640" y="68" class="node-name" text-anchor="middle">Perform a pick</text>
+    <text x="640" y="88" class="node-code" text-anchor="middle">PickItem</text>
+    <text x="640" y="108" class="node-note" text-anchor="middle">Own one compatible reservation</text>
+  </g>
+  <g class="node" data-node="position">
+    <rect x="120" y="224" width="240" height="80" rx="8"/>
+    <text x="240" y="252" class="node-name" text-anchor="middle">Present totes</text>
+    <text x="240" y="272" class="node-code" text-anchor="middle">PresentTotes</text>
+    <text x="240" y="292" class="node-note" text-anchor="middle">Inventory and order totes</text>
+  </g>
+  <g class="node focal" data-node="transfer">
+    <rect x="520" y="224" width="240" height="80" rx="8"/>
+    <text x="640" y="252" class="node-name" text-anchor="middle">Transfer items</text>
+    <text x="640" y="272" class="node-code" text-anchor="middle">TransferItems</text>
+    <text x="640" y="292" class="node-note" text-anchor="middle">Consume the operator interval</text>
+  </g>
+  <g class="node" data-node="clear">
+    <rect x="920" y="224" width="240" height="80" rx="8"/>
+    <text x="1040" y="252" class="node-name" text-anchor="middle">Clear presentations</text>
+    <text x="1040" y="272" class="node-code" text-anchor="middle">ClearPresentations</text>
+    <text x="1040" y="292" class="node-note" text-anchor="middle">Release each hold when clear</text>
+  </g>
+  <g class="node" data-node="inv-in">
+    <rect x="40" y="432" width="200" height="80" rx="8"/>
+    <text x="140" y="460" class="node-name" text-anchor="middle">Present inventory</text>
+    <text x="140" y="480" class="node-code" text-anchor="middle">TransportTote</text>
+    <text x="140" y="500" class="node-note" text-anchor="middle">entry_to_pick / pick_to_pick</text>
+  </g>
+  <g class="node" data-node="order-in">
+    <rect x="280" y="432" width="200" height="80" rx="8"/>
+    <text x="380" y="460" class="node-name" text-anchor="middle">Present order tote</text>
+    <text x="380" y="480" class="node-code" text-anchor="middle">TransportTote</text>
+    <text x="380" y="500" class="node-note" text-anchor="middle">HTM → presentation point</text>
+  </g>
+  <g class="node" data-node="inv-out">
+    <rect x="800" y="432" width="200" height="80" rx="8"/>
+    <text x="900" y="460" class="node-name" text-anchor="middle">Move inventory on</text>
+    <text x="900" y="480" class="node-code" text-anchor="middle">TransportTote</text>
+    <text x="900" y="500" class="node-note" text-anchor="middle">pick_to_pick / pick_to_exit</text>
+  </g>
+  <g class="node" data-node="order-out">
+    <rect x="1040" y="432" width="200" height="80" rx="8"/>
+    <text x="1140" y="460" class="node-name" text-anchor="middle">Move order tote on</text>
+    <text x="1140" y="480" class="node-code" text-anchor="middle">TransportTote</text>
+    <text x="1140" y="500" class="node-note" text-anchor="middle">Waiting block or exit</text>
+  </g>
+  <line x1="40" y1="548" x2="1240" y2="548" class="rule"/>
+  <path d="M 40 568 H 80" class="connector" marker-end="url(#tasks-pick-arrow)"/>
+  <text x="96" y="572" class="legend">Parent creates child</text>
+  <text x="408" y="572" class="legend">Repeated labels are separate task instances</text>
+  <text x="936" y="572" class="legend">Proposed decomposition</text>
+</svg>
+</div>
+<figcaption>
+<code>TransportTote</code> is capability-driven. EasyLoop uses conveyor positioning for inventory and robot motion for the order. Clearance can overlap after the transfer; each presentation remains occupied until its tote leaves.</figcaption>
+</figure>
+<p>
+<code>TransferItems</code> names both tote IDs, the SKU, quantity, and operator reservation. Its item-transfer event takes effect at the end of the committed pick interval. Inventory and order progress must not report that work as physically completed at an earlier time.</p>
+</section>
+<section id="primitives">
+<h2>Decompose at real scheduling and custody boundaries</h2>
+<p class="section-intro">A small task earns its place when it can be scheduled independently, moves a robot or shared mechanism, transfers custody, or produces a useful typed result. Selecting a candidate, waiting for a signal, and visiting each path cell remain operations within tasks and services.</p>
+<h3>The robot backend separates navigation from load/unload</h3>
+<figure>
+<div class="diagram-scroll" tabindex="0" role="region" aria-label="Reusable tote transport children">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 584" role="img" aria-labelledby="tasks-transport-title tasks-transport-desc">
+  <title id="tasks-transport-title">Reusable tote transport children</title>
+  <desc id="tasks-transport-desc">The robot backend of TransportTote composes pickup and loaded travel; pickup composes optional approach navigation and LoadTote. This destination keeps the tote aboard.</desc>
+  <defs>
+    <marker id="tasks-transport-arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--muted)"/>
+    </marker>
+    <marker id="tasks-transport-arrow-accent" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--accent)"/>
+    </marker>
+    <marker id="tasks-transport-arrow-link" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--link)"/>
+    </marker>
+  </defs>
+  <path class="connector" data-parent="transport" data-child="pickup" d="M 600 120 L 600 144 Q 600 152 592 152 L 408 152 Q 400 152 400 160 L 400 216" marker-end="url(#tasks-transport-arrow)"/>
+  <path class="connector" data-parent="transport" data-child="loaded" d="M 680 120 L 680 144 Q 680 152 688 152 L 888 152 Q 896 152 896 160 L 896 216" marker-end="url(#tasks-transport-arrow)"/>
+  <path class="connector" data-parent="pickup" data-child="empty" d="M 360 296 L 360 336 Q 360 344 352 344 L 248 344 Q 240 344 240 352 L 240 408" marker-end="url(#tasks-transport-arrow)"/>
+  <path class="connector" data-parent="pickup" data-child="transfer" d="M 440 296 L 440 336 Q 440 344 448 344 L 552 344 Q 560 344 560 352 L 560 408" marker-end="url(#tasks-transport-arrow)"/>
+  <g class="node" data-node="transport">
+    <rect x="520" y="40" width="240" height="80" rx="8"/>
+    <text x="640" y="68" class="node-name" text-anchor="middle">Transport tote</text>
+    <text x="640" y="88" class="node-code" text-anchor="middle">TransportTote</text>
+    <text x="640" y="108" class="node-note" text-anchor="middle">Source and destination supplied</text>
+  </g>
+  <g class="node focal" data-node="pickup">
+    <rect x="280" y="216" width="240" height="80" rx="8"/>
+    <text x="400" y="244" class="node-name" text-anchor="middle">Pick up tote</text>
+    <text x="400" y="264" class="node-code" text-anchor="middle">PickupTote</text>
+    <text x="400" y="284" class="node-note" text-anchor="middle">Select or inherit the robot</text>
+  </g>
+  <g class="node" data-node="loaded">
+    <rect x="776" y="216" width="240" height="80" rx="8"/>
+    <text x="896" y="244" class="node-name" text-anchor="middle">Navigate</text>
+    <text x="896" y="264" class="node-code" text-anchor="middle">Navigate</text>
+    <text x="896" y="284" class="node-note" text-anchor="middle">Tote stays aboard</text>
+  </g>
+  <g class="node" data-node="empty">
+    <rect x="120" y="408" width="240" height="80" rx="8"/>
+    <text x="240" y="436" class="node-name" text-anchor="middle">Navigate</text>
+    <text x="240" y="456" class="node-code" text-anchor="middle">Navigate</text>
+    <text x="240" y="476" class="node-note" text-anchor="middle">Approach the source if needed</text>
+  </g>
+  <g class="node" data-node="transfer">
+    <rect x="440" y="408" width="240" height="80" rx="8"/>
+    <text x="560" y="436" class="node-name" text-anchor="middle">Load tote</text>
+    <text x="560" y="456" class="node-code" text-anchor="middle">LoadTote</text>
+    <text x="560" y="476" class="node-note" text-anchor="middle">Source holder → robot</text>
+  </g>
+  <line x1="40" y1="524" x2="1240" y2="524" class="rule"/>
+  <path d="M 40 544 H 80" class="connector" marker-end="url(#tasks-transport-arrow)"/>
+  <text x="96" y="548" class="legend">Parent creates child</text>
+  <text x="408" y="548" class="legend">Repeated labels are separate task instances</text>
+  <text x="936" y="548" class="legend">Proposed decomposition</text>
+</svg>
+</div>
+<figcaption>
+<code>TransportTote</code> is the destination-oriented task family. This tree expands its robot backend: <code>PickupTote</code> selects a robot or uses the robot handed to it. The empty approach is omitted when already at the source. If the robot already holds the tote, omit pickup. This example ends with the tote aboard; add <code>UnloadTote</code> only when the destination requires a handoff. Repeated labels are separate instances of the same reusable task type.</figcaption>
+</figure>
+<h3>Keep the storage capabilities that already exist</h3>
+<figure>
+<div class="diagram-scroll" tabindex="0" role="region" aria-label="Storage wrappers reuse equipment tasks">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 520" role="img" aria-labelledby="tasks-storage-title tasks-storage-desc">
+  <title id="tasks-storage-title">Storage wrappers reuse equipment tasks</title>
+  <desc id="tasks-storage-desc">RetrieveTote composes VTM forward transport and pickup; ReturnToStorage composes relay delivery, custody transfer, and the existing VTM return backend.</desc>
+  <defs>
+    <marker id="tasks-storage-arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--muted)"/>
+    </marker>
+    <marker id="tasks-storage-arrow-accent" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--accent)"/>
+    </marker>
+    <marker id="tasks-storage-arrow-link" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--link)"/>
+    </marker>
+  </defs>
+  <path class="connector" data-parent="retrieve" data-child="forward" d="M 280 160 L 280 232 Q 280 240 272 240 L 168 240 Q 160 240 160 248 L 160 336" marker-end="url(#tasks-storage-arrow)"/>
+  <path class="connector" data-parent="retrieve" data-child="pickup" d="M 360 160 L 360 232 Q 360 240 368 240 L 472 240 Q 480 240 480 248 L 480 336" marker-end="url(#tasks-storage-arrow)"/>
+  <path class="connector" data-parent="return" data-child="move" d="M 884 160 L 884 232 Q 884 240 876 240 L 744 240 Q 736 240 736 248 L 736 336" marker-end="url(#tasks-storage-arrow)"/>
+  <path class="connector" data-parent="return" data-child="deposit" d="M 944 160 L 944 336" marker-end="url(#tasks-storage-arrow)"/>
+  <path class="connector" data-parent="return" data-child="vtm-return" d="M 1004 160 L 1004 232 Q 1004 240 1012 240 L 1144 240 Q 1152 240 1152 248 L 1152 336" marker-end="url(#tasks-storage-arrow)"/>
+  <g class="node" data-node="retrieve">
+    <rect x="200" y="80" width="240" height="80" rx="8"/>
+    <text x="320" y="108" class="node-name" text-anchor="middle">Retrieve tote</text>
+    <text x="320" y="128" class="node-code" text-anchor="middle">RetrieveTote</text>
+    <text x="320" y="148" class="node-note" text-anchor="middle">Existing relay supply contract</text>
+  </g>
+  <g class="node" data-node="return">
+    <rect x="824" y="80" width="240" height="80" rx="8"/>
+    <text x="944" y="108" class="node-name" text-anchor="middle">Return to storage</text>
+    <text x="944" y="128" class="node-code" text-anchor="middle">ReturnToStorage</text>
+    <text x="944" y="148" class="node-note" text-anchor="middle">Existing relay return contract</text>
+  </g>
+  <g class="node backend" data-node="forward">
+    <rect x="80" y="336" width="160" height="80" rx="8"/>
+    <text x="160" y="364" class="node-name" text-anchor="middle">VTM forward</text>
+    <text x="160" y="384" class="node-code" text-anchor="middle">VtmForward</text>
+    <text x="160" y="404" class="node-note" text-anchor="middle">Equipment backend</text>
+  </g>
+  <g class="node" data-node="pickup">
+    <rect x="400" y="336" width="160" height="80" rx="8"/>
+    <text x="480" y="364" class="node-name" text-anchor="middle">Pick up tote</text>
+    <text x="480" y="384" class="node-code" text-anchor="middle">PickupTote</text>
+    <text x="480" y="404" class="node-note" text-anchor="middle">Tote held on HTM</text>
+  </g>
+  <g class="node" data-node="move">
+    <rect x="656" y="336" width="160" height="80" rx="8"/>
+    <text x="736" y="364" class="node-name" text-anchor="middle">Navigate</text>
+    <text x="736" y="384" class="node-code" text-anchor="middle">Navigate</text>
+    <text x="736" y="404" class="node-note" text-anchor="middle">Loaded → relay</text>
+  </g>
+  <g class="node" data-node="deposit">
+    <rect x="864" y="336" width="160" height="80" rx="8"/>
+    <text x="944" y="364" class="node-name" text-anchor="middle">Unload tote</text>
+    <text x="944" y="384" class="node-code" text-anchor="middle">UnloadTote</text>
+    <text x="944" y="404" class="node-note" text-anchor="middle">HTM → relay</text>
+  </g>
+  <g class="node backend" data-node="vtm-return">
+    <rect x="1072" y="336" width="160" height="80" rx="8"/>
+    <text x="1152" y="364" class="node-name" text-anchor="middle">VTM return</text>
+    <text x="1152" y="384" class="node-code" text-anchor="middle">VtmReturn</text>
+    <text x="1152" y="404" class="node-note" text-anchor="middle">Equipment backend</text>
+  </g>
+  <line x1="40" y1="460" x2="1240" y2="460" class="rule"/>
+  <path d="M 40 480 H 80" class="connector" marker-end="url(#tasks-storage-arrow)"/>
+  <text x="96" y="484" class="legend">Parent creates child</text>
+  <text x="408" y="484" class="legend">Repeated labels are separate task instances</text>
+  <text x="936" y="484" class="legend">Proposed decomposition</text>
+</svg>
+</div>
+<figcaption>Two separate composites are shown here. Grey nodes are existing equipment-specific backends. A VTM cycle does not become a fictitious generic robot operation; generic compositions call the storage capability. <code>HtmPickup</code>, <code>HtmDeliver</code>, and <code>HtmStore</code> provide implementation material for the extracted movement and transfer tasks.</figcaption>
+</figure>
+<div class="table-scroll">
+<table class="catalog">
+<thead>
+<tr>
+<th scope="col">Task or family</th>
+<th scope="col">What it owns / returns</th>
+<th scope="col">Status in this proposal</th>
+<th scope="col">Configured by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>FulfillOrder</code>
+<br>
+<code>PickOrder</code>
+</td>
+<td>Order identity, tote continuity, repeated pick results, completed-tote handoff.</td>
+<td>New compositions</td>
+<td>Source, pick area, dispatch policy</td>
+</tr>
+<tr>
+<td>
+<code>SupplyAndCollectTotes</code>
+</td>
+<td>One HTM assignment across delivery, mandatory continuation, collection, and release.</td>
+<td>New composition</td>
+<td>Dropoff, holding route, collection eligibility</td>
+</tr>
+<tr>
+<td>
+<code>SupplyTote</code>
+<br>
+<code>CollectTote</code>
+</td>
+<td>Delivery of the supplied tote; later acquisition of a returned tote. Different IDs are allowed.</td>
+<td>Rework loop actors into explicit chains</td>
+<td>Transfer endpoints and continuation</td>
+</tr>
+<tr>
+<td>
+<code>PickupTote</code>
+</td>
+<td>Select or inherit a robot, approach the source if needed, and load the tote. Return the loaded robot and ready time.</td>
+<td>Extract existing HTM behavior</td>
+<td>Tote source and destination</td>
+</tr>
+<tr>
+<td>
+<code>Navigate</code>
+</td>
+<td>A committed route, arrival pose, ready time, and destination hold. Carrying state stays intact.</td>
+<td>Extract shared motion task</td>
+<td>Robot capability, graph, load, endpoint</td>
+</tr>
+<tr>
+<td>
+<code>LoadTote</code>
+<br>
+<code>UnloadTote</code>
+</td>
+<td>Load a tote onto the robot or unload it to a relay, conveyor, or fixture. Both are explicit custody transfers.</td>
+<td>Extract load/unload subtasks</td>
+<td>Robot, relay, conveyor, or fixture endpoints</td>
+</tr>
+<tr>
+<td>
+<code>TransportTote</code>
+</td>
+<td>Placement at a requested endpoint, using the supplied transport capability; return its held presence.</td>
+<td>Adapt tote_task destination contract</td>
+<td>Robot, conveyor, or fixed presentation</td>
+</tr>
+<tr>
+<td>
+<code>ConveyorMove</code>
+</td>
+<td>A tote’s conveyor movement request, implemented by a shared physical schedule that accounts for every affected tote.</td>
+<td>Adapt conveyor_move_task vocabulary</td>
+<td>Belt topology, transfer mechanisms, occupancy</td>
+</tr>
+<tr>
+<td>
+<code>TransferItems</code>
+</td>
+<td>Item movement between source and destination totes during an accepted operator interval.</td>
+<td>Extract from <code>Presentation(Pick)</code>
+</td>
+<td>Tote pair, SKU, quantity, operator</td>
+</tr>
+<tr>
+<td>
+<code>AdvanceQueue</code>
+</td>
+<td>Robot custody through finite queue progression; move children and signal-driven waits.</td>
+<td>New reusable composition</td>
+<td>Directed queue, holding locations, exit condition</td>
+</tr>
+<tr>
+<td>
+<code>VtmForward</code>
+<br>
+<code>VtmReturn</code>
+</td>
+<td>Existing storage-equipment cycles and relay handoffs.</td>
+<td>Reuse first</td>
+<td>Storage and relay capabilities</td>
+</tr>
+<tr>
+<td>
+<code>DispatchTote</code>
+</td>
+<td>Route a completed tote to its destination, then transfer/extract and release resources.</td>
+<td>Reuse buffer / extraction behavior</td>
+<td>Exit destination and handling operation</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="mini">Names describe responsibilities, not approved public Rust APIs. Extract only where the responsibility is real; do not require a pass-through wrapper around a single leaf. Reuse comes from explicit inputs and injected capabilities, not a new machine-type enum or a generic workflow language.</p>
+</section>
+<section id="terminology">
+<h2>Use Butler’s vocabulary where the responsibilities match</h2>
+<p class="meta">Butler develop <code>7064a99964</code> · Rechecked after the September 7 pull</p>
+<p>Butler’s fulfillment code uses <code>carrier</code> for types including <code>tote</code> and <code>packing_box</code>. Its material-handling tasks use <strong>tote</strong>, <strong>load/unload</strong>, <strong>transport</strong>, <strong>presentation point</strong>, and <strong>waiting block</strong>. These diagrams use that concrete vocabulary. A tote is the container; the HTM is the robot carrying it. PPS means pick/put station.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th scope="col">Proposed simulator term</th>
+<th scope="col">Butler reference</th>
+<th scope="col">Scope of the alignment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>TransportTote</code>
+</td>
+<td>
+<code>tote_task</code>; robot legs in <code>tote_move_task</code> and <code>relay_pps_task</code>
+</td>
+<td>Transport a named tote to a configured destination. Robot, conveyor, and already-present cases are capability bindings. The former “position” and “transport” names now share this family.</td>
+</tr>
+<tr>
+<td>
+<code>Navigate</code>
+</td>
+<td>
+<code>goto_barcode</code>, <code>goto_pps_destination</code>
+</td>
+<td>A movement subtask. Butler’s <code>bot_transport_task</code> has a broader assignment lifecycle and is not the equivalent of a single route.</td>
+</tr>
+<tr>
+<td>
+<code>LoadTote</code> / <code>UnloadTote</code>
+</td>
+<td>
+<code>load_tote</code> / <code>unload_tote</code>, including HTM variants</td>
+<td>Direction is from the robot’s perspective: load onto it, unload from it. No load/unload occurs when an order HTM merely presents its tote.</td>
+</tr>
+<tr>
+<td>
+<code>ConveyorMove</code>
+</td>
+<td>
+<code>conveyor_move_task</code>: <code>entry_to_pick</code>, <code>pick_to_pick</code>, <code>pick_to_exit</code>
+</td>
+<td>Use Butler’s movement intents. The simulator must additionally model the shared belt and side-transfer timing behind them.</td>
+</tr>
+<tr>
+<td>
+<code>PresentTotes</code>
+</td>
+<td>Source-arrival and destination-agent readiness in the pick workflow</td>
+<td>A new coordinating parent: bring the inventory tote and order tote to their matching presentation points. The names above are not a claim that Butler has a “present pair” task.</td>
+</tr>
+<tr>
+<td>
+<code>MoveToWaitingBlock</code> / <code>AdvanceQueue</code>
+</td>
+<td>
+<code>waiting_block</code>, <code>sequenced_queue</code>, <code>waiting_for_sequence</code>
+</td>
+<td>Use the location and sequencing nouns. Queue service states remain distinct from independently scheduled movement tasks.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+<code>FulfillOrder</code>, <code>PickOrder</code>, <code>AcquireTote</code>, <code>PickupTote</code>, <code>RetrieveTote</code>, <code>SupplyTote</code>, <code>CollectTote</code>, <code>SupplyAndCollectTotes</code>, <code>DispatchTote</code>, <code>PresentTotes</code>, and <code>ClearPresentations</code> are descriptive simulator compositions, not verbatim Butler task classes. <code>TransferItems</code> remains the generic item-transfer primitive; Butler’s operator-confirmation workflow covers more UI and validation behavior. Existing <code>VtmForward</code> and <code>VtmReturn</code> keep their simulator names.</p>
+<p>Names do not import Butler’s full control flow. Its post-conveyor-drop code can complete the delivery task and leave a robot unassigned. Daniel’s no-early-exit requirement still governs this simulation: the proposed parent retains the HTM through collection. The task-model-v2 scheduler and the reviewed physical topology remain the basis of the design.</p>
+<p>
+<a href="butler-terminology.md">Detailed nomenclature mapping, source lines, and Butler revision</a>
+</p>
+</section>
+<section id="coordination">
+<h2>Schedule one compatible pick window</h2>
+<p>Parentage does not make resources ready. Before committing a pick, the resource services must provide a compatible bounded plan for these conditions:</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th scope="col">Claim</th>
+<th scope="col">Required condition</th>
+<th scope="col">Held until</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inventory presentation</td>
+<td>The chosen inventory tote is at the selected position with the requested items available.</td>
+<td>The tote clears, or a subsequent accepted pick retains its occupancy.</td>
+</tr>
+<tr>
+<td>Order presentation</td>
+<td>The correct order tote and its HTM are present on the matching side.</td>
+<td>The HTM completes its curved departure to the next safe hold.</td>
+</tr>
+<tr>
+<td>Operator</td>
+<td>The shared operator is free for the transfer interval; both tote placements are ready.</td>
+<td>The committed item-transfer interval ends.</td>
+</tr>
+<tr>
+<td>Clearance</td>
+<td>The plan can continue to safe holding locations after the pick.</td>
+<td>Those movements finish and successor holds take ownership.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre aria-label="Pick timing relationship">pick_start = max(inventory_ready, order_ready, operator_ready)
+pick_end   = pick_start + transfer_duration
+
+The accepted plan must keep both presentations occupied through pick_end.
+The operator frees at pick_end; each tote hold frees when that tote clears.</pre>
+<div class="two-col">
+<div>
+<h3>V2 provides the scheduling contract</h3>
+<p>Tasks propose revocable candidacies, acceptance converts them into held reservations, and scheduling consumes them. Parents create children through <code>SchedCtx::add_task</code> and pass typed handoffs. The scheduler remains unaware of EasyLoop.</p>
+<p>A child’s returned schedule may describe future work. Successors must use its ready time and reservation; awaiting the Rust future does not mean the settled simulation clock has reached that time.</p>
+</div>
+<div>
+<h3>Wait without blocking unrelated work</h3>
+<p>Do not publish an inadmissible earliest proposal whose prerequisite requires another task to be accepted. That can pin the trailing global barrier. Wait locally on resource version changes, re-quote, and publish a startable candidacy.</p>
+<p>A bad route or impossible transfer is an error. An occupied but eventually available resource is a wait. Cancellation must drop tentative claims and preserve or reconcile already committed custody.</p>
+</div>
+</div>
+<h3>The conveyor owns one shared physical schedule</h3>
+<p>At deposit, a conveyor-held tote becomes available to compatible pick proposals. Its capacity claim lasts through presentation and return until collection. Tote position requests use the shared conveyor service: a main-belt movement affects all riders, and side transfers can reorder totes only where the declared mechanism allows it. Independent per-tote timers are insufficient.</p>
+<p>Initially, model meaningful moves, stops, side transfers, and occupancy. Detailed roller physics can wait. Later tote animation reads these committed events and their effective times, including pauses for picking; it must not invent its own route or timing.</p>
+</section>
+<section id="configuration">
+<h2>EasyLoop supplies the bindings</h2>
+<p>The reusable vocabulary stays the same. An EasyLoop composition supplies the capabilities and policies below. This table is a design contract, <strong>not new world-protocol syntax</strong>.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th scope="col">Binding</th>
+<th scope="col">EasyLoop configuration</th>
+<th scope="col">Reusable elsewhere</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tote source</td>
+<td>Inventory via VTM and relay. Empty order totes and trays use typed storage retrieval; cartons use <code>InductContainer</code> at a declared induction cell.</td>
+<td>Storage, induction, or already supplied totes</td>
+</tr>
+<tr>
+<td>Transfer endpoints</td>
+<td>Inventory dropoff and collection ports</td>
+<td>Any compatible holder-to-holder handoff</td>
+</tr>
+<tr>
+<td>After deposit</td>
+<td>Retain the empty HTM; traverse the under-conveyor queue with no early exit.</td>
+<td>Destination-specific continuation policy</td>
+</tr>
+<tr>
+<td>Collection</td>
+<td>Choose an eligible returned inventory tote; no same-tote requirement.</td>
+<td>Late-bound pickup from an endpoint</td>
+</tr>
+<tr>
+<td>Conveyor capacity</td>
+<td>Eight total inventory totes, including presentation and collection-ready totes</td>
+<td>Finite shared transport capacity</td>
+</tr>
+<tr>
+<td>Presentation pair</td>
+<td>Two choices of corresponding inventory chute and order-HTM presentation</td>
+<td>Compatible source/destination tote positions</td>
+</tr>
+<tr>
+<td>Operator</td>
+<td>One operator resource shared by both sides, following Daniel’s current description</td>
+<td>Operator/resource grouping supplied by the composition</td>
+</tr>
+<tr>
+<td>Waiting and repetition</td>
+<td>Two independent configurable waiting blocks, currently six cells each. Each block serves one fixed order presentation. Orders return within that block for further picks; they cannot switch sides.</td>
+<td>Waiting-location set and next-operation policy</td>
+</tr>
+<tr>
+<td>Motion</td>
+<td>Declared links, including curved U-turns and 135°/45° presentation headings</td>
+<td>Path geometry below the task vocabulary</td>
+</tr>
+<tr>
+<td>Order destination</td>
+<td>DS uses the buffer with immediate retrieval eligibility by default; SC/3P go directly to extraction. Reusable containers return empty to storage; cartons leave the system.</td>
+<td>Tote dispatch and terminal handling</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For a fixed-fixture pick area, <code>TransportTote</code> can consume an existing fixture presence instead of moving an HTM or belt. The same item-transfer task still names both totes and its work resource. Cencora now selects its own JSON root set. Shared task changes still require behavioral parity against the pre-Walmart baseline; separating the task lists does not establish that parity.</p>
+</section>
+<section id="compositions">
+<h2>Compositions select roots; tasks resolve shared state</h2>
+<p>Named compositions now live in a JSON-only folder: <a href="../../sim/dessim/compositions/cencora.json">cencora.json</a> and <a href="../../sim/dessim/compositions/walmart.json">walmart.json</a>. A scenario selects <code>"composition": "walmart"</code>, or supplies an inline <code>{"tasks": [...]}</code> definition. The default is <code>cencora</code>; Walmart specs select their own composition explicitly.</p>
+<p>The hardcoded <code>fn cencora</code> and <code>ModelState</code> are removed. Cencora selects its pick, putaway and return families. Walmart selects <code>FulfillOrders</code>; its children perform physical conveyor handling, picking and outbound dispatch.</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th scope="col">Responsibility</th><th scope="col">Current mechanism</th></tr></thead>
+<tbody>
+<tr><td>Declare the roots</td><td>Named JSON or an inline scenario task list. <code>#[task]</code> registers root types by struct name.</td></tr>
+<tr><td>Supply configuration</td><td>Optional root <code>config</code> overrides <code>task_defaults</code>; omitted parameters inherit existing task/scenario defaults.</td></tr>
+<tr><td>Create shared managers</td><td>Synchronous <code>Task::create</code> obtains typed handles with <code>ctx.state::&lt;Manager&gt;()?</code>. One instance per type per simulation run.</td></tr>
+<tr><td>Spawn later work</td><td>Unregistered children use <code>new(...)</code> and <code>add_task</code>. Later tasks can resolve managers that were never needed at startup.</td></tr>
+<tr><td>Wait for setup</td><td><code>InitializeFleet</code>, <code>FillInventory</code> and <code>LoadOrders</code> are finite roots. An <code>after</code> dependency delays construction until setup completes.</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>ConfigureTtp</code> is removed. Equipment properties remain with the map/settings; managers have no general configuration section. Factories wire dependencies synchronously and do not perform simulated setup. Async initialization, if later needed, belongs in background work with explicit readiness.</p>
+<p><a href="../compositions.md">Composition format, manager lifecycle and validation</a></p>
+</section>
+<section id="implementation">
+<h2>Working sequence before throughput and animation</h2>
+<p><code>FillInventory</code> preloads the full on-hand snapshot before orders run. Automatic placement balances total units among inventory totes, preserving all SKU quantities and allowing mixed contents. The full Walmart map receives 1,397,589 source units plus an explicit, approved 43-unit demo top-up in 162,060 totes (8 or 9 units each); limiting order count does not reduce that stock. Vinay’s tote-addressed mock-put file will supply actual placement later. See <a href="automatic-preload-2026-09-09.md">preload details</a>.</p>
+<p>The implementation transfers real stock from the inventory tote into the order’s tote, tray or carton at the end of the paired pick dwell. Both containers must remain correctly presented throughout that dwell, and the shared operator cannot serve overlapping picks. The order HTM can circulate and change presentation sides between picks.</p>
+<p>An order returns to the waiting block only when it still needs another pick. After its final pick, its existing HTM continues toward buffer storage or extraction from the presentation. Its waiting-space allocation becomes reusable after that pick and physical clearance of its last waiting-cell reservation; downstream work retains its own robot and cell reservations. Outbound congestion can still delay physical departure, but a completed order is not deliberately parked in the sequencing block.</p>
+<p>The inventory HTM unloads its tote, traverses every cell of the one-way queue, and stays retained until a returning tote is collected. Conveyor admission and collection hold physical capacity through their actual handoff times. The HTM at the queue head takes the earliest ready returning tote. This can differ from its original delivery: presentation sequencing can change the tote return order, while HTMs cannot overtake in their queue.</p>
+<p>Curved robot links use the same committed geometry and kinematic timing in Ghost and collision modes. Conveyor totes now animate along recorded inbound and return intervals, including their contents and inclination. Detailed main-belt sequencing remains future work: the current flow uses declared transit timing and does not yet model every stop and lateral shift of a populated main belt.</p>
+<p class="mini">Geometry remains at the reviewed checkpoint. The broader world-protocol format migration and unresolved worldlens decisions remain parked. Separating Cencora's roots and passing focused regressions does not establish full historical Cencora parity.</p>
+</section>
+<section id="sources">
+<h2>Source trail</h2>
+<p>Read against the current code, not only the older design documents. The task-model-v2 scheduler came from merge <code>3ec77ec677</code> (#456). Live master was verified at <code>87ba106fd</code> on 7 September; its only later change is the cencora VTM-isolation fixture fix (#459), not yet incorporated here.</p>
+<ul class="sources">
+<li>
+<a href="../../sim/dessim/src/scheduler/task/mod.rs">Task API and child completion</a>
+</li>
+<li>
+<a href="../../sim/dessim/src/scheduler/task/proposal.rs">Proposal and acceptance contract</a>
+</li>
+<li>
+<a href="../../native-modules/src/migration/flows/ttp/handoff.rs">Existing typed handoffs</a>
+</li>
+<li>
+<a href="../../native-modules/src/migration/flows/fulfillment/orders.rs">Walmart order hierarchy</a>
+</li>
+<li>
+<a href="../../native-modules/src/migration/flows/fulfillment/transfer_items.rs">Physical paired item transfer</a>
+</li>
+<li>
+<a href="../../native-modules/src/migration/flows/fulfillment/tote_handoff.rs">Tote handoffs and extraction</a>
+</li>
+<li>
+<a href="../../native-modules/src/migration/flows/fulfillment/induct_container.rs">Physical container induction and pickup</a>
+</li>
+<li>
+<a href="../../native-modules/tests/fulfillment_orchestration.rs">Mixed-container orchestration checks</a>
+</li>
+<li>
+<a href="../../sim/dessim/src/model/conveyance/mod.rs">Conveyor capacity, presentation and custody</a>
+</li>
+<li>
+<a href="../../native-modules/src/migration/flows/transport/navigate.rs">Retained HTM movement</a>
+</li>
+<li>
+<a href="../../native-modules/tests/walmart_flow.rs">Physical flow checks on minimal and full maps</a>
+</li>
+<li>
+<a href="../../native-modules/src/migration/flows/ttp/task/htm_deliver.rs">Delivery’s barrier/wait constraint</a>
+</li>
+<li>
+<a href="../../native-modules/src/migration/flows/ttp/task/return_tote.rs">Existing ReturnTote composition</a>
+</li>
+<li>
+<a href="../../specs/easyloop/DESIGN.md">Earlier EasyLoop design — historical</a>
+</li>
+</ul>
+<p class="mini">Daniel’s rulings through September 12 govern the layout: two independent waiting blocks replace the earlier shared block. One operator and one inventory conveyor serve both presentations. Retained empty HTMs, conveyor capacity, and angled order presentation follow the earlier rulings.</p>
+</section>
+<footer>
+<p>Self-contained HTML and inline SVG. No JavaScript, remote assets, or runtime dependency. Styled with Claude’s diagram-design skill; offline typography uses Georgia, Arial, and Menlo/Consolas when Instrument Serif and Geist are unavailable. Bounded trees keep parentage readable; Butler terminology, configuration, and timing constraints remain in accompanying text.</p>
+<p>Updated 7 September 2026. The first three trees describe implemented tasks; the five further-decomposition trees remain proposals. Detailed belt animation is not implemented. <a href="questions.html">Site questions and provisional physical choices</a> remain separate from the implementation record.</p>
+</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crucible: the websocket server and the browser UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-paper:       #f5f5f5;
+      --color-paper-2:     #ececec;
+      --color-ink:         #2d3142;
+      --color-muted:       #4f5d75;
+      --color-soft:        #7a8399;
+      --color-rule:        rgba(45,49,66,0.12);
+      --color-rule-solid:  rgba(79,93,117,0.25);
+      --color-accent:      #eb6c36;
+      --color-accent-tint: rgba(235,108,54,0.08);
+      --color-link:        #2e5aa8;
+      --font-sans:   'Geist', system-ui, sans-serif;
+      --font-serif:  'Instrument Serif', 'Times New Roman', serif;
+      --font-mono:   'Geist Mono', ui-monospace, Menlo, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      min-height: 100vh;
+      padding: 3rem 2rem;
+      color: var(--color-ink);
+    }
+
+    .container { max-width: 1120px; margin: 0 auto; }
+
+    .header { margin-bottom: 2.5rem; }
+    .header-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.75rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--color-ink);
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--color-muted);
+      max-width: 60ch;
+    }
+    .status {
+      margin-top: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--color-soft);
+    }
+
+    section { margin-top: 3rem; }
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-soft);
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-family: var(--font-sans);
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.5rem;
+    }
+    p, li { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink); }
+    p { max-width: 72ch; margin-bottom: 0.875rem; }
+    ul, ol { max-width: 72ch; margin: 0 0 1rem 1.25rem; }
+    li { margin-bottom: 0.375rem; }
+    li::marker { color: rgba(45,49,66,0.35); }
+    strong { font-weight: 600; }
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.8125em;
+      background: rgba(45,49,66,0.05);
+      padding: 0 0.3em;
+      border-radius: 3px;
+    }
+    .aside {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.0625rem;
+      line-height: 1.5;
+      color: var(--color-ink);
+      max-width: 60ch;
+      margin: 1rem 0 1.25rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--color-accent);
+    }
+
+    .diagram-container { overflow-x: auto; margin: 1.25rem 0 0.5rem; }
+    .diagram-container svg { width: 100%; min-width: 880px; display: block; }
+    figcaption {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--color-soft);
+      margin-bottom: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.75rem 0 1.5rem;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+    }
+    th {
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      text-align: left;
+      padding: 0.5rem 0.75rem 0.5rem 0;
+      border-bottom: 1px solid var(--color-rule-solid);
+      vertical-align: bottom;
+    }
+    td {
+      padding: 0.5rem 0.75rem 0.5rem 0;
+      border-bottom: 1px solid var(--color-rule);
+      vertical-align: top;
+      color: var(--color-ink);
+    }
+    td:first-child { font-weight: 600; }
+    td.wrap { white-space: normal; }
+    .table-scroll { overflow-x: auto; }
+
+    .tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.1rem 0.4rem;
+      border-radius: 2px;
+      border: 1px solid rgba(45,49,66,0.40);
+      color: var(--color-ink);
+      white-space: nowrap;
+    }
+    .tag.open { border-color: var(--color-accent); color: var(--color-accent); }
+    .tag.done { border-color: rgba(79,93,117,0.50); color: var(--color-muted); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 0.9fr;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+    @media (max-width: 800px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      background: #ffffff;
+      border-radius: 6px;
+      border: 1px solid var(--color-rule);
+      padding: 1.25rem;
+    }
+    .card .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-soft);
+      margin-bottom: 0.5rem;
+    }
+    .card-header {
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-bottom: 0.75rem; padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(45,49,66,0.08);
+    }
+    .card-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .card-dot.ink { background: var(--color-ink); }
+    .card-dot.muted { background: var(--color-muted); }
+    .card-dot.coral { background: var(--color-accent); }
+    .card h3 { margin: 0; font-size: 0.875rem; }
+    .card ul { list-style: none; margin: 0; }
+    .card li { font-size: 0.8125rem; color: var(--color-muted); padding-left: 0.875rem; position: relative; }
+    .card li::before { content: '—'; position: absolute; left: 0; color: rgba(45,49,66,0.25); font-size: 0.75rem; }
+
+    .footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(45,49,66,0.10);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--color-soft);
+      line-height: 1.7;
+    }
+    .footer ul { list-style: none; margin: 0.5rem 0 0; }
+    .footer li { font-size: 0.72rem; color: var(--color-soft); font-family: var(--font-mono); }
+
+    @media print {
+      body { padding: 1rem; }
+      .diagram-container svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <p class="header-eyebrow">Design document · branch <code>agent/worldview</code> · draft PR #492 · 2026-09-18</p>
+    <h1>Crucible: the websocket server and the browser UI</h1>
+    <p class="subtitle">One server process runs simulations, records each as a <code>.worldview</code>, and serves a recording to browsers once the attempt that produced it has ended. The browser draws it with the same Rust renderer desvis uses, compiled to WebAssembly. This document describes the server, the protocol between it and a browser, the UI, and the rendering code the two viewers share.</p>
+    <p class="status">Status: built on this branch, in the same pull request as the format. A run is submitted, queued, simulated inside the server, recorded, stored, and opened in a browser at any instant once its attempt has ended — finished, cancelled, or failed with something recorded. <strong>Watching a run while it executes is not here</strong>; section 06 says what it waits on. The split of the server into a broker and a fleet of runner processes, prototyped on <code>agent/crucible-streaming</code>, is out of scope and left to a later initiative; a run executes inside the server process, and PostgreSQL is the only container development needs.</p>
+  </header>
+
+  <section id="shape">
+    <p class="section-eyebrow">00 · the shape</p>
+    <h2>One process, three jobs: run, record, serve</h2>
+    <p>Crucible was a single-process server, <code>studio/runs</code>, that ran one simulation and pushed its output to a browser over a websocket. This phase keeps that shape and changes what flows through it. Every run the server executes ends in a <code>.worldview</code> recording (the format is described in <code>docs/designs/worldview-streaming.html</code>), written from the finished run model, uploaded to storage, and served from there to every browser that asks for it. A browser opens a run at whatever instant it asks for, the first time or after a reload, and the server reads that instant out of the recording rather than replaying anything.</p>
+    <ul>
+      <li><strong>Run.</strong> A submitted specification becomes a run; the simulator executes it on a worker thread inside the server, up to a configured number of runs at once. There is one runner mode, in-process. Dispatching runs to separate runner processes is not part of this phase.</li>
+      <li><strong>Record.</strong> When the run ends, its observer's collected state is written as one recording — by the same writer, from the same model, as when headless desvis runs that spec, so the two files hold the same run. The recording is uploaded whole to storage (a local folder in development, a Google Cloud Storage bucket in deployment, behind one interface) and the local copy dropped. The writer never sends to a browser, so no browser can slow the simulator or grow a queue in the server's memory.</li>
+      <li><strong>Serve.</strong> Browsers speak one protocol over one websocket: submit, list, status, attach at an instant, detach, cancel, and a request for a metric's time series. Submitting a run returns its id and nothing else; watching is a separate <code>attach</code>, at 0 for the start or at N for a scrub or a re-attach, which reads the recording forward from that instant. Frames travel as binary messages; everything else is JSON text.</li>
+    </ul>
+    <p>The run registry, which runs exist, their attempts and outcomes, and where their recordings are, lives in PostgreSQL, as it does in the prototype. It is the only external service, and <code>dev.sh</code> starts it in a container.</p>
+    <figure>
+      <div class="diagram-container">
+<svg viewBox="0 0 940 508" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cr-arch-title cr-arch-desc">
+  <title id="cr-arch-title">Crucible: one server process runs, records and serves</title>
+  <desc id="cr-arch-desc">Architecture: one server process runs simulations on worker threads; when a run ends its writer produces the whole recording and uploads it to storage; each browser attachment has its own reader, which fetches that recording onto this machine and seeks into it; the run registry lives in PostgreSQL.</desc>
+  <defs>
+    <marker id="cr-arch-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+    <marker id="cr-arch-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+    <marker id="cr-arch-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#f5f5f5"/>
+  <rect x="300" y="48" width="340" height="372" rx="8" fill="#ececec" stroke="rgba(79,93,117,0.25)" stroke-width="1"/>
+  <text x="312" y="64" fill="#4f5d75" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start" letter-spacing="0.12em">APPS/CRUCIBLE · ONE SERVER PROCESS</text>
+  <line x1="172" y1="352" x2="372" y2="352" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#cr-arch-arrow-link)"/>
+  <rect x="214" y="331" width="124" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="276" y="340" fill="#2e5aa8" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">ATTACH, THEN FRAMES</text>
+  <line x1="460" y1="152" x2="460" y2="196" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-arch-arrow)"/>
+  <rect x="472" y="169" width="148" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="476" y="178" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start" letter-spacing="0.06em">THE FINISHED RUN</text>
+  <path d="M 540,220 H 672 Q 680,220 680,212 V 108 Q 680,100 688,100 H 720" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-arch-arrow)"/>
+  <rect x="586" y="199" width="44" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="608" y="208" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">WRITE ONCE</text>
+  <path d="M 540,252 H 652 Q 660,252 660,244 V 220 Q 660,212 668,212 H 720" fill="none" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#cr-arch-arrow)"/>
+  <rect x="532" y="259" width="128" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="596" y="268" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">UPLOAD AT THE END</text>
+  <path d="M 720,124 H 712 Q 704,124 704,132 V 344 Q 704,352 696,352 H 548" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-arch-arrow)"/>
+  <rect x="562" y="331" width="124" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="624" y="340" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">ONE READER EACH</text>
+  <line x1="640" y1="408" x2="720" y2="408" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-arch-arrow)"/>
+  <rect x="652" y="387" width="56" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="680" y="396" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">REGISTRY</text>
+  <rect x="380" y="80" width="160" height="72" rx="6" fill="#f5f5f5"/>
+  <rect x="380" y="80" width="160" height="72" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <rect x="388" y="86" width="72" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="424" y="95" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">IN-PROCESS</text>
+  <text x="460" y="114" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">simulation run</text>
+  <text x="460" y="130" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">dessim on a worker thread</text>
+  <rect x="380" y="196" width="160" height="72" rx="6" fill="#f5f5f5"/>
+  <rect x="380" y="196" width="160" height="72" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+  <rect x="388" y="202" width="80" height="12" rx="2" fill="transparent" stroke="#eb6c36" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="428" y="211" fill="#eb6c36" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">ONE PER RUN</text>
+  <text x="460" y="230" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">the run&#8217;s writer</text>
+  <text x="460" y="246" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">writes · indexes · uploads</text>
+  <rect x="372" y="316" width="176" height="72" rx="6" fill="#f5f5f5"/>
+  <rect x="372" y="316" width="176" height="72" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <rect x="380" y="322" width="104" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="432" y="331" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">ONE PER BROWSER</text>
+  <text x="460" y="350" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">attachment readers</text>
+  <text x="460" y="366" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">seek to a keyframe, then send on</text>
+  <rect x="20" y="316" width="152" height="72" rx="6" fill="#f5f5f5"/>
+  <rect x="20" y="316" width="152" height="72" rx="6" fill="rgba(79,93,117,0.10)" stroke="#7a8399" stroke-width="1"/>
+  <rect x="28" y="322" width="48" height="12" rx="2" fill="transparent" stroke="#4f5d75" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="52" y="331" fill="#4f5d75" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">CLIENT</text>
+  <text x="96" y="350" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">browser</text>
+  <text x="96" y="366" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">React shell + wasm viewer</text>
+  <rect x="720" y="64" width="200" height="72" rx="6" fill="#f5f5f5"/>
+  <rect x="720" y="64" width="200" height="72" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+  <rect x="728" y="70" width="92" height="12" rx="2" fill="transparent" stroke="#4f5d75" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="774" y="79" fill="#4f5d75" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">ON THIS MACHINE</text>
+  <text x="820" y="98" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">local temporary folder</text>
+  <text x="820" y="114" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">recordings fetched to be read</text>
+  <rect x="720" y="176" width="200" height="72" rx="6" fill="#f5f5f5"/>
+  <rect x="720" y="176" width="200" height="72" rx="6" fill="rgba(45,49,66,0.03)" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+  <rect x="728" y="182" width="60" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.30)" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="758" y="191" fill="rgba(45,49,66,0.30)" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">RUNSTORE</text>
+  <text x="820" y="210" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">storage</text>
+  <text x="820" y="226" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">local folder or GCS bucket</text>
+  <rect x="720" y="372" width="200" height="72" rx="6" fill="#f5f5f5"/>
+  <rect x="720" y="372" width="200" height="72" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+  <rect x="728" y="378" width="60" height="12" rx="2" fill="transparent" stroke="#4f5d75" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="758" y="387" fill="#4f5d75" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">REGISTRY</text>
+  <text x="820" y="406" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">PostgreSQL</text>
+  <text x="820" y="422" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">runs · attempts · outcomes</text>
+  <line x1="20" y1="464" x2="920" y2="464" stroke="rgba(45,49,66,0.12)" stroke-width="0.8"/>
+  <text x="20" y="480" fill="#4f5d75" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start" letter-spacing="0.14em">LEGEND</text>
+  <line x1="96" y1="476" x2="116" y2="476" stroke="#4f5d75" stroke-width="1.2"/>
+  <text x="124" y="480" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">in-process, every frame</text>
+  <line x1="308" y1="476" x2="328" y2="476" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="336" y="480" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">once per run, or on demand</text>
+  <line x1="556" y1="476" x2="576" y2="476" stroke="#2e5aa8" stroke-width="1.2"/>
+  <text x="584" y="480" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start">network: JSON control + binary frames</text>
+</svg>
+      </div>
+      <figcaption>One server process. Runs execute on worker threads; when one ends its writer produces the whole recording and uploads it to storage, and never sends to a browser; each attachment is a reader of its own over the copy on this machine, so a slow browser slows only itself. The registry is PostgreSQL.</figcaption>
+    </figure>
+  </section>
+
+  <section id="server">
+    <p class="section-eyebrow">01 · the server</p>
+    <h2>Runs execute inside it; a recording leaves it once, at the end</h2>
+    <p>A <strong>submit</strong> carries the run's specification: the world document, the scenario and its data, the settings. The server checks the shape, stores the specification, creates the run and its first attempt in the registry, and queues the run; a worker thread picks it up when one is free and simulates it. When the run ends, the observer's collected state becomes the recording, written whole by the format's writer and uploaded to storage as the attempt's one object. Every browser attachment is then a reader of that recording: it seeks to the keyframe at or before the asked instant, sends what it finds, and walks the file forward from there, one delta per slice. A browser that reads slowly slows only its own reader; the server holds no per-browser queue beyond the websocket's own send buffer, and a browser that stops accepting frames for longer than the reader waits is dropped with <code>lagged</code>.</p>
+    <p>A run that ends in an orderly way — finished, cancelled by somebody, or stopped by the watchdog — is recorded from the model as it stands, so a cancelled run yields a shorter recording rather than a damaged one, and the recording carries the index block, the end block with the stop reason and the run's summary, and the trailer. The attempt's outcome and object key go to the registry. The other kind of ending is the server process itself dying mid-run: there is no recording to keep, because the file is written at the end, so at startup the server marks every attempt still marked <em>running</em> as <em>partial</em>, with nothing to open. A run whose simulator refused to continue is <em>failed</em>, with its reason, and is recorded not at all.</p>
+    <p>Every reader — a browser opening a run, a <code>series</code> reply, the floor compile, the <code>workbook</code> command on a downloaded file — reads that stored object. The first attachment to a run fetches the object onto the server's machine, into a temporary folder bounded by a configured size; later readers find the copy already there, and the runs nobody has read for longest are evicted whole.</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Concern</th><th>Where it lives</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Run registry: runs, attempts, outcomes, object keys</td><td>PostgreSQL</td><td>the only external service; migrations owned by the server</td></tr>
+        <tr><td>Specifications and recordings</td><td>storage (<code>runstore</code>: local folder or a bucket)</td><td>one object per recording, uploaded whole when the attempt ends</td></tr>
+        <tr><td>Recordings being read</td><td>a local temporary folder of the server</td><td>a stored recording is fetched here the first time anyone asks for it, with the floor compiled beside it; the folder is bounded by a configured size and swept at restart</td></tr>
+        <tr><td>Simulation execution</td><td>worker threads in the server process</td><td>a configured cap on concurrent runs; a submit beyond it queues</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="protocol">
+    <p class="section-eyebrow">02 · the protocol</p>
+    <h2>Text to ask, binary to receive</h2>
+    <p>The browser opens one websocket and holds one attachment at a time on it. Control messages are JSON objects tagged by <code>type</code>; frames are binary messages, each one frame of the recording as it stands in the file, so the same decoder reads the wire and the file.</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Browser sends</th><th>Server answers</th></tr></thead>
+      <tbody>
+        <tr><td><code>submit {spec}</code></td><td><code>submitted {run}</code>, before any work starts</td></tr>
+        <tr><td><code>list</code> · <code>status {run}</code></td><td><code>list {runs}</code> · <code>status {run, attempts, progress}</code></td></tr>
+        <tr><td><code>attach {run, from: ms | "live", sections}</code></td><td><code>attached {run, attempt, from_ms, live_edge_ms}</code>, then the stream, read from the recording by this attachment's own reader: the scenario block filtered for a browser, the index up to the keyframe, the keyframe at or before <em>from</em> with the asked sections, then each delta after it, then the recording's end frame followed by <code>ended {outcome}</code>. <code>"live"</code> means the last instant the recording holds. Submitting a run returns no stream; the browser attaches once there is a recording.</td></tr>
+        <tr><td><code>detach</code> · <code>cancel {run}</code></td><td>the stream stops · <code>cancelled</code>; the run stops where it is and is recorded from there</td></tr>
+        <tr><td><code>series {run, metrics, until}</code></td><td>a JSON reply with each metric's points from the run's start to <em>until</em>, one per slice, bucketed only when there are more slices than a chart can show; afterwards the browser extends the series from the scalars section of each delta it receives. Binary messages stay worldview frames only; requests carry an id so replies and an attachment share the socket.</td></tr>
+        <tr><td>—</td><td><code>lagged {resume_from_ms}</code>: the browser's socket stopped accepting frames for longer than the reader will wait, so the attachment was dropped; the browser re-attaches at that instant, discards the state it held, and receives a fresh keyframe</td></tr>
+      </tbody>
+    </table></div>
+    <p>Two things the server does on the browser's behalf. It <strong>filters</strong>: the scenario block a browser receives carries the world document, the id tables and every declaration made before the attach instant, but not the scenario's data files, and a keyframe or delta carries only the sections the attachment asked for, re-encoded with a shorter section table. And it <strong>compiles the floor</strong>: drawing needs each cell's centre, kind and size, which the world document states as entities and components that only the simulator's map compiler turns into a floor; rather than compile that in the browser, the server compiles the document once per run and includes the compact floor in the filtered scenario block. The browser still receives the world document itself, parsed in wasm by the world-protocol library, which is plain data and needs nothing of the simulator; that is what the entity inspector reads when it comes to the web UI. The recording itself is unchanged by either.</p>
+    <figure>
+      <div class="diagram-container">
+<svg viewBox="0 0 940 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cr-seq-title cr-seq-desc">
+  <title id="cr-seq-title">Attaching to a run at an instant, and what follows</title>
+  <desc id="cr-seq-desc">Sequence: the browser attaches at an instant; its reader answers, sends the filtered scenario, the index up to that instant and the keyframe at or before it; then it reads the file on and sends one delta per slice; a browser that falls behind is told to re-attach; the end block closes the stream.</desc>
+  <defs>
+    <marker id="cr-seq-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+    <marker id="cr-seq-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+    <marker id="cr-seq-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#f5f5f5"/>
+  <line x1="120" y1="80" x2="120" y2="616" stroke="rgba(79,93,117,0.25)" stroke-width="1"/>
+  <line x1="380" y1="80" x2="380" y2="616" stroke="rgba(79,93,117,0.25)" stroke-width="1"/>
+  <line x1="640" y1="80" x2="640" y2="616" stroke="rgba(79,93,117,0.25)" stroke-width="1"/>
+  <line x1="860" y1="80" x2="860" y2="616" stroke="rgba(79,93,117,0.25)" stroke-width="1"/>
+  <line x1="120" y1="112" x2="380" y2="112" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-seq-arrow)"/>
+  <rect x="162" y="91" width="176" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="250" y="100" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">ATTACH {RUN, FROM, SECTIONS}</text>
+  <line x1="380" y1="152" x2="120" y2="152" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-seq-arrow)"/>
+  <rect x="122" y="131" width="256" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="250" y="140" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">ATTACHED {ATTEMPT, FROM_MS, LIVE_EDGE_MS}</text>
+  <line x1="380" y1="192" x2="120" y2="192" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-seq-arrow)"/>
+  <rect x="150" y="171" width="200" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="250" y="180" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">SCENARIO, FILTERED FOR A BROWSER</text>
+  <line x1="380" y1="232" x2="120" y2="232" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-seq-arrow)"/>
+  <rect x="150" y="211" width="200" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="250" y="220" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">PARTIAL INDEX UP TO THE KEYFRAME</text>
+  <line x1="860" y1="272" x2="380" y2="272" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#cr-seq-arrow)"/>
+  <rect x="510" y="251" width="220" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="620" y="260" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">FETCHED ONCE; KEYFRAME ≤ FROM AT ITS OFFSET</text>
+  <line x1="380" y1="304" x2="120" y2="304" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#cr-seq-arrow-accent)"/>
+  <rect x="158" y="283" width="184" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="250" y="292" fill="#eb6c36" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">KEYFRAME, ASKED SECTIONS ONLY</text>
+  <rect x="72" y="336" width="828" height="168" rx="6" fill="none" stroke="rgba(79,93,117,0.25)" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="72" y="336" width="112" height="16" fill="#ececec" stroke="rgba(79,93,117,0.25)" stroke-width="0.8"/>
+  <text x="128" y="348" fill="#4f5d75" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.10em">EVERY SLICE</text>
+  <line x1="380" y1="376" x2="640" y2="376" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-seq-arrow)"/>
+  <rect x="442" y="355" width="136" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="510" y="364" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">SEEK TO THE NEXT FRAME</text>
+  <line x1="640" y1="412" x2="380" y2="412" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-seq-arrow)"/>
+  <rect x="410" y="391" width="200" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="510" y="400" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">THAT SLICE&#8217;S DELTA, IN BYTES</text>
+  <line x1="380" y1="484" x2="120" y2="484" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#cr-seq-arrow-accent)"/>
+  <rect x="168" y="463" width="164" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="250" y="472" fill="#eb6c36" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">DELTA, ASKED SECTIONS ONLY</text>
+  <line x1="380" y1="536" x2="120" y2="536" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#cr-seq-arrow)"/>
+  <rect x="90" y="515" width="320" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="250" y="524" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">LAGGED {RESUME_FROM_MS} · IF THE BROWSER FELL BEHIND</text>
+  <line x1="120" y1="572" x2="380" y2="572" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#cr-seq-arrow)"/>
+  <rect x="104" y="551" width="292" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="250" y="560" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">ATTACH {RUN, RESUME_FROM_MS} → A FRESH KEYFRAME</text>
+  <line x1="380" y1="608" x2="120" y2="608" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-seq-arrow)"/>
+  <rect x="206" y="587" width="88" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="250" y="596" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">END {OUTCOME}</text>
+  <rect x="48" y="32" width="144" height="40" rx="6" fill="#f5f5f5"/>
+  <rect x="48" y="32" width="144" height="40" rx="6" fill="rgba(79,93,117,0.10)" stroke="#7a8399" stroke-width="1"/>
+  <text x="120" y="54" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">browser</text>
+  <rect x="308" y="32" width="144" height="40" rx="6" fill="#f5f5f5"/>
+  <rect x="308" y="32" width="144" height="40" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+  <text x="380" y="54" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">server</text>
+  <rect x="568" y="32" width="144" height="40" rx="6" fill="#f5f5f5"/>
+  <rect x="568" y="32" width="144" height="40" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="640" y="54" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">the recording</text>
+  <rect x="788" y="32" width="144" height="40" rx="6" fill="#f5f5f5"/>
+  <rect x="788" y="32" width="144" height="40" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+  <text x="860" y="54" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">storage</text>
+</svg>
+      </div>
+      <figcaption>Attaching at an instant. The attachment's reader sends what the browser needs to start, then walks the recording forward and sends one delta per slice; a browser that falls behind is told where to resume and receives a fresh keyframe; later keyframes never travel.</figcaption>
+    </figure>
+  </section>
+
+  <section id="ui">
+    <p class="section-eyebrow">03 · the browser UI</p>
+    <h2>A React shell around a WebGPU viewer compiled from Rust</h2>
+    <p>The UI is the existing <code>crucible-ui</code> application: a React and TypeScript shell (Vite, uPlot for the charts) that owns the sidebar, the run list, the playback controls and the charts, and a canvas that belongs to the viewer. The viewer is Rust: <code>studio/viewer</code>, compiled to WebAssembly with wasm-bindgen and driving the canvas through wgpu's WebGPU backend, with WebGL as the fallback. The TypeScript wrapper <code>studio/viewer/js</code> loads the wasm module and exposes it to the shell.</p>
+    <p>The shell hands every binary message to the viewer unopened. The viewer decodes the frame with the <code>worldview</code> crate compiled to wasm, applies it to its state (a keyframe replaces, a delta advances), and draws the instant the shell's cursor points at, interpolating movers along their step lists inside a slice. Scrubbing within the frames the viewer holds costs nothing; scrubbing outside them makes the shell re-attach at the wanted instant, and the viewer rebuilds from the keyframe it is sent. The charts are the shell's: they show the series the server assembled from the recording's scalars sections.</p>
+    <p>What the browser needs from the wire is therefore small: the compiled floor, the playback section of one keyframe and of every delta after it, the scalars section for the charts, and the heat section when the heat overlay is on. The tables section never travels to a browser.</p>
+    <p><strong>The entity explorer</strong>, desvis's roll of every entity in the world document with its components and the cells it derived, keeps working in desvis unchanged: it reads the loaded world document, which a recording now carries in its scenario block. Bringing it to the browser later needs three things the filtered scenario block can carry: the world document's own bytes, parsed in the browser by the world-protocol library; the id tables; and the census the server computes once per run (which cells each entity derived, which entity each cell is), because that census comes from the simulator's map compiler. The shared renderer draws the hover outline; the shell draws the roll. Nothing in it needs the simulator in the browser.</p>
+  </section>
+
+  <section id="render">
+    <p class="section-eyebrow">04 · rendering, shared</p>
+    <h2>One renderer for desvis and the browser</h2>
+    <p>Today there are two wgpu renderers of the same floor: desvis's, under <code>desvis/src/gpu</code> (about 3,900 lines: camera, grid pipeline, cell layer, bots, totes, arrows, rack frames, and the meshes its inspection panels use), and the prototype browser viewer's, under <code>studio/viewer/src/gpu</code>, with five shader files of the same names. Every fix to one has had to be made twice, and the two have already drifted. This phase makes one crate of the drawing code and has both viewers use it.</p>
+    <p><strong>The crate is carved out of desvis, not written fresh.</strong> desvis's renderer is the more complete of the two and is the one the parity gate measures, so its drawing code moves: <code>desvis/src/gpu/camera/</code> (math, projection, input) and <code>desvis/src/gpu/renderer/</code> (the grid pipeline, the cell layer, instances, bots, totes, arrows, rack frames) and the five shaders become <code>worldview/worldview-render</code>, with their history preserved as a move. desvis keeps what is its own: the egui panels, tooltips and the picking and selection its inspectors run on, which call into the crate. The meshes go where the pipeline that draws them goes — the HTM body with the robot pipeline, the container shell with the container pipeline — so a robot and a tote look the same in both viewers. The prototype browser viewer's copy of the renderer is deleted, and the two things it did better than desvis, placing cells by their centres from a floor with no lattice and selecting the cell whose square holds the pointer, are folded into the crate before the copy goes. After the move, a change to how a bot or a tote is drawn is made once and both viewers get it.</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Crate</th><th>What it is</th><th>Depends on</th></tr></thead>
+      <tbody>
+        <tr><td><code>worldview</code></td><td>the recording format: frames, sections, index, writer and reader, and the playback state a keyframe plus deltas rebuild</td><td><code>desunits</code>, <code>desgraph</code>; zstd native, a pure-Rust zstd decoder on wasm</td></tr>
+        <tr><td><code>worldview-render</code> (new, carved out of desvis)</td><td>the shared wgpu renderer: camera (projection, orbit, pan, zoom, selection), the floor's cell layer, bots, totes, arrows, rack frames, the heat tint and the reserved-cell overlay, the shaders, and the instance buffers; it takes a wgpu device, queue and surface format and a playback state, and knows nothing of egui or of the DOM</td><td><code>worldview</code>, <code>desgraph</code>, <code>desunits</code>, <code>wgpu</code> 23 (WGSL only; each viewer picks its backends), <code>bytemuck</code>, <code>rustc-hash</code>; <code>naga</code> in tests for shader validation, and <code>image</code> in desvis's GPU preview test</td></tr>
+        <tr><td><code>desvis</code></td><td>the desktop viewer: eframe/egui panels around a <code>worldview-render</code> viewport, plus its inspection meshes</td><td><code>worldview-render</code>, <code>workbook</code>, <code>dessim</code>, eframe 0.30 with the wgpu backend, egui_plot</td></tr>
+        <tr><td><code>studio/viewer</code></td><td>the browser viewer: the wasm-bindgen surface over <code>worldview-render</code>: a canvas, pointer and wheel input, <code>push_frame(bytes)</code>, the cursor</td><td><code>worldview-render</code>, wasm-bindgen, web-sys, js-sys; wgpu with the <code>webgpu</code> and <code>webgl</code> features</td></tr>
+        <tr><td><code>studio/viewer/js</code></td><td>the TypeScript wrapper that loads the wasm module and types its interface</td><td>the wasm build of <code>studio/viewer</code></td></tr>
+        <tr><td><code>crucible-ui</code></td><td>the React shell</td><td><code>studio/viewer/js</code>, React 19, Vite, uPlot, TypeScript</td></tr>
+        <tr><td><code>studio/runs</code></td><td>the server: axum, the websocket protocol, the frame sink and writer, the registry, in-process runs</td><td><code>worldview</code>, <code>dessim</code>, <code>runstore</code>, axum, tokio, sqlx</td></tr>
+      </tbody>
+    </table></div>
+    <p>The boundary of the shared crate is drawing: it renders a playback state at an instant into a wgpu surface. What is not shared stays with each viewer: desvis's egui panels, tooltips and inspection meshes; the browser's DOM, sidebar and charts. The first thing the shared crate's tests assert is that both viewers draw the same instance buffers for the same state, so a drift between the two viewers becomes a failing test rather than a screenshot comparison.</p>
+    <figure>
+      <div class="diagram-container">
+<svg viewBox="0 0 940 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cr-deps-title cr-deps-desc">
+  <title id="cr-deps-title">The crates behind the two viewers</title>
+  <desc id="cr-deps-desc">Dependency graph: the React shell loads the TypeScript wrapper, which loads the browser viewer compiled to WebAssembly; that viewer and desvis both draw through one shared renderer crate, which reads the recording format crate and wgpu; the server runs the simulator, whose observer writes the recording format.</desc>
+  <defs>
+    <marker id="cr-deps-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+    <marker id="cr-deps-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+    <marker id="cr-deps-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#f5f5f5"/>
+  <line x1="130" y1="104" x2="130" y2="144" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-deps-arrow)"/>
+  <rect x="140" y="119" width="136" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="144" y="128" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start" letter-spacing="0.06em">LOADS THE WASM MODULE</text>
+  <line x1="130" y1="208" x2="130" y2="248" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-deps-arrow)"/>
+  <path d="M 140,320 V 384 Q 140,392 148,392 H 300" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-deps-arrow)"/>
+  <rect x="176" y="371" width="88" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="220" y="380" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">DRAWS THROUGH</text>
+  <path d="M 620,104 V 312 Q 620,320 612,320 H 448 Q 440,320 440,328 V 352" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-deps-arrow)"/>
+  <rect x="486" y="299" width="88" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="530" y="308" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">DRAWS THROUGH</text>
+  <line x1="380" y1="432" x2="380" y2="464" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#cr-deps-arrow-accent)"/>
+  <path d="M 480,432 V 444 Q 480,452 488,452 H 572 Q 580,452 580,460 V 464" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-deps-arrow)"/>
+  <line x1="830" y1="104" x2="830" y2="248" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-deps-arrow)"/>
+  <rect x="840" y="167" width="100" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="844" y="176" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="start" letter-spacing="0.06em">RUNS IN-PROCESS</text>
+  <path d="M 830,320 V 552 Q 830,560 822,560 H 388 Q 380,560 380,552 V 512" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#cr-deps-arrow)"/>
+  <rect x="504" y="571" width="208" height="12" rx="2" fill="#f5f5f5"/>
+  <text x="608" y="580" fill="#7a8399" font-size="8" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">THE OBSERVER WRITES THE RECORDING</text>
+  <rect x="40" y="40" width="180" height="64" rx="6" fill="#f5f5f5"/>
+  <rect x="40" y="40" width="180" height="64" rx="6" fill="rgba(79,93,117,0.10)" stroke="#7a8399" stroke-width="1"/>
+  <rect x="48" y="46" width="72" height="12" rx="2" fill="transparent" stroke="#4f5d75" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="84" y="55" fill="#4f5d75" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">TYPESCRIPT</text>
+  <text x="130" y="70" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">crucible-ui</text>
+  <text x="130" y="86" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">React 19 · Vite · uPlot</text>
+  <rect x="40" y="144" width="200" height="64" rx="6" fill="#f5f5f5"/>
+  <rect x="40" y="144" width="200" height="64" rx="6" fill="rgba(79,93,117,0.10)" stroke="#7a8399" stroke-width="1"/>
+  <rect x="48" y="150" width="80" height="12" rx="2" fill="transparent" stroke="#4f5d75" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="88" y="159" fill="#4f5d75" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">NPM PACKAGE</text>
+  <text x="140" y="174" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">studio/viewer/js</text>
+  <text x="140" y="190" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">the TypeScript wrapper</text>
+  <rect x="40" y="248" width="200" height="72" rx="6" fill="#f5f5f5"/>
+  <rect x="40" y="248" width="200" height="72" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <rect x="48" y="254" width="80" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="88" y="263" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">RUST → WASM</text>
+  <text x="140" y="282" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">studio/viewer</text>
+  <text x="140" y="298" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">wasm-bindgen · web-sys · wgpu webgpu/webgl</text>
+  <rect x="540" y="40" width="160" height="64" rx="6" fill="#f5f5f5"/>
+  <rect x="540" y="40" width="160" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <rect x="548" y="46" width="56" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="576" y="55" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">DESKTOP</text>
+  <text x="620" y="70" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">desvis</text>
+  <text x="620" y="86" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">eframe/egui · panels</text>
+  <rect x="740" y="40" width="180" height="64" rx="6" fill="#f5f5f5"/>
+  <rect x="740" y="40" width="180" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <rect x="748" y="46" width="48" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="772" y="55" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">SERVER</text>
+  <text x="830" y="70" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">studio/runs</text>
+  <text x="830" y="86" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">axum · tokio · sqlx · runstore</text>
+  <rect x="300" y="352" width="220" height="80" rx="6" fill="#f5f5f5"/>
+  <rect x="300" y="352" width="220" height="80" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+  <rect x="308" y="358" width="80" height="12" rx="2" fill="transparent" stroke="#eb6c36" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="348" y="367" fill="#eb6c36" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">NEW, SHARED</text>
+  <text x="410" y="390" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">worldview-render</text>
+  <text x="410" y="406" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">camera · cells · bots · totes · arrows</text>
+  <text x="410" y="418" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">heat · reservations · shaders</text>
+  <rect x="740" y="248" width="180" height="72" rx="6" fill="#f5f5f5"/>
+  <rect x="740" y="248" width="180" height="72" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <rect x="748" y="254" width="72" height="12" rx="2" fill="transparent" stroke="#2d3142" stroke-opacity="0.4" stroke-width="0.8"/>
+  <text x="784" y="263" fill="#2d3142" font-size="7" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle" letter-spacing="0.08em">IN-PROCESS</text>
+  <text x="830" y="282" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">dessim</text>
+  <text x="830" y="298" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">the simulator and its observer</text>
+  <rect x="300" y="464" width="160" height="40" rx="6" fill="#f5f5f5"/>
+  <rect x="300" y="464" width="160" height="40" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+  <text x="380" y="482" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">worldview</text>
+  <text x="380" y="498" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">frames · sections · index</text>
+  <rect x="520" y="464" width="120" height="40" rx="6" fill="#f5f5f5"/>
+  <rect x="520" y="464" width="120" height="40" rx="6" fill="rgba(45,49,66,0.03)" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+  <text x="580" y="482" fill="#2d3142" font-size="12" font-family="'Geist', system-ui, sans-serif" text-anchor="middle" font-weight="600">wgpu 23</text>
+  <text x="580" y="498" fill="#4f5d75" font-size="9" font-family="'Geist Mono', ui-monospace, Menlo, monospace" text-anchor="middle">+ bytemuck, naga</text>
+</svg>
+      </div>
+      <figcaption>The crates. Both viewers draw through one shared renderer, which reads the recording format and wgpu; the server runs the simulator in-process and its observer writes the recording.</figcaption>
+    </figure>
+  </section>
+
+  <section id="dev">
+    <p class="section-eyebrow">05 · development</p>
+    <h2><code>dev.sh start</code> gives a working UI</h2>
+    <p><code>studio/runs/dev.sh start</code> brings up PostgreSQL in a container on a port derived from the checkout, builds the server in the release profile (the simulator runs inside it, and the dev profile runs it at a third of real time), builds the wasm viewer, starts the server and the UI's dev server, and prints the UI's address. Submitting a run takes the UI's form or the terminal client. Nothing else is containerised, and no image builds are part of this phase. <code>dev.sh status</code>, <code>logs</code>, <code>stop</code> and <code>stop --db</code> do what they say. <code>studio/runs/README.md</code> has the commands and what each step costs on a developer's machine.</p>
+  </section>
+
+  <section id="removed">
+    <p class="section-eyebrow">06 · what is not here</p>
+    <h2>Watching a run as it executes, and the fleet</h2>
+    <p><strong>Watching a run while it executes is not in this branch.</strong> A run can be opened once its attempt has ended; until then the run list shows its state and its simulated clock counting up, and the shell attaches on its own as soon as a recording is stored. What live watching waits on is the simulator, not the server or the browser: the simulator's only present is the scheduler's trailing global barrier, so frames can be emitted only for the time buckets that barrier has already passed, out of an accumulator running ahead of it, and what is emitted is final. That needs one rule the simulator does not yet keep — no event may be emitted with a timestamp behind the barrier — and the work lives on its own branch, <code>agent/worldview-emit</code>. Nothing of it is built here: no live file, no provisional values, no second writer. When it lands, the server writes while a run executes and an attachment tails that file; the protocol, the format and the UI already say what to do with the frames, which is why <code>attach</code> takes <code>"live"</code> and the shell follows a run before it has a recording.</p>
+    <p>The prototype on <code>agent/crucible-streaming</code> split the server into brokers and a horizontally scaled deployment of runner processes, with a protocol between them, redispatch of a run whose runner died, container images for both and a workflow that built them. None of that is carried into this phase. The server runs simulations in-process, as <code>studio/runs</code> does today; the storage interface, the client protocol, the viewer and the development runner are the parts of the prototype that carry forward. When the fleet returns as its own initiative, the recording, the protocol and the UI are unchanged by it: a runner would produce the same frames into the same sink.</p>
+  </section>
+
+  <section id="gate">
+    <p class="section-eyebrow">07 · done means</p>
+    <h2>Open a run, scrub, seek, reload, and take the workbook</h2>
+    <p>From a fresh clone: <code>dev.sh start</code>, open the UI, submit the cencora fixture, watch its progress count up, open it when it finishes with robots and totes moving on the floor and the charts filled, play, scrub inside the held window, seek outside it, reload the page and re-attach at an instant, turn each overlay and view on, open the DFW6 site, cancel a run and open what it recorded, submit a spec with its own files, and build a workbook from the stored recording. Both viewers draw the same instance buffers for the same recording, asserted by the shared crate's tests. The walk is driven headlessly by <code>scripts/worldview/ui_gate.mjs</code>, which asserts every step before photographing it.</p>
+  </section>
+
+  <footer class="footer">
+    <p>Branch <code>agent/worldview</code>, draft PR #492 · 2026-09-18. Companion: <code>docs/designs/worldview-streaming.html</code> (the recording format).</p>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+{
+  "v": 1,
+  "vocabulary": [
+    "template.knob",
+    "template.description",
+    "template.placement",
+    "template.knob_binding",
+    "template.presence",
+    "template.target_scope",
+    "flow.node",
+    "flow.material_edge",
+    "flow.agent_segment",
+    "flow.return_rule",
+    "floor_drive",
+    "rack_ladder",
+    "lift",
+    "end_effector"
+  ],
+  "entries": [
+    {
+      "scope": "catalog/carrier/tote",
+      "document": "catalog/carrier-tote.world.json"
+    },
+    {
+      "scope": "catalog/artifact/relay-bay",
+      "document": "catalog/artifact-relay-bay.world.json"
+    },
+    {
+      "scope": "catalog/artifact/open-patch",
+      "document": "catalog/artifact-open-patch.world.json"
+    },
+    {
+      "scope": "catalog/agent/da50",
+      "document": "catalog/agent-da50.world.json"
+    },
+    {
+      "scope": "catalog/agent/d30",
+      "document": "catalog/agent-d30.world.json"
+    },
+    {
+      "scope": "template/site/rectangle/map",
+      "document": "template/rectangle/map.world.json"
+    },
+    {
+      "scope": "template/site/rectangle/fleet",
+      "document": "template/rectangle/fleet.world.json"
+    },
+    {
+      "scope": "template/site/rectangle/flow",
+      "document": "template/rectangle/flow.world.json"
+    },
+    {
+      "scope": "template/site/rectangle",
+      "document": "template/rectangle/root.world.json"
+    },
+    {
+      "scope": "template/site/square/map",
+      "document": "template/square/map.world.json"
+    },
+    {
+      "scope": "template/site/square/fleet",
+      "document": "template/square/fleet.world.json"
+    },
+    {
+      "scope": "template/site/square/flow",
+      "document": "template/square/flow.world.json"
+    },
+    {
+      "scope": "template/site/square",
+      "document": "template/square/root.world.json"
+    },
+    {
+      "scope": "template/site/l-shape/map",
+      "document": "template/l-shape/map.world.json"
+    },
+    {
+      "scope": "template/site/l-shape/fleet",
+      "document": "template/l-shape/fleet.world.json"
+    },
+    {
+      "scope": "template/site/l-shape/flow",
+      "document": "template/l-shape/flow.world.json"
+    },
+    {
+      "scope": "template/site/l-shape",
+      "document": "template/l-shape/root.world.json"
+    },
+    {
+      "scope": "template/site/u-shape/map",
+      "document": "template/u-shape/map.world.json"
+    },
+    {
+      "scope": "template/site/u-shape/fleet",
+      "document": "template/u-shape/fleet.world.json"
+    },
+    {
+      "scope": "template/site/u-shape/flow",
+      "document": "template/u-shape/flow.world.json"
+    },
+    {
+      "scope": "template/site/u-shape",
+      "document": "template/u-shape/root.world.json"
+    },
+    {
+      "scope": "template/site/i-shape/map",
+      "document": "template/i-shape/map.world.json"
+    },
+    {
+      "scope": "template/site/i-shape/fleet",
+      "document": "template/i-shape/fleet.world.json"
+    },
+    {
+      "scope": "template/site/i-shape/flow",
+      "document": "template/i-shape/flow.world.json"
+    },
+    {
+      "scope": "template/site/i-shape",
+      "document": "template/i-shape/root.world.json"
+    }
+  ]
+}

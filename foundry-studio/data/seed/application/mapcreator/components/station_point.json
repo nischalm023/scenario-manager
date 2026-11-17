@@ -1,0 +1,59 @@
+{
+  "asserts": "has",
+  "component": "station_point",
+  "meaning": "the presentation point has what the older Map Creator dialect states about it instead: the relay-or-RTP kind it serves, and its position number at the station",
+  "owner": "foundry-studio",
+  "refs": [
+    {
+      "expects": "cell",
+      "path": "/cell"
+    },
+    {
+      "expects": "mapcreator.station",
+      "path": "/station"
+    }
+  ],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {
+      "entity_id": {
+        "description": "One entity of this document, by identity. A declared identity is a UUID; a derived one is its root UUID and the generator's key path, which nothing in a converted document produces.",
+        "title": "entity_id",
+        "type": "string"
+      },
+      "legacy_value": {
+        "description": "A legacy value the dump wrote, kept verbatim in whatever JSON kind it wrote it. It states no type on purpose: the round trip writes back what the dump said, and correcting a kind here would be the converter deciding what the site meant.",
+        "title": "legacy_value"
+      }
+    },
+    "$id": "urn:mapcreator-compat:0.1:components:station_point",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the presentation point has what the older Map Creator dialect states about it instead: the relay-or-RTP kind it serves, and its position number at the station",
+    "properties": {
+      "cell": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The cell Map Creator's `coordinate` names, by entity identity. The export writes the legacy spelling back from the identity, so no display string is load-bearing here (SPEC §2)."
+      },
+      "cell_unresolved": {
+        "$ref": "#/$defs/legacy_value",
+        "description": "Map Creator's `coordinate` verbatim, present only when the cell it names is not in this dump. Never corrected and never dropped: the round trip writes back what the dump said, and the ledger counts it as a dangling source reference."
+      },
+      "point_type": {
+        "description": "Map Creator's `type`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      },
+      "station": {
+        "$ref": "#/$defs/entity_id",
+        "description": "The station this record belongs to, by entity identity. A point sits inside its station's own record rather than naming it, so the reference is the import's and the export rebuilds the nesting from it."
+      }
+    },
+    "required": [
+      "station"
+    ],
+    "title": "station_point",
+    "type": "object"
+  },
+  "status": "ratified"
+}

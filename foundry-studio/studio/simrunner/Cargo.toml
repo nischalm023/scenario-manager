@@ -1,0 +1,46 @@
+[package]
+name = "simrunner"
+version = "0.1.0"
+edition = "2024"
+description = "The simulation runner (spec 08 section 3.5): every step before simtime through the WPS client and the scenario crate, up to the manifest; then the run through dessim's harness, a heartbeat every 5 s, a live stream of its progress and its recording's frames to the streaming server when one is named, and its recording, metrics, series and ending delivered to the API by the runner itself"
+
+[[bin]]
+name = "simrunner"
+path = "src/main.rs"
+
+[dependencies]
+studio-protocol = { path = "../../studio/protocol" }
+# The summary's figures as `metrics.json` names them, the same names the metric streams use.
+studio-metrics = { path = "../metrics" }
+desunits = { path = "../../sim/desunits" }
+# The runner reads the site at its pins through the one door to world-proto-server (spec 04).
+wps-client = { path = "../../studio/wps-client" }
+# Spec 07's one crate for the check and the runner: the variant, the site facts, the run's spec and the compile seam.
+scenario-spec = { path = "../../studio/scenario-spec" }
+# `harness::prepare` and `execute`, the recording writer, and the world reader the site facts are read with.
+dessim = { path = "../../sim/dessim" }
+# The tasks: a program that runs a simulation, or reads a spec or a recording that names tasks, links this crate
+# (`use native_modules as _;`), or it finds no task by name.
+native-modules = { path = "../../native-modules" }
+# A recording's metrics and series, derived from its frames.
+worldview = { path = "../../worldview/worldview" }
+# No TLS: a runner reaches the runners' listener over plain HTTP on the loopback or inside the cluster. `stream`: its
+# recording goes to the door from the file, never whole in memory.
+reqwest = { version = "0.13", default-features = false, features = ["stream"] }
+# The live stream to the streaming server, plain `ws://` like the door: no TLS here either.
+tokio-tungstenite = "0.29"
+futures = "0.3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+thiserror = "2"
+# `signal`: SIGTERM is the platform ending the run, which stops the simulation and reports before the process goes.
+# `fs`: a recording goes to the door from its file. `io-util`: the stream reads the recording's frames from the file.
+tokio = { version = "1", features = ["fs", "io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
+url = "2"
+
+[dev-dependencies]
+axum = { version = "0.8", features = ["ws"] }
+tempfile = "3"
+# A listener of the tests' own on a bare socket, and a paused clock for the delivery's four minutes.
+tokio = { version = "1", features = ["io-util", "net", "test-util"] }

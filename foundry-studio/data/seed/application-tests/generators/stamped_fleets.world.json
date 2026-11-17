@@ -1,0 +1,151 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "87000000-0000-4000-8000-000000000003",
+    "name": "Nested fleet and carrier templates",
+    "kind": "world"
+  },
+  "primary_frame": "6a2f8c41-0d93-4e57-b1c8-2f7e9a3d5c06",
+  "required_components": [
+    "frame",
+    "robot_class",
+    "cohort",
+    "carrier_type",
+    "carrier_pool",
+    "sector"
+  ],
+  "$comment": "Authored Foundry regression input: stamp parameters flow into cohort and carrier_pool generation.",
+  "entities": [
+    {
+      "id": "6a2f8c41-0d93-4e57-b1c8-2f7e9a3d5c06",
+      "name": "site",
+      "components": {
+        "frame": {
+          "dims": 3,
+          "units": "mm",
+          "unit_mm": 1
+        }
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-0000000000a1",
+      "name": "a floor class",
+      "components": {
+        "robot_class": {
+          "role": "htm",
+          "footprint": [
+            850,
+            650
+          ],
+          "height": 300
+        }
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-0000000000a2",
+      "name": "a climbing class",
+      "components": {
+        "robot_class": {
+          "role": "vtm",
+          "locomotion": "ladder",
+          "height": 3600
+        }
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-0000000000c1",
+      "name": "a tote",
+      "components": {
+        "carrier_type": {
+          "kind": "tote",
+          "size": [
+            650,
+            450,
+            300
+          ]
+        }
+      }
+    },
+    {
+      "id": "b1000000-0000-4000-8000-0000000000e1",
+      "name": "a sector naming nobody",
+      "components": {
+        "sector": {
+          "members": []
+        }
+      }
+    },
+    {
+      "id": "87000000-0000-4000-8000-000000000001",
+      "components": {
+        "template": {
+          "params": {
+            "class": {},
+            "kind": {}
+          },
+          "entities": [
+            {
+              "local": "fleet",
+              "components": {
+                "cohort": {
+                  "robot_class": {
+                    "$param": "class"
+                  },
+                  "count": 2,
+                  "assignment": {
+                    "kind": "hard",
+                    "to": [
+                      "b1000000-0000-4000-8000-0000000000e1"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "local": "pool",
+              "components": {
+                "carrier_pool": {
+                  "carrier_type": {
+                    "$param": "kind"
+                  },
+                  "count": 3,
+                  "designation": "order",
+                  "placement": {
+                    "kind": "sector",
+                    "sector": "b1000000-0000-4000-8000-0000000000e1"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "87000000-0000-4000-8000-000000000002",
+      "components": {
+        "pose": {
+          "frame": "6a2f8c41-0d93-4e57-b1c8-2f7e9a3d5c06",
+          "position": [
+            0,
+            0
+          ]
+        },
+        "stamp": {
+          "template": "87000000-0000-4000-8000-000000000001",
+          "params": {
+            "class": "b1000000-0000-4000-8000-0000000000a1",
+            "kind": "b1000000-0000-4000-8000-0000000000c1"
+          },
+          "repeat": {
+            "count": 2,
+            "step": [
+              1000,
+              0
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,382 @@
+{
+  "version": 3,
+  "grid": {
+    "width": 30,
+    "depth": 30,
+    "cell_size_mm": 1000.0
+  },
+  "highways": [
+    {
+      "origin": [
+        0,
+        1
+      ],
+      "width": 30,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        2
+      ],
+      "width": 30,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        3
+      ],
+      "width": 30,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        28
+      ],
+      "width": 30,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        27
+      ],
+      "width": 30,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        0,
+        26
+      ],
+      "width": 30,
+      "height": 1,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        1,
+        0
+      ],
+      "width": 1,
+      "height": 30,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        2,
+        0
+      ],
+      "width": 1,
+      "height": 30,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        3,
+        0
+      ],
+      "width": 1,
+      "height": 30,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        28,
+        0
+      ],
+      "width": 1,
+      "height": 30,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        27,
+        0
+      ],
+      "width": 1,
+      "height": 30,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        26,
+        0
+      ],
+      "width": 1,
+      "height": 30,
+      "direction": "Bidirectional"
+    }
+  ],
+  "zones": [
+    {
+      "type": "rtp",
+      "id": 1,
+      "origin": [
+        4,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 2,
+      "origin": [
+        7,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 3,
+      "origin": [
+        10,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 4,
+      "origin": [
+        13,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 5,
+      "origin": [
+        16,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 6,
+      "origin": [
+        19,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 7,
+      "origin": [
+        22,
+        4
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 8,
+      "origin": [
+        4,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 9,
+      "origin": [
+        7,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 10,
+      "origin": [
+        10,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 11,
+      "origin": [
+        13,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 12,
+      "origin": [
+        16,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 13,
+      "origin": [
+        19,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 14,
+      "origin": [
+        22,
+        15
+      ],
+      "rows": 10,
+      "cols": 2
+    }
+  ],
+  "stations": [
+    {
+      "id": 1,
+      "position": [
+        12,
+        0
+      ],
+      "presentation_cell": [
+        12,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 2,
+      "position": [
+        17,
+        0
+      ],
+      "presentation_cell": [
+        17,
+        1
+      ],
+      "edge": "Bottom",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 3,
+      "position": [
+        12,
+        29
+      ],
+      "presentation_cell": [
+        12,
+        28
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 4,
+      "position": [
+        17,
+        29
+      ],
+      "presentation_cell": [
+        17,
+        28
+      ],
+      "edge": "Top",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 5,
+      "position": [
+        0,
+        12
+      ],
+      "presentation_cell": [
+        1,
+        12
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 6,
+      "position": [
+        0,
+        17
+      ],
+      "presentation_cell": [
+        1,
+        17
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 7,
+      "position": [
+        29,
+        12
+      ],
+      "presentation_cell": [
+        28,
+        12
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 8,
+      "position": [
+        29,
+        17
+      ],
+      "presentation_cell": [
+        28,
+        17
+      ],
+      "edge": "Right",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "aisle_info": [
+    {
+      "aisle_id": "A1",
+      "display_name": "Aisle One",
+      "io_point_coordinates": [
+        "[1,1]",
+        "[1,2]"
+      ],
+      "additional_information": {
+        "type": "vtm"
+      }
+    },
+    {
+      "aisle_id": "A2",
+      "display_name": "Aisle Two",
+      "io_point_coordinates": [
+        "[4,1]",
+        "[8,8]"
+      ],
+      "additional_information": {
+        "type": "vtm"
+      }
+    }
+  ]
+}

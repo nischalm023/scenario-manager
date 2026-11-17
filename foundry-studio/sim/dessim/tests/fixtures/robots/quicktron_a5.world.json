@@ -1,0 +1,48 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "393fec86-b979-4f91-9cc5-a38255dbd80d",
+    "kind": "catalog",
+    "name": "Quicktron A5 (Dematic DA50)"
+  },
+  "$comment": "A VTM that rides the racking. Handling and alignment from the DA50 spec sheet (rows 1, 2 and 8), the figures Cencora runs; travel and lift from Quicktron's A5 efficiency calculation tool (04 A5效率计算工具 V1.0-20251127). The tool disagrees on handling: a shallow pick or place 4.0 s, a deep one 5.0 s, a relay (buffer) place or pick 4.0 s, and a distance-dependent walk to the buffer rack of about 1.93 s on its default layout. The project decided on 2026-09-04 to model the cycle's fixed part as 15.8 s (notes/457-findings-2026-09-04.md) without splitting it among these figures; this file keeps the 17.2 s they give, which Cencora's results depend on. No source gives the A5's dimensions.",
+  "entities": [
+    {
+      "id": "d88bf9a2-83be-4006-a1a3-05c9e97e05ec",
+      "name": "Quicktron A5",
+      "components": {
+        "lineage": [
+          {
+            "party": "Quicktron",
+            "role": "manufacturer",
+            "designation": "A5"
+          },
+          {
+            "party": "Dematic",
+            "role": "distributor",
+            "designation": "DA50"
+          }
+        ],
+        "rack_ladder": {
+          "max_speed_mm_s": 3000,
+          "accel_mm_s2": 2000
+        },
+        "lift": {
+          "profile": {
+            "max_speed_mm_s": 3000,
+            "accel_mm_s2": 2000
+          }
+        },
+        "end_effector": {
+          "kind": "forks",
+          "pick_secs": 6.2,
+          "drop_secs": 5.0,
+          "align_before_pick_secs": 3.0,
+          "align_before_drop_secs": 3.0,
+          "reach_slots_deep": 3,
+          "$comment": "The A5 tool gives the fork type as 'hooked boxes, 3-deep and within'; its depth table times a 2-deep pick at 23.59 s and a 3-deep one at 39.94 s, relocation included. Pick, drop and alignment are the DA50 spec sheet's rows 1, 2 and 8: 6.2 s is the single-deep 'Pick Single/Multi Container SD', and row 8 is the 'Level Alignment Scan'. The simulator scans before every fork insertion, as issue #262 decided; whether the scan belongs to the approach alone is still unconfirmed."
+        }
+      }
+    }
+  ]
+}

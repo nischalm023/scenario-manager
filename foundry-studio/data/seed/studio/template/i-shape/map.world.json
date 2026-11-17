@@ -1,0 +1,1202 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "I-Shape's map scope (template/site/i-shape/map): a width by depth outline the flow crosses: putaway on the wall it enters by, pick on the wall opposite, the aisles between; the orientation knob moves both station rows between the x walls and the y walls.",
+  "doc": {
+    "id": "66a63184-bd87-4eb9-a0e3-874ab377f7af",
+    "name": "I-Shape: map",
+    "kind": "template",
+    "depends_on": [
+      "9667f012-a447-46e6-a75f-beafb020e9eb",
+      "f2914490-29bf-49ff-99fe-027416167ee5",
+      "d44ca445-0338-49a2-85ad-2e6fe2bc7005"
+    ]
+  },
+  "primary_frame": "d14f54dd-899e-4b5d-b08c-e918d6c379b5",
+  "entities": [
+    {
+      "id": "d14f54dd-899e-4b5d-b08c-e918d6c379b5",
+      "name": "site",
+      "components": {
+        "frame": {
+          "dims": 3,
+          "units": "mm",
+          "unit_mm": 1
+        }
+      }
+    },
+    {
+      "id": "80d2fb93-0b77-4be7-9703-7fe942114f57",
+      "name": "shell",
+      "components": {
+        "frame": {
+          "parent": "d14f54dd-899e-4b5d-b08c-e918d6c379b5",
+          "dims": 2,
+          "units": "mm",
+          "transform_to_parent": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "21fb8c6f-da41-43e6-9ea2-82fafedadb0e",
+      "name": "floor",
+      "components": {
+        "region": {
+          "frame": "80d2fb93-0b77-4be7-9703-7fe942114f57",
+          "origin": [
+            1700,
+            1700
+          ],
+          "size": [
+            37400,
+            23800
+          ]
+        },
+        "tiling": {
+          "pitch": [
+            850,
+            850
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          },
+          "exclusions": [
+            {
+              "origin": [
+                5100,
+                2550
+              ],
+              "size": [
+                30600,
+                12750
+              ]
+            }
+          ]
+        },
+        "template.knob_binding": {
+          "/region/size/0": "max(850, width - 3400)",
+          "/region/size/1": "max(850, depth - 3400)",
+          "/tiling/exclusions/0/size/0": "aisles * 7650",
+          "/tiling/exclusions/0/size/1": "(bays * 2750 + 2549) / 850 * 850"
+        }
+      }
+    },
+    {
+      "id": "e5ba9ef2-cb08-4bcc-a5fb-04fa111c44f6",
+      "name": "floor strip along the −y wall",
+      "components": {
+        "region": {
+          "frame": "80d2fb93-0b77-4be7-9703-7fe942114f57",
+          "origin": [
+            0,
+            0
+          ],
+          "size": [
+            40800,
+            1700
+          ]
+        },
+        "tiling": {
+          "pitch": [
+            850,
+            850
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        },
+        "template.knob_binding": {
+          "/region/size/0": "width"
+        },
+        "template.presence": {
+          "when": "(1 - orientation)"
+        }
+      }
+    },
+    {
+      "id": "09f29cd3-2704-4e3f-b8f8-f53c544ee756",
+      "name": "stitch: −y strip to the floor",
+      "components": {
+        "stitch": {
+          "a": "e5ba9ef2-cb08-4bcc-a5fb-04fa111c44f6",
+          "b": "21fb8c6f-da41-43e6-9ea2-82fafedadb0e",
+          "rule": "contact",
+          "tolerance": 100
+        },
+        "template.presence": {
+          "when": "(1 - orientation)"
+        }
+      }
+    },
+    {
+      "id": "10435206-f50f-4ce0-bcca-d18afd232775",
+      "name": "floor strip along the +y wall",
+      "components": {
+        "region": {
+          "frame": "80d2fb93-0b77-4be7-9703-7fe942114f57",
+          "origin": [
+            0,
+            25500
+          ],
+          "size": [
+            40800,
+            1700
+          ]
+        },
+        "tiling": {
+          "pitch": [
+            850,
+            850
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        },
+        "template.knob_binding": {
+          "/region/origin/1": "max(0, depth - 1700)",
+          "/region/size/0": "width"
+        },
+        "template.presence": {
+          "when": "(1 - orientation)"
+        }
+      }
+    },
+    {
+      "id": "e5c49d72-9285-43f9-a74a-879853629dd3",
+      "name": "stitch: +y strip to the floor",
+      "components": {
+        "stitch": {
+          "a": "10435206-f50f-4ce0-bcca-d18afd232775",
+          "b": "21fb8c6f-da41-43e6-9ea2-82fafedadb0e",
+          "rule": "contact",
+          "tolerance": 100
+        },
+        "template.presence": {
+          "when": "(1 - orientation)"
+        }
+      }
+    },
+    {
+      "id": "13084b6b-d8ac-48f9-b74c-402acaf7ea15",
+      "name": "floor strip along the −x wall",
+      "components": {
+        "region": {
+          "frame": "80d2fb93-0b77-4be7-9703-7fe942114f57",
+          "origin": [
+            0,
+            1700
+          ],
+          "size": [
+            1700,
+            23800
+          ]
+        },
+        "tiling": {
+          "pitch": [
+            850,
+            850
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        },
+        "template.knob_binding": {
+          "/region/size/1": "max(850, depth - 3400)"
+        },
+        "template.presence": {
+          "when": "orientation"
+        }
+      }
+    },
+    {
+      "id": "706102d7-3f15-4e91-a305-9c1deba8a1f2",
+      "name": "stitch: −x strip to the floor",
+      "components": {
+        "stitch": {
+          "a": "13084b6b-d8ac-48f9-b74c-402acaf7ea15",
+          "b": "21fb8c6f-da41-43e6-9ea2-82fafedadb0e",
+          "rule": "contact",
+          "tolerance": 100
+        },
+        "template.presence": {
+          "when": "orientation"
+        }
+      }
+    },
+    {
+      "id": "5b148b3a-a339-4a50-b013-932813610a8a",
+      "name": "floor strip along the +x wall",
+      "components": {
+        "region": {
+          "frame": "80d2fb93-0b77-4be7-9703-7fe942114f57",
+          "origin": [
+            39100,
+            1700
+          ],
+          "size": [
+            1700,
+            23800
+          ]
+        },
+        "tiling": {
+          "pitch": [
+            850,
+            850
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        },
+        "template.knob_binding": {
+          "/region/origin/0": "max(0, width - 1700)",
+          "/region/size/1": "max(850, depth - 3400)"
+        },
+        "template.presence": {
+          "when": "orientation"
+        }
+      }
+    },
+    {
+      "id": "4a650b3c-cc17-406a-95b7-565cb19c45fb",
+      "name": "stitch: +x strip to the floor",
+      "components": {
+        "stitch": {
+          "a": "5b148b3a-a339-4a50-b013-932813610a8a",
+          "b": "21fb8c6f-da41-43e6-9ea2-82fafedadb0e",
+          "rule": "contact",
+          "tolerance": 100
+        },
+        "template.presence": {
+          "when": "orientation"
+        }
+      }
+    },
+    {
+      "id": "c91ad800-244b-43e1-ac4b-38733455df1c",
+      "name": "aisle piece",
+      "components": {
+        "template": {
+          "params": {},
+          "entities": [
+            {
+              "local": "gap_left",
+              "name": "aisle's left half-gap",
+              "components": {
+                "pose": {
+                  "position": [
+                    0,
+                    0
+                  ],
+                  "heading_deg": 0
+                },
+                "stamp": {
+                  "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1",
+                  "params": {
+                    "size": [
+                      1700,
+                      12750
+                    ]
+                  }
+                },
+                "template.knob_binding": {
+                  "/stamp/params/size/1": "(bays * 2750 + 2549) / 850 * 850"
+                }
+              }
+            },
+            {
+              "local": "rack_left",
+              "name": "left rack row",
+              "components": {
+                "pose": {
+                  "position": [
+                    3000,
+                    850
+                  ],
+                  "heading_deg": 90
+                },
+                "stamp": {
+                  "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1",
+                  "repeat": {
+                    "count": 4,
+                    "step": [
+                      0,
+                      2750
+                    ]
+                  }
+                },
+                "template.knob_binding": {
+                  "/stamp/repeat/count": "bays"
+                }
+              }
+            },
+            {
+              "local": "vtm_aisle",
+              "name": "VTM aisle",
+              "components": {
+                "region": {
+                  "origin": [
+                    3000,
+                    850
+                  ],
+                  "size": [
+                    1650,
+                    11000
+                  ]
+                },
+                "template.knob_binding": {
+                  "/region/size/1": "bays * 2750"
+                }
+              }
+            },
+            {
+              "local": "rack_right",
+              "name": "right rack row",
+              "components": {
+                "pose": {
+                  "position": [
+                    4650,
+                    3600
+                  ],
+                  "heading_deg": 270
+                },
+                "stamp": {
+                  "template": "611def02-6716-45f9-b10c-0e5d7c17d6a6@1",
+                  "repeat": {
+                    "count": 4,
+                    "step": [
+                      0,
+                      2750
+                    ]
+                  }
+                },
+                "template.knob_binding": {
+                  "/stamp/repeat/count": "bays"
+                }
+              }
+            },
+            {
+              "local": "gap_right",
+              "name": "aisle's right half-gap",
+              "components": {
+                "pose": {
+                  "position": [
+                    5950,
+                    0
+                  ],
+                  "heading_deg": 0
+                },
+                "stamp": {
+                  "template": "5fefbdd0-f980-4d6f-9ba8-de868c655ec8@1",
+                  "params": {
+                    "size": [
+                      1700,
+                      12750
+                    ]
+                  }
+                },
+                "template.knob_binding": {
+                  "/stamp/params/size/1": "(bays * 2750 + 2549) / 850 * 850"
+                }
+              }
+            },
+            {
+              "local": "access_left",
+              "name": "access: left rack row from the VTM aisle",
+              "components": {
+                "access": {
+                  "rack": {
+                    "local_ref": "rack_left"
+                  },
+                  "along": {
+                    "local_ref": "vtm_aisle"
+                  },
+                  "face": "-y",
+                  "serves": [
+                    "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+                  ]
+                }
+              }
+            },
+            {
+              "local": "access_right",
+              "name": "access: right rack row from the VTM aisle",
+              "components": {
+                "access": {
+                  "rack": {
+                    "local_ref": "rack_right"
+                  },
+                  "along": {
+                    "local_ref": "vtm_aisle"
+                  },
+                  "face": "-y",
+                  "serves": [
+                    "c4918604-8b05-4117-8e32-aaa47b0aca86@1"
+                  ]
+                }
+              }
+            },
+            {
+              "local": "sector",
+              "name": "aisle",
+              "components": {
+                "sector": {
+                  "members": [
+                    {
+                      "local_ref": "rack_left"
+                    },
+                    {
+                      "local_ref": "rack_right"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "local": "vtms",
+              "name": "aisle VTMs",
+              "components": {
+                "cohort": {
+                  "robot_class": "c4918604-8b05-4117-8e32-aaa47b0aca86@1",
+                  "count": 2,
+                  "assignment": {
+                    "kind": "hard",
+                    "to": [
+                      {
+                        "local_ref": "sector"
+                      }
+                    ]
+                  }
+                },
+                "template.knob_binding": {
+                  "/cohort/count": "vtms_per_aisle"
+                },
+                "template.target_scope": {
+                  "scope": "fleet"
+                }
+              }
+            },
+            {
+              "local": "stitch_left",
+              "name": "stitch: left half-gap to the floor",
+              "components": {
+                "stitch": {
+                  "a": {
+                    "local_ref": "gap_left"
+                  },
+                  "b": "21fb8c6f-da41-43e6-9ea2-82fafedadb0e",
+                  "rule": "contact",
+                  "tolerance": 100
+                }
+              }
+            },
+            {
+              "local": "stitch_right",
+              "name": "stitch: right half-gap to the floor",
+              "components": {
+                "stitch": {
+                  "a": {
+                    "local_ref": "gap_right"
+                  },
+                  "b": "21fb8c6f-da41-43e6-9ea2-82fafedadb0e",
+                  "rule": "contact",
+                  "tolerance": 100
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "eb30b21c-8edb-47ec-a37d-7aee981ba9b2",
+      "name": "pick station piece, +x wall",
+      "components": {
+        "template": {
+          "params": {},
+          "entities": [
+            {
+              "local": "patch",
+              "name": "pick station floor",
+              "components": {
+                "region": {
+                  "origin": [
+                    0,
+                    0
+                  ],
+                  "size": [
+                    2550,
+                    1700
+                  ]
+                },
+                "tiling": {
+                  "pitch": [
+                    850,
+                    850
+                  ],
+                  "derives": {
+                    "cell": {
+                      "traversable_by": [
+                        "htm"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "local": "station",
+              "name": "pick station",
+              "components": {
+                "pose": {
+                  "position": [
+                    2125,
+                    425
+                  ],
+                  "heading_deg": 0
+                },
+                "station": {
+                  "kind": "pick",
+                  "bins": 1,
+                  "exit_direction": "-x"
+                }
+              }
+            },
+            {
+              "local": "lane",
+              "name": "pick station: lane",
+              "components": {
+                "queue": {
+                  "discipline": "no_reverse",
+                  "path": [
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:0,0"
+                    },
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:1,0"
+                    },
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:1,1"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "local": "present",
+              "name": "pick station presentation",
+              "components": {
+                "pose": {
+                  "position": [
+                    1275,
+                    425
+                  ],
+                  "heading_deg": 0
+                },
+                "presentation_point": {
+                  "for": "inventory_tote",
+                  "station": {
+                    "local_ref": "station"
+                  }
+                }
+              }
+            },
+            {
+              "local": "stitch",
+              "name": "stitch: pick station floor to the floor",
+              "components": {
+                "stitch": {
+                  "a": {
+                    "local_ref": "patch"
+                  },
+                  "b": "21fb8c6f-da41-43e6-9ea2-82fafedadb0e",
+                  "rule": "contact",
+                  "tolerance": 100
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ac184957-8224-4694-bd77-0cda833e58dd",
+      "name": "pick station piece, +y wall",
+      "components": {
+        "template": {
+          "params": {},
+          "entities": [
+            {
+              "local": "patch",
+              "name": "pick station floor",
+              "components": {
+                "region": {
+                  "origin": [
+                    0,
+                    0
+                  ],
+                  "size": [
+                    2550,
+                    1700
+                  ]
+                },
+                "tiling": {
+                  "pitch": [
+                    850,
+                    850
+                  ],
+                  "derives": {
+                    "cell": {
+                      "traversable_by": [
+                        "htm"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "local": "station",
+              "name": "pick station",
+              "components": {
+                "pose": {
+                  "position": [
+                    2125,
+                    425
+                  ],
+                  "heading_deg": 0
+                },
+                "station": {
+                  "kind": "pick",
+                  "bins": 1,
+                  "exit_direction": "-y"
+                }
+              }
+            },
+            {
+              "local": "lane",
+              "name": "pick station: lane",
+              "components": {
+                "queue": {
+                  "discipline": "no_reverse",
+                  "path": [
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:2,0"
+                    },
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:2,1"
+                    },
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:1,1"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "local": "present",
+              "name": "pick station presentation",
+              "components": {
+                "pose": {
+                  "position": [
+                    1275,
+                    425
+                  ],
+                  "heading_deg": 0
+                },
+                "presentation_point": {
+                  "for": "inventory_tote",
+                  "station": {
+                    "local_ref": "station"
+                  }
+                }
+              }
+            },
+            {
+              "local": "stitch",
+              "name": "stitch: pick station floor to the floor",
+              "components": {
+                "stitch": {
+                  "a": {
+                    "local_ref": "patch"
+                  },
+                  "b": "21fb8c6f-da41-43e6-9ea2-82fafedadb0e",
+                  "rule": "contact",
+                  "tolerance": 100
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "6879e9f7-52b4-49e4-8588-85e1a5117029",
+      "name": "putaway station piece, −x wall",
+      "components": {
+        "template": {
+          "params": {},
+          "entities": [
+            {
+              "local": "patch",
+              "name": "putaway station floor",
+              "components": {
+                "region": {
+                  "origin": [
+                    0,
+                    0
+                  ],
+                  "size": [
+                    2550,
+                    1700
+                  ]
+                },
+                "tiling": {
+                  "pitch": [
+                    850,
+                    850
+                  ],
+                  "derives": {
+                    "cell": {
+                      "traversable_by": [
+                        "htm"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "local": "station",
+              "name": "putaway station",
+              "components": {
+                "pose": {
+                  "position": [
+                    2125,
+                    425
+                  ],
+                  "heading_deg": 0
+                },
+                "station": {
+                  "kind": "put",
+                  "bins": 1,
+                  "exit_direction": "+x"
+                }
+              }
+            },
+            {
+              "local": "lane",
+              "name": "putaway station: lane",
+              "components": {
+                "queue": {
+                  "discipline": "no_reverse",
+                  "path": [
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:1,2"
+                    },
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:0,2"
+                    },
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:0,1"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "local": "present",
+              "name": "putaway station presentation",
+              "components": {
+                "pose": {
+                  "position": [
+                    1275,
+                    425
+                  ],
+                  "heading_deg": 0
+                },
+                "presentation_point": {
+                  "for": "inventory_tote",
+                  "station": {
+                    "local_ref": "station"
+                  }
+                }
+              }
+            },
+            {
+              "local": "stitch",
+              "name": "stitch: putaway station floor to the floor",
+              "components": {
+                "stitch": {
+                  "a": {
+                    "local_ref": "patch"
+                  },
+                  "b": "21fb8c6f-da41-43e6-9ea2-82fafedadb0e",
+                  "rule": "contact",
+                  "tolerance": 100
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cda8aaca-f7d0-4e17-9aa1-c7a9abae3904",
+      "name": "putaway station piece, −y wall",
+      "components": {
+        "template": {
+          "params": {},
+          "entities": [
+            {
+              "local": "patch",
+              "name": "putaway station floor",
+              "components": {
+                "region": {
+                  "origin": [
+                    0,
+                    0
+                  ],
+                  "size": [
+                    2550,
+                    1700
+                  ]
+                },
+                "tiling": {
+                  "pitch": [
+                    850,
+                    850
+                  ],
+                  "derives": {
+                    "cell": {
+                      "traversable_by": [
+                        "htm"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "local": "station",
+              "name": "putaway station",
+              "components": {
+                "pose": {
+                  "position": [
+                    2125,
+                    425
+                  ],
+                  "heading_deg": 0
+                },
+                "station": {
+                  "kind": "put",
+                  "bins": 1,
+                  "exit_direction": "+y"
+                }
+              }
+            },
+            {
+              "local": "lane",
+              "name": "putaway station: lane",
+              "components": {
+                "queue": {
+                  "discipline": "no_reverse",
+                  "path": [
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:0,1"
+                    },
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:0,0"
+                    },
+                    {
+                      "local_ref": "patch",
+                      "key": "cell:1,0"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "local": "present",
+              "name": "putaway station presentation",
+              "components": {
+                "pose": {
+                  "position": [
+                    1275,
+                    425
+                  ],
+                  "heading_deg": 0
+                },
+                "presentation_point": {
+                  "for": "inventory_tote",
+                  "station": {
+                    "local_ref": "station"
+                  }
+                }
+              }
+            },
+            {
+              "local": "stitch",
+              "name": "stitch: putaway station floor to the floor",
+              "components": {
+                "stitch": {
+                  "a": {
+                    "local_ref": "patch"
+                  },
+                  "b": "21fb8c6f-da41-43e6-9ea2-82fafedadb0e",
+                  "rule": "contact",
+                  "tolerance": 100
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "f30c424e-fb7b-4806-a307-6dfdbf9e825a",
+      "name": "aisle row",
+      "components": {
+        "pose": {
+          "frame": "80d2fb93-0b77-4be7-9703-7fe942114f57",
+          "position": [
+            6800,
+            4250
+          ],
+          "heading_deg": 0
+        },
+        "template.placement": {
+          "piece": "c91ad800-244b-43e1-ac4b-38733455df1c",
+          "repeat": {
+            "count": [
+              4,
+              1
+            ],
+            "pitch": [
+              7650,
+              0
+            ]
+          },
+          "stands_for": [
+            "sector"
+          ]
+        },
+        "template.knob_binding": {
+          "/template.placement/repeat/count/0": "aisles"
+        }
+      }
+    },
+    {
+      "id": "41df5e07-da84-4b04-936b-ed8203aaf130",
+      "name": "putaway stations on the −x wall",
+      "components": {
+        "pose": {
+          "frame": "80d2fb93-0b77-4be7-9703-7fe942114f57",
+          "position": [
+            0,
+            4250
+          ],
+          "heading_deg": 270
+        },
+        "template.placement": {
+          "piece": "6879e9f7-52b4-49e4-8588-85e1a5117029",
+          "repeat": {
+            "count": [
+              1,
+              2
+            ],
+            "pitch": [
+              0,
+              4250
+            ]
+          },
+          "stands_for": [
+            "station"
+          ]
+        },
+        "template.knob_binding": {
+          "/template.placement/repeat/count/1": "putaway_stations * (1 - orientation)",
+          "/template.placement/repeat/pitch/1": "station_pitch"
+        }
+      }
+    },
+    {
+      "id": "7c01ca03-5034-4ec5-ae57-a4df2775ee42",
+      "name": "pick stations on the +x wall",
+      "components": {
+        "pose": {
+          "frame": "80d2fb93-0b77-4be7-9703-7fe942114f57",
+          "position": [
+            40800,
+            1700
+          ],
+          "heading_deg": 90
+        },
+        "template.placement": {
+          "piece": "eb30b21c-8edb-47ec-a37d-7aee981ba9b2",
+          "repeat": {
+            "count": [
+              1,
+              4
+            ],
+            "pitch": [
+              0,
+              4250
+            ]
+          },
+          "stands_for": [
+            "station"
+          ]
+        },
+        "template.knob_binding": {
+          "/template.placement/repeat/count/1": "pick_stations * (1 - orientation)",
+          "/template.placement/repeat/pitch/1": "station_pitch",
+          "/pose/position/0": "width"
+        }
+      }
+    },
+    {
+      "id": "55aa1f28-85fe-42a7-90ac-464be4bf87bd",
+      "name": "putaway stations on the −y wall",
+      "components": {
+        "pose": {
+          "frame": "80d2fb93-0b77-4be7-9703-7fe942114f57",
+          "position": [
+            1700,
+            0
+          ],
+          "heading_deg": 0
+        },
+        "template.placement": {
+          "piece": "cda8aaca-f7d0-4e17-9aa1-c7a9abae3904",
+          "repeat": {
+            "count": [
+              0,
+              1
+            ],
+            "pitch": [
+              4250,
+              0
+            ]
+          },
+          "stands_for": [
+            "station"
+          ]
+        },
+        "template.knob_binding": {
+          "/template.placement/repeat/count/0": "putaway_stations * orientation",
+          "/template.placement/repeat/pitch/0": "station_pitch"
+        }
+      }
+    },
+    {
+      "id": "f7e3ce17-1bc3-4325-bb83-0a96d93ca713",
+      "name": "pick stations on the +y wall",
+      "components": {
+        "pose": {
+          "frame": "80d2fb93-0b77-4be7-9703-7fe942114f57",
+          "position": [
+            4250,
+            27200
+          ],
+          "heading_deg": 180
+        },
+        "template.placement": {
+          "piece": "ac184957-8224-4694-bd77-0cda833e58dd",
+          "repeat": {
+            "count": [
+              0,
+              1
+            ],
+            "pitch": [
+              4250,
+              0
+            ]
+          },
+          "stands_for": [
+            "station"
+          ]
+        },
+        "template.knob_binding": {
+          "/template.placement/repeat/count/0": "pick_stations * orientation",
+          "/template.placement/repeat/pitch/0": "station_pitch",
+          "/pose/position/1": "depth"
+        }
+      }
+    },
+    {
+      "id": "efd9f522-0759-4b87-bf40-9e9e1cccadcf",
+      "name": "Inventory storage",
+      "components": {
+        "sector": {
+          "members": [
+            "f30c424e-fb7b-4806-a307-6dfdbf9e825a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "f9f9e78a-a191-435e-a4de-3d8572c0c2c6",
+      "name": "Pick stations",
+      "components": {
+        "sector": {
+          "members": [
+            "7c01ca03-5034-4ec5-ae57-a4df2775ee42",
+            "f7e3ce17-1bc3-4325-bb83-0a96d93ca713"
+          ]
+        }
+      }
+    },
+    {
+      "id": "646ce849-b66d-433c-8c75-25e3b18b01f0",
+      "name": "Put stations",
+      "components": {
+        "sector": {
+          "members": [
+            "41df5e07-da84-4b04-936b-ed8203aaf130",
+            "55aa1f28-85fe-42a7-90ac-464be4bf87bd"
+          ]
+        }
+      }
+    }
+  ]
+}

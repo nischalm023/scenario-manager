@@ -1,0 +1,86 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "5c6e8e46-3110-4a78-872a-babdcba664f7",
+    "name": "a piece joining the floor its stamp names, through its parameters and a cell of its own",
+    "kind": "world"
+  },
+  "primary_frame": "f4682e40-3fda-4708-9ab3-9b33f9673670",
+  "required_components": ["frame", "region", "tiling", "template", "stamp", "stitch", "queue", "cell"],
+  "$comment": "Hand-made, because no shipped site writes these forms and Foundry Agent Studio's site templates do. The piece's seam joins its patch to whichever floor the stamp binds as `floor`; its lane runs over the tile of the patch the stamp picks as `queue`, then over the stand, a cell the piece declares and names by its bare handle, then over the floor cell the stamp names outright as `exit`. The stamp sets the piece down on the floor's north edge, so the seam's contact links each tile of the patch to the floor tile below it.",
+  "entities": [
+    {
+      "id": "f4682e40-3fda-4708-9ab3-9b33f9673670",
+      "name": "site",
+      "components": {
+        "frame": { "dims": 3, "units": "mm", "unit_mm": 1 }
+      }
+    },
+    {
+      "id": "9be0cb56-832e-406b-8536-596746bf9587",
+      "name": "floor",
+      "components": {
+        "region": { "frame": "f4682e40-3fda-4708-9ab3-9b33f9673670", "origin": [0, 0], "size": [6000, 1000] },
+        "tiling": { "pitch": [1000, 1000], "derives": { "cell": { "traversable_by": ["htm"] } } }
+      }
+    },
+    {
+      "id": "91407748-c315-44c8-948f-e2bd7d46c369",
+      "name": "a station piece",
+      "components": {
+        "template": {
+          "params": { "floor": {}, "queue": {}, "exit": {} },
+          "entities": [
+            {
+              "local": "patch",
+              "components": {
+                "region": { "origin": [0, 0], "size": [2000, 1000] },
+                "tiling": { "pitch": [1000, 1000], "derives": { "cell": { "traversable_by": ["htm"] } } }
+              }
+            },
+            {
+              "local": "stand",
+              "components": {
+                "pose": { "position": [2500, 500] },
+                "cell": { "traversable_by": ["htm"] }
+              }
+            },
+            {
+              "local": "seam",
+              "components": {
+                "stitch": { "a": { "local_ref": "patch" }, "b": { "$param": "floor" }, "rule": "contact", "tolerance": 0 }
+              }
+            },
+            {
+              "local": "lane",
+              "components": {
+                "queue": {
+                  "path": [
+                    { "local_ref": "patch", "key": { "$param": "queue" } },
+                    { "local_ref": "stand" },
+                    { "$param": "exit" }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "8024b9fa-c3d1-41ef-8aa2-930c4c51fb0b",
+      "name": "the piece, set down on the floor's north edge",
+      "components": {
+        "pose": { "frame": "f4682e40-3fda-4708-9ab3-9b33f9673670", "position": [0, 1000], "heading_deg": 0 },
+        "stamp": {
+          "template": "91407748-c315-44c8-948f-e2bd7d46c369",
+          "params": {
+            "floor": "9be0cb56-832e-406b-8536-596746bf9587",
+            "queue": "cell:1,0",
+            "exit": "9be0cb56-832e-406b-8536-596746bf9587/cell:3,0"
+          }
+        }
+      }
+    }
+  ]
+}

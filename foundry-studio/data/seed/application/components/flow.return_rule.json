@@ -1,0 +1,32 @@
+{
+  "asserts": "is",
+  "component": "flow.return_rule",
+  "meaning": "the entity is the batching and placement rule for totes returning to storage from stations, shared by every return edge one root task serves",
+  "owner": "agent-studio",
+  "refs": [],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "flow.return_rule",
+    "description": "the entity is the batching and placement rule for totes returning to storage from stations, shared by every return edge one root task serves",
+    "$comment": "Written for world-proto's registry from Agent Studio's 06-flow-panel-and-compiler.md section 3.1 (notes/agent-studio-2026-10-17/design/specs/06-flow-panel-and-compiler.md). Open to fields a newer writer adds (SPEC section 9).",
+    "type": "object",
+    "required": [
+      "min_backlog"
+    ],
+    "properties": {
+      "min_backlog": {
+        "description": "Still required, as dessim's return rule requires it; no run reads it: each finished presentation's clearance sends the HTM's tote back to storage and batches nothing.",
+        "type": "integer",
+        "minimum": 1
+      },
+      "destination": {
+        "description": "Which aisle a returning tote goes to.",
+        "enum": [
+          "nearest_eligible"
+        ],
+        "default": "nearest_eligible"
+      }
+    }
+  },
+  "status": "experimental"
+}

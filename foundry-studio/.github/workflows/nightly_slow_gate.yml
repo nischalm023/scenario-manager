@@ -1,0 +1,43 @@
+# The slow gate, nightly: dessim's tests with its whole-fixture simulations
+# and scale benchmarks un-ignored (`scripts/test-slow-gate.sh`).
+# The fast gate a developer runs (`cargo nextest run`) skips those tests, so
+# this is where they are proved. The same Rust the images build with
+# (`rust:1-bookworm`): stable.
+name: Nightly slow gate
+on:
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightly-slow-gate
+  cancel-in-progress: true
+jobs:
+  slow-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    # Debug info cut to line tables, which still give a backtrace its files and
+    # lines. On Linux every test binary carries the debug info of all it links,
+    # and at full debug info dessim's test binaries outgrow the runner's disk.
+    env:
+      CARGO_PROFILE_DEV_DEBUG: line-tables-only
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/world-proto-access
+        with:
+          key: ${{ secrets.WORLD_PROTO_DEPLOY_KEY }}
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: slow-gate
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: nextest
+      # The build has a step of its own, so a run's page tells a build that
+      # failed from a test that failed.
+      - name: Build the tests
+        run: scripts/test-slow-gate.sh --no-run
+      - name: Run the tests
+        run: scripts/test-slow-gate.sh

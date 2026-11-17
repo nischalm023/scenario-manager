@@ -1,0 +1,351 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "Square's top scope (template/site/square): its knobs and its card.",
+  "doc": {
+    "id": "4a24bcad-772d-4d93-8f8f-c0a432adf317",
+    "name": "Square",
+    "kind": "template",
+    "depends_on": [
+      "c00f991f-4b60-4ec5-8b3e-d261c4f9768f",
+      "9667f012-a447-46e6-a75f-beafb020e9eb",
+      "f2914490-29bf-49ff-99fe-027416167ee5",
+      "d44ca445-0338-49a2-85ad-2e6fe2bc7005",
+      "fda5287c-b2e0-4d3e-a000-e46fa35ba40c"
+    ]
+  },
+  "primary_frame": "6ef79a4e-1799-42f5-8e42-f3a69254e0c7",
+  "entities": [
+    {
+      "id": "ba0e382f-6057-494e-8ea3-886a2287152b",
+      "name": "Side",
+      "components": {
+        "template.knob": {
+          "key": "side",
+          "label": "Side",
+          "unit": "mm",
+          "min": 4250,
+          "max": 255000,
+          "step": 850,
+          "default": "max(aisles * 7650 + 10200, bays * 2750 + 9350, max(pick_minus_y + putaway_minus_y, pick_plus_y + putaway_plus_y, pick_minus_x + putaway_minus_x, pick_plus_x + putaway_plus_x) * station_pitch + 3400)",
+          "description": "The shell's side, along x and along y. Fits {aisles} aisles and the stations on its walls.",
+          "group": "Outline",
+          "order": 1,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "aisles * 7650 + 10200 - side",
+              "problem": "The aisle row needs {value} mm more floor than the shell's width gives."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(pick_minus_y + putaway_minus_y) * station_pitch + 3400 - side",
+              "problem": "The stations on the −y wall need {value} mm more wall than it has."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(pick_plus_y + putaway_plus_y) * station_pitch + 3400 - side",
+              "problem": "The stations on the +y wall need {value} mm more wall than it has."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(bays * 2750 + 2549) / 850 * 850 + 7650 - side",
+              "problem": "The aisles need {value} mm more depth than the shell gives them."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(pick_minus_x + putaway_minus_x) * station_pitch + 3400 - side",
+              "problem": "The stations on the −x wall need {value} mm more wall than it has."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(pick_plus_x + putaway_plus_x) * station_pitch + 3400 - side",
+              "problem": "The stations on the +x wall need {value} mm more wall than it has."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a4295aaa-7fa7-47b5-8a79-a64b8d25de77",
+      "name": "Aisles",
+      "components": {
+        "template.knob": {
+          "key": "aisles",
+          "label": "Aisles",
+          "unit": "count",
+          "min": 1,
+          "max": 30,
+          "step": 1,
+          "default": 4,
+          "description": "Aisles of two rack rows each, laid side by side along +x.",
+          "group": "Storage",
+          "order": 1
+        }
+      }
+    },
+    {
+      "id": "ce9b9eaf-6af1-48c6-ae25-58d79988b65a",
+      "name": "Bays per rack row",
+      "components": {
+        "template.knob": {
+          "key": "bays",
+          "label": "Bays per rack row",
+          "unit": "count",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "default": 4,
+          "description": "Bays of relay racking in each rack row, along each aisle.",
+          "group": "Storage",
+          "order": 2
+        }
+      }
+    },
+    {
+      "id": "c2726c08-75ac-4b51-a6bb-d4e2f18aa3e5",
+      "name": "VTMs per aisle",
+      "components": {
+        "template.knob": {
+          "key": "vtms_per_aisle",
+          "label": "VTMs per aisle",
+          "unit": "count",
+          "options": [
+            {
+              "value": 1,
+              "label": "1 VTM"
+            },
+            {
+              "value": 2,
+              "label": "2 VTMs"
+            }
+          ],
+          "default": 2,
+          "description": "VTMs hard-assigned to each aisle.",
+          "group": "Storage",
+          "order": 3
+        }
+      }
+    },
+    {
+      "id": "d6e5a25f-98b1-46b4-8188-26b3cd755512",
+      "name": "Station pitch",
+      "components": {
+        "template.knob": {
+          "key": "station_pitch",
+          "label": "Station pitch",
+          "unit": "mm",
+          "min": 2550,
+          "max": 12750,
+          "step": 850,
+          "default": 4250,
+          "description": "Distance from one station to the next along a wall.",
+          "group": "Stations",
+          "order": 10
+        }
+      }
+    },
+    {
+      "id": "460f7bbd-b03c-4ba4-834e-c4f780affa02",
+      "name": "HTMs",
+      "components": {
+        "template.knob": {
+          "key": "htms",
+          "label": "HTMs",
+          "unit": "count",
+          "min": 1,
+          "max": 600,
+          "step": 1,
+          "default": 24,
+          "description": "HTMs working the floor.",
+          "group": "Fleet",
+          "order": 20,
+          "checks": [
+            {
+              "severity": "warning",
+              "value_unit": "count",
+              "fails_when": "pick_minus_y + pick_plus_y + pick_minus_x + pick_plus_x + putaway_minus_y + putaway_plus_y + putaway_minus_x + putaway_plus_x - htms",
+              "problem": "Fewer HTMs than stations: {value} stations have no HTM of their own."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "d1710229-656b-4ba7-b458-e52a5a5e9dff",
+      "name": "Pick stations, −y wall",
+      "components": {
+        "template.knob": {
+          "key": "pick_minus_y",
+          "label": "Pick stations, −y wall",
+          "unit": "count",
+          "min": 0,
+          "max": 12,
+          "step": 1,
+          "default": 4,
+          "description": "Pick stations along the −y wall, drawn along the bottom.",
+          "group": "Stations",
+          "order": 1,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "count",
+              "fails_when": "1 - min(1, pick_minus_y + pick_plus_y + pick_minus_x + pick_plus_x)",
+              "problem": "Place at least one pick station."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a9cee19c-f15d-4f97-b10a-8a9b9acf0e2f",
+      "name": "Pick stations, +y wall",
+      "components": {
+        "template.knob": {
+          "key": "pick_plus_y",
+          "label": "Pick stations, +y wall",
+          "unit": "count",
+          "min": 0,
+          "max": 12,
+          "step": 1,
+          "default": 0,
+          "description": "Pick stations along the +y wall, drawn along the top.",
+          "group": "Stations",
+          "order": 2
+        }
+      }
+    },
+    {
+      "id": "e3442350-1b04-4017-9333-c2e767a0215d",
+      "name": "Pick stations, −x wall",
+      "components": {
+        "template.knob": {
+          "key": "pick_minus_x",
+          "label": "Pick stations, −x wall",
+          "unit": "count",
+          "min": 0,
+          "max": 12,
+          "step": 1,
+          "default": 0,
+          "description": "Pick stations along the −x wall, drawn up the left.",
+          "group": "Stations",
+          "order": 3
+        }
+      }
+    },
+    {
+      "id": "aa779272-6986-4833-b490-a2032f53abee",
+      "name": "Pick stations, +x wall",
+      "components": {
+        "template.knob": {
+          "key": "pick_plus_x",
+          "label": "Pick stations, +x wall",
+          "unit": "count",
+          "min": 0,
+          "max": 12,
+          "step": 1,
+          "default": 0,
+          "description": "Pick stations along the +x wall, drawn up the right.",
+          "group": "Stations",
+          "order": 4
+        }
+      }
+    },
+    {
+      "id": "e6156335-c9aa-4d68-a225-c0164d0167d9",
+      "name": "Putaway stations, −y wall",
+      "components": {
+        "template.knob": {
+          "key": "putaway_minus_y",
+          "label": "Putaway stations, −y wall",
+          "unit": "count",
+          "min": 0,
+          "max": 12,
+          "step": 1,
+          "default": 0,
+          "description": "Putaway stations along the −y wall, drawn along the bottom.",
+          "group": "Stations",
+          "order": 5
+        }
+      }
+    },
+    {
+      "id": "22a4cdd6-6cd6-425f-be2f-4d09e860ebd2",
+      "name": "Putaway stations, +y wall",
+      "components": {
+        "template.knob": {
+          "key": "putaway_plus_y",
+          "label": "Putaway stations, +y wall",
+          "unit": "count",
+          "min": 0,
+          "max": 12,
+          "step": 1,
+          "default": 2,
+          "description": "Putaway stations along the +y wall, drawn along the top.",
+          "group": "Stations",
+          "order": 6,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "count",
+              "fails_when": "1 - min(1, putaway_minus_y + putaway_plus_y + putaway_minus_x + putaway_plus_x)",
+              "problem": "Place at least one putaway station."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "92959004-a723-4a74-87f5-48ba671fdb90",
+      "name": "Putaway stations, −x wall",
+      "components": {
+        "template.knob": {
+          "key": "putaway_minus_x",
+          "label": "Putaway stations, −x wall",
+          "unit": "count",
+          "min": 0,
+          "max": 12,
+          "step": 1,
+          "default": 0,
+          "description": "Putaway stations along the −x wall, drawn up the left.",
+          "group": "Stations",
+          "order": 7
+        }
+      }
+    },
+    {
+      "id": "e95c0b63-57b8-4066-bdc6-f7fe0dcb3b1e",
+      "name": "Putaway stations, +x wall",
+      "components": {
+        "template.knob": {
+          "key": "putaway_plus_x",
+          "label": "Putaway stations, +x wall",
+          "unit": "count",
+          "min": 0,
+          "max": 12,
+          "step": 1,
+          "default": 0,
+          "description": "Putaway stations along the +x wall, drawn up the right.",
+          "group": "Stations",
+          "order": 8
+        }
+      }
+    },
+    {
+      "id": "355ea363-9256-4544-8643-4970a65517a3",
+      "name": "Square",
+      "components": {
+        "template.description": {
+          "title": "Square",
+          "text": "Equal sides, flexible flow",
+          "built_from": "GOFoundry-POC's shell library, warehouseLayouts.js:7-19 at 4104823"
+        }
+      }
+    }
+  ]
+}

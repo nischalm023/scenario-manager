@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Walmart — workflow isolation</title><style>
+:root {
+  --paper:#f5f5f5;
+  --paper-2:#ececec;
+  --ink:#2d3142;
+  --muted:#4f5d75;
+  --rule:#bfc0c0;
+  --accent:#eb6c36;
+  --accent-tint:rgba(235,108,54,.08);
+  --link:#2e5aa8;
+  --sans:'Geist',Arial,sans-serif;
+  --mono:'Geist Mono',Menlo,Consolas,monospace;
+  --serif:'Instrument Serif',Georgia,serif;
+}
+* { box-sizing:border-box }
+body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.6 var(--sans) }
+main { max-width:1120px; margin:0 auto; padding:48px 40px 64px }
+a { color:var(--link); text-underline-offset:4px }
+a:focus-visible { outline:3px solid var(--link); outline-offset:4px }
+header { margin-bottom:32px }
+.status { display:inline-block; margin:0 0 16px; padding:4px 12px; border:1px solid var(--rule); border-radius:4px; font-size:12px; font-weight:600 }
+h1 { margin:0 0 20px; font:400 48px/1.12 var(--serif); letter-spacing:-.02em }
+h2 { margin:0 0 16px; font-size:28px; line-height:1.25; font-weight:600 }
+h3 { margin:0 0 12px; font-size:20px; line-height:1.35 }
+p { max-width:82ch; margin:0 0 16px }
+.lead { font-size:20px; line-height:1.5; max-width:68ch }
+.meta { color:var(--muted); font-size:14px }
+nav { display:flex; flex-wrap:wrap; gap:12px 28px; padding:20px 0; margin-bottom:40px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule) }
+section { margin:0 0 48px; scroll-margin-top:24px }
+.note { padding:18px 24px; margin:24px 0; border-left:4px solid var(--accent); background:var(--accent-tint) }
+.note p:last-child { margin-bottom:0 }
+.questions { list-style:none; padding:0; margin:24px 0; counter-reset:question }
+.questions>li { counter-increment:question; padding:24px 0 24px 60px; border-top:1px solid var(--rule); position:relative; break-inside:avoid }
+.questions>li::before { content:counter(question,decimal-leading-zero); position:absolute; left:0; top:22px; color:var(--accent); font:400 28px/1.3 var(--serif) }
+.questions p:last-child { margin-bottom:0 }
+.purpose { color:var(--muted); font-size:14px }
+code { font:.9em var(--mono); overflow-wrap:anywhere }
+table { width:100%; border-collapse:collapse; margin:24px 0; font-size:15px }
+caption { text-align:left; margin-bottom:12px; color:var(--muted); font-size:14px }
+th,td { padding:14px 16px; vertical-align:top; border-bottom:1px solid var(--rule); text-align:left }
+th { background:var(--paper-2); font-weight:600 }
+tbody th { background:transparent; width:24% }
+.sources tbody th { width:26% }
+footer { padding-top:24px; border-top:1px solid var(--rule); color:var(--muted); font-size:13px }
+@media(max-width:700px) {
+  main { padding:32px 20px 48px }
+  h1 { font-size:38px }
+  h2 { font-size:24px }
+  .lead { font-size:18px }
+  .questions>li { padding-left:44px }
+  th,td { padding:12px 8px }
+}
+@media print {
+  @page { margin:16mm }
+  body { background:#fff; font-size:10pt; line-height:1.45; print-color-adjust:exact; -webkit-print-color-adjust:exact }
+  main { max-width:none; padding:0 }
+  h1 { font-size:30pt }
+  h2 { font-size:18pt; break-after:avoid }
+  h3 { font-size:13pt; break-after:avoid }
+  .lead { font-size:12pt }
+  .meta,.purpose,caption,footer { font-size:9pt }
+  nav { display:none }
+  section { margin-bottom:24pt }
+  .questions>li { padding-top:14pt; padding-bottom:14pt }
+  .questions>li::before { top:12pt }
+  table { font-size:9pt }
+  tr { break-inside:avoid }
+  thead { display:table-header-group }
+  th,td { padding:9pt }
+  a { color:inherit }
+}
+
+pre {padding:20px;background:var(--paper-2);overflow:auto;line-height:1.5}
+pre code {overflow-wrap:normal}
+.table-scroll {overflow-x:auto}
+</style></head><body><main>
+<header><p class="status">Solutions team · controlled comparisons</p><h1>Find what limits the flow</h1>
+<p class="lead">Remove one workflow stage at a time, measure the change, then restore it. These controls are supported task parameters; normal behavior is the default.</p>
+<p class="meta">Walmart EasyLoop · 230 HTMs · updated 12 September 2026</p></header>
+<nav><a href="#controls">Controls</a><a href="#compare">Comparison runs</a><a href="#configure">Configuration</a><a href="#results">Results</a><a href="tasks.html">Task design</a><a href="questions.html">Site questions</a></nav>
+<section id="controls"><h2>What each control changes</h2>
+<div class="table-scroll"><table><thead><tr><th>Task parameter</th><th>When true</th><th>What still happens</th></tr></thead><tbody>
+<tr><th><code>bypass_extraction</code><br><span class="meta">Default: false</span></th><td>After the order HTM physically clears its EasyLoop, the order contents disappear immediately. Boxes disappear too. There is no order-buffer detour, extraction trip, or extraction dwell.</td><td>Actual picks, the loaded exit movement, and admission reservations remain. Empty reusable totes/trays return to storage normally. Empty box HTMs become available for their next assignment or the normal idle fallback.</td></tr>
+<tr><th><code>bypass_box_induction</code><br><span class="meta">Default: false</span></th><td>A selected available empty HTM receives a box instantly at its own location. It does not visit the induction port or spend time picking up the box.</td><td>The real finite HTM fleet, robot availability times, fleet headroom, travel to the assigned EasyLoop, admission, waiting, and picks remain. Tote/tray retrieval is unchanged. No HTM is teleported or created.</td></tr>
+</tbody></table></div>
+<p>These controls are independent. They apply to the <code>FulfillOrders</code> task tree. They do not alter Cencora's task flow. Missing ports are allowed only when the corresponding stage is bypassed.</p>
+<p>Bypassed extraction emits no extraction service cycles, so the extraction-rate metric is zero by construction. Pick counts and physical order-area entry/exit metrics still report actual simulated work. A bypass result measures the remaining system's capacity; it is not a forecast for the full workflow.</p></section>
+<section id="compare"><h2>Run the four comparisons</h2>
+<p>Use the same map, fleet, order file, seed, simulated duration, order eligibility, and inventory settings. All four supplied presets use the full order file, T0 eligibility, direct extraction where enabled, and no putaway.</p>
+<div class="table-scroll"><table><thead><tr><th>Preset</th><th>Extraction bypass</th><th>Box-induction bypass</th><th>Question</th></tr></thead><tbody>
+<tr><th><a href="../../sim/dessim/tests/fixtures/walmart_dfw6_throughput_control_spec.json">Control</a></th><td>false</td><td>false</td><td>What does the complete outbound flow achieve?</td></tr>
+<tr><th><a href="../../sim/dessim/tests/fixtures/walmart_dfw6_no_extraction_spec.json">No extraction</a></th><td>true</td><td>false</td><td>How much do outbound travel, extraction service, and their traffic limit picking?</td></tr>
+<tr><th><a href="../../sim/dessim/tests/fixtures/walmart_dfw6_no_induction_spec.json">No box induction</a></th><td>false</td><td>true</td><td>Does box supply limit order-container availability?</td></tr>
+<tr><th><a href="../../sim/dessim/tests/fixtures/walmart_dfw6_no_induction_or_extraction_spec.json">Both bypassed</a></th><td>true</td><td>true</td><td>What limits the remaining inventory retrieval, conveyor, order admission, and operator flow?</td></tr>
+</tbody></table></div>
+<p>Compare completed picks per simulated hour, operator utilization, physically resident orders, and HTM idle/held time. Confirm the run reached the requested horizon. Compare complete interior hours for sustained throughput; a one-hour run includes startup.</p>
+<p>A small gain from either single bypass does not rule out that stage: another stage can mask it. The combined run exposes that interaction. When a bypass helps, trace the remaining delay before deciding whether the real workflow needs a scheduling fix, a corrected service-time assumption, or more physical capacity.</p></section>
+<section id="configure"><h2>Configure the task</h2><p>In a scenario with an inline composition, put the switches on its existing <code>FulfillOrders</code> root task:</p>
+<pre><code>{
+  "type": "FulfillOrders",
+  "after": ["LoadOrders"],
+  "config": {
+    "bypass_extraction": false,
+    "bypass_box_induction": false
+  }
+}</code></pre>
+<p>Set either value to <code>true</code> for the comparison. These are JSON booleans, not quoted strings. Omission means normal behavior. When using a named composition, the same configuration belongs on its root task in the composition JSON.</p>
+<p>The effective composition is included in the saved profile. Active switches are also printed in the startup log as <code>[flow isolation]</code>. Give each inspection window and exported run a label identifying its mode. Restore both switches to false for a full-workflow run.</p>
+<p>Existing duration parameters such as <code>extraction_secs</code> can test service-time sensitivity without removing travel. Bypass switches remove the whole named stage; those are different experiments.</p></section>
+<section id="results"><h2>Current comparison</h2>
+<div class="table-scroll"><table><thead><tr><th>Extraction</th><th>Box induction</th><th>Picks in one simulated hour</th><th>HTM idle time</th></tr></thead><tbody>
+<tr><td>Normal</td><td>Normal</td><td>866</td><td>39.4%</td></tr>
+<tr><td>Disabled</td><td>Normal</td><td>1,264</td><td>34.2%</td></tr>
+<tr><td>Normal</td><td>Disabled</td><td>No completed result: relay-pickup route failure</td><td>—</td></tr>
+<tr><td>Disabled</td><td>Disabled</td><td>1,313</td><td>35.8%</td></tr>
+</tbody></table></div>
+<p>Disabling extraction increases the completed-hour pick count by 46%. Disabling box induction as well adds another 49 picks, reaching 91% of the four operators’ 1,440 single-unit picks/hour ceiling. The run with both disabled produced 310, 331, 337, and 335 picks in successive quarter-hours.</p>
+<p>With normal extraction and box induction disabled, the scheduler stopped after 560 picks when a relay pickup could not find a route within its 300-second planning horizon. That incomplete run cannot establish the effect of disabling box induction by itself. The failure is retained for a routing/selection audit.</p>
+<p>These are one-hour comparisons, including startup. All picked orders in the measured cohorts contained one unit. They do not yet establish long-run stability or capacity for the full multi-line order mix and putaway workload.</p>
+<p><a href="review-2026-09-12/workflow-isolation.md">Isolation validation and run provenance</a></p>
+<p><a href="review-2026-09-12/inventory-release.md">Inventory-release comparison and baseline provenance</a></p></section>
+<footer>Keep the main scenario faithful to the site workflow. Use a labeled preset or copied composition for isolation, and retain its settings with the results.</footer>
+</main></body></html>

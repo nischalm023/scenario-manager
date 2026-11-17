@@ -1,0 +1,7458 @@
+{
+  "proto_version": "0.7.0",
+  "doc": {
+    "id": "2d2b5c2e-e7e7-455f-b74c-fa388f0b869c",
+    "name": "cencora world (converted from desmap fixture cencora_v3)",
+    "kind": "world",
+    "depends_on": []
+  },
+  "primary_frame": "23dcb09e-5b10-4b6c-bdb5-8a01b12ebaa6",
+  "required_components": [
+    "frame",
+    "region",
+    "tiling",
+    "access",
+    "stitch",
+    "template",
+    "stamp",
+    "rack",
+    "storage",
+    "sector",
+    "station",
+    "queue",
+    "presentation_point",
+    "cohort",
+    "robot_class",
+    "carrier_type"
+  ],
+  "$comment": "Converted from libs/desmap/tests/fixtures/cencora_v3.world.json (WarehouseDesign v3): a 153 x 96 grid at 850 mm, 19 relay zones, one rack prototype, 26 stations, 84 clip boxes, 14 parking zones, 340 HTMs. The old file already records that its row axis is not one pitch: it carries row_centers_mm because the diving boards inside a rack bay sit 645/645/850 apart and no uniform pitch lands on that sequence. Nothing here is laundered back through a uniform pitch to get rid of it — the bays repeat at their true 2,140 mm and each bay's three diving boards sit at their surveyed 425/1070/1715 mm, which reproduces all 18 surveyed row centres exactly, while the open floor keeps a floor pitch and the relays bind its cells many-to-one. The one prototype becomes TWO templates, because which face the boards present on is a fact about the steel now and this site's 38 runs alternate faces across their aisles. Old grid [c, r] -> mm [850c+425, row_centers_mm[r]]. See CONVERSION.md for every mapping decision, what the old file could not say, and what this conversion had to invent.",
+  "entities": [
+    {
+      "id": "23dcb09e-5b10-4b6c-bdb5-8a01b12ebaa6",
+      "name": "site",
+      "components": {
+        "frame": {
+          "dims": 3,
+          "units": "mm",
+          "unit_mm": 1
+        }
+      }
+    },
+    {
+      "id": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+      "name": "floor1",
+      "components": {
+        "frame": {
+          "parent": "23dcb09e-5b10-4b6c-bdb5-8a01b12ebaa6",
+          "dims": 2,
+          "units": "mm",
+          "transform_to_parent": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "0e14e66d-f51c-4ba0-88aa-681177205c40",
+      "name": "legacy grid (desmap)",
+      "components": {
+        "frame": {
+          "parent": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "dims": 2,
+          "units": "index",
+          "integer_only": true,
+          "transform_to_parent": {
+            "translation": [
+              425,
+              425
+            ],
+            "scale": [
+              850,
+              850
+            ]
+          },
+          "$comment": "The old fixture's grid: 153 wide x 96 deep, cell_size_mm 850, no mirror (desmap fixtures are self-consistent). An old index names a cell, and a cell's place is its centre, so the transform is the formula this file's own header states: index [c,r] reads as millimetres [850c+425, 850r+425] — the 850 mm pitch as the scale, half a cell as the translation. A zero translation would name the cell's minimum corner instead, and shift every projection half a cell into the next square. Declared for projection only — nothing below is positioned in it — and this fixture is the proof that the projection is nominal and lossy (SPEC §4). Column centres do land on 850c+425 everywhere. Row centres do NOT: the old file carries row_centers_mm because grid rows 20-37 are the surveyed relay positions of the rack runs (645/645/850 repeating), and everything above them is shifted a constant -2460 mm off the nominal lattice, because 18 rows of true relay pitch span 12,840 mm where 18 nominal cells would span 15,300 mm."
+        }
+      }
+    },
+    {
+      "id": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+      "name": "open floor: grid rows 0-19",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            0,
+            0
+          ],
+          "size": [
+            130050,
+            17000
+          ]
+        },
+        "tiling": {
+          "$comment": "153 x 20 = 3060 cells on the nominal lattice, which for these rows IS the survey: grid rows 0-19 sit at 850c+425 exactly. The pick stations and their queues live here. No flow is declared, so the band compiles two_way (SPEC §5: flow restricts, never permits) — the old fixture has zero highways and lets HTMs roam the open grid.",
+          "pitch": [
+            850,
+            850
+          ],
+          "exclusions": [
+            {
+              "origin": [
+                124100,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                118150,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                112200,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                106250,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                90950,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                79050,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                63750,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                57800,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                51850,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                42500,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                36550,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                30600,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                24650,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                15300,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                9350,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                3400,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                90950,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                15300
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            }
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "29aea64c-c755-4fa6-b965-ccaca1fad270",
+      "name": "open floor: lane past bay 1 (grid rows 20-22)",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            0,
+            17102
+          ],
+          "size": [
+            130050,
+            1935
+          ]
+        },
+        "tiling": {
+          "$comment": "The HTM lane running past one bay of the rack faces. The old file gives these rows at 645/645/850, and that is the survey: the three diving-board positions inside a 2,140 mm bay, six bays deep, which desmap had to bend its single row axis onto because it has one pitch per axis for everything. This rectangle keeps them — three rows at the boards' own 645 mm — so a cell centre stands under every board and each relay binds a cell of its own. That is why one bay is one rectangle: 645 tiles a bay exactly and no single pitch tiles the run, and a lane retiled at a pitch of its own leaves relays sharing cells sideways, which SPEC §5 calls a misalignment. The origin sits half a step low so that 645's half-step centre rounds half-up onto the surveyed number. Centres: 17425, 18070, 18715. Nothing is minted alongside: the cell an HTM stands on to work a board is a cell of the lane it was already driving.",
+          "pitch": [
+            850,
+            645
+          ],
+          "exclusions": [
+            {
+              "$comment": "zone 1 footprint: The whole three-column zone leaves the floor: both rack columns and the VTM aisle between them, 3 x 15 = 45 relay-band cells per zone. The old compiler kept the aisle as CellKind::Aisle, blocked every HTM edge touching one, and walled the column at both ends with clip boxes — so no HTM ever entered it, and VTMs need no floor cells at all, because the rack is their habitat (SPEC §7). What used to be an aisle column is now the 850 mm of clear air between two rack footprints that face away from each other.",
+              "origin": [
+                124100,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                118150,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                112200,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                106250,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                79050,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                63750,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                57800,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                51850,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                42500,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                36550,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                30600,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                24650,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                15300,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                9350,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                3400,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                90950,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                -102
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            }
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "a263108b-f5d6-4719-8603-42a955884939",
+      "name": "open floor: grid rows 38-95",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            0,
+            29840
+          ],
+          "size": [
+            130050,
+            49300
+          ]
+        },
+        "tiling": {
+          "$comment": "153 x 58 = 8874 cells at uniform 850 pitch again, but anchored at y = 29,840 rather than the nominal 32,300: the surveyed band below is 2,460 mm shorter than 18 nominal cells, and every row above it inherits that shift. The 16 putaway stations live here, as does the building notch — the single 114 x 46 clip box that removes 5,244 of these cells.",
+          "pitch": [
+            850,
+            850
+          ],
+          "exclusions": [
+            {
+              "$comment": "clip 0: All 84 clip_boxes of the old file, in source order, one exclusion each and no further comment on any of them — a clip box is an anonymous 'make this Blank' rectangle with no id and no reason attached, and this is what 84 of them look like. This first one carries most of the work: 114 x 46 grid cells, the corner of the bounding rectangle that is not the building — cencora's floor is an L. Ten of the 84 are exact duplicates of another (the zone-end walls at columns 82, 100 and 107), harmless in both formats. Each rectangle's y range is cut midway to the neighbouring row centres, so it strictly contains the centres it means to remove and none of its neighbours' (SPEC §5).",
+              "origin": [
+                0,
+                10200
+              ],
+              "size": [
+                96900,
+                39100
+              ]
+            },
+            {
+              "origin": [
+                124100,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                90950,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                106250,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                112200,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                118150,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                51850,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                57800,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                63750,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                79050,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                42500,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                36550,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                30600,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                24650,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                15300,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                9350,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                3400,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                90950,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                0
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                11900,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                11050,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                15300,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                14450,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                18700,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                17850,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                21250,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                8500,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                22100,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                45050,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                48450,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                51850,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                47600,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                51000,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                54400,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                55250,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                57800,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                58650,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                79900,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                83300,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                86700,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                82450,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                85850,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                89250,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                90100,
+                7650
+              ],
+              "size": [
+                850,
+                2550
+              ]
+            },
+            {
+              "origin": [
+                92650,
+                8500
+              ],
+              "size": [
+                850,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                10200
+              ],
+              "size": [
+                2550,
+                850
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                12750
+              ],
+              "size": [
+                1700,
+                850
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                13600
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                17000
+              ],
+              "size": [
+                1700,
+                850
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                17850
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                21250
+              ],
+              "size": [
+                1700,
+                850
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                22100
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                25500
+              ],
+              "size": [
+                1700,
+                850
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                26350
+              ],
+              "size": [
+                2550,
+                1700
+              ]
+            }
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "ccdf3ab3-ff96-4ec3-8dd7-5e818c571215",
+      "name": "stitch: rows 0-19 band <-> lane past bay 1",
+      "components": {
+        "stitch": {
+          "a": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+          "b": "29aea64c-c755-4fa6-b965-ccaca1fad270",
+          "rule": "contact",
+          "$comment": "The seam where the uniform lattice hands over to the first bay's lane: 102 mm of gap, columns aligned, one link per surviving column pair. Nothing links without a stitch (SPEC §5) — two bands that abut are two bands that abut.",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "a008a271-4c62-43e9-bbf2-98f0d04d1e02",
+      "name": "stitch: lane past bay 6 <-> rows 38-95 band",
+      "components": {
+        "stitch": {
+          "a": "ada32c4d-ebdc-57f1-883a-f5ae7d4770ef",
+          "b": "a263108b-f5d6-4719-8603-42a955884939",
+          "rule": "contact",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "c392abcd-d86c-5886-a155-9a2d36daa18c",
+      "name": "open floor: lane past bay 2 (grid rows 23-25)",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            0,
+            19242
+          ],
+          "size": [
+            130050,
+            1935
+          ]
+        },
+        "tiling": {
+          "$comment": "Bay 2 of six. Same three rows at 645 mm, one bay further along: centres 19565, 20210, 20855, which are the source's own row centres for grid rows 23-25.",
+          "pitch": [
+            850,
+            645
+          ],
+          "exclusions": [
+            {
+              "$comment": "zone 1 footprint: The whole three-column zone leaves the floor: both rack columns and the VTM aisle between them, 3 x 15 = 45 relay-band cells per zone. The old compiler kept the aisle as CellKind::Aisle, blocked every HTM edge touching one, and walled the column at both ends with clip boxes — so no HTM ever entered it, and VTMs need no floor cells at all, because the rack is their habitat (SPEC §7). What used to be an aisle column is now the 850 mm of clear air between two rack footprints that face away from each other.",
+              "origin": [
+                124100,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                118150,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                112200,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                106250,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                79050,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                63750,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                57800,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                51850,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                42500,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                36550,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                30600,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                24650,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                15300,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                9350,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                3400,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                90950,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                -2242
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            }
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "3d639e13-630f-51c3-89b3-8d964861d2dc",
+      "name": "open floor: lane past bay 3 (grid rows 26-28)",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            0,
+            21382
+          ],
+          "size": [
+            130050,
+            1935
+          ]
+        },
+        "tiling": {
+          "$comment": "Bay 3 of six. Same three rows at 645 mm, one bay further along: centres 21705, 22350, 22995, which are the source's own row centres for grid rows 26-28.",
+          "pitch": [
+            850,
+            645
+          ],
+          "exclusions": [
+            {
+              "$comment": "zone 1 footprint: The whole three-column zone leaves the floor: both rack columns and the VTM aisle between them, 3 x 15 = 45 relay-band cells per zone. The old compiler kept the aisle as CellKind::Aisle, blocked every HTM edge touching one, and walled the column at both ends with clip boxes — so no HTM ever entered it, and VTMs need no floor cells at all, because the rack is their habitat (SPEC §7). What used to be an aisle column is now the 850 mm of clear air between two rack footprints that face away from each other.",
+              "origin": [
+                124100,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                118150,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                112200,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                106250,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                79050,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                63750,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                57800,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                51850,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                42500,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                36550,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                30600,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                24650,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                15300,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                9350,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                3400,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                90950,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                -4382
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            }
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "baf08347-0aed-57b1-923c-ffc891b8474c",
+      "name": "open floor: lane past bay 4 (grid rows 29-31)",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            0,
+            23522
+          ],
+          "size": [
+            130050,
+            1935
+          ]
+        },
+        "tiling": {
+          "$comment": "Bay 4 of six. Same three rows at 645 mm, one bay further along: centres 23845, 24490, 25135, which are the source's own row centres for grid rows 29-31.",
+          "pitch": [
+            850,
+            645
+          ],
+          "exclusions": [
+            {
+              "$comment": "zone 1 footprint: The whole three-column zone leaves the floor: both rack columns and the VTM aisle between them, 3 x 15 = 45 relay-band cells per zone. The old compiler kept the aisle as CellKind::Aisle, blocked every HTM edge touching one, and walled the column at both ends with clip boxes — so no HTM ever entered it, and VTMs need no floor cells at all, because the rack is their habitat (SPEC §7). What used to be an aisle column is now the 850 mm of clear air between two rack footprints that face away from each other.",
+              "origin": [
+                124100,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                118150,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                112200,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                106250,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                79050,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                63750,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                57800,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                51850,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                42500,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                36550,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                30600,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                24650,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                15300,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                9350,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                3400,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                90950,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                -6522
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            }
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "d29a685e-85bf-52b2-b3a4-751e94e9d422",
+      "name": "open floor: lane past bay 5 (grid rows 32-34)",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            0,
+            25662
+          ],
+          "size": [
+            130050,
+            1935
+          ]
+        },
+        "tiling": {
+          "$comment": "Bay 5 of six. Same three rows at 645 mm, one bay further along: centres 25985, 26630, 27275, which are the source's own row centres for grid rows 32-34.",
+          "pitch": [
+            850,
+            645
+          ],
+          "exclusions": [
+            {
+              "$comment": "zone 1 footprint: The whole three-column zone leaves the floor: both rack columns and the VTM aisle between them, 3 x 15 = 45 relay-band cells per zone. The old compiler kept the aisle as CellKind::Aisle, blocked every HTM edge touching one, and walled the column at both ends with clip boxes — so no HTM ever entered it, and VTMs need no floor cells at all, because the rack is their habitat (SPEC §7). What used to be an aisle column is now the 850 mm of clear air between two rack footprints that face away from each other.",
+              "origin": [
+                124100,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                118150,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                112200,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                106250,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                79050,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                63750,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                57800,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                51850,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                42500,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                36550,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                30600,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                24650,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                15300,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                9350,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                3400,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                90950,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                -8662
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            }
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "ada32c4d-ebdc-57f1-883a-f5ae7d4770ef",
+      "name": "open floor: lane past bay 6 (grid rows 35-37)",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            0,
+            27802
+          ],
+          "size": [
+            130050,
+            1935
+          ]
+        },
+        "tiling": {
+          "$comment": "Bay 6 of six. Same three rows at 645 mm, one bay further along: centres 28125, 28770, 29415, which are the source's own row centres for grid rows 35-37.",
+          "pitch": [
+            850,
+            645
+          ],
+          "exclusions": [
+            {
+              "$comment": "zone 1 footprint: The whole three-column zone leaves the floor: both rack columns and the VTM aisle between them, 3 x 15 = 45 relay-band cells per zone. The old compiler kept the aisle as CellKind::Aisle, blocked every HTM edge touching one, and walled the column at both ends with clip boxes — so no HTM ever entered it, and VTMs need no floor cells at all, because the rack is their habitat (SPEC §7). What used to be an aisle column is now the 850 mm of clear air between two rack footprints that face away from each other.",
+              "origin": [
+                124100,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                118150,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                112200,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                106250,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                96900,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                79050,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                63750,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                57800,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                51850,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                42500,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                36550,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                30600,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                24650,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                15300,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                9350,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                3400,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                90950,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                85000,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            },
+            {
+              "origin": [
+                69700,
+                -10802
+              ],
+              "size": [
+                2550,
+                12840
+              ]
+            }
+          ],
+          "derives": {
+            "cell": {
+              "traversable_by": [
+                "htm"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "5146b05b-b102-5351-af3f-09ac5b189bfa",
+      "name": "stitch: lane past bay 1 <-> lane past bay 2",
+      "components": {
+        "stitch": {
+          "a": "29aea64c-c755-4fa6-b965-ccaca1fad270",
+          "b": "c392abcd-d86c-5886-a155-9a2d36daa18c",
+          "rule": "contact",
+          "tolerance": 250,
+          "$comment": "A seam between one bay's lane rectangle and the next: 205 mm of floor the survey puts no row centre in, because the gap from a bay's last board to the next bay's first is 850 mm and a lane row is 645. Nothing links without a stitch (SPEC §5)."
+        }
+      }
+    },
+    {
+      "id": "638e8091-1993-510b-b083-3e8b1481b03d",
+      "name": "stitch: lane past bay 2 <-> lane past bay 3",
+      "components": {
+        "stitch": {
+          "a": "c392abcd-d86c-5886-a155-9a2d36daa18c",
+          "b": "3d639e13-630f-51c3-89b3-8d964861d2dc",
+          "rule": "contact",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "6d514c8d-0a5a-5ada-9200-38edcc477f0a",
+      "name": "stitch: lane past bay 3 <-> lane past bay 4",
+      "components": {
+        "stitch": {
+          "a": "3d639e13-630f-51c3-89b3-8d964861d2dc",
+          "b": "baf08347-0aed-57b1-923c-ffc891b8474c",
+          "rule": "contact",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "e4dd7d0a-5311-5291-80ae-2ab62881da19",
+      "name": "stitch: lane past bay 4 <-> lane past bay 5",
+      "components": {
+        "stitch": {
+          "a": "baf08347-0aed-57b1-923c-ffc891b8474c",
+          "b": "d29a685e-85bf-52b2-b3a4-751e94e9d422",
+          "rule": "contact",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "9522e01d-c04c-5f04-a5da-9a4e0e54918b",
+      "name": "stitch: lane past bay 5 <-> lane past bay 6",
+      "components": {
+        "stitch": {
+          "a": "d29a685e-85bf-52b2-b3a4-751e94e9d422",
+          "b": "ada32c4d-ebdc-57f1-883a-f5ae7d4770ef",
+          "rule": "contact",
+          "tolerance": 250
+        }
+      }
+    },
+    {
+      "id": "47ceda15-2718-4ff5-8518-475e4530da52",
+      "name": "cencora A5 bay (4 slot columns x 11 shelves, 3 relays) (relays on the +y face)",
+      "components": {
+        "template": {
+          "params": {},
+          "$comment": "One bay of the old racks[] prototype 'cencora_a5_bay', presenting its boards on the '+y' face. The old file had one prototype and said nothing about faces; v0.6 puts the relay face on the steel, so a prototype whose copies present opposite ways is two templates. That is what this conversion found and it is not a defect of either format: desmap could not say which way a board pointed, and the runs on the two sides of an aisle genuinely point opposite ways. The template still takes no parameters, and which class works the STORAGE face, from where, still belongs to the access each run declares.",
+          "entities": [
+            {
+              "local": "rack",
+              "components": {
+                "pose": {
+                  "position": [
+                    0,
+                    0
+                  ],
+                  "heading_deg": 0
+                },
+                "rack": {
+                  "slots_wide": 4,
+                  "slots_deep": 1,
+                  "$comment": "Pure steel, as one enumerated list of level heights bottom-up: two relay levels at 394 and 952 mm, then the eleven shelves the old prototype surveyed, 1580 mm up to 7577 mm. That shelf sequence is a 558/559 mm rhythm with two 764 mm structural jumps in it, which is why the list states each height instead of asserting a pitch no shelf sits on. The two relay levels are what the old format could not say at all — it had one relay per position and no heights — and each states where its three shelves stand on the bay, as [along the run, out across it], plus how far one may reach for a cell. The 'out' number is which side of the steel they present on, said as geometry: 850 is the far edge of the bay's depth on this face, 0 the near edge on the other. Six relays per bay, addressed 'relay:{level},{i}'; the two levels at one position share the cell an HTM stands on, because a stack is two shelves and one place to stand, and they share it without being told to: both find the same nearest cell. Which face the STORAGE is worked from, and by whom, is not here: that is the access, declared per zone, because this same steel is served from outside by an HTM and from inside by a climbing A5.",
+                  "footprint": [
+                    2140,
+                    850
+                  ],
+                  "slot_pitch": [
+                    500,
+                    850
+                  ],
+                  "levels": [
+                    {
+                      "height": 394,
+                      "positions": [[425, 850], [1070, 850], [1715, 850]],
+                      "reach": 675
+                    },
+                    {
+                      "height": 952,
+                      "positions": [[425, 850], [1070, 850], [1715, 850]],
+                      "reach": 675
+                    },
+                    {
+                      "height": 1580
+                    },
+                    {
+                      "height": 2138
+                    },
+                    {
+                      "height": 2697
+                    },
+                    {
+                      "height": 3461
+                    },
+                    {
+                      "height": 4020
+                    },
+                    {
+                      "height": 4578
+                    },
+                    {
+                      "height": 5137
+                    },
+                    {
+                      "height": 5696
+                    },
+                    {
+                      "height": 6460
+                    },
+                    {
+                      "height": 7018
+                    },
+                    {
+                      "height": 7577
+                    }
+                  ]
+                },
+                "storage": {
+                  "holds": "inventory"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+      "name": "cencora A5 bay (4 slot columns x 11 shelves, 3 relays) (relays on the -y face)",
+      "components": {
+        "template": {
+          "params": {},
+          "$comment": "One bay of the old racks[] prototype 'cencora_a5_bay', presenting its boards on the '-y' face. The old file had one prototype and said nothing about faces; v0.6 puts the relay face on the steel, so a prototype whose copies present opposite ways is two templates. That is what this conversion found and it is not a defect of either format: desmap could not say which way a board pointed, and the runs on the two sides of an aisle genuinely point opposite ways. The template still takes no parameters, and which class works the STORAGE face, from where, still belongs to the access each run declares.",
+          "entities": [
+            {
+              "local": "rack",
+              "components": {
+                "pose": {
+                  "position": [
+                    0,
+                    0
+                  ],
+                  "heading_deg": 0
+                },
+                "rack": {
+                  "slots_wide": 4,
+                  "slots_deep": 1,
+                  "$comment": "Pure steel, as one enumerated list of level heights bottom-up: two relay levels at 394 and 952 mm, then the eleven shelves the old prototype surveyed, 1580 mm up to 7577 mm. That shelf sequence is a 558/559 mm rhythm with two 764 mm structural jumps in it, which is why the list states each height instead of asserting a pitch no shelf sits on. The two relay levels are what the old format could not say at all — it had one relay per position and no heights — and each states where its three shelves stand on the bay, as [along the run, out across it], plus how far one may reach for a cell. The 'out' number is which side of the steel they present on, said as geometry: 850 is the far edge of the bay's depth on this face, 0 the near edge on the other. Six relays per bay, addressed 'relay:{level},{i}'; the two levels at one position share the cell an HTM stands on, because a stack is two shelves and one place to stand, and they share it without being told to: both find the same nearest cell. Which face the STORAGE is worked from, and by whom, is not here: that is the access, declared per zone, because this same steel is served from outside by an HTM and from inside by a climbing A5.",
+                  "footprint": [
+                    2140,
+                    850
+                  ],
+                  "slot_pitch": [
+                    500,
+                    850
+                  ],
+                  "levels": [
+                    {
+                      "height": 394,
+                      "positions": [[425, 0], [1070, 0], [1715, 0]],
+                      "reach": 675
+                    },
+                    {
+                      "height": 952,
+                      "positions": [[425, 0], [1070, 0], [1715, 0]],
+                      "reach": 675
+                    },
+                    {
+                      "height": 1580
+                    },
+                    {
+                      "height": 2138
+                    },
+                    {
+                      "height": 2697
+                    },
+                    {
+                      "height": 3461
+                    },
+                    {
+                      "height": 4020
+                    },
+                    {
+                      "height": 4578
+                    },
+                    {
+                      "height": 5137
+                    },
+                    {
+                      "height": 5696
+                    },
+                    {
+                      "height": 6460
+                    },
+                    {
+                      "height": 7018
+                    },
+                    {
+                      "height": 7577
+                    }
+                  ]
+                },
+                "storage": {
+                  "holds": "inventory"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "bb9264eb-9e8c-4ce8-b4fc-1190f6e42a1b",
+      "name": "rack row: zone 1 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            124950,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          },
+          "$comment": "Old zone 1: type relay, origin [146, 20], length 18, sides Dual (the default), 6 Left + 6 Right bays at x_offset 0, 2140, ... 10700. The zone's three grid columns are rack / VTM aisle / rack; this stamp is the LEFT rack column. The template runs along its own +x and the heading turns it to run along world +y, so the repeat marches 2,140 mm a bay, six bays, 17,000 -> 29,840 mm. The repeat is legitimate here because the BAY pitch is genuinely uniform: the 645/645/850 alternation the old grid needed row_centers_mm for is the three relay offsets inside one bay, and it comes out of the relay levels' positions at true millimetres — 17425, 18070, 18715, 19565, ... exactly the 18 surveyed row centres. This run takes the '+y'-face template, which the 90 degree turn points at world -x, away from the aisle and onto the HTM lane."
+        },
+        "external_ids": {
+          "desmap_zone_id": 1,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "85c41d4c-bda6-41bc-aa1d-b8d4786f1020",
+      "name": "rack row: zone 1 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            126650,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          },
+          "$comment": "The other face of old zone 1, in the grid column on the far side of the aisle. Same pose convention, same heading, same repeat — what differs is the template: this run takes the '-y'-face copy, which after the quarter turn points at world +x, again away from the aisle. Through v0.5 both runs stamped one template and the face rode on each run's own boards-access; now the face is on the steel, so the two directions are two templates. Keeping the heading the same for both is what keeps bay 0 at the same end of the run on both sides of the aisle."
+        },
+        "external_ids": {
+          "desmap_zone_id": 1,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "ec0a51a0-2ec1-4ae0-b2c6-1b59341b8f34",
+      "name": "rack row: zone 2 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            119000,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 2,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "8eb8a02e-28e1-4aa1-8cfc-0ebd81039f14",
+      "name": "rack row: zone 2 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            120700,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 2,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "a0cc13c8-f54b-4ce3-8300-a7f4d58df28a",
+      "name": "rack row: zone 3 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            113050,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 3,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "87c9d3a4-93b8-4d99-b787-f5c068c2fc68",
+      "name": "rack row: zone 3 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            114750,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 3,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "4457be54-8f98-4833-bedb-91249462eb55",
+      "name": "rack row: zone 4 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            107100,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 4,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "2e47f234-3c60-485c-93a7-c93c4ba6d979",
+      "name": "rack row: zone 4 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            108800,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 4,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "ba5a0276-e5ff-41ae-943f-5042dadcff7e",
+      "name": "rack row: zone 5 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            97750,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 5,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "b4683bd5-b174-4f08-87b7-0d6a974f70ef",
+      "name": "rack row: zone 5 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            99450,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 5,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "2de7b5bf-253c-4dcc-b8b6-ee0fe70dc90e",
+      "name": "rack row: zone 8 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            79900,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 8,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "007214b7-0464-4d1d-a0bd-43718cc9eac9",
+      "name": "rack row: zone 8 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            81600,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 8,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "924a4df2-a7e3-4477-8256-1ce8afc4830d",
+      "name": "rack row: zone 10 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            64600,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 10,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "5d858703-d40c-47f7-a452-ae5d88b89f32",
+      "name": "rack row: zone 10 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            66300,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 10,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "cb6b719a-7ba1-4ba5-b52f-07112b691894",
+      "name": "rack row: zone 11 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            58650,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 11,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "520bcadb-02a8-4bf2-8dc4-3d16fe282bcc",
+      "name": "rack row: zone 11 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            60350,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 11,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "f9a06d3c-892c-486a-9a2d-45c792815107",
+      "name": "rack row: zone 12 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            52700,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 12,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "b746949b-e702-4fd6-9c17-482881903fe5",
+      "name": "rack row: zone 12 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            54400,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 12,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "8dca81cc-85ad-4619-b6d1-1f81bba024dc",
+      "name": "rack row: zone 13 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            43350,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 13,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "49155b06-4b8e-49a5-82e9-0fc6e147e0e5",
+      "name": "rack row: zone 13 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            45050,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 13,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "36d42319-83d6-4918-9f5c-696e4e611823",
+      "name": "rack row: zone 14 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            37400,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 14,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "f0b8d3b4-51c1-432c-aa57-b4801dc69ce9",
+      "name": "rack row: zone 14 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            39100,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 14,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "25416126-9b5b-4eec-b20a-d4b848f9b6af",
+      "name": "rack row: zone 15 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            31450,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 15,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "cf43ff40-7eff-4a80-9df3-5085f7377cf4",
+      "name": "rack row: zone 15 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            33150,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 15,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "c90dceba-ceb7-4004-957e-396b0069d342",
+      "name": "rack row: zone 16 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            25500,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 16,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "80b00389-ef9c-443d-8825-6af68b4f265f",
+      "name": "rack row: zone 16 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            27200,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 16,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "1c3a510a-9870-49bb-8151-b8a1476260c9",
+      "name": "rack row: zone 17 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            16150,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 17,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "b9cece92-bd05-4f64-baad-8bdefaaaad54",
+      "name": "rack row: zone 17 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            17850,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 17,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "c51571ac-9521-46a1-8324-e88209584927",
+      "name": "rack row: zone 18 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            10200,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 18,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "f0607d2e-a46d-4425-8370-c69310b64e66",
+      "name": "rack row: zone 18 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            11900,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 18,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "fe3b7069-1850-4150-aa8b-1a357f65d014",
+      "name": "rack row: zone 19 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            4250,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 19,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "f15da238-fb1b-450c-b288-501cf1630884",
+      "name": "rack row: zone 19 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            5950,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 19,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "0b973c80-8bc2-4a4e-a024-1fc81904b32d",
+      "name": "rack row: zone 20 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            91800,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 20,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "ded36be2-8160-4b7c-b103-5783028922d4",
+      "name": "rack row: zone 20 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            93500,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 20,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "eaf74bb7-60e9-4e1f-aaec-dc24f52da974",
+      "name": "rack row: zone 21 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            85850,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 21,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "f806eaa6-44ae-4540-9924-cc44f4fb1551",
+      "name": "rack row: zone 21 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            87550,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 21,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "b6ad84cc-ea6d-449e-9912-f0c3d4d3909d",
+      "name": "rack row: zone 23 left face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            70550,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "47ceda15-2718-4ff5-8518-475e4530da52",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 23,
+          "desmap_rack_side": "Left"
+        }
+      }
+    },
+    {
+      "id": "1bbda9aa-9051-43fa-a89b-333fba2baa9b",
+      "name": "rack row: zone 23 right face",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            72250,
+            17000
+          ],
+          "heading_deg": 90
+        },
+        "stamp": {
+          "template": "5f1ce2a7-3b40-4d18-9c62-8d1a4b0e77c3",
+          "params": {},
+          "repeat": {
+            "count": 6,
+            "step": [
+              0,
+              2140
+            ]
+          }
+        },
+        "external_ids": {
+          "desmap_zone_id": 23,
+          "desmap_rack_side": "Right"
+        }
+      }
+    },
+    {
+      "id": "85e5322a-57a8-41ad-841d-53189a54d5e2",
+      "name": "zone 1 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            124100,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 1
+        }
+      }
+    },
+    {
+      "id": "8f808eaa-a827-49ae-b8d3-fbf2961d69fa",
+      "name": "zone 2 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            118150,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 2
+        }
+      }
+    },
+    {
+      "id": "64788d3a-c284-44b5-9574-bf2e44556b08",
+      "name": "zone 3 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            112200,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 3
+        }
+      }
+    },
+    {
+      "id": "ea127743-bf0a-4028-95a5-f1d76776d993",
+      "name": "zone 4 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            106250,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 4
+        }
+      }
+    },
+    {
+      "id": "b1526ba1-62d5-4b83-81e9-8fd5ca559481",
+      "name": "zone 5 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            96900,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 5
+        }
+      }
+    },
+    {
+      "id": "4a65df31-40b7-400c-bd79-577c3122bad3",
+      "name": "zone 8 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            79050,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 8
+        }
+      }
+    },
+    {
+      "id": "1b9d3742-dc14-4bd0-a040-7c11b7713b8d",
+      "name": "zone 10 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            63750,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 10
+        }
+      }
+    },
+    {
+      "id": "288facf8-e9e4-4a9c-ab49-c80152ae7c07",
+      "name": "zone 11 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            57800,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 11
+        }
+      }
+    },
+    {
+      "id": "78cba0cf-7165-4781-839a-a384d3f2becf",
+      "name": "zone 12 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            51850,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 12
+        }
+      }
+    },
+    {
+      "id": "d96195f5-b252-4487-a850-38909b78341c",
+      "name": "zone 13 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            42500,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 13
+        }
+      }
+    },
+    {
+      "id": "65a96d51-e6e4-4e02-8ffc-da013321dca7",
+      "name": "zone 14 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            36550,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 14
+        }
+      }
+    },
+    {
+      "id": "d56fb2a2-1cb0-4824-b88f-51ee8757aae9",
+      "name": "zone 15 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            30600,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 15
+        }
+      }
+    },
+    {
+      "id": "b5a1d49b-d30f-4500-8be0-b049d6527464",
+      "name": "zone 16 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            24650,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 16
+        }
+      }
+    },
+    {
+      "id": "f9a06f02-59ec-4b3b-b13d-189b3ffa5872",
+      "name": "zone 17 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            15300,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 17
+        }
+      }
+    },
+    {
+      "id": "dbc890f3-cb90-4972-94a6-c0a284f66152",
+      "name": "zone 18 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            9350,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 18
+        }
+      }
+    },
+    {
+      "id": "0fc16208-268b-43d5-813d-480ba11e5a5f",
+      "name": "zone 19 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            3400,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 19
+        }
+      }
+    },
+    {
+      "id": "5094aecf-d416-4907-bfdb-d178c4814baa",
+      "name": "zone 20 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            90950,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 20
+        }
+      }
+    },
+    {
+      "id": "bca7038d-330f-43e6-bf7f-6f9de7728b7c",
+      "name": "zone 21 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            85000,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 21
+        }
+      }
+    },
+    {
+      "id": "08a063a5-3d6f-4f94-aa67-9c0410325fe9",
+      "name": "zone 23 footprint",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            69700,
+            17000
+          ],
+          "size": [
+            2550,
+            12840
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 23
+        }
+      }
+    },
+    {
+      "id": "ecea4023-b1be-4b4f-97da-8e6d63d475bc",
+      "name": "sector: zone 1",
+      "components": {
+        "sector": {
+          "members": [
+            "bb9264eb-9e8c-4ce8-b4fc-1190f6e42a1b",
+            "85c41d4c-bda6-41bc-aa1d-b8d4786f1020"
+          ],
+          "$comment": "One sector per old zone, not per zone group: vtm_count is a per-zone number in the old file, so the thing a VTM cohort is hard-assigned to has to be the zone. The two members are the zone's two rack rows; a generator member stands for its whole expansion, so this names both faces, all 12 bays, and every relay and slot beneath them."
+        },
+        "external_ids": {
+          "desmap_zone_id": 1
+        }
+      }
+    },
+    {
+      "id": "c7bac68e-f3ff-49c9-9859-0d5e3e5f4814",
+      "name": "sector: zone 2",
+      "components": {
+        "sector": {
+          "members": [
+            "ec0a51a0-2ec1-4ae0-b2c6-1b59341b8f34",
+            "8eb8a02e-28e1-4aa1-8cfc-0ebd81039f14"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 2
+        }
+      }
+    },
+    {
+      "id": "37cd7db5-a6b4-4765-824c-dec2e8eaaa68",
+      "name": "sector: zone 3",
+      "components": {
+        "sector": {
+          "members": [
+            "a0cc13c8-f54b-4ce3-8300-a7f4d58df28a",
+            "87c9d3a4-93b8-4d99-b787-f5c068c2fc68"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 3
+        }
+      }
+    },
+    {
+      "id": "5df40bb4-14e8-4fc5-8ce2-77759cef5ad7",
+      "name": "sector: zone 4",
+      "components": {
+        "sector": {
+          "members": [
+            "4457be54-8f98-4833-bedb-91249462eb55",
+            "2e47f234-3c60-485c-93a7-c93c4ba6d979"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 4
+        }
+      }
+    },
+    {
+      "id": "a7a8fe58-63a9-41d9-8cf8-f18ee9fe3a44",
+      "name": "sector: zone 5",
+      "components": {
+        "sector": {
+          "members": [
+            "ba5a0276-e5ff-41ae-943f-5042dadcff7e",
+            "b4683bd5-b174-4f08-87b7-0d6a974f70ef"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 5
+        }
+      }
+    },
+    {
+      "id": "3a37acdc-d523-4c87-80f3-430a426e1e2e",
+      "name": "sector: zone 8",
+      "components": {
+        "sector": {
+          "members": [
+            "2de7b5bf-253c-4dcc-b8b6-ee0fe70dc90e",
+            "007214b7-0464-4d1d-a0bd-43718cc9eac9"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 8
+        }
+      }
+    },
+    {
+      "id": "91ad5ed6-0b6a-436a-a14b-5a1caddae987",
+      "name": "sector: zone 10",
+      "components": {
+        "sector": {
+          "members": [
+            "924a4df2-a7e3-4477-8256-1ce8afc4830d",
+            "5d858703-d40c-47f7-a452-ae5d88b89f32"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 10
+        }
+      }
+    },
+    {
+      "id": "ea7c397d-10f5-47d8-b476-917559ac0218",
+      "name": "sector: zone 11",
+      "components": {
+        "sector": {
+          "members": [
+            "cb6b719a-7ba1-4ba5-b52f-07112b691894",
+            "520bcadb-02a8-4bf2-8dc4-3d16fe282bcc"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 11
+        }
+      }
+    },
+    {
+      "id": "3a292748-e925-4eac-b8b7-6cfaefa2afc1",
+      "name": "sector: zone 12",
+      "components": {
+        "sector": {
+          "members": [
+            "f9a06d3c-892c-486a-9a2d-45c792815107",
+            "b746949b-e702-4fd6-9c17-482881903fe5"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 12
+        }
+      }
+    },
+    {
+      "id": "4acb85f2-aedb-4c81-994c-6483b5a5cfee",
+      "name": "sector: zone 13",
+      "components": {
+        "sector": {
+          "members": [
+            "8dca81cc-85ad-4619-b6d1-1f81bba024dc",
+            "49155b06-4b8e-49a5-82e9-0fc6e147e0e5"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 13
+        }
+      }
+    },
+    {
+      "id": "aeae6c5b-bd73-4cf9-a5a9-b6ae1381d262",
+      "name": "sector: zone 14",
+      "components": {
+        "sector": {
+          "members": [
+            "36d42319-83d6-4918-9f5c-696e4e611823",
+            "f0b8d3b4-51c1-432c-aa57-b4801dc69ce9"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 14
+        }
+      }
+    },
+    {
+      "id": "072840b1-c3b3-4c80-a239-c07689f920b3",
+      "name": "sector: zone 15",
+      "components": {
+        "sector": {
+          "members": [
+            "25416126-9b5b-4eec-b20a-d4b848f9b6af",
+            "cf43ff40-7eff-4a80-9df3-5085f7377cf4"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 15
+        }
+      }
+    },
+    {
+      "id": "a7696553-afdd-410d-8744-500776ac2b8a",
+      "name": "sector: zone 16",
+      "components": {
+        "sector": {
+          "members": [
+            "c90dceba-ceb7-4004-957e-396b0069d342",
+            "80b00389-ef9c-443d-8825-6af68b4f265f"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 16
+        }
+      }
+    },
+    {
+      "id": "ee62d9aa-0171-470c-8484-36f633dc6120",
+      "name": "sector: zone 17",
+      "components": {
+        "sector": {
+          "members": [
+            "1c3a510a-9870-49bb-8151-b8a1476260c9",
+            "b9cece92-bd05-4f64-baad-8bdefaaaad54"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 17
+        }
+      }
+    },
+    {
+      "id": "3a25e74b-d9b9-41bf-9ce9-b9a2bd28c633",
+      "name": "sector: zone 18",
+      "components": {
+        "sector": {
+          "members": [
+            "c51571ac-9521-46a1-8324-e88209584927",
+            "f0607d2e-a46d-4425-8370-c69310b64e66"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 18
+        }
+      }
+    },
+    {
+      "id": "624d9b62-1936-4031-b3f9-281819f2617a",
+      "name": "sector: zone 19",
+      "components": {
+        "sector": {
+          "members": [
+            "fe3b7069-1850-4150-aa8b-1a357f65d014",
+            "f15da238-fb1b-450c-b288-501cf1630884"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 19
+        }
+      }
+    },
+    {
+      "id": "e911f14d-915e-4a3a-816b-9efd909a8d38",
+      "name": "sector: zone 20",
+      "components": {
+        "sector": {
+          "members": [
+            "0b973c80-8bc2-4a4e-a024-1fc81904b32d",
+            "ded36be2-8160-4b7c-b103-5783028922d4"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 20
+        }
+      }
+    },
+    {
+      "id": "5825dfc7-ef1e-4a29-87e4-d50c67391fde",
+      "name": "sector: zone 21",
+      "components": {
+        "sector": {
+          "members": [
+            "eaf74bb7-60e9-4e1f-aaec-dc24f52da974",
+            "f806eaa6-44ae-4540-9924-cc44f4fb1551"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 21
+        }
+      }
+    },
+    {
+      "id": "6c82803a-dc68-4811-9c85-52fde03c03bd",
+      "name": "sector: zone 23",
+      "components": {
+        "sector": {
+          "members": [
+            "b6ad84cc-ea6d-449e-9912-f0c3d4d3909d",
+            "1bbda9aa-9051-43fa-a89b-333fba2baa9b"
+          ]
+        },
+        "external_ids": {
+          "desmap_zone_id": 23
+        }
+      }
+    },
+    {
+      "id": "e81cd23a-fbe0-4735-8b1f-48415575e578",
+      "name": "pick station 1",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            11475,
+            425
+          ]
+        },
+        "station": {
+          "kind": "pick",
+          "exit_direction": "+x",
+          "$comment": "Old station 1: station_type Pick, position [13, 0], presentation_cell [13, 1], queue_path [[10,1], [11,1], [12,1]], exit_direction East. Ten of these sit along grid row 0 with a straight three-cell approach in row 1. exit_direction maps by desmap's own definition (libs/desmap/src/design/queue_edges.rs: North is (0,-1) in [col, row], South (0,+1)), and row centres increase with y in both formats, so North is -y and East is +x."
+        },
+        "external_ids": {
+          "desmap_station_id": 1
+        }
+      }
+    },
+    {
+      "id": "9b5fa806-85dd-4b5c-b536-f5e6acfbde42",
+      "name": "pick station 1: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:10,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:11,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:12,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:13,1"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+        "key": "cell:13,1"
+      },
+      "expect": {
+        "position": [
+          11475,
+          1275
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "e81cd23a-fbe0-4735-8b1f-48415575e578"
+        }
+      },
+      "$comment": "Old presentation_cell [13, 1]: the floor's own derived cell GAINS a presentation_point by override, keeping its pose and traversability, with an `expect` pin on where the author believes that ordinal address sits. All 26 stations are decorated this way."
+    },
+    {
+      "id": "b4bbb91a-59bd-4fce-a012-b5bd4dc8e072",
+      "name": "pick station 2",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            19125,
+            425
+          ]
+        },
+        "station": {
+          "kind": "pick",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 2
+        }
+      }
+    },
+    {
+      "id": "a93012bd-a1d4-40aa-b42b-892a0626353b",
+      "name": "pick station 2: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:19,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:20,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:21,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:22,1"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+        "key": "cell:22,1"
+      },
+      "expect": {
+        "position": [
+          19125,
+          1275
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "b4bbb91a-59bd-4fce-a012-b5bd4dc8e072"
+        }
+      }
+    },
+    {
+      "id": "8fffc7a7-c865-4395-8cf4-a8b85340e2ea",
+      "name": "pick station 3",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            34425,
+            425
+          ]
+        },
+        "station": {
+          "kind": "pick",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 3
+        }
+      }
+    },
+    {
+      "id": "bf7cc79f-e7c9-4bc7-9896-3c7431d998cd",
+      "name": "pick station 3: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:37,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:38,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:39,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:40,1"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+        "key": "cell:40,1"
+      },
+      "expect": {
+        "position": [
+          34425,
+          1275
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "8fffc7a7-c865-4395-8cf4-a8b85340e2ea"
+        }
+      }
+    },
+    {
+      "id": "8b35d12f-3808-4c25-845f-4f69ec059cc9",
+      "name": "pick station 4",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            50575,
+            425
+          ]
+        },
+        "station": {
+          "kind": "pick",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 4
+        }
+      }
+    },
+    {
+      "id": "a849355f-0061-4495-afae-9f3c1532eed6",
+      "name": "pick station 4: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:56,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:57,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:58,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:59,1"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+        "key": "cell:59,1"
+      },
+      "expect": {
+        "position": [
+          50575,
+          1275
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "8b35d12f-3808-4c25-845f-4f69ec059cc9"
+        }
+      }
+    },
+    {
+      "id": "9d7d256e-82f8-4b45-b9be-abaad8b8295c",
+      "name": "pick station 5",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            66725,
+            425
+          ]
+        },
+        "station": {
+          "kind": "pick",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 5
+        }
+      }
+    },
+    {
+      "id": "cc994ad6-2d62-4256-bb72-a442586a225a",
+      "name": "pick station 5: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:75,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:76,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:77,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:78,1"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+        "key": "cell:78,1"
+      },
+      "expect": {
+        "position": [
+          66725,
+          1275
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "9d7d256e-82f8-4b45-b9be-abaad8b8295c"
+        }
+      }
+    },
+    {
+      "id": "9e06602f-fe1d-4714-b742-0395a89117d7",
+      "name": "pick station 6",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            76075,
+            425
+          ]
+        },
+        "station": {
+          "kind": "pick",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 6
+        }
+      }
+    },
+    {
+      "id": "bab170aa-7414-4bbb-90a5-4d692c7c4d97",
+      "name": "pick station 6: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:86,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:87,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:88,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:89,1"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+        "key": "cell:89,1"
+      },
+      "expect": {
+        "position": [
+          76075,
+          1275
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "9e06602f-fe1d-4714-b742-0395a89117d7"
+        }
+      }
+    },
+    {
+      "id": "d722a289-fe33-4b91-84c1-bafcce76cc47",
+      "name": "pick station 7",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            90525,
+            425
+          ]
+        },
+        "station": {
+          "kind": "pick",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 7
+        }
+      }
+    },
+    {
+      "id": "f5887747-ef69-482d-a21d-8993b08d26e5",
+      "name": "pick station 7: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:103,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:104,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:105,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:106,1"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+        "key": "cell:106,1"
+      },
+      "expect": {
+        "position": [
+          90525,
+          1275
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "d722a289-fe33-4b91-84c1-bafcce76cc47"
+        }
+      }
+    },
+    {
+      "id": "4807f2ba-a837-4da2-81ac-66a9f245194f",
+      "name": "pick station 8",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            104125,
+            425
+          ]
+        },
+        "station": {
+          "kind": "pick",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 8
+        }
+      }
+    },
+    {
+      "id": "bf4cdd5b-5d05-44b0-8531-a75c85c1a606",
+      "name": "pick station 8: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:119,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:120,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:121,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:122,1"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+        "key": "cell:122,1"
+      },
+      "expect": {
+        "position": [
+          104125,
+          1275
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "4807f2ba-a837-4da2-81ac-66a9f245194f"
+        }
+      }
+    },
+    {
+      "id": "13d2a985-ca60-45c1-8b71-010c0429a44a",
+      "name": "pick station 9",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            119425,
+            425
+          ]
+        },
+        "station": {
+          "kind": "pick",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 9
+        }
+      }
+    },
+    {
+      "id": "34f5d4ef-4cc9-467b-93af-3b031188c3d0",
+      "name": "pick station 9: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:137,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:138,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:139,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:140,1"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+        "key": "cell:140,1"
+      },
+      "expect": {
+        "position": [
+          119425,
+          1275
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "13d2a985-ca60-45c1-8b71-010c0429a44a"
+        }
+      }
+    },
+    {
+      "id": "9e34cb80-1de4-42cb-9f88-ebf6f362d80a",
+      "name": "pick station 10",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            127075,
+            425
+          ]
+        },
+        "station": {
+          "kind": "pick",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 10
+        }
+      }
+    },
+    {
+      "id": "cfacabe9-0755-4c9d-9ccc-f91ca04d7c8a",
+      "name": "pick station 10: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:146,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:147,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:148,1"
+            },
+            {
+              "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+              "key": "cell:149,1"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "4bec0dae-9800-40e0-a5b6-3427c17d69d9",
+        "key": "cell:149,1"
+      },
+      "expect": {
+        "position": [
+          127075,
+          1275
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "9e34cb80-1de4-42cb-9f88-ebf6f362d80a"
+        }
+      }
+    },
+    {
+      "id": "6a5bb456-f2e3-4003-9754-00dd355d0353",
+      "name": "putaway station 11",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            11475,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y",
+          "$comment": "Old station 11: station_type Putaway, position [13, 47], presentation_cell [12, 47], exit_direction North. The queue is a five-cell horseshoe — down column 11, across, and back up column 12 — the same point-of-no-return shape the EasyLoop's queue has, drawn here in plain floor cells. The old file's settings.putaway.queue_depth of 2 is a scenario admission limit and is parked with the other settings."
+        },
+        "external_ids": {
+          "desmap_station_id": 11
+        }
+      }
+    },
+    {
+      "id": "d443fa1b-891a-4472-a3d6-d938259d718f",
+      "name": "putaway station 11: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:11,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:11,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:11,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:12,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:12,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:12,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:12,9"
+      },
+      "expect": {
+        "position": [
+          10625,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "6a5bb456-f2e3-4003-9754-00dd355d0353"
+        }
+      }
+    },
+    {
+      "id": "42e5ebf6-4cf5-4c10-978d-f61421a8728f",
+      "name": "putaway station 12",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            14875,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y"
+        },
+        "external_ids": {
+          "desmap_station_id": 12
+        }
+      }
+    },
+    {
+      "id": "32781dc6-eb47-4986-8da3-69551b555826",
+      "name": "putaway station 12: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:15,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:15,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:15,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:16,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:16,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:16,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:16,9"
+      },
+      "expect": {
+        "position": [
+          14025,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "42e5ebf6-4cf5-4c10-978d-f61421a8728f"
+        }
+      }
+    },
+    {
+      "id": "6d99016a-ba1b-4dd1-b2b7-9a0352d3b08d",
+      "name": "putaway station 13",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            18275,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y"
+        },
+        "external_ids": {
+          "desmap_station_id": 13
+        }
+      }
+    },
+    {
+      "id": "b7ea53da-c320-47f2-8c25-9e6830f248fe",
+      "name": "putaway station 13: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:19,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:19,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:19,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:20,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:20,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:20,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:20,9"
+      },
+      "expect": {
+        "position": [
+          17425,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "6d99016a-ba1b-4dd1-b2b7-9a0352d3b08d"
+        }
+      }
+    },
+    {
+      "id": "4bc0af55-84bf-4f5e-87ca-ed2714c5a9aa",
+      "name": "putaway station 14",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            21675,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y"
+        },
+        "external_ids": {
+          "desmap_station_id": 14
+        }
+      }
+    },
+    {
+      "id": "ba01535d-5ff1-4a41-98b9-685953a9db5a",
+      "name": "putaway station 14: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:23,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:23,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:23,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:24,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:24,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:24,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:24,9"
+      },
+      "expect": {
+        "position": [
+          20825,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "4bc0af55-84bf-4f5e-87ca-ed2714c5a9aa"
+        }
+      }
+    },
+    {
+      "id": "02851233-fb5e-4c3f-8a4c-3194ab3cd47c",
+      "name": "putaway station 15",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            48025,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y"
+        },
+        "external_ids": {
+          "desmap_station_id": 15
+        }
+      }
+    },
+    {
+      "id": "b996c2af-dc35-45e6-89b9-8c2f66a685ce",
+      "name": "putaway station 15: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:54,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:54,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:54,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:55,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:55,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:55,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:55,9"
+      },
+      "expect": {
+        "position": [
+          47175,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "02851233-fb5e-4c3f-8a4c-3194ab3cd47c"
+        }
+      }
+    },
+    {
+      "id": "10e4315c-a8e8-4959-bf4d-834f6feb6bdd",
+      "name": "putaway station 16",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            51425,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y"
+        },
+        "external_ids": {
+          "desmap_station_id": 16
+        }
+      }
+    },
+    {
+      "id": "a3fe4517-c73d-417c-bb3a-3391ed4d4584",
+      "name": "putaway station 16: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:58,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:58,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:58,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:59,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:59,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:59,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:59,9"
+      },
+      "expect": {
+        "position": [
+          50575,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "10e4315c-a8e8-4959-bf4d-834f6feb6bdd"
+        }
+      }
+    },
+    {
+      "id": "c054c14e-e7e0-460c-be88-37e2f8f28f53",
+      "name": "putaway station 17",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            54825,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y"
+        },
+        "external_ids": {
+          "desmap_station_id": 17
+        }
+      }
+    },
+    {
+      "id": "d97cda89-fabf-4934-a97c-75221484a80e",
+      "name": "putaway station 17: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:62,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:62,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:62,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:63,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:63,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:63,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:63,9"
+      },
+      "expect": {
+        "position": [
+          53975,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "c054c14e-e7e0-460c-be88-37e2f8f28f53"
+        }
+      }
+    },
+    {
+      "id": "b6e7e5f2-e44f-41bf-9bce-839c061c12a3",
+      "name": "putaway station 18",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            58225,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y"
+        },
+        "external_ids": {
+          "desmap_station_id": 18
+        }
+      }
+    },
+    {
+      "id": "dc4afca7-3492-4305-b337-02025f2512aa",
+      "name": "putaway station 18: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:66,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:66,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:66,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:67,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:67,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:67,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:67,9"
+      },
+      "expect": {
+        "position": [
+          57375,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "b6e7e5f2-e44f-41bf-9bce-839c061c12a3"
+        }
+      }
+    },
+    {
+      "id": "34e56c98-b34a-45d8-bc2c-4c568c985989",
+      "name": "putaway station 19",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            82875,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y"
+        },
+        "external_ids": {
+          "desmap_station_id": 19
+        }
+      }
+    },
+    {
+      "id": "f158323b-bca7-4d30-b499-afd68b774c88",
+      "name": "putaway station 19: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:95,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:95,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:95,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:96,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:96,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:96,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:96,9"
+      },
+      "expect": {
+        "position": [
+          82025,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "34e56c98-b34a-45d8-bc2c-4c568c985989"
+        }
+      }
+    },
+    {
+      "id": "95e1c5d8-a373-4608-b04f-17f1d668e512",
+      "name": "putaway station 20",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            86275,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y"
+        },
+        "external_ids": {
+          "desmap_station_id": 20
+        }
+      }
+    },
+    {
+      "id": "557a63cc-c014-4476-8290-3c0a46936307",
+      "name": "putaway station 20: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:99,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:99,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:99,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:100,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:100,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:100,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:100,9"
+      },
+      "expect": {
+        "position": [
+          85425,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "95e1c5d8-a373-4608-b04f-17f1d668e512"
+        }
+      }
+    },
+    {
+      "id": "f07a44f7-0354-4bdd-8486-fede8fe26c8f",
+      "name": "putaway station 21",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            89675,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y"
+        },
+        "external_ids": {
+          "desmap_station_id": 21
+        }
+      }
+    },
+    {
+      "id": "cda3ac01-c51c-4b90-a92f-4b0b132789cf",
+      "name": "putaway station 21: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:103,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:103,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:103,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:104,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:104,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:104,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:104,9"
+      },
+      "expect": {
+        "position": [
+          88825,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "f07a44f7-0354-4bdd-8486-fede8fe26c8f"
+        }
+      }
+    },
+    {
+      "id": "deef149c-9e7b-49dd-b1b5-a6e21ac0f263",
+      "name": "putaway station 22",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            93075,
+            37915
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "-y"
+        },
+        "external_ids": {
+          "desmap_station_id": 22
+        }
+      }
+    },
+    {
+      "id": "53ad748c-b0ee-48c6-92ef-84c445656010",
+      "name": "putaway station 22: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:107,9"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:107,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:107,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:108,11"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:108,10"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:108,9"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:108,9"
+      },
+      "expect": {
+        "position": [
+          92225,
+          37915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "deef149c-9e7b-49dd-b1b5-a6e21ac0f263"
+        }
+      }
+    },
+    {
+      "id": "628f0bff-eaf1-4609-9f3f-5b9d30ee8b74",
+      "name": "putaway station 23",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            99025,
+            43015
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 23
+        }
+      }
+    },
+    {
+      "id": "8a83cc95-05cd-48eb-9f25-9b28e0a9002a",
+      "name": "putaway station 23: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:116,13"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:115,13"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:114,13"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:114,14"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:115,14"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:116,14"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:116,14"
+      },
+      "expect": {
+        "position": [
+          99025,
+          42165
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "628f0bff-eaf1-4609-9f3f-5b9d30ee8b74"
+        }
+      }
+    },
+    {
+      "id": "12ca47dc-1db8-4657-8b10-35f2f205e9f3",
+      "name": "putaway station 24",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            99025,
+            47265
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 24
+        }
+      }
+    },
+    {
+      "id": "acfd8d77-bb92-477d-aec9-25eaeac65f26",
+      "name": "putaway station 24: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:116,18"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:115,18"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:114,18"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:114,19"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:115,19"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:116,19"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:116,19"
+      },
+      "expect": {
+        "position": [
+          99025,
+          46415
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "12ca47dc-1db8-4657-8b10-35f2f205e9f3"
+        }
+      }
+    },
+    {
+      "id": "4e53f955-4889-4ff5-96c4-86404d0f00fc",
+      "name": "putaway station 25",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            99025,
+            51515
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 25
+        }
+      }
+    },
+    {
+      "id": "d2b84b30-ee75-438e-bcdb-0003f6e2bc3b",
+      "name": "putaway station 25: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:116,23"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:115,23"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:114,23"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:114,24"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:115,24"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:116,24"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:116,24"
+      },
+      "expect": {
+        "position": [
+          99025,
+          50665
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "4e53f955-4889-4ff5-96c4-86404d0f00fc"
+        }
+      }
+    },
+    {
+      "id": "b772dc1c-225a-4295-b58b-dc0f1d9c198a",
+      "name": "putaway station 26",
+      "components": {
+        "pose": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "position": [
+            99025,
+            55765
+          ]
+        },
+        "station": {
+          "kind": "put",
+          "exit_direction": "+x"
+        },
+        "external_ids": {
+          "desmap_station_id": 26
+        }
+      }
+    },
+    {
+      "id": "e3dd79f4-d1ec-4638-b9cc-13ea0e2f349e",
+      "name": "putaway station 26: lane",
+      "components": {
+        "queue": {
+          "path": [
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:116,28"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:115,28"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:114,28"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:114,29"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:115,29"
+            },
+            {
+              "generator": "a263108b-f5d6-4719-8603-42a955884939",
+              "key": "cell:116,29"
+            }
+          ],
+          "discipline": "no_reverse"
+        }
+      }
+    },
+    {
+      "derivation": {
+        "generator": "a263108b-f5d6-4719-8603-42a955884939",
+        "key": "cell:116,29"
+      },
+      "expect": {
+        "position": [
+          99025,
+          54915
+        ],
+        "tolerance": 50
+      },
+      "components": {
+        "presentation_point": {
+          "for": "inventory_tote",
+          "station": "b772dc1c-225a-4295-b58b-dc0f1d9c198a"
+        }
+      }
+    },
+    {
+      "id": "6925e4e7-e0bd-4c00-8d6b-d1c569a14879",
+      "name": "HTM (generic)",
+      "components": {
+        "robot_class": {
+          "role": "htm",
+          "model": "HTM",
+          "configuration": "standard",
+          "carries": [
+            "tote"
+          ],
+          "carry_exclusive": true,
+          "$comment": "The old file's entire robot model is fleet.htms = 340. Footprint and height are representative placeholders. The speed is the one number the source does carry, settings.htm.empty_speed = 4.5, read as m/s — the old settings block states no unit. No 'lineage': the source names no maker for this class, and a lineage names organizations, so this conversion asserts none rather than putting a placeholder where a company's name goes.",
+          "footprint": [
+            850,
+            650
+          ],
+          "height": 300,
+          "max_speed": 4500
+        }
+      }
+    },
+    {
+      "id": "1d043005-93de-4915-8c80-8d19d1943e96",
+      "name": "VTM A5",
+      "components": {
+        "lineage": [
+          {
+            "party": "Quicktron",
+            "role": "manufacturer",
+            "designation": "A5"
+          },
+          {
+            "party": "Dematic",
+            "role": "distributor",
+            "designation": "DA50"
+          }
+        ],
+        "robot_class": {
+          "role": "vtm",
+          "model": "A5",
+          "configuration": "standard",
+          "carries": [
+            "tote"
+          ],
+          "$comment": "Model A5 is the one thing the old map says about a VTM (VtmModel::A5, the zone default). 'height' is the zone's declared zone_height_mm of 10,017 — the racking height the VTM's vertical travel spans, which is the closest the old format comes to a robot dimension. Footprint is a representative placeholder. Cycle times (pick 6.2 s, drop 5.0 s, alignment 3.0 s) are settings and are parked.",
+          "locomotion": "ladder",
+          "footprint": [
+            850,
+            850
+          ],
+          "height": 10017
+        }
+      },
+      "$comment": "One machine, two names, and in v0.6 that is a lineage rather than a legacy identifier: Quicktron manufactures the A5, Dematic distributes it as the DA50, and the chain runs origin first. Through v0.5 the rebrand rode in external_ids beside the desmap ids, which was the wrong shelf — external_ids holds the keys other systems and sources use for an entity, and 'what Dematic sells this as' is a live commercial fact with a party and a role behind it (SPEC §2, §10.1). Neither name is in the source file: desmap says VtmModel::A5 and nothing else, so the two parties are an invention of this conversion and are listed as one in CONVERSION.md. locomotion 'ladder' is what makes the inner aisles untiled — this class climbs the racking and never stands on the ground, so there is no floor to give it."
+    },
+    {
+      "id": "969ede45-5281-431e-a8c7-bf15af88db69",
+      "name": "cohort: HTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "6925e4e7-e0bd-4c00-8d6b-d1c569a14879",
+          "count": 340,
+          "assignment": {
+            "kind": "free"
+          },
+          "$comment": "Old fleet.htms: 340. They roam the open floor; nothing pins them to a zone."
+        }
+      }
+    },
+    {
+      "id": "e26ad964-3bac-4c62-9c98-79465426456f",
+      "name": "cohort: zone 1 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "ecea4023-b1be-4b4f-97da-8e6d63d475bc"
+            ]
+          },
+          "$comment": "Old zone.vtm_count, unset in every cencora zone and therefore the default 2 — 19 zones, 38 VTMs, a number that existed nowhere in the old file and had to be summed out of the map. Hard-assigned to the zone's sector: these two never leave it."
+        }
+      }
+    },
+    {
+      "id": "71d240dd-c6af-43ca-9a33-79c2aec305b1",
+      "name": "cohort: zone 2 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "c7bac68e-f3ff-49c9-9859-0d5e3e5f4814"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "59e05f4f-d90a-4067-91cb-f32e0a7e2f5d",
+      "name": "cohort: zone 3 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "37cd7db5-a6b4-4765-824c-dec2e8eaaa68"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "b6059726-10b9-464d-861d-767f91d1d93f",
+      "name": "cohort: zone 4 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "5df40bb4-14e8-4fc5-8ce2-77759cef5ad7"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "ea6c0486-bb96-4780-ac93-240dee290657",
+      "name": "cohort: zone 5 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "a7a8fe58-63a9-41d9-8cf8-f18ee9fe3a44"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "72686cf8-a052-46a0-a032-82d7a814df4f",
+      "name": "cohort: zone 8 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "3a37acdc-d523-4c87-80f3-430a426e1e2e"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "f84d3092-de17-407f-981f-6eef12f04aa4",
+      "name": "cohort: zone 10 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "91ad5ed6-0b6a-436a-a14b-5a1caddae987"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "f92de648-b1cb-4347-bea6-73279d959541",
+      "name": "cohort: zone 11 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "ea7c397d-10f5-47d8-b476-917559ac0218"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "d6bdaa03-db9a-470b-a7e8-c6cf12539437",
+      "name": "cohort: zone 12 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "3a292748-e925-4eac-b8b7-6cfaefa2afc1"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "6e2adf4e-3f9a-4403-9fa3-5a55470a7a54",
+      "name": "cohort: zone 13 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "4acb85f2-aedb-4c81-994c-6483b5a5cfee"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "1bdc0c5c-423b-4e26-8c94-7ebe557f6587",
+      "name": "cohort: zone 14 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "aeae6c5b-bd73-4cf9-a5a9-b6ae1381d262"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "89a6c843-fef9-4725-9620-89f916b9505a",
+      "name": "cohort: zone 15 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "072840b1-c3b3-4c80-a239-c07689f920b3"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "8ea610e4-75db-43d2-ad36-dfeb2a216ef8",
+      "name": "cohort: zone 16 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "a7696553-afdd-410d-8744-500776ac2b8a"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "b8cf869f-6343-48b7-b6d8-34bae6c75b8a",
+      "name": "cohort: zone 17 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "ee62d9aa-0171-470c-8484-36f633dc6120"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "4afad632-5bf0-4474-b317-ab259dffb6a0",
+      "name": "cohort: zone 18 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "3a25e74b-d9b9-41bf-9ce9-b9a2bd28c633"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "2c5666f0-2f40-47f0-a375-e4d58b7dc4f4",
+      "name": "cohort: zone 19 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "624d9b62-1936-4031-b3f9-281819f2617a"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "623b6b70-9623-46ea-b633-049ae2eb461d",
+      "name": "cohort: zone 20 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "e911f14d-915e-4a3a-816b-9efd909a8d38"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "5b1f3ff7-b0fb-4e9e-937b-d225cb0fa863",
+      "name": "cohort: zone 21 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "5825dfc7-ef1e-4a29-87e4-d50c67391fde"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "5abc7483-93bd-4c07-8dad-879de4a74ff1",
+      "name": "cohort: zone 23 VTMs",
+      "components": {
+        "cohort": {
+          "robot_class": "1d043005-93de-4915-8c80-8d19d1943e96",
+          "count": 2,
+          "assignment": {
+            "kind": "hard",
+            "to": [
+              "6c82803a-dc68-4811-9c85-52fde03c03bd"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "2ce1eefb-1a2e-4daa-ad3d-5304a7969376",
+      "name": "tote (generic)",
+      "components": {
+        "carrier_type": {
+          "kind": "tote",
+          "$comment": "Implicit in the old format — no carrier type exists there. Dimensions are representative. scenario.units_per_tote = 1 is a workload fact and is parked.",
+          "size": [
+            650,
+            450,
+            300
+          ]
+        }
+      }
+    },
+    {
+      "id": "6c1bfb0f-2644-4c88-9f42-48d08988c516",
+      "name": "inner VTM aisle: zone 1",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "$comment": "The 2,550 mm zone footprint is rack (850) + aisle (850) + rack (850); this is the middle strip, running the full length of the steel. It declares NO tiling, and that is the point: the A5 that works these faces climbs the racking, so there is no floor here for anybody to stand on and inventing cells would put a lane in the graph that no robot drives. Tiling follows locomotion (SPEC §5). The old fixture had no way to say any of this — the aisle existed only as the gap left by an exclusion.",
+          "origin": [
+            124950,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "8bc8e823-dabf-47ed-a8c2-5d90eabcceb1",
+      "name": "access: zone 1 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "bb9264eb-9e8c-4ce8-b4fc-1190f6e42a1b",
+          "along": "6c1bfb0f-2644-4c88-9f42-48d08988c516",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ],
+          "$comment": "The junction between this run and the region it is worked from, and the only access the run needs: the inward face, onto the aisle between the two runs. It derives nothing — the climb is rack-internal motion — but it is what makes this zone somewhere the A5 works, which is how the zone's cohort keeps its habitat now that a rack is no longer habitat by itself. It is also where slot depth counts from. The outward face is not a second access any more: it is the 'face' on the steel's relay levels, and the cell an HTM stands on is whichever lane cell each relay reaches."
+        }
+      }
+    },
+    {
+      "id": "3ac04d42-bcb6-478b-9a12-62b313e863ab",
+      "name": "access: zone 1 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "85c41d4c-bda6-41bc-aa1d-b8d4786f1020",
+          "along": "6c1bfb0f-2644-4c88-9f42-48d08988c516",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "026e2624-095b-49c0-9fb9-5feffcaab263",
+      "name": "inner VTM aisle: zone 2",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            119000,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "6dee1b77-b771-4f52-a305-9dc2c46aeaa0",
+      "name": "access: zone 2 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "ec0a51a0-2ec1-4ae0-b2c6-1b59341b8f34",
+          "along": "026e2624-095b-49c0-9fb9-5feffcaab263",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "60a0b51d-d0c1-4639-9ede-6a9f559491e8",
+      "name": "access: zone 2 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "8eb8a02e-28e1-4aa1-8cfc-0ebd81039f14",
+          "along": "026e2624-095b-49c0-9fb9-5feffcaab263",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "bc5ca165-bbea-4285-9eb4-bdf976067363",
+      "name": "inner VTM aisle: zone 3",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            113050,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "bd914d51-49c5-4d70-b523-047781b93899",
+      "name": "access: zone 3 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "a0cc13c8-f54b-4ce3-8300-a7f4d58df28a",
+          "along": "bc5ca165-bbea-4285-9eb4-bdf976067363",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cbd91608-e623-440a-8f92-e67ddf78a1f8",
+      "name": "access: zone 3 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "87c9d3a4-93b8-4d99-b787-f5c068c2fc68",
+          "along": "bc5ca165-bbea-4285-9eb4-bdf976067363",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "0a9cd87b-5788-47c3-9d2a-e6341bf6f479",
+      "name": "inner VTM aisle: zone 4",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            107100,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "48eee358-b102-458e-aece-1c5c6d86cc46",
+      "name": "access: zone 4 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "4457be54-8f98-4833-bedb-91249462eb55",
+          "along": "0a9cd87b-5788-47c3-9d2a-e6341bf6f479",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "02286a17-d415-4b39-a07d-b6f2de0c1192",
+      "name": "access: zone 4 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "2e47f234-3c60-485c-93a7-c93c4ba6d979",
+          "along": "0a9cd87b-5788-47c3-9d2a-e6341bf6f479",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ae0ff290-483e-46f4-b59f-0cec037a24dd",
+      "name": "inner VTM aisle: zone 5",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            97750,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "5ce2f1bc-e33b-4803-a2d0-2a7d17d6546d",
+      "name": "access: zone 5 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "ba5a0276-e5ff-41ae-943f-5042dadcff7e",
+          "along": "ae0ff290-483e-46f4-b59f-0cec037a24dd",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ee3db188-caa6-45de-8cdf-d306de82e1f0",
+      "name": "access: zone 5 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "b4683bd5-b174-4f08-87b7-0d6a974f70ef",
+          "along": "ae0ff290-483e-46f4-b59f-0cec037a24dd",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ef7546af-2500-405d-9538-497c9ef672ce",
+      "name": "inner VTM aisle: zone 8",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            79900,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "82005e3e-903d-4c2f-aaec-80664f106cd7",
+      "name": "access: zone 8 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "2de7b5bf-253c-4dcc-b8b6-ee0fe70dc90e",
+          "along": "ef7546af-2500-405d-9538-497c9ef672ce",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ecf6914c-793b-489f-a2ed-d89610f6dcfb",
+      "name": "access: zone 8 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "007214b7-0464-4d1d-a0bd-43718cc9eac9",
+          "along": "ef7546af-2500-405d-9538-497c9ef672ce",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ae4787b3-d6a9-4641-923d-972817a94b21",
+      "name": "inner VTM aisle: zone 10",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            64600,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "0941666d-41d4-4076-aabd-132b2b1f8f9b",
+      "name": "access: zone 10 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "924a4df2-a7e3-4477-8256-1ce8afc4830d",
+          "along": "ae4787b3-d6a9-4641-923d-972817a94b21",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "5edb834d-1def-4ebd-8f97-0f64b10118a5",
+      "name": "access: zone 10 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "5d858703-d40c-47f7-a452-ae5d88b89f32",
+          "along": "ae4787b3-d6a9-4641-923d-972817a94b21",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "87665bf6-f174-492d-90f9-22ec088b3c88",
+      "name": "inner VTM aisle: zone 11",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            58650,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "f46beb4b-ae81-4e59-a989-9997f7e5bf47",
+      "name": "access: zone 11 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "cb6b719a-7ba1-4ba5-b52f-07112b691894",
+          "along": "87665bf6-f174-492d-90f9-22ec088b3c88",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "d01b1583-7ee9-4d7b-8bee-29ed9c529e72",
+      "name": "access: zone 11 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "520bcadb-02a8-4bf2-8dc4-3d16fe282bcc",
+          "along": "87665bf6-f174-492d-90f9-22ec088b3c88",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "0b3484bd-aa02-4460-80a6-3e13908f4609",
+      "name": "inner VTM aisle: zone 12",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            52700,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "1e564ba0-6e42-4087-9999-b45d125d5484",
+      "name": "access: zone 12 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "f9a06d3c-892c-486a-9a2d-45c792815107",
+          "along": "0b3484bd-aa02-4460-80a6-3e13908f4609",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "5a5dab24-520d-4579-abd1-979b4778cb60",
+      "name": "access: zone 12 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "b746949b-e702-4fd6-9c17-482881903fe5",
+          "along": "0b3484bd-aa02-4460-80a6-3e13908f4609",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "0758b019-11c0-4921-b91f-42d6e7bce1dc",
+      "name": "inner VTM aisle: zone 13",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            43350,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "cda01b8a-b45f-4b59-be5e-141a6f1e2f6e",
+      "name": "access: zone 13 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "8dca81cc-85ad-4619-b6d1-1f81bba024dc",
+          "along": "0758b019-11c0-4921-b91f-42d6e7bce1dc",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "9b3588f3-0dd8-4b34-b8d4-1fd6d975861c",
+      "name": "access: zone 13 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "49155b06-4b8e-49a5-82e9-0fc6e147e0e5",
+          "along": "0758b019-11c0-4921-b91f-42d6e7bce1dc",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "31fe15e2-15d6-49c9-b3fe-246a12fc128b",
+      "name": "inner VTM aisle: zone 14",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            37400,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "b4ccffad-cbef-496e-87c6-3540579063c7",
+      "name": "access: zone 14 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "36d42319-83d6-4918-9f5c-696e4e611823",
+          "along": "31fe15e2-15d6-49c9-b3fe-246a12fc128b",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "5cfc9015-b096-4541-b61c-29f5ace3ed19",
+      "name": "access: zone 14 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "f0b8d3b4-51c1-432c-aa57-b4801dc69ce9",
+          "along": "31fe15e2-15d6-49c9-b3fe-246a12fc128b",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "2d8a25be-7518-4647-bb7b-d984896e145b",
+      "name": "inner VTM aisle: zone 15",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            31450,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "6b31af6e-58bf-4f90-8d5c-8897355c2997",
+      "name": "access: zone 15 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "25416126-9b5b-4eec-b20a-d4b848f9b6af",
+          "along": "2d8a25be-7518-4647-bb7b-d984896e145b",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "4c9b3d87-ec23-488d-be5f-2effecd3d18f",
+      "name": "access: zone 15 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "cf43ff40-7eff-4a80-9df3-5085f7377cf4",
+          "along": "2d8a25be-7518-4647-bb7b-d984896e145b",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "9d44696a-f810-4f1c-bb5f-878323f97c7b",
+      "name": "inner VTM aisle: zone 16",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            25500,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "8d6807e0-6ab1-42aa-a8cf-63fbb7bbf868",
+      "name": "access: zone 16 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "c90dceba-ceb7-4004-957e-396b0069d342",
+          "along": "9d44696a-f810-4f1c-bb5f-878323f97c7b",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "60299ab2-ecd6-48dd-8f24-e31fbf2c1686",
+      "name": "access: zone 16 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "80b00389-ef9c-443d-8825-6af68b4f265f",
+          "along": "9d44696a-f810-4f1c-bb5f-878323f97c7b",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "3087b9e2-a8c4-4567-ba08-e4fcf8999b9c",
+      "name": "inner VTM aisle: zone 17",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            16150,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "00bc0f27-feee-4e7e-a2c5-1ecf6f9e825f",
+      "name": "access: zone 17 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "1c3a510a-9870-49bb-8151-b8a1476260c9",
+          "along": "3087b9e2-a8c4-4567-ba08-e4fcf8999b9c",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "670bc8ff-2bbe-4039-8676-aa82d4bd625c",
+      "name": "access: zone 17 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "b9cece92-bd05-4f64-baad-8bdefaaaad54",
+          "along": "3087b9e2-a8c4-4567-ba08-e4fcf8999b9c",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "a55ff199-7b65-4e99-97e3-c8c5d9eb3ce8",
+      "name": "inner VTM aisle: zone 18",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            10200,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "7d641711-a58d-4cb8-b111-e7a46804e2b6",
+      "name": "access: zone 18 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "c51571ac-9521-46a1-8324-e88209584927",
+          "along": "a55ff199-7b65-4e99-97e3-c8c5d9eb3ce8",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "9baedeaa-44c1-4250-958e-057d83b559b9",
+      "name": "access: zone 18 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "f0607d2e-a46d-4425-8370-c69310b64e66",
+          "along": "a55ff199-7b65-4e99-97e3-c8c5d9eb3ce8",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "6429c50d-ccf1-4064-8064-2d20b320c680",
+      "name": "inner VTM aisle: zone 19",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            4250,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "892045bd-a8cc-457e-9a62-b4be7b96e24d",
+      "name": "access: zone 19 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "fe3b7069-1850-4150-aa8b-1a357f65d014",
+          "along": "6429c50d-ccf1-4064-8064-2d20b320c680",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "8d9a2fc7-a884-4c92-b450-3d0e9e6e4736",
+      "name": "access: zone 19 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "f15da238-fb1b-450c-b288-501cf1630884",
+          "along": "6429c50d-ccf1-4064-8064-2d20b320c680",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "63df9d1d-89b0-4e5f-b54c-2974a27b5468",
+      "name": "inner VTM aisle: zone 20",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            91800,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "8cc54476-3f3b-49ac-917e-29ff59fc7794",
+      "name": "access: zone 20 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "0b973c80-8bc2-4a4e-a024-1fc81904b32d",
+          "along": "63df9d1d-89b0-4e5f-b54c-2974a27b5468",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "c132300d-22f0-46b1-8280-5c3a912ebe69",
+      "name": "access: zone 20 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "ded36be2-8160-4b7c-b103-5783028922d4",
+          "along": "63df9d1d-89b0-4e5f-b54c-2974a27b5468",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "d52ce3e9-beaa-42bd-9fec-640c9eb6d7d1",
+      "name": "inner VTM aisle: zone 21",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            85850,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "e8e2617a-0123-4fd4-a50f-263f1d438939",
+      "name": "access: zone 21 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "eaf74bb7-60e9-4e1f-aaec-dc24f52da974",
+          "along": "d52ce3e9-beaa-42bd-9fec-640c9eb6d7d1",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "17bcb031-3060-462f-9743-34d84a610739",
+      "name": "access: zone 21 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "f806eaa6-44ae-4540-9924-cc44f4fb1551",
+          "along": "d52ce3e9-beaa-42bd-9fec-640c9eb6d7d1",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "7b55db0b-b2e4-4246-a238-1ec29787f919",
+      "name": "inner VTM aisle: zone 23",
+      "components": {
+        "region": {
+          "frame": "26808bf0-3b69-41bb-b9e4-9eb51b4d5d7a",
+          "origin": [
+            70550,
+            17000
+          ],
+          "size": [
+            850,
+            12840
+          ]
+        }
+      }
+    },
+    {
+      "id": "8b07336d-e285-44d6-9544-1e0f5796a342",
+      "name": "access: zone 23 left <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "b6ad84cc-ea6d-449e-9912-f0c3d4d3909d",
+          "along": "7b55db0b-b2e4-4246-a238-1ec29787f919",
+          "face": "-y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    },
+    {
+      "id": "d1da7a31-5763-4d7a-b95d-5e9964457e1c",
+      "name": "access: zone 23 right <-> inner aisle",
+      "components": {
+        "access": {
+          "rack": "1bbda9aa-9051-43fa-a89b-333fba2baa9b",
+          "along": "7b55db0b-b2e4-4246-a238-1ec29787f919",
+          "face": "+y",
+          "serves": [
+            "1d043005-93de-4915-8c80-8d19d1943e96"
+          ]
+        }
+      }
+    }
+  ]
+}

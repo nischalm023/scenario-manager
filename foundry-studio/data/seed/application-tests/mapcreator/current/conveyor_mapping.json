@@ -1,0 +1,40 @@
+[
+  {
+    "go_coordinates": [
+      999,
+      3
+    ],
+    "HAI_coordinates": "HC-31",
+    "conveyor_coordinates": {
+      "conveyor_id": "3",
+      "step_id": "C3-S1"
+    },
+    "location_type": "conveyor_track"
+  },
+  {
+    "go_coordinates": [
+      4,
+      1
+    ],
+    "HAI_coordinates": "HC-32",
+    "conveyor_coordinates": {
+      "conveyor_id": "3",
+      "step_id": "C3-S2"
+    },
+    "location_type": "conveyor_pps_point",
+    "pps_id": 31
+  },
+  {
+    "go_coordinates": [
+      8,
+      8
+    ],
+    "HAI_coordinates": "HC-33",
+    "conveyor_coordinates": {
+      "conveyor_id": "3",
+      "step_id": "C3-S3"
+    },
+    "location_type": "conveyor_track",
+    "pps_id": 39
+  }
+]

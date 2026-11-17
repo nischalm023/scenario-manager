@@ -1,0 +1,28 @@
+{
+ "composition": "walmart",
+ "world": "walmart_dfw6.json",
+ "scenario": {
+  "num_skus": 1000,
+  "total_inventory_units": 50000,
+  "num_orders": 500,
+  "total_order_picks": 2000,
+  "units_per_tote": 1,
+  "popular_skus_pct": 0.0,
+  "inventory_popular_share": 0.0,
+  "order_popular_share": 0.0
+ },
+ "settings": {
+  "queue_factor": 3.0,
+  "fidelity": "CollisionDes",
+  "sim_duration": {
+   "secs": 36000,
+   "nanos": 0
+  },
+  "pick": {
+   "embargo_secs": 7200.0
+  },
+  "putaway": {
+   "enabled": true
+  }
+ }
+}

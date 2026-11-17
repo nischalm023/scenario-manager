@@ -1,0 +1,509 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "U-Shape's flow scope (template/site/u-shape/flow): spec 06 section 6.1's relay flow, putaway and pick, schematic: one storage node over the aisles' sector, the station nodes over the pick and put sectors, the aisle VTMs named as the cohort assigned at each place.",
+  "doc": {
+    "id": "33941b48-99be-462d-a89d-36f7d6708eaf",
+    "name": "U-Shape: flow",
+    "kind": "template",
+    "depends_on": []
+  },
+  "entities": [
+    {
+      "id": "f9d8e4e5-ef4c-4e55-8368-c19be7163343",
+      "name": "Inbound units",
+      "components": {
+        "flow.node": {
+          "kind": "source",
+          "demand": "putaway"
+        }
+      }
+    },
+    {
+      "id": "486a7617-125d-47b1-914d-c719a352276c",
+      "name": "Put stations",
+      "components": {
+        "flow.node": {
+          "kind": "stations",
+          "sectors": [
+            "61fc7cf0-8706-40e6-8b4a-4e91600e00d8"
+          ],
+          "process": {
+            "operation": "put",
+            "gives_by": [
+              "09515fd1-a3a9-4c26-ac5b-d6363ea6f4c0"
+            ],
+            "receives_by": [
+              "f8187d93-e6ee-4dc3-9ef1-08394f87482d",
+              "97c5a8e2-2244-4430-8786-49451a6bdb0d"
+            ]
+          },
+          "work": {
+            "presentations_per_hour": 240,
+            "tote_swap_sim_ms": 2000
+          },
+          "intake": [
+            {
+              "moves": "inventory_tote:empty",
+              "admission_factor": 1.5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+      "name": "Inventory storage",
+      "components": {
+        "flow.node": {
+          "kind": "storage",
+          "sectors": [
+            "90b453fe-d07c-43c5-a40e-ea34feb5916f"
+          ],
+          "holds": "inventory_tote",
+          "deposit": "ranked"
+        }
+      }
+    },
+    {
+      "id": "fdebb147-6881-4a07-ba0b-cd69bda14a24",
+      "name": "Pick stations",
+      "components": {
+        "flow.node": {
+          "kind": "stations",
+          "sectors": [
+            "edc6ec62-0939-4e07-9171-432d5849643a"
+          ],
+          "process": {
+            "operation": "pick",
+            "gives_by": [
+              "848b2141-7c35-48a4-9b09-7acbbf68ebab"
+            ],
+            "receives_in": "station_bins"
+          },
+          "work": {
+            "pick_sim_ms": 7000,
+            "sequencing": "all_totes",
+            "tote_swap_sim_ms": 2000
+          },
+          "intake": [
+            {
+              "moves": "inventory_tote:stock",
+              "admission_factor": 4.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "6b572451-a660-4cdd-9cc0-8a4730e629e6",
+      "name": "Outbound orders",
+      "components": {
+        "flow.node": {
+          "kind": "sink"
+        }
+      }
+    },
+    {
+      "id": "ad177c76-8c92-401f-9d03-83130dfdee11",
+      "name": "Return rule",
+      "components": {
+        "flow.return_rule": {
+          "min_backlog": 1,
+          "destination": "nearest_eligible"
+        }
+      }
+    },
+    {
+      "id": "09515fd1-a3a9-4c26-ac5b-d6363ea6f4c0",
+      "name": "Inbound units to Put stations: units",
+      "components": {
+        "flow.material_edge": {
+          "from": "f9d8e4e5-ef4c-4e55-8368-c19be7163343",
+          "to": "486a7617-125d-47b1-914d-c719a352276c",
+          "moves": "units",
+          "induction": {
+            "sequence": "sku_demand",
+            "hour_gate": true,
+            "units_per_tote": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "f8187d93-e6ee-4dc3-9ef1-08394f87482d",
+      "name": "Inventory storage to Put stations: empty tote",
+      "components": {
+        "flow.material_edge": {
+          "from": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+          "to": "486a7617-125d-47b1-914d-c719a352276c",
+          "moves": "inventory_tote:empty"
+        }
+      }
+    },
+    {
+      "id": "97c5a8e2-2244-4430-8786-49451a6bdb0d",
+      "name": "Pick stations to Put stations: empty tote",
+      "components": {
+        "flow.material_edge": {
+          "from": "fdebb147-6881-4a07-ba0b-cd69bda14a24",
+          "to": "486a7617-125d-47b1-914d-c719a352276c",
+          "moves": "inventory_tote:empty",
+          "alternative_to": "f8187d93-e6ee-4dc3-9ef1-08394f87482d",
+          "bias": "fleet_pressure"
+        }
+      }
+    },
+    {
+      "id": "9c04e2be-4d68-42bc-a851-b7cbb4623f1d",
+      "name": "Put stations to Inventory storage: stock tote",
+      "components": {
+        "flow.material_edge": {
+          "from": "486a7617-125d-47b1-914d-c719a352276c",
+          "to": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+          "moves": "inventory_tote:stock",
+          "returns_by": "ad177c76-8c92-401f-9d03-83130dfdee11"
+        }
+      }
+    },
+    {
+      "id": "9a99f18b-9abb-41b5-b30c-fb775188ff9b",
+      "name": "Put stations to Inventory storage: empty tote once inbound ends",
+      "components": {
+        "flow.material_edge": {
+          "from": "486a7617-125d-47b1-914d-c719a352276c",
+          "to": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+          "moves": "inventory_tote:empty",
+          "when": {
+            "phase": "inbound_ended"
+          },
+          "returns_by": "ad177c76-8c92-401f-9d03-83130dfdee11"
+        }
+      }
+    },
+    {
+      "id": "848b2141-7c35-48a4-9b09-7acbbf68ebab",
+      "name": "Inventory storage to Pick stations: stock tote",
+      "components": {
+        "flow.material_edge": {
+          "from": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+          "to": "fdebb147-6881-4a07-ba0b-cd69bda14a24",
+          "moves": "inventory_tote:stock",
+          "opens_at_sim_ms": 0
+        }
+      }
+    },
+    {
+      "id": "e538e9ea-b46b-4693-b019-e4ea8e7e289a",
+      "name": "Pick stations to Inventory storage: tote after the pick",
+      "components": {
+        "flow.material_edge": {
+          "from": "fdebb147-6881-4a07-ba0b-cd69bda14a24",
+          "to": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+          "moves": "inventory_tote:after_pick",
+          "returns_by": "ad177c76-8c92-401f-9d03-83130dfdee11"
+        }
+      }
+    },
+    {
+      "id": "8fb2835e-77d6-4df1-91ca-ba0142e0167c",
+      "name": "Pick stations to Outbound orders: order in its bin",
+      "components": {
+        "flow.material_edge": {
+          "from": "fdebb147-6881-4a07-ba0b-cd69bda14a24",
+          "to": "6b572451-a660-4cdd-9cc0-8a4730e629e6",
+          "moves": "order:in_bin"
+        }
+      }
+    },
+    {
+      "id": "3225a7eb-2ead-4a16-993b-a2e761b28040",
+      "name": "units arrive at Put stations",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "09515fd1-a3a9-4c26-ac5b-d6363ea6f4c0",
+          "step": 1,
+          "from": {
+            "node": "f9d8e4e5-ef4c-4e55-8368-c19be7163343",
+            "port": "boundary"
+          },
+          "to": {
+            "node": "486a7617-125d-47b1-914d-c719a352276c",
+            "port": "presentation"
+          },
+          "executor": {
+            "external": true
+          },
+          "at_end": "arrives"
+        }
+      }
+    },
+    {
+      "id": "e9c9e704-ea25-4575-8e8c-b1b91fc3d03a",
+      "name": "the aisle VTMs: slot to relay",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "f8187d93-e6ee-4dc3-9ef1-08394f87482d",
+          "step": 1,
+          "from": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "slot"
+          },
+          "to": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "relay"
+          },
+          "executor": {
+            "assigned": "from"
+          },
+          "at_end": "hands_over"
+        }
+      }
+    },
+    {
+      "id": "4d2089c2-4136-490e-9138-d8772f833443",
+      "name": "HTM fleet: relay to Put stations",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "f8187d93-e6ee-4dc3-9ef1-08394f87482d",
+          "step": 2,
+          "from": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "relay"
+          },
+          "to": {
+            "node": "486a7617-125d-47b1-914d-c719a352276c",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "4d3bdf67-be89-468e-b37b-bf78ec2f0c69"
+          },
+          "at_end": "keeps_through_work"
+        }
+      }
+    },
+    {
+      "id": "466510ac-41bc-467c-a162-33813327f402",
+      "name": "HTM fleet: Pick stations to Put stations",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "97c5a8e2-2244-4430-8786-49451a6bdb0d",
+          "step": 1,
+          "from": {
+            "node": "fdebb147-6881-4a07-ba0b-cd69bda14a24",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "486a7617-125d-47b1-914d-c719a352276c",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "4d3bdf67-be89-468e-b37b-bf78ec2f0c69"
+          },
+          "at_end": "keeps_through_work"
+        }
+      }
+    },
+    {
+      "id": "09771107-e1cf-45d0-9853-717b4e598462",
+      "name": "HTM fleet: Put stations to relay",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "9c04e2be-4d68-42bc-a851-b7cbb4623f1d",
+          "step": 1,
+          "from": {
+            "node": "486a7617-125d-47b1-914d-c719a352276c",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "4d3bdf67-be89-468e-b37b-bf78ec2f0c69"
+          },
+          "at_end": "hands_over"
+        }
+      }
+    },
+    {
+      "id": "399c55a5-7fcb-4e7b-b6b4-2218e06c5a4b",
+      "name": "the aisle VTMs: relay to slot",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "9c04e2be-4d68-42bc-a851-b7cbb4623f1d",
+          "step": 2,
+          "from": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "relay"
+          },
+          "to": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down"
+        }
+      }
+    },
+    {
+      "id": "2a09da72-8bac-477b-865a-c8cd430a3d1c",
+      "name": "HTM fleet: Put stations to relay, inbound ended",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "9a99f18b-9abb-41b5-b30c-fb775188ff9b",
+          "step": 1,
+          "from": {
+            "node": "486a7617-125d-47b1-914d-c719a352276c",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "4d3bdf67-be89-468e-b37b-bf78ec2f0c69"
+          },
+          "at_end": "hands_over"
+        }
+      }
+    },
+    {
+      "id": "aa7bc627-cdea-40a8-97ff-d96e615e1d18",
+      "name": "the aisle VTMs: relay to slot, inbound ended",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "9a99f18b-9abb-41b5-b30c-fb775188ff9b",
+          "step": 2,
+          "from": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "relay"
+          },
+          "to": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down"
+        }
+      }
+    },
+    {
+      "id": "9c6e06ac-3cab-43bb-9a09-a8defd11ef18",
+      "name": "the aisle VTMs: slot to relay for a pick",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "848b2141-7c35-48a4-9b09-7acbbf68ebab",
+          "step": 1,
+          "from": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "slot"
+          },
+          "to": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "relay"
+          },
+          "executor": {
+            "assigned": "from"
+          },
+          "at_end": "hands_over"
+        }
+      }
+    },
+    {
+      "id": "597faf55-146d-4510-8d4e-e46b7d3df793",
+      "name": "HTM fleet: relay to Pick stations",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "848b2141-7c35-48a4-9b09-7acbbf68ebab",
+          "step": 2,
+          "from": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "relay"
+          },
+          "to": {
+            "node": "fdebb147-6881-4a07-ba0b-cd69bda14a24",
+            "port": "presentation"
+          },
+          "executor": {
+            "cohort": "4d3bdf67-be89-468e-b37b-bf78ec2f0c69"
+          },
+          "at_end": "keeps_through_work",
+          "retained_for": [
+            "efe23635-1e90-4c70-ae3d-fe201aaec8be",
+            "466510ac-41bc-467c-a162-33813327f402"
+          ]
+        }
+      }
+    },
+    {
+      "id": "efe23635-1e90-4c70-ae3d-fe201aaec8be",
+      "name": "HTM fleet: Pick stations to relay",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "e538e9ea-b46b-4693-b019-e4ea8e7e289a",
+          "step": 1,
+          "from": {
+            "node": "fdebb147-6881-4a07-ba0b-cd69bda14a24",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "relay"
+          },
+          "executor": {
+            "cohort": "4d3bdf67-be89-468e-b37b-bf78ec2f0c69"
+          },
+          "at_end": "hands_over"
+        }
+      }
+    },
+    {
+      "id": "a325c0e1-a6a8-45ac-a3c2-8d5d1ba5f602",
+      "name": "the aisle VTMs: relay to slot after a pick",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "e538e9ea-b46b-4693-b019-e4ea8e7e289a",
+          "step": 2,
+          "from": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "relay"
+          },
+          "to": {
+            "node": "cf9abdf8-842f-45a2-b48d-57c8d44ee1b1",
+            "port": "slot"
+          },
+          "executor": {
+            "assigned": "to"
+          },
+          "at_end": "sets_down"
+        }
+      }
+    },
+    {
+      "id": "fc18b404-4948-4c3d-b924-7177bbdbb7df",
+      "name": "orders leave in their bins",
+      "components": {
+        "flow.agent_segment": {
+          "edge": "8fb2835e-77d6-4df1-91ca-ba0142e0167c",
+          "step": 1,
+          "from": {
+            "node": "fdebb147-6881-4a07-ba0b-cd69bda14a24",
+            "port": "presentation"
+          },
+          "to": {
+            "node": "6b572451-a660-4cdd-9cc0-8a4730e629e6",
+            "port": "boundary"
+          },
+          "executor": {
+            "external": true
+          },
+          "at_end": "leaves"
+        }
+      }
+    }
+  ]
+}

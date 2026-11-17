@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Studio</title>
+  </head>
+  <body>
+    <!-- The root takes no box of its own, so the shell's height reads the body's (studio.css sizes html, body, .shell). -->
+    <div id="root" style="display: contents"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- Spec 02 section 3.4: the page's one live region, present and empty from the first paint, the last element. -->
+    <div id="announcer" class="visually-hidden" role="log" aria-live="polite" aria-relevant="additions"></div>
+  </body>
+</html>

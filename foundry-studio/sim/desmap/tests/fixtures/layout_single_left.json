@@ -1,0 +1,121 @@
+{
+  "version": 3,
+  "grid": {
+    "width": 20,
+    "depth": 20,
+    "cell_size_mm": 1000.0
+  },
+  "highways": [
+    {
+      "origin": [
+        1,
+        0
+      ],
+      "width": 1,
+      "height": 20,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        2,
+        0
+      ],
+      "width": 1,
+      "height": 20,
+      "direction": "Bidirectional"
+    },
+    {
+      "origin": [
+        3,
+        0
+      ],
+      "width": 1,
+      "height": 20,
+      "direction": "Bidirectional"
+    }
+  ],
+  "zones": [
+    {
+      "type": "rtp",
+      "id": 1,
+      "origin": [
+        4,
+        1
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 2,
+      "origin": [
+        7,
+        1
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 3,
+      "origin": [
+        10,
+        1
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 4,
+      "origin": [
+        13,
+        1
+      ],
+      "rows": 10,
+      "cols": 2
+    },
+    {
+      "type": "rtp",
+      "id": 5,
+      "origin": [
+        16,
+        1
+      ],
+      "rows": 10,
+      "cols": 2
+    }
+  ],
+  "stations": [
+    {
+      "id": 1,
+      "position": [
+        0,
+        7
+      ],
+      "presentation_cell": [
+        1,
+        7
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    },
+    {
+      "id": 2,
+      "position": [
+        0,
+        12
+      ],
+      "presentation_cell": [
+        1,
+        12
+      ],
+      "edge": "Left",
+      "queue_path": [],
+      "exit_direction": "East",
+      "station_type": "Pick"
+    }
+  ]
+}

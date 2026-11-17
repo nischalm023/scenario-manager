@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:world-graph-server:defs",
+  "title": "world graph server definitions",
+  "description": "The definitions this server adds to the protocol's own schema layer. The layer under `proto/schema/` describes documents as the protocol writes them; the server reads and writes those documents under rules of its own (DESIGN.md), and the few shapes those rules need have no name in the layer. They are collected here, in one document, so a schema in the registry can name one by `$ref: \"urn:world-graph-server:defs#/$defs/<name>\"`. The server folds this document into every schema it compiles, and serves it verbatim at `GET /protocol/defs` so an outside validator — the browser UI, a second implementation — resolves that same reference against the same bytes.",
+  "$defs": {
+    "version_pin": {
+      "title": "version-pinned reference",
+      "description": "A reference carrying the version to resolve it at: the identity, then `@` and a pin — a changeset number, `head`, `tag:<name>` or a branch's name, each name a slug (DESIGN.md §4, §15). Across units a reference names an immutable version (§5), which is why a site's stamps pin the catalog templates they name; which pins a stored reference may carry is the pin rule's to say, and every spelling is accepted here so that a reference the rule refuses meets the server's own sentence rather than a pattern error. Filed for the spec conversation as DESIGN.md §13 items 1 and 2; until it lands, this is the server's grammar and not the protocol's. The two patterns are `values.json`'s `uuid` and `derived_entity_id` with the trailing `$` moved past the pin — a copy, kept honest by `schema_defs`'s drift test, which re-derives both from that file and fails if this document has drifted from it.",
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}@(?:[0-9]+|tag:[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?|[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+(/(relay_cell|instance|carrier|relay|local|robot|cell|slot):[^/]+)*@(?:[0-9]+|tag:[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?|[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?)$"
+        }
+      ]
+    }
+  }
+}

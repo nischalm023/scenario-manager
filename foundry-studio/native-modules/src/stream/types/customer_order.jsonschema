@@ -1,0 +1,75 @@
+{
+  "$defs": {
+    "SkuQuantity": {
+      "additionalProperties": false,
+      "description": "Units of one SKU: what an order wants of it, or what a tote holds of it.",
+      "properties": {
+        "quantity": {
+          "description": "How many units, at least 1.",
+          "format": "uint32",
+          "maximum": 4294967295,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sku": {
+          "description": "The SKU's id.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sku",
+        "quantity"
+      ],
+      "type": "object"
+    },
+    "WorldTime": {
+      "description": "An instant of world time, the simulated clock, in milliseconds from the run's start; at most 2^53 - 1, so that every JSON reader holds it exactly.",
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One order a customer has placed: the units of each SKU the customer wants. A site's flow picks the order as it stands or forms pallets from it, and a task that forms pallets takes the orders in the sequence of their stream.",
+  "properties": {
+    "arrival_ms": {
+      "$ref": "#/$defs/WorldTime",
+      "description": "The world time at which the arrival is to happen: the lot's goods come to their station to be put or lifted, or the order arrives and may be worked. It is a no-earlier-than time: no task books work on the record at an earlier world time, and the arrival itself comes when the robots' timing allows, close to this time in a run that flows freely. It is independent of the world time from which the record is known and may be earlier than it; the record's work then waits until the record is known. Absent: the world time from which the record is known."
+    },
+    "customer": {
+      "description": "Who the order is for, by id: a customer such as a forward distribution centre. Absent: the order names no customer.",
+      "type": "string"
+    },
+    "due_ms": {
+      "$ref": "#/$defs/WorldTime",
+      "description": "The world time by which the record's work is due: a lenient deadline that gates nothing, and that a task may weigh as urgency. Absent: no deadline."
+    },
+    "id": {
+      "description": "The order's id.",
+      "type": "string"
+    },
+    "known_ms": {
+      "$ref": "#/$defs/WorldTime",
+      "description": "The instant of world time from which the record is known to the scheduler: in scheduler time, no decision may use the record before the barrier, the world time below which the scheduler books no new claim, has reached this instant, and a run without the barrier refuses a record known after 0. Absent: 0."
+    },
+    "lines": {
+      "description": "What the customer wants, at least one line.",
+      "items": {
+        "$ref": "#/$defs/SkuQuantity"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "station": {
+      "description": "The station the order is pinned to, by the id its world document declares, optionally followed by `/` and a part of the station, which is not modelled. Absent: any station that takes it.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "lines"
+  ],
+  "title": "CustomerOrder",
+  "type": "object"
+}

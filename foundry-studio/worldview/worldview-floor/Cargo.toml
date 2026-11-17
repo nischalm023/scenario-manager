@@ -1,0 +1,16 @@
+[package]
+name = "worldview-floor"
+version = "0.1.0"
+edition = "2024"
+description = "The compile from a loaded world document to the scene both viewers draw: cell tiles, hops, rack steel, the ground under them, and which cells each entity turned into"
+
+[dependencies]
+desgraph = { path = "../../sim/desgraph" }
+desmap = { path = "../../sim/desmap" }
+dessim = { path = "../../sim/dessim" }
+worldview-render = { path = "../worldview-render" }
+# The conveyor props read a dropoff cell's declared frame out of the document.
+site-model = { path = "../../sim/site-model" }
+
+rustc-hash = "2"
+thiserror = "2"

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "642.247",
+    "dock_barcode": "642.247",
+    "dock_coordinate": "[4,2]",
+    "direction": 0,
+    "display_name": "Dock A",
+    "station_id": "DS-1",
+    "station_type": "pps",
+    "mtu_id": "",
+    "rack_id": "",
+    "rack_status": "free",
+    "reserved_by": "",
+    "status": "active",
+    "station_point_status": "idle"
+  },
+  {
+    "id": "DK-9",
+    "dock_barcode": "633.337",
+    "dock_coordinate": "[3,3]",
+    "direction": 3,
+    "display_name": "Dock B",
+    "station_id": "DS-2",
+    "station_type": "pps",
+    "mtu_id": "carrier-2",
+    "rack_id": "rack-8",
+    "rack_status": "parked",
+    "reserved_by": "bot-4",
+    "status": "active",
+    "station_point_status": "busy"
+  }
+]

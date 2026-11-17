@@ -1,0 +1,28 @@
+{
+  "url": "http://bins.example.invalid/api/bintypes",
+  "type": "POST",
+  "header": {
+    "accept": "application/json",
+    "content-type": "application/json"
+  },
+  "data": [
+    {
+      "type_id": "small",
+      "tag": [],
+      "dimension": {
+        "height": 30.5,
+        "length": 40.0,
+        "breadth": 25.25
+      }
+    },
+    {
+      "type_id": "large",
+      "tag": [],
+      "dimension": {
+        "height": 42.5,
+        "length": 60.0,
+        "breadth": 25.25
+      }
+    }
+  ]
+}

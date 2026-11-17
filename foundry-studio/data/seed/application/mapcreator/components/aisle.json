@@ -1,0 +1,61 @@
+{
+  "asserts": "has",
+  "component": "aisle",
+  "meaning": "the sector IS a Map Creator aisle: a run of io-point cells a vertical transport works, with the operator-facing name and the vendor classification the export states and no extent, no rack and no direction",
+  "owner": "foundry-studio",
+  "refs": [],
+  "schema": {
+    "$comment": "Open to fields a newer producer adds (SPEC §9). Derived from `records.rs`'s field map by `vocabulary()`; edit the map, not this.",
+    "$defs": {
+      "legacy_value": {
+        "description": "A legacy value the dump wrote, kept verbatim in whatever JSON kind it wrote it. It states no type on purpose: the round trip writes back what the dump said, and correcting a kind here would be the converter deciding what the site meant.",
+        "title": "legacy_value"
+      },
+      "placed_legacy_values": {
+        "description": "Legacy values a Map Creator list holds that named nothing in the dump, each with `at`, its place in the list counting from zero, and `value`, the value verbatim.",
+        "items": {
+          "properties": {
+            "at": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "value": {
+              "$ref": "#/$defs/legacy_value"
+            }
+          },
+          "required": [
+            "at",
+            "value"
+          ],
+          "type": "object"
+        },
+        "title": "placed_legacy_values",
+        "type": "array"
+      }
+    },
+    "$id": "urn:mapcreator-compat:0.1:components:aisle",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "the sector IS a Map Creator aisle: a run of io-point cells a vertical transport works, with the operator-facing name and the vendor classification the export states and no extent, no rack and no direction",
+    "properties": {
+      "additional_information": {
+        "description": "Map Creator's `additional_information`, carried as the export states it.",
+        "type": [
+          "object"
+        ]
+      },
+      "display_name": {
+        "description": "Map Creator's `display_name`, carried as the export states it.",
+        "type": [
+          "string"
+        ]
+      },
+      "io_point_coordinates_unresolved": {
+        "$ref": "#/$defs/placed_legacy_values",
+        "description": "The entries of Map Creator's `io_point_coordinates` that name a cell that is not in this dump, each verbatim with its place in the list the file states. The entries that resolved are references in their own order, and the export writes each of these back at its place among them. Present only when an entry named nothing."
+      }
+    },
+    "title": "aisle",
+    "type": "object"
+  },
+  "status": "ratified"
+}

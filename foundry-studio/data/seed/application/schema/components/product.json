@@ -1,0 +1,310 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:worldproto:0.7:components:product",
+  "title": "world protocol — product components",
+  "description": "Packaged products and the pieces they are made of: templates and the stamps that place them, and the station-shaped components a template assembles. The bet SPEC §6 makes is that an EasyLoop is not a primitive — it is a template in a catalog document, built out of cells, queues, ports and presentation points — so a new station kind is a new document rather than a schema change. Mirrors the crate module of the same name.",
+  "$defs": {
+    "template": {
+      "title": "template",
+      "description": "A reusable sub-world: internal entities named by local handles instead of UUIDs, positioned in the template's own local frame, parameterized where the product varies. A template ships its own internal connectivity, so a site author does not have to wire its organs together (SPEC §6).",
+      "type": "object",
+      "properties": {
+        "params": {
+          "description": "The knobs this template offers, each by name.",
+          "type": "object",
+          "additionalProperties": {"$ref": "#/$defs/param_decl"}
+        },
+        "entities": {
+          "description": "The entities one instance of this template consists of.",
+          "type": "array",
+          "items": {"$ref": "#/$defs/template_entity"}
+        }
+      }
+    },
+    "param_decl": {
+      "title": "parameter declaration",
+      "description": "One knob's declaration. A parameter with no default must be bound by every stamp; leaving one unbound is a load error rather than a silent zero (SPEC §6).",
+      "type": "object",
+      "properties": {"default": true}
+    },
+    "template_entity": {
+      "title": "template internal",
+      "description": "One entity inside a template, addressed by its handle. Its components are read exactly as an entity's components are read anywhere else.",
+      "type": "object",
+      "required": ["local"],
+      "properties": {
+        "local": {"$ref": "urn:worldproto:0.7:values#/$defs/local_handle"},
+        "name": {
+          "description": "A label for people. Not identity, never unique, never referenced.",
+          "type": "string"
+        },
+        "components": {
+          "description": "Read exactly as any entity's components are read. The authoring profile reaches in here too — see authoring.json's strict overlay.",
+          "$ref": "urn:worldproto:0.7:components#/$defs/set"
+        },
+        "$comment": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "stamp": {
+      "title": "stamp",
+      "description": "One placement of a template, optionally repeated. Expansion always produces an instance level, repeat or not, so adding a repeat later cannot silently rename every identity beneath it (SPEC §6).",
+      "type": "object",
+      "required": ["template"],
+      "properties": {
+        "template": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"},
+        "params": {
+          "description": "Values bound to the template's parameters, by name. A value may be any JSON the parameter stands for.",
+          "type": "object"
+        },
+        "repeat": {"$ref": "#/$defs/repeat"}
+      }
+    },
+    "repeat": {
+      "title": "repeat",
+      "description": "Instance i sits at the stamp's position plus i steps. The step is expressed in the frame of the stamp's pose and is deliberately not rotated by the stamp's heading, so a rotated row marches along the same world axis as an unrotated one and the two span the same extent (SPEC §6).",
+      "type": "object",
+      "required": ["count", "step"],
+      "properties": {
+        "count": {"$ref": "urn:worldproto:0.7:values#/$defs/count_positive"},
+        "step": {"$ref": "urn:worldproto:0.7:values#/$defs/coord_pair"}
+      }
+    },
+    "station": {
+      "title": "station",
+      "description": "A workstation: what it does, and which product it is (SPEC §10).",
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "description": "What happens here.",
+          "type": "string",
+          "enum": ["pick", "put", "induct", "extract"]
+        },
+        "role": {
+          "description": "The product this station is — `easyloop`, `box_induction`. Open by design: a new station kind is a new template, not a schema change.",
+          "type": "string"
+        }
+      }
+    },
+    "port": {
+      "title": "port",
+      "description": "A boundary point where things enter or leave the world (SPEC §10).",
+      "type": "object",
+      "required": ["direction"],
+      "properties": {
+        "direction": {
+          "description": "Whether the world gains something here or loses it.",
+          "type": "string",
+          "enum": ["source", "sink"]
+        },
+        "of": {
+          "$comment": "SPEC §10 describes these entries as carrier-type refs plus a designation; the Dallas catalog writes a carrier kind plus a designation instead, and says why in its own comment. The entry shape is left open until that is ruled — see README.md.",
+          "description": "What passes through, one entry per kind of thing.",
+          "type": "array",
+          "items": {"type": "object"}
+        },
+        "into": {
+          "description": "The station a sink port feeds.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        },
+        "from": {
+          "description": "The station a source port draws from.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        }
+      }
+    },
+    "queue": {
+      "title": "queue",
+      "description": "An ordered path of cells with a discipline, whose last cell is the place it serves: a lane into a station's presentation cell, a belt's route to its handover, the horseshoe under a station's safety cover. It sits on an entity of its own, never on a `station` or a `presentation_point` (archetypes.json, `station_states_no_queue`, `presentation_point_states_no_queue`). The path is the admission: every cell on it admits an occupant, and a scenario admitting fewer states a shorter path. A path step must resolve to a live cell; dangling, removed or non-cell targets refuse the load (SPEC §10).",
+      "type": "object",
+      "properties": {
+        "path": {
+          "description": "The cells in the order they are travelled, named in the one address vocabulary a stitch pair also uses — never bare key strings, which cannot survive outside the entity that coined them. The list is what the queue admits on, so it is also what a policy overlay restates to admit fewer.",
+          "type": "array",
+          "items": {"$ref": "urn:worldproto:0.7:values#/$defs/cell_address"}
+        },
+        "discipline": {
+          "description": "What entering the path commits an agent to. `no_reverse` is the point of no return the sequencing logic must respect.",
+          "type": "string",
+          "enum": ["no_reverse"]
+        }
+      }
+    },
+    "waiting": {
+      "title": "waiting",
+      "description": "A holding pool. Capacity is simply its cell count, so it carries no fields of its own — the region and tiling beside it say how big it is (SPEC §10).",
+      "type": "object"
+    },
+    "pick": {
+      "title": "pick",
+      "description": "A PICK PLACE: where an operator takes goods out of an inventory carrier presented beside them and puts those goods into the carrier an HTM is holding out. It carries no fields — which carrier is held out is said by the `presentation_point` on the same cell, and what is picked is said by the order the carrier belongs to (SPEC §10).",
+      "type": "object"
+    },
+    "induct": {
+      "title": "induct",
+      "description": "An INDUCT PLACE: where an operator puts goods into a carrier presented beside them. The same shape as `pick` and the opposite direction, and it carries no fields for the same reason (SPEC §10).",
+      "type": "object"
+    },
+    "presentation_point": {
+      "title": "presentation point",
+      "description": "Where a carrier is presented to an operator. v0 binds it to a serving cell by proximity; explicit binding is an open question (SPEC §10, §12.11).",
+      "type": "object",
+      "properties": {
+        "for": {"description": "Which carrier is presented here.", "type": "string"},
+        "station": {
+          "description": "The station this point belongs to. A producer that nests a station's points inside its record, as Map Creator does, states it here, and the shipped `presentation_cell` lenses read it.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"
+        },
+        "light_curtain": {
+          "description": "Whether an optical safety barrier guards this point, as Map Creator states it.",
+          "type": "boolean"
+        },
+        "presented_entity_allowed_types": {
+          "description": "What may be presented here, as Map Creator states it.",
+          "type": "array"
+        },
+        "presenting_agent_type": {
+          "description": "The kind of robot that presents a carrier here, as Map Creator states it.",
+          "type": "string"
+        },
+        "presenting_agent_id": {
+          "description": "The robot that presents a carrier here, where the producer names one.",
+          "type": "string"
+        },
+        "attributes": {
+          "description": "The point's presentation geometry as Map Creator states it: the cell it names, the height a carrier is presented at, the robot class that presents it and the heading it presents at, the direction the operator reaches from, and whether the operator works here. The cell is the producer's statement and agrees with the point's pose; whether a point binds a serving cell explicitly stays open (SPEC §12.11).",
+          "type": "object",
+          "properties": {
+            "cell": {
+              "description": "The cell this point stands on, as the producer named it.",
+              "$ref": "urn:worldproto:0.7:values#/$defs/cell_address"
+            },
+            "cell_unresolved": {
+              "description": "The cell the producer named, as it named it, present only where it names no cell the same document declares."
+            },
+            "display_attributes": {"description": "How Map Creator labels the point for an operator.", "type": "object"},
+            "pick_direction": {"description": "The direction the operator reaches from.", "type": "number"},
+            "presentation_height": {"description": "The height a carrier is presented at.", "type": "number"},
+            "bot_type": {"description": "The robot class that presents a carrier here.", "type": "string"},
+            "bot_orientation": {"description": "The heading the robot presents at.", "type": "number"},
+            "is_workbench": {"description": "Whether this is where the operator works.", "type": "boolean"}
+          }
+        },
+        "world_coordinates_unresolved": {
+          "description": "The grid coordinates the producer stated for the point, as it stated them, present only where the cell it names is not one the same document declares, so no cell can give them back."
+        }
+      }
+    },
+    "sector": {
+      "title": "sector",
+      "description": "A shapeless named grouping used as a selector for behaviours — explicit members, or the region beside it, or both. A generator listed as a member stands for its whole expansion (SPEC §10).",
+      "type": "object",
+      "properties": {
+        "members": {
+          "type": "array",
+          "items": {"$ref": "urn:worldproto:0.7:values#/$defs/entity_ref"}
+        }
+      }
+    },
+    "demand": {
+      "title": "demand",
+      "description": "A workload source bound into a scenario: what the world is asked to do, and where the data saying so lives (SPEC §10).",
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "description": "Which direction of work this source produces.",
+          "type": "string",
+          "enum": ["orders", "putaway"]
+        },
+        "source": {
+          "description": "Where the data comes from. Data files stay external; this names them.",
+          "type": "object"
+        }
+      }
+    },
+    "carrier_type": {
+      "title": "carrier type",
+      "description": "A kind of thing that rides an agent and holds merchandise. Inventory-versus-order is a per-carrier designation, not a different type (SPEC §10).",
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "description": "Which physical kind this is. A tray is a tote without walls; a box is its own carrier.",
+          "type": "string",
+          "enum": ["tote", "tray", "box"]
+        },
+        "size": {"description": "Outside dimensions.", "$ref": "urn:worldproto:0.7:values#/$defs/steps_list"},
+        "self_carrying": {
+          "description": "The thing rides an agent directly, with no tray beneath it.",
+          "$ref": "urn:worldproto:0.7:values#/$defs/flag"
+        }
+      }
+    },
+    "lineage": {
+      "title": "lineage",
+      "description": "How a cataloged product says where it came from: an ordered list, origin first, one entry per party that handled it. The motivating case is one product with three parties behind it — Quicktron manufactures the A5, Dematic distributes it as the DA50, GreyOrange integrates it into a site — which is one class with one set of capabilities and three names. That is a live commercial fact rather than a join key into another system or source, which is why it is not `external_ids` (SPEC §10.1).",
+      "type": "array",
+      "items": {"$ref": "#/$defs/lineage_entry"}
+    },
+    "lineage_entry": {
+      "title": "lineage entry",
+      "description": "One party's part in a product's history, and the options that party actually fitted. As-built, never a catalog of what the party offers: a world document is not a product configurator whose rules every consumer would have to reimplement (SPEC §10.1).",
+      "type": "object",
+      "required": ["party", "role"],
+      "properties": {
+        "party": {
+          "description": "The organization's name in words; v0 has no entity for an organization.",
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {"$ref": "#/$defs/lineage_role"},
+        "designation": {
+          "description": "The product's code in that party's own catalog.",
+          "type": "string"
+        },
+        "options": {
+          "description": "The options this party applied. An option appears once, on the entry of the party that applied it, so the same fitting is never written twice.",
+          "type": "array",
+          "items": {"$ref": "#/$defs/lineage_option"}
+        }
+      }
+    },
+    "lineage_role": {
+      "title": "lineage role",
+      "description": "What a party did to the product. Closed, because the chain runs origin to site and two designations with no direction between them are a rebrand nobody can order (SPEC §10.1).",
+      "type": "string",
+      "enum": ["manufacturer", "distributor", "integrator", "operator"]
+    },
+    "lineage_option": {
+      "title": "lineage option",
+      "description": "One fitting, on the entry of the party that applied it. It describes and never rules: what a class can carry, how fast it travels and how big it is stay stated flat on the class, exactly once, so no capability is readable in two places that could disagree (SPEC §10.1).",
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "description": "In human words, and required: an option nobody can name is not one.",
+          "type": "string",
+          "minLength": 1
+        },
+        "designation": {
+          "description": "The option's code in the naming party's catalog — the same word as the entry-level field on purpose, because it is one concept at two scales.",
+          "type": "string"
+        },
+        "offered_by": {
+          "description": "Whose catalog the option came out of, when that is somebody other than the party that applied it.",
+          "type": "string"
+        },
+        "replaces": {
+          "description": "Free text naming the stock item this displaced.",
+          "type": "string"
+        },
+        "detail": {
+          "description": "An open description of the option. It describes; it never restates or overrides the class's own numbers.",
+          "type": "object"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+/* The Docs section (`DocsSection`, `DocPage`): the repository's documents set as reading text in the app's tokens. The
+   shell's base rules take every margin and list marker away for its controls; a document puts them back. */
+
+.docs-index, .doc { font-size: var(--text-md); line-height: var(--lh-md); min-width: 0; }
+
+/* ---------- the list of documents ---------- */
+.docs-index { display: grid; gap: var(--space-6); max-width: var(--measure); }
+.docs-index__lede { color: var(--color-text-secondary); }
+.docs-index__folder { display: grid; gap: var(--space-2); }
+.docs-index__path { font-size: var(--text-sm); line-height: var(--lh-sm); font-weight: var(--weight-medium); color: var(--color-text-tertiary); }
+.docs-index__list { display: grid; gap: var(--space-1-5); }
+.docs-index__file { margin-left: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-quaternary); }
+
+/* ---------- one document ---------- */
+.doc { max-width: 64rem; }
+.doc :where(p, ul, ol, blockquote, pre, .table-scroll, .doc__figure) { margin-block: 0 var(--space-4); }
+.doc :where(p, ul, ol, blockquote, .doc__heading) { max-width: var(--measure); }
+.doc ul { list-style: disc; padding-left: var(--space-6); }
+.doc ol { list-style: decimal; padding-left: var(--space-6); }
+.doc li + li, .doc li > :where(ul, ol, p) { margin-top: var(--space-1-5); }
+.doc li > :where(ul, ol) { margin-bottom: 0; }
+.doc strong { font-weight: var(--weight-semibold); }
+
+.doc__source { font-size: var(--text-sm); line-height: var(--lh-sm); color: var(--color-text-tertiary); }
+.doc__heading { scroll-margin-top: var(--space-4); }
+.doc__heading--1 { font-size: var(--text-2xl); line-height: var(--lh-2xl); margin-block: 0 var(--space-4); }
+.doc__heading--2 { font-size: var(--text-xl); line-height: var(--lh-xl); margin-block: var(--space-10) var(--space-3); }
+.doc__heading--3 { font-size: var(--text-lg); line-height: var(--lh-lg); margin-block: var(--space-8) var(--space-2); }
+.doc__heading--4, .doc__heading--5, .doc__heading--6 { font-size: var(--text-md); line-height: var(--lh-md); margin-block: var(--space-6) var(--space-2); }
+/* A heading's link to itself reads as the heading; the underline shows it can be followed and its address copied. */
+.doc__self { color: inherit; text-decoration: none; }
+.doc__self:hover { text-decoration: underline; text-decoration-thickness: 1px; }
+
+/* Inline code breaks only where `Code` lets it, after a path's slashes, so a table column keeps names whole. */
+.doc code { padding: 0 var(--space-1); border-radius: var(--radius-xs); background: var(--color-bg-tertiary); overflow-wrap: break-word; }
+.doc pre {
+  padding: var(--space-3); overflow-x: auto; border: 1px solid var(--color-border-secondary); border-radius: var(--radius-md);
+  background: var(--color-bg-secondary); font-size: var(--text-sm); line-height: var(--lh-sm);
+}
+.doc pre code { padding: 0; background: none; overflow-wrap: normal; }
+.doc blockquote { padding-left: var(--space-4); border-left: 3px solid var(--color-border-primary); color: var(--color-text-secondary); }
+.doc hr { margin-block: var(--space-6); border: 0; border-top: 1px solid var(--color-border-secondary); }
+
+.doc .table-scroll table { font-size: var(--text-sm); line-height: var(--lh-sm); }
+.doc .table-scroll th { white-space: nowrap; }
+
+/* A figure keeps the size it was drawn at, so its labels never shrink below their drawn size; a panel narrower than
+   the figure scrolls it sideways. Each figure draws its own background, light or dark with the page. */
+.doc__figure { overflow-x: auto; }
+.doc__image { display: block; max-width: none; height: auto; }
+
+/* A link or image the build could not resolve: the unit tests refuse it, and it shows plainly until they do. */
+.doc__unresolved { color: var(--color-bad); text-decoration: underline wavy; }

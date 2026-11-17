@@ -1,0 +1,320 @@
+{
+  "proto_version": "0.7.0",
+  "$comment": "L-Shape's top scope (template/site/l-shape): its knobs and its card.",
+  "doc": {
+    "id": "3cc43de1-dc39-46f9-a1e5-6aed72acb10c",
+    "name": "L-Shape",
+    "kind": "template",
+    "depends_on": [
+      "c00f991f-4b60-4ec5-8b3e-d261c4f9768f",
+      "9667f012-a447-46e6-a75f-beafb020e9eb",
+      "f2914490-29bf-49ff-99fe-027416167ee5",
+      "d44ca445-0338-49a2-85ad-2e6fe2bc7005",
+      "fda5287c-b2e0-4d3e-a000-e46fa35ba40c"
+    ]
+  },
+  "primary_frame": "7a9b508b-1f25-4b67-9bc7-9dbf20127660",
+  "entities": [
+    {
+      "id": "00eee3d9-d5c4-42e8-bde9-2d051d7da26f",
+      "name": "Width",
+      "components": {
+        "template.knob": {
+          "key": "width",
+          "label": "Width",
+          "unit": "mm",
+          "min": 4250,
+          "max": 255000,
+          "step": 850,
+          "default": "max(aisles * 7650 + 8500 + 1700, pick_stations * station_pitch + 6800, cut_width + 6800)",
+          "description": "The L's extent along x, its arm along x included. Fits {aisles} aisles, the pick row and the arm along y.",
+          "group": "Outline",
+          "order": 1,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "6800 - (width - cut_width)",
+              "problem": "The arm along y needs {value} mm more width."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "aisles * 7650 + 8500 - width",
+              "problem": "The aisle row needs {value} mm more floor than the shell's width gives."
+            },
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "pick_stations * station_pitch + 6800 - width",
+              "problem": "The pick row needs {value} mm more of the −y wall."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "5928ec39-6538-4bc4-b82a-53649fe3b75b",
+      "name": "Depth",
+      "components": {
+        "template.knob": {
+          "key": "depth",
+          "label": "Depth",
+          "unit": "mm",
+          "min": 4250,
+          "max": 255000,
+          "step": 850,
+          "default": "cut_depth + bays * 2750 + 9350",
+          "description": "The L's extent along y, its arm along y included. Fits rack rows of {bays} bays in the arm along x.",
+          "group": "Outline",
+          "order": 2,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "(bays * 2750 + 2549) / 850 * 850 + 5950 - (depth - cut_depth)",
+              "problem": "The aisles need {value} mm more depth than the arm along x gives them."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "607b4f38-991e-4b7b-9dfe-d0ff4e0a8af9",
+      "name": "Cut corner width",
+      "components": {
+        "template.knob": {
+          "key": "cut_width",
+          "label": "Cut corner width",
+          "unit": "mm",
+          "min": 4250,
+          "max": 255000,
+          "step": 850,
+          "default": 20400,
+          "description": "How far the cut corner reaches along x.",
+          "group": "Outline",
+          "order": 3
+        }
+      }
+    },
+    {
+      "id": "011cf06d-aa03-43ff-a909-e242d37af466",
+      "name": "Cut corner depth",
+      "components": {
+        "template.knob": {
+          "key": "cut_depth",
+          "label": "Cut corner depth",
+          "unit": "mm",
+          "min": 4250,
+          "max": 255000,
+          "step": 850,
+          "default": 13600,
+          "description": "How far the cut corner reaches along y.",
+          "group": "Outline",
+          "order": 4,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "6800 - (depth - cut_depth)",
+              "problem": "The arm along x needs {value} mm more depth."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "d0108816-250b-477d-b292-83df606fabbe",
+      "name": "Cut corner",
+      "components": {
+        "template.knob": {
+          "key": "orientation",
+          "label": "Cut corner",
+          "unit": "count",
+          "options": [
+            {
+              "value": 0,
+              "label": "+x +y"
+            },
+            {
+              "value": 1,
+              "label": "−x +y"
+            },
+            {
+              "value": 2,
+              "label": "+x −y"
+            },
+            {
+              "value": 3,
+              "label": "−x −y"
+            }
+          ],
+          "default": 0,
+          "description": "Which corner of the outline the L leaves out, drawn north-up.",
+          "group": "Outline",
+          "order": 5
+        }
+      }
+    },
+    {
+      "id": "29348ffc-f089-416f-970a-9f3630006005",
+      "name": "Aisles",
+      "components": {
+        "template.knob": {
+          "key": "aisles",
+          "label": "Aisles",
+          "unit": "count",
+          "min": 1,
+          "max": 30,
+          "step": 1,
+          "default": 4,
+          "description": "Aisles of two rack rows each, laid side by side along +x.",
+          "group": "Storage",
+          "order": 1
+        }
+      }
+    },
+    {
+      "id": "3c468de4-ecd7-43ff-9806-c83a7fc34a50",
+      "name": "Bays per rack row",
+      "components": {
+        "template.knob": {
+          "key": "bays",
+          "label": "Bays per rack row",
+          "unit": "count",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "default": 4,
+          "description": "Bays of relay racking in each rack row, along each aisle.",
+          "group": "Storage",
+          "order": 2
+        }
+      }
+    },
+    {
+      "id": "862c73e5-3068-4440-b1e9-1fb496bb6812",
+      "name": "VTMs per aisle",
+      "components": {
+        "template.knob": {
+          "key": "vtms_per_aisle",
+          "label": "VTMs per aisle",
+          "unit": "count",
+          "options": [
+            {
+              "value": 1,
+              "label": "1 VTM"
+            },
+            {
+              "value": 2,
+              "label": "2 VTMs"
+            }
+          ],
+          "default": 2,
+          "description": "VTMs hard-assigned to each aisle.",
+          "group": "Storage",
+          "order": 3
+        }
+      }
+    },
+    {
+      "id": "b0766af5-0dd0-4ff6-99d6-9882ac3c2917",
+      "name": "Station pitch",
+      "components": {
+        "template.knob": {
+          "key": "station_pitch",
+          "label": "Station pitch",
+          "unit": "mm",
+          "min": 2550,
+          "max": 12750,
+          "step": 850,
+          "default": 4250,
+          "description": "Distance from one station to the next along a wall.",
+          "group": "Stations",
+          "order": 10
+        }
+      }
+    },
+    {
+      "id": "303eb3a0-e167-4cac-82ed-afb804921aa8",
+      "name": "HTMs",
+      "components": {
+        "template.knob": {
+          "key": "htms",
+          "label": "HTMs",
+          "unit": "count",
+          "min": 1,
+          "max": 600,
+          "step": 1,
+          "default": 24,
+          "description": "HTMs working the floor.",
+          "group": "Fleet",
+          "order": 20,
+          "checks": [
+            {
+              "severity": "warning",
+              "value_unit": "count",
+              "fails_when": "pick_stations + putaway_stations - htms",
+              "problem": "Fewer HTMs than stations: {value} stations have no HTM of their own."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "1d5ed81b-c63b-4fc1-a6aa-c171f2943a65",
+      "name": "Pick stations",
+      "components": {
+        "template.knob": {
+          "key": "pick_stations",
+          "label": "Pick stations",
+          "unit": "count",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "default": 4,
+          "description": "Pick stations on the −y wall, in front of the aisles: drawn along the bottom with the cut corner at +x +y or −x +y, along the top at +x −y or −x −y.",
+          "group": "Stations",
+          "order": 30
+        }
+      }
+    },
+    {
+      "id": "07abc46d-3573-420c-945e-dd9b9a462f02",
+      "name": "Putaway stations",
+      "components": {
+        "template.knob": {
+          "key": "putaway_stations",
+          "label": "Putaway stations",
+          "unit": "count",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "default": 2,
+          "description": "Putaway stations on the −x wall, beyond the arm along x: drawn up the left with the cut corner at +x +y or +x −y, up the right at −x +y or −x −y.",
+          "group": "Stations",
+          "order": 31,
+          "checks": [
+            {
+              "severity": "error",
+              "value_unit": "mm",
+              "fails_when": "putaway_stations * station_pitch - cut_depth",
+              "problem": "The putaway row needs {value} mm more of the −x wall beyond the arm along x."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "fab9d6cb-bda4-4cce-9b5c-efb4d6db3a8a",
+      "name": "L-Shape",
+      "components": {
+        "template.description": {
+          "title": "L-Shape",
+          "text": "Receiving + shipping on adjacent walls",
+          "built_from": "GOFoundry-POC's shell library, warehouseLayouts.js:7-19 at 4104823"
+        }
+      }
+    }
+  ]
+}

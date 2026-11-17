@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "seed_manifest": "l-shape-6-aisles.seed.json",
+  "worlds": [
+    {
+      "name": "l-shape-6-aisles",
+      "scope": "catalog/fixtures/simulator-world-source-l-shape-6-aisles",
+      "source": "../worlds/flowgraph/l_shape_6_aisles.json",
+      "source_sha256": "651d09f2bae436b9ab26c777009e8fc28adb59addb01a22be160116c2b1d0b67",
+      "output": "../../snapshots/worlds/flowgraph/l_shape_6_aisles.json",
+      "mode": "assembled"
+    }
+  ],
+  "registry": []
+}

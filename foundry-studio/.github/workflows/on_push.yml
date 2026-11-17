@@ -1,0 +1,20 @@
+name: Push
+on:
+  push:
+    branches: [main, "exp-**"]
+concurrency:
+  group: push-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+  id-token: write # required for Workload Identity Federation
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 } # git describe needs full history
+      - uses: ./.github/actions/world-proto-access
+        with:
+          key: ${{ secrets.WORLD_PROTO_DEPLOY_KEY }}
+      - uses: ./.github/actions/build-and-push

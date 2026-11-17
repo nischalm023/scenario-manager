@@ -1,0 +1,34 @@
+[
+  {
+    "location": "TL-0001",
+    "io_point": {
+      "coordinate": "[1,1]",
+      "bot_orientation": 0
+    },
+    "storage_direction": 1,
+    "ndeep": 1,
+    "height": 450
+  },
+  {
+    "location": "TL-0002",
+    "io_point": {
+      "coordinate": "[1,1]",
+      "bot_orientation": 0
+    },
+    "storage_direction": 1,
+    "ndeep": 2,
+    "height": 450,
+    "relay_point": "[1,2]",
+    "storage_sector": 3
+  },
+  {
+    "location": "TL-0004",
+    "io_point": {
+      "coordinate": "[9,9]",
+      "bot_orientation": 2
+    },
+    "storage_direction": 3,
+    "ndeep": 1,
+    "height": 1450
+  }
+]
